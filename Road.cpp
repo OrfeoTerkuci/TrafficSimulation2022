@@ -2,10 +2,6 @@
 
 Road::Road(unsigned int length, const string &roadName) : length(length), roadName(roadName) {}
 
-Road::~Road() {
-
-}
-
 unsigned int Road::getLength() const {
     return length;
 }
@@ -20,4 +16,8 @@ const string &Road::getRoadName() const {
 
 void Road::setRoadName(const string &newRoadName) {
     Road::roadName = newRoadName;
+}
+
+Road::~Road() {
+
 }

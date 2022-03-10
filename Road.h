@@ -11,8 +11,6 @@ class Road {
 public:
     Road(unsigned int length, const string &roadName);
 
-    virtual ~Road();
-
     unsigned int getLength() const;
 
     void setLength(unsigned int newLength);
@@ -20,6 +18,8 @@ public:
     const string &getRoadName() const;
 
     void setRoadName(const string &newRoadName);
+
+    virtual ~Road();
 };
 
 

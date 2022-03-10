@@ -22,10 +22,10 @@ set(tinySources
         )
 
 # Set source files for RELEASE target
-set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulationReader.cpp TrafficLight.cpp Vehicle.cpp ${tinysources})
+set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulationReader.cpp TrafficLight.cpp Vehicle.cpp Road.cpp ${tinysources})
 
 # Set source files for DEBUG target
-set(DEBUG_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulationReader.cpp TrafficLight.cpp Vehicle.cpp ${tinysources})
+set(DEBUG_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulationReader.cpp TrafficLight.cpp Vehicle.cpp Road.cpp ${tinysources})
 
 # Create RELEASE target
 add_executable(ts ${RELEASE_SOURCE_FILES})
