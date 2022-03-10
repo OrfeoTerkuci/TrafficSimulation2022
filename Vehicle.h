@@ -3,8 +3,9 @@
 
 class Vehicle {
 
-double speed;
-double position;
+    double speed;
+    double position;
+
 public:
     Vehicle(double speed, double position);
 
