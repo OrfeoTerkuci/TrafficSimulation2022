@@ -11,11 +11,11 @@ public:
 
     double getSpeed() const;
 
-    void setSpeed(double speed);
+    void setSpeed(double newSpeed);
 
     double getPosition() const;
 
-    void setPosition(double position);
+    void setPosition(double newPosition);
 
     virtual ~Vehicle();
 };
