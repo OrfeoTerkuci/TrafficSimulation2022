@@ -9,6 +9,6 @@
 using namespace std;
 
 int main(){
-TrafficSimulation ts;
-
+TrafficSimulation ts("Simulation1.xml");
+return 0;
 }
