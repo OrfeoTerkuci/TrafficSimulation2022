@@ -2,7 +2,7 @@
 #define TRAFFICSIMULATION2022_VOERTUIG_H
 #include "Road.h"
 
-class Voertuig {
+class Vehicle {
 
 };
 
