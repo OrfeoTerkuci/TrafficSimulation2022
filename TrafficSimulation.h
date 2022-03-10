@@ -7,16 +7,11 @@
 using namespace std;
 
 class Road;
-class TrafficLight;
-class Vehicle;
 
 class TrafficSimulation {
     string filename;
 
-    vector<Road> roads;
-    vector<TrafficLight> trafficLights;
-    vector<Vehicle> vehicles;
-
+    vector<Road*> roads;
 public:
     TrafficSimulation(const string &filename);
 
