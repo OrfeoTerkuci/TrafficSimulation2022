@@ -1,3 +1,7 @@
 #include "TrafficLight.h"
 #include "Vehicle.h"
 #include "TrafficSimulationReader.h"
+#include "Road.h"
+#include "Exceptions.h"
+#include "DesignByContract.h"
+#include "tinyxml/tinyxml.h"
