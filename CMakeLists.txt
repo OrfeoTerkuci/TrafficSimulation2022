@@ -21,11 +21,15 @@ set(tinySources
         tinyxmlparser.cpp
         )
 
+# Set Help Libraries
+set(AdditionalSources
+        Standard_Values.h)
+
 # Set source files for RELEASE target
-set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp ${tinysources})
+set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp ${AdditionalSources} ${tinysources})
 
 # Set source files for DEBUG target
-set(DEBUG_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp ${tinysources})
+set(DEBUG_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp ${AdditionalSources} ${tinysources})
 
 # Create RELEASE target
 add_executable(ts ${RELEASE_SOURCE_FILES})

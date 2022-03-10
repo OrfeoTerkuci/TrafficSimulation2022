@@ -1,14 +1,12 @@
-#include "TrafficLight.h"
-#include "Vehicle.h"
 #include "TrafficSimulation.h"
-#include "Road.h"
 #include "Exceptions.h"
 #include "DesignByContract.h"
-#include "tinyxml/tinyxml.h"
+#include "Standard_Values.h"
 
 using namespace std;
 
 int main(){
 TrafficSimulation ts("Simulation1.xml");
+cout<< LENGTH / 3;
 return 0;
 }

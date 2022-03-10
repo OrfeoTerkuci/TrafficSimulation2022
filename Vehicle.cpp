@@ -1,6 +1,6 @@
 #include "Vehicle.h"
 
-Vehicle::Vehicle(double speed, double position) : speed(speed), position(position) {}
+Vehicle::Vehicle(double speed, double position) : speed(speed), position(position) , acceleration(0.0) {}
 
 double Vehicle::getSpeed() const {
     return speed;
@@ -16,6 +16,14 @@ double Vehicle::getPosition() const {
 
 void Vehicle::setPosition(double newPosition) {
     Vehicle::position = newPosition;
+}
+
+double Vehicle::calculateAcceleration() {
+    return 0;
+}
+
+double Vehicle::calculateSpeed() {
+    return 0;
 }
 
 Vehicle::~Vehicle() {
