@@ -5,6 +5,9 @@
 
 using namespace std;
 
+class Road;
+class TrafficLight;
+class
 class TrafficSimulationReader {
     string filename;
 public:
@@ -13,8 +16,6 @@ public:
     TrafficSimulationReader();
 
     virtual ~TrafficSimulationReader();
-
-
 };
 
 
