@@ -12,10 +12,10 @@ include_directories(gtest/include)
 link_directories(gtest/lib)
 
 # Set source files for RELEASE target
-set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp)
+set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulationReader.cpp TrafficLight.cpp Vehicle.cpp tinystr.cpp tinyxmlerror.cpp tinystr.h tinyxml.h tinyxml.cpp tinyxmlparser.cpp)
 
 # Set source files for DEBUG target
-set(DEBUG_SOURCE_FILES TrafficSimulationMain.cpp)
+set(DEBUG_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulationReader.cpp TrafficLight.cpp Vehicle.cpp tinystr.cpp tinyxmlerror.cpp tinystr.h tinyxml.h tinyxml.cpp tinyxmlparser.cpp)
 
 # Create RELEASE target
 add_executable(ts ${RELEASE_SOURCE_FILES})

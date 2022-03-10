@@ -1,9 +1,20 @@
 #ifndef TRAFFICSIMULATION2022_VOERTUIG_H
 #define TRAFFICSIMULATION2022_VOERTUIG_H
-#include "Road.h"
 
 class Vehicle {
 
+double speed;
+double position;
+public:
+    Vehicle(double speed, double position);
+
+    double getSpeed() const;
+
+    void setSpeed(double speed);
+
+    double getPosition() const;
+
+    void setPosition(double position);
 };
 
 

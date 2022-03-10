@@ -2,8 +2,8 @@
 #define TRAFFICSIMULATION2022_TRAFFICLIGHT_H
 
 
-class TrafficLight {
 
+class TrafficLight {
 };
 
 
