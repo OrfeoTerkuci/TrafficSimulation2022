@@ -4,6 +4,4 @@ TrafficSimulationReader::TrafficSimulationReader(const string &filename) : filen
 
 TrafficSimulationReader::TrafficSimulationReader() {}
 
-TrafficSimulationReader::~TrafficSimulationReader() {
-
-}
+TrafficSimulationReader::~TrafficSimulationReader() {}
