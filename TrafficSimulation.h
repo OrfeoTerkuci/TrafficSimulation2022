@@ -10,7 +10,7 @@ class Road;
 class TrafficLight;
 class Vehicle;
 
-class TrafficSimulationReader {
+class TrafficSimulation {
     string filename;
 
     vector<Road> roads;
@@ -18,11 +18,11 @@ class TrafficSimulationReader {
     vector<Vehicle> vehicles;
 
 public:
-    TrafficSimulationReader(const string &filename);
+    TrafficSimulation(const string &filename);
 
-    TrafficSimulationReader();
+    TrafficSimulation();
 
-    virtual ~TrafficSimulationReader();
+    virtual ~TrafficSimulation();
 };
 
 

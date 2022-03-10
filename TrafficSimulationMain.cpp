@@ -1,6 +1,6 @@
 #include "TrafficLight.h"
 #include "Vehicle.h"
-#include "TrafficSimulationReader.h"
+#include "TrafficSimulation.h"
 #include "Road.h"
 #include "Exceptions.h"
 #include "DesignByContract.h"
@@ -9,5 +9,6 @@
 using namespace std;
 
 int main(){
+TrafficSimulation ts;
 
 }
