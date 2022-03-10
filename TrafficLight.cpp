@@ -6,14 +6,14 @@ int TrafficLight::getCyclus() const {
     return cyclus;
 }
 
-void TrafficLight::setCyclus(int cyclus) {
-    TrafficLight::cyclus = cyclus;
+void TrafficLight::setCyclus(int newCyclus) {
+    TrafficLight::cyclus = newCyclus;
 }
 
 lightColor TrafficLight::getCurrentColor() const {
     return currentColor;
 }
 
-void TrafficLight::setCurrentColor(lightColor currentColor) {
-    TrafficLight::currentColor = currentColor;
+void TrafficLight::setCurrentColor(lightColor newColor) {
+    TrafficLight::currentColor = newColor;
 }
