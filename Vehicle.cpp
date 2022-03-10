@@ -17,3 +17,7 @@ double Vehicle::getPosition() const {
 void Vehicle::setPosition(double position) {
     Vehicle::position = position;
 }
+
+Vehicle::~Vehicle() {
+
+}

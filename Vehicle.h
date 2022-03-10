@@ -15,6 +15,8 @@ public:
     double getPosition() const;
 
     void setPosition(double position);
+
+    virtual ~Vehicle();
 };
 
 
