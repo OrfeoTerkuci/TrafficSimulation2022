@@ -1,0 +1,33 @@
+<!--
+Verkeerssimulatie = { Element }
+Element = "<" ElementType ">" AttributeList "</" ElementType ">"
+ElementType = "VOERTUIG" | "BAAN" | "VERKEERSLICHT" | "VOERTUIGGENERATOR"
+AttributeList = Attribute { Attribute }
+Attribute = "<" AttributeType ">" AttributeValue "</" AttributeType ">"
+AttributeType = "naam" | "lengte" | "baan" | "positie"
+                | "cyclus" | "frequentie"
+AttributeValue = Integer | String
+Integer = Digit { Digit }
+Digit = "0" ... "9"
+String = Character { Character }
+Character = "a" ... "z" | "A" ... "Z" | Digit
+-->
+<Veerkerssimulatie>
+<BAAN>
+    <naam>Middelheimlaan</naam>
+    <lengte>500</lengte>
+</BAAN>
+<VERKEERSLICHT>
+    <baan>Middelheimlaan</baan>
+    <positie>400</positie>
+    <cyclus>20</cyclus>
+</VERKEERSLICHT>
+<VOERTUIG>
+    <baan>Middelheimlaan</baan>
+    <positie>20</positie>
+</VOERTUIG>
+<VOERTUIG>
+    <baan>Middelheimlaan</baan>
+    <positie>0</positie>
+</VOERTUIG>
+</Veerkerssimulatie>
