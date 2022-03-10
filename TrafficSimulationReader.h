@@ -6,6 +6,14 @@
 using namespace std;
 
 class TrafficSimulationReader {
+    string filename;
+public:
+    TrafficSimulationReader(const string &filename);
+
+    TrafficSimulationReader();
+
+    virtual ~TrafficSimulationReader();
+
 
 };
 
