@@ -18,10 +18,10 @@ set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp)
 set(DEBUG_SOURCE_FILES TrafficSimulationMain.cpp)
 
 # Create RELEASE target
-add_executable(ttt ${RELEASE_SOURCE_FILES})
+add_executable(ts ${RELEASE_SOURCE_FILES})
 
 # Create DEBUG target
-add_executable(ttt_debug ${DEBUG_SOURCE_FILES})
+add_executable(ts_debug ${DEBUG_SOURCE_FILES})
 
 # Link library
-target_link_libraries(ttt_debug gtest)
+target_link_libraries(ts_debug gtest)
