@@ -6,16 +6,16 @@ double Vehicle::getSpeed() const {
     return speed;
 }
 
-void Vehicle::setSpeed(double speed) {
-    Vehicle::speed = speed;
+void Vehicle::setSpeed(double newSpeed) {
+    Vehicle::speed = newSpeed;
 }
 
 double Vehicle::getPosition() const {
     return position;
 }
 
-void Vehicle::setPosition(double position) {
-    Vehicle::position = position;
+void Vehicle::setPosition(double newPosition) {
+    Vehicle::position = newPosition;
 }
 
 Vehicle::~Vehicle() {
