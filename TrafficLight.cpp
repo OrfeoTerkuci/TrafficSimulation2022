@@ -17,3 +17,11 @@ lightColor TrafficLight::getCurrentColor() const {
 void TrafficLight::setCurrentColor(lightColor newColor) {
     TrafficLight::currentColor = newColor;
 }
+
+const Road &TrafficLight::getRoad() const {
+    return road;
+}
+
+void TrafficLight::setRoad(const Road &newRoad) {
+    TrafficLight::road = newRoad;
+}

@@ -1,13 +1,15 @@
 #ifndef TRAFFICSIMULATION2022_TRAFFICLIGHT_H
 #define TRAFFICSIMULATION2022_TRAFFICLIGHT_H
+#include "Road.h"
 
 enum lightColor {red , green};
 
 class TrafficLight {
-    int cyclus;
+    unsigned int cyclus;
 
     lightColor currentColor;
 
+    Road road;
 public:
     TrafficLight(int cyclus);
 
@@ -18,6 +20,10 @@ public:
     lightColor getCurrentColor() const;
 
     void setCurrentColor(lightColor newColor);
+
+    const Road &getRoad() const;
+
+    void setRoad(const Road &newRoad);
 };
 
 
