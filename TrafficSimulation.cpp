@@ -15,7 +15,7 @@ bool TrafficSimulation::parseRoad(TiXmlElement* &root){
 
     // temp values
     string tempn;
-    unsigned int templ;
+    unsigned int tempi;
 
     // Parsing
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
@@ -31,13 +31,13 @@ bool TrafficSimulation::parseRoad(TiXmlElement* &root){
             }
         }
         else if(elemName == LENGTE){
-            templ = atoi(elem->GetText());
-            if(templ == 0){
+            tempi = atoi(elem->GetText());
+            if(tempi == 0){
                 delete newRoad;
                 return false;
             }
             else{
-                newRoad->setLength(templ);
+                newRoad->setLength(tempi);
             }
         }
     }
@@ -56,15 +56,19 @@ bool TrafficSimulation::parseRoad(TiXmlElement* &root){
 }
 
 bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
+    // Create object
     TrafficLight* trafficLight = new TrafficLight();
 
+    // Create temp values
     string tempn;
-    unsigned int templ;
+    unsigned int tempi;
 
+    // Parsing
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
         string elemName = elem->Value();
         tempn = elem->GetText();
 
+        // if elem is empty, end parsing and return false
         if(tempn.empty()){
             delete trafficLight;
             return false;
@@ -79,15 +83,16 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
             }
         }
         else if(elemName == POSITIE){
-            templ = atoi(elem->GetText());
-            trafficLight->setPosition(templ);
+            tempi = atoi(elem->GetText());
+            trafficLight->setPosition(tempi);
         }
         else if(elemName == CYCLUS){
-            templ = atoi(elem->GetText());
-            trafficLight->setCyclus(templ);
+            tempi = atoi(elem->GetText());
+            trafficLight->setCyclus(tempi);
         }
     }
 
+    // add traffic light to road
     for (int i = 0; i < this->roads.size(); ++i) {
         if (this->roads[i] == trafficLight->getRoad()){
             this->roads[i]->addLight(trafficLight);
@@ -98,7 +103,38 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
     return true;
 }
 
-bool TrafficSimulation::parseVehicle(TiXmlElement* &root){return false;}
+bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
+    Vehicle* vehicle = new Vehicle();
+
+    string tempn;
+    unsigned int tempi;
+
+    for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
+        string elemName = elem->Value();
+        tempn = elem->GetText();
+
+        // if elem is empty, end parsing and return false
+        if(tempn.empty()){
+            delete vehicle;
+            return false;
+        }
+
+        if(elemName == BAANL){
+            for (int i = 0; i < this->roads.size(); ++i) {
+                if (tempn == this->roads[i]->getRoadName()) {
+                    vehicle->setRoad(this->roads[i]);
+                    break;
+                }
+            }
+        }
+        else if(elemName == POSITIE){
+            tempi = atoi(elem->GetText());
+            vehicle->setPosition(tempi);
+        }
+    }
+
+    return true;
+}
 
 //==== Constructors and Destructor ====//
 TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename) {
@@ -132,7 +168,6 @@ TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename
         if(elemName == BAANU){
             if(!this->parseRoad(elem)){
                 cout << "Error: Could not make road" << endl;
-                break;
             }
         }
         else if(elemName == VERKEERSLICHT){
