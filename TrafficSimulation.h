@@ -31,6 +31,8 @@ public:
     bool parseTrafficLight(TiXmlElement* &root);
 
     bool parseVehicle(TiXmlElement* &root);
+
+    void print();
 };
 
 

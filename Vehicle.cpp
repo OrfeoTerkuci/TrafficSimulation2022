@@ -39,3 +39,7 @@ Road *Vehicle::getRoad() const {
 void Vehicle::setRoad(Road *newRoad) {
     Vehicle::road = newRoad;
 }
+
+void Vehicle::print() {
+
+}

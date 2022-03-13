@@ -40,3 +40,7 @@ unsigned int TrafficLight::getPosition() const {
 void TrafficLight::setPosition(unsigned int newPosition) {
     TrafficLight::position = newPosition;
 }
+
+void TrafficLight::print() {
+
+}

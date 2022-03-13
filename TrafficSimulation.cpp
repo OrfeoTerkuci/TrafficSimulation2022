@@ -204,3 +204,7 @@ bool TrafficSimulation::addRoad(Road *newRoad) {
     this->roads.push_back(newRoad);
     return true;
 }
+
+void TrafficSimulation::print() {
+
+}

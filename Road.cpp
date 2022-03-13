@@ -39,3 +39,7 @@ Road::~Road() {
 }
 
 Road::Road() {}
+
+void Road::print() {
+
+}

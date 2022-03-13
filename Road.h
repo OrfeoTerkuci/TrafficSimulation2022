@@ -35,6 +35,8 @@ public:
     void addLight (TrafficLight* newLight);
 
     virtual ~Road();
+
+    void print();
 };
 
 

@@ -32,6 +32,8 @@ public:
     Road *getRoad() const;
 
     void setRoad(Road *road);
+
+    void print();
 };
 
 
