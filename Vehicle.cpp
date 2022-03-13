@@ -29,3 +29,13 @@ double Vehicle::calculateSpeed() {
 Vehicle::~Vehicle() {
 
 }
+
+Vehicle::Vehicle() {}
+
+Road *Vehicle::getRoad() const {
+    return road;
+}
+
+void Vehicle::setRoad(Road *newRoad) {
+    Vehicle::road = newRoad;
+}
