@@ -1,7 +1,7 @@
 #include "TrafficLight.h"
 
 
-TrafficLight::TrafficLight(unsigned int cyclus, const Road &road) : cyclus(cyclus), road(road) {}
+TrafficLight::TrafficLight(unsigned int cyclus, Road *road) : cyclus(cyclus), road(road) {}
 
 int TrafficLight::getCyclus() const {
     return cyclus;
@@ -32,3 +32,11 @@ TrafficLight::~TrafficLight() {
 }
 
 TrafficLight::TrafficLight() {}
+
+unsigned int TrafficLight::getPosition() const {
+    return position;
+}
+
+void TrafficLight::setPosition(unsigned int newPosition) {
+    TrafficLight::position = newPosition;
+}

@@ -11,15 +11,19 @@ class TrafficLight {
 
     Road* road;
 
+    unsigned int position;
 public:
-
-    TrafficLight(unsigned int cyclus, const Road &road);
+    TrafficLight(unsigned int cyclus, Road *road);
 
     TrafficLight();
 
     int getCyclus() const;
 
     void setCyclus(int newCyclus);
+
+    unsigned int getPosition() const;
+
+    void setPosition(unsigned int newPosition);
 
     lightColor getCurrentColor() const;
 

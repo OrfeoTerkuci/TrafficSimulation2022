@@ -63,19 +63,39 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
 
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
         string elemName = elem->Value();
+        tempn = elem->GetText();
+
+        if(tempn.empty()){
+            delete trafficLight;
+            return false;
+        }
+
         if(elemName == BAANL){
             for (int i = 0; i < this->roads.size(); ++i) {
-                tempn = elem->GetText();
-                if(tempn == this->roads[i]->getRoadName()){
+                if (tempn == this->roads[i]->getRoadName()) {
                     trafficLight->setRoad(this->roads[i]);
                     break;
                 }
             }
-            return false;
+        }
+        else if(elemName == POSITIE){
+            templ = atoi(elem->GetText());
+            trafficLight->setPosition(templ);
+        }
+        else if(elemName == CYCLUS){
+            templ = atoi(elem->GetText());
+            trafficLight->setCyclus(templ);
         }
     }
 
-    return false;
+    for (int i = 0; i < this->roads.size(); ++i) {
+        if (this->roads[i] == trafficLight->getRoad()){
+            this->roads[i]->addLight(trafficLight);
+            break;
+        }
+    }
+
+    return true;
 }
 
 bool TrafficSimulation::parseVehicle(TiXmlElement* &root){return false;}
