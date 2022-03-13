@@ -6,7 +6,7 @@
 #include <stdexcept>
 
 TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename) {
-    TiXmlDocument doc;
+    /*TiXmlDocument doc;
 
     // File readable detection with error message
     try{
@@ -30,7 +30,7 @@ TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename
         doc.Clear();
     }
 
-    // Parsing of data
+    // Parsing of data*/
 
 }
 
