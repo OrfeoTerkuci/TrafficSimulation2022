@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include "tinyxml/tinyxml.h"
 using namespace std;
 
 class Road;
@@ -18,6 +19,18 @@ public:
     TrafficSimulation();
 
     virtual ~TrafficSimulation();
+
+    const vector<Road *> &getRoads() const;
+
+    void setRoads(const vector<Road *> &newRoads);
+
+    bool addRoad(Road* newRoad);
+
+    bool parseRoad(TiXmlElement* &root);
+
+    bool parseTrafficLight(TiXmlElement* &root, TrafficSimulation* TF);
+
+    bool parseVehicle(TiXmlElement* &root, TrafficSimulation* TF);
 };
 
 
