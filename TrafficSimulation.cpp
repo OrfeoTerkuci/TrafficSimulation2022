@@ -75,7 +75,7 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
         }
 
         if(elemName == BAANL){
-            for (int i = 0; i < this->roads.size(); ++i) {
+            for (unsigned int i = 0; i < this->roads.size(); ++i) {
                 if (tempn == this->roads[i]->getRoadName()) {
                     trafficLight->setRoad(this->roads[i]);
                     break;
@@ -93,7 +93,7 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
     }
 
     // add traffic light to road
-    for (int i = 0; i < this->roads.size(); ++i) {
+    for (unsigned int i = 0; i < this->roads.size(); ++i) {
         if (this->roads[i] == trafficLight->getRoad()){
             this->roads[i]->addLight(trafficLight);
             break;
@@ -120,7 +120,7 @@ bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
         }
 
         if(elemName == BAANL){
-            for (int i = 0; i < this->roads.size(); ++i) {
+            for (unsigned int i = 0; i < this->roads.size(); ++i) {
                 if (tempn == this->roads[i]->getRoadName()) {
                     vehicle->setRoad(this->roads[i]);
                     break;
@@ -196,7 +196,7 @@ void TrafficSimulation::setRoads(const vector<Road *> &newRoads) {
 }
 
 bool TrafficSimulation::addRoad(Road *newRoad) {
-    for (int i = 0; i < this->roads.size(); ++i) {
+    for (unsigned int i = 0; i < this->roads.size(); ++i) {
         if(this->roads[i] == newRoad){
             return false;
         }
