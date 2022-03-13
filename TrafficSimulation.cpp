@@ -55,9 +55,30 @@ bool TrafficSimulation::parseRoad(TiXmlElement* &root){
     return false;
 }
 
-bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root, TrafficSimulation* TF){return false;}
+bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
+    TrafficLight* trafficLight = new TrafficLight();
 
-bool TrafficSimulation::parseVehicle(TiXmlElement* &root, TrafficSimulation* TF){return false;}
+    string tempn;
+    unsigned int templ;
+
+    for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
+        string elemName = elem->Value();
+        if(elemName == BAANL){
+            for (int i = 0; i < this->roads.size(); ++i) {
+                tempn = elem->GetText();
+                if(tempn == this->roads[i]->getRoadName()){
+                    trafficLight->setRoad(this->roads[i]);
+                    break;
+                }
+            }
+            return false;
+        }
+    }
+
+    return false;
+}
+
+bool TrafficSimulation::parseVehicle(TiXmlElement* &root){return false;}
 
 //==== Constructors and Destructor ====//
 TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename) {
@@ -95,10 +116,14 @@ TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename
             }
         }
         else if(elemName == VERKEERSLICHT){
-
+            if(!this->parseTrafficLight(elem)){
+                cout << "Error: Could not make traffic light" << endl;
+            }
         }
         else if(elemName == VOERTUIG){
-
+            if(!this->parseVehicle(elem)){
+                cout << "Error: Could not make vehicle" << endl;
+            }
         }
     }
 }
@@ -121,7 +146,6 @@ bool TrafficSimulation::addRoad(Road *newRoad) {
             return false;
         }
     }
-
     this->roads.push_back(newRoad);
     return true;
 }

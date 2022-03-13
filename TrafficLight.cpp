@@ -19,14 +19,16 @@ void TrafficLight::setCurrentColor(lightColor newColor) {
     TrafficLight::currentColor = newColor;
 }
 
-const Road &TrafficLight::getRoad() const {
+const Road* TrafficLight::getRoad() {
     return road;
 }
 
-void TrafficLight::setRoad(const Road &newRoad) {
+void TrafficLight::setRoad(Road* newRoad) {
     TrafficLight::road = newRoad;
 }
 
 TrafficLight::~TrafficLight() {
 
 }
+
+TrafficLight::TrafficLight() {}

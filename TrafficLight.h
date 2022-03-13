@@ -9,11 +9,13 @@ class TrafficLight {
 
     lightColor currentColor;
 
-    Road road;
+    Road* road;
 
 public:
 
     TrafficLight(unsigned int cyclus, const Road &road);
+
+    TrafficLight();
 
     int getCyclus() const;
 
@@ -23,9 +25,9 @@ public:
 
     void setCurrentColor(lightColor newColor);
 
-    const Road &getRoad() const;
+    const Road* getRoad();
 
-    void setRoad(const Road &newRoad);
+    void setRoad(Road* newRoad);
 
     virtual ~TrafficLight();
 };

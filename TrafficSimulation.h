@@ -28,9 +28,9 @@ public:
 
     bool parseRoad(TiXmlElement* &root);
 
-    bool parseTrafficLight(TiXmlElement* &root, TrafficSimulation* TF);
+    bool parseTrafficLight(TiXmlElement* &root);
 
-    bool parseVehicle(TiXmlElement* &root, TrafficSimulation* TF);
+    bool parseVehicle(TiXmlElement* &root);
 };
 
 
