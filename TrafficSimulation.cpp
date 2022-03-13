@@ -8,7 +8,7 @@
 TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename) {
     TiXmlDocument doc;
 
-    // File readable detection
+    // File readable detection with error message
     try{
         if(!doc.LoadFile(this->filename.c_str())) {
             std::cerr << doc.ErrorDesc() << std::endl;
@@ -30,6 +30,7 @@ TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename
         doc.Clear();
     }
 
+    // Parsing of data
 
 }
 
