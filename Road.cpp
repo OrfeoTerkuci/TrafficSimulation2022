@@ -37,3 +37,5 @@ void Road::addLight(TrafficLight *newLight) {
 Road::~Road() {
 
 }
+
+Road::Road() {}

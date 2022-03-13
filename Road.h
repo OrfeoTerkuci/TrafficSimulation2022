@@ -16,6 +16,8 @@ class Road {
 public:
     Road(unsigned int length, const string &roadName);
 
+    Road();
+
     unsigned int getLength() const;
 
     TrafficLight* &getTrafficLights(int index);
