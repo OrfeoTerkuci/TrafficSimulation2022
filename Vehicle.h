@@ -2,7 +2,9 @@
 #define TRAFFICSIMULATION2022_VOERTUIG_H
 
 #include "Road.h"
+#include <iostream>
 
+using namespace std;
 class Vehicle {
     double speed;
     double position;

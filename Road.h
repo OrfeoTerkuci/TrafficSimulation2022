@@ -2,7 +2,10 @@
 #define TRAFFICSIMULATION2022_ROAD_H
 #include <string>
 #include <vector>
+#include <iostream>
+
 using namespace std;
+
 class TrafficLight;
 class Vehicle;
 

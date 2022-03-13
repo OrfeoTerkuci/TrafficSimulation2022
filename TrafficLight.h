@@ -2,6 +2,10 @@
 #define TRAFFICSIMULATION2022_TRAFFICLIGHT_H
 #include "Road.h"
 
+#include <iostream>
+
+using namespace std;
+
 enum lightColor {red , green};
 
 class TrafficLight {
