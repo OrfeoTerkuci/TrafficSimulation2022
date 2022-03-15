@@ -30,7 +30,7 @@ Vehicle::~Vehicle() {
 
 }
 
-Vehicle::Vehicle() {}
+Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) {}
 
 Road *Vehicle::getRoad() const {
     return road;

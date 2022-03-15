@@ -123,6 +123,7 @@ bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
             for (unsigned int i = 0; i < this->roads.size(); ++i) {
                 if (tempn == this->roads[i]->getRoadName()) {
                     vehicle->setRoad(this->roads[i]);
+                    this->roads[i]->addVehicle(vehicle);
                     break;
                 }
             }
