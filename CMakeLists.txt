@@ -13,12 +13,12 @@ link_directories(gtest/lib)
 
 # Set tinyxml sources
 set(tinySources
-        tinystr.cpp
-        tinyxmlerror.cpp
-        tinystr.h
-        tinyxml.h
-        tinyxml.cpp
-        tinyxmlparser.cpp
+        tinyxml\tinystr.cpp
+        tinyxml\tinyxmlerror.cpp
+        tinyxml\tinystr.h
+        tinyxml\tinyxml.h
+        tinyxml\tinyxml.cpp
+        tinyxml\tinyxmlparser.cpp
         )
 
 # Set Help Libraries
@@ -26,10 +26,10 @@ set(AdditionalSources
         Standard_Values.h)
 
 # Set source files for RELEASE target
-set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp ${AdditionalSources} ${tinysources})
+set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp ${AdditionalSources} ${tinySources})
 
 # Set source files for DEBUG target
-set(DEBUG_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp ${AdditionalSources} ${tinysources})
+set(DEBUG_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp ${AdditionalSources} ${tinySources})
 
 # Create RELEASE target
 add_executable(ts ${RELEASE_SOURCE_FILES})
