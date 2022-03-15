@@ -13,12 +13,12 @@ link_directories(gtest/lib)
 
 # Set tinyxml sources
 set(tinySources
-        tinyxml\tinystr.cpp
-        tinyxml\tinyxmlerror.cpp
-        tinyxml\tinystr.h
-        tinyxml\tinyxml.h
-        tinyxml\tinyxml.cpp
-        tinyxml\tinyxmlparser.cpp
+        tinyxml/tinystr.cpp
+        tinyxml/tinyxmlerror.cpp
+        tinyxml/tinystr.h
+        tinyxml/tinyxml.h
+        tinyxml/tinyxml.cpp
+        tinyxml/tinyxmlparser.cpp
         )
 
 # Set Help Libraries
