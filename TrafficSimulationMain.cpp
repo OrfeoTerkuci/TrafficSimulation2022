@@ -7,6 +7,6 @@ using namespace std;
 
 int main(){
 TrafficSimulation ts("Simulation1.xml");
-cout<< BAANL;
+ts.print();
 return 0;
 }
