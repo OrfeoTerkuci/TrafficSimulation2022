@@ -1,4 +1,11 @@
+// custom libs
 #include "Vehicle.h"
+#include "Standard_Values.h"
+
+// build in libs
+#include <cmath>
+
+using namespace std;
 
 Vehicle::Vehicle(double speed, double position) : speed(speed), position(position) , acceleration(0.0) {}
 
@@ -34,6 +41,10 @@ Road *Vehicle::getRoad() const {
 
 void Vehicle::setRoad(Road *newRoad) {
     Vehicle::road = newRoad;
+}
+
+void Vehicle::calculateNewPosition() {
+    this->position = this->position - (pow(this->speed, 2) / 2 * acceleration);
 }
 
 void Vehicle::print() {
