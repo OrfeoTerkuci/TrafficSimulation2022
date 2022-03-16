@@ -48,6 +48,10 @@ void Vehicle::calculateNewPosition() {
     this->speed = 0;
 }
 
+void Vehicle::calculateNewSpeed() {
+
+}
+
 void Vehicle::print() {
     cout << "Vehicle specifications:" << endl;
     cout << '\t' << "Road: " << this->road->getRoadName() << endl;

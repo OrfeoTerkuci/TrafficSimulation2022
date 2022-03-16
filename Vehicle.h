@@ -37,7 +37,7 @@ public:
 
     void calculateNewPosition();
 
-    void
+    void calculateNewSpeed();
 
     void print();
 };
