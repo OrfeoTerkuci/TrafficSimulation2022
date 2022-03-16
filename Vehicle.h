@@ -37,6 +37,8 @@ public:
 
     void calulateFollowDistance();
 
+    double calculateSpeedRestriction();
+
     Vehicle* getNextVehicle();
 
     void print();
