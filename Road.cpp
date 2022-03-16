@@ -28,6 +28,22 @@ void Road::setRoadName(const string &newRoadName) {
     Road::roadName = newRoadName;
 }
 
+const vector<TrafficLight *> &Road::getTrafficLights() const {
+    return trafficLights;
+}
+
+void Road::setTrafficLights(const vector<TrafficLight *> &newTrafficLights) {
+    Road::trafficLights = newTrafficLights;
+}
+
+const vector<Vehicle *> &Road::getVehicles() const {
+    return vehicles;
+}
+
+void Road::setVehicles(const vector<Vehicle *> &newVehicles) {
+    Road::vehicles = newVehicles;
+}
+
 void Road::addVehicle(Vehicle *newVehicle) {
     vehicles.push_back(newVehicle);
 }

@@ -25,7 +25,13 @@ public:
 
     TrafficLight* &getTrafficLight(int index);
 
+    const vector<TrafficLight *> &getTrafficLights() const;
 
+    void setTrafficLights(const vector<TrafficLight *> &newTrafficLights);
+
+    const vector<Vehicle *> &getVehicles() const;
+
+    void setVehicles(const vector<Vehicle *> &newVehicles);
 
     Vehicle* &getVehicle(int index);
 
