@@ -42,7 +42,7 @@ void TrafficLight::setPosition(unsigned int newPosition) {
 }
 
 void TrafficLight::print() {
-    cout << "Traffic light: " << endl;
+    cout << "Traffic light specifications: " << endl;
     cout << '\t' << "In road " << this->road->getRoadName() << endl;
     cout << '\t' << "On position " << this->position << endl;
     cout << '\t' << "Has " << this->cyclus << " Cycles" << endl;
