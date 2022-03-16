@@ -207,5 +207,16 @@ bool TrafficSimulation::addRoad(Road *newRoad) {
 }
 
 void TrafficSimulation::print() {
-
+    if (this->roads.size() != 0){
+        for(unsigned int i = 0; i < this->roads.size(); i++){
+            cout << "--------------------" << endl;
+            cout << "Roadname is: " << this->roads[i]->getRoadName() << endl;
+            cout << '\t' << "consist of " << this->roads[i]->getTrafficLightsAmount() << " traffic lights." << endl;
+            for (int j = 0; j < this->roads[i]->getTrafficLightsAmount(); ++j) {
+                cout << endl;
+                cout << "Traffic light " << j + 1 << ":" << endl;
+                this->roads[i]->getTrafficLights(j)->print();
+            }
+        }
+    }
 }
