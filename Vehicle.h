@@ -37,6 +37,8 @@ public:
 
     void calculateNewPosition();
 
+    void
+
     void print();
 };
 

@@ -45,11 +45,12 @@ void Vehicle::setRoad(Road *newRoad) {
 
 void Vehicle::calculateNewPosition() {
     this->position = this->position - (pow(this->speed, 2) / 2 * acceleration);
+    this->speed = 0;
 }
 
 void Vehicle::print() {
     cout << "Vehicle specifications:" << endl;
-    cout << '\t' << "Name: " << this->road->getRoadName() << endl;
+    cout << '\t' << "Road: " << this->road->getRoadName() << endl;
     cout << '\t' << "Position: " << this->position << endl;
     cout << '\t' << "Speed: " << this->speed << endl;
     cout << '\t' << "Acceleration: " << this->acceleration << endl;
