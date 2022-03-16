@@ -37,13 +37,13 @@ public:
 
     void addLight (TrafficLight* newLight);
 
-    virtual ~Road();
-
     int getVehicleAmount();
 
     int getTrafficLightsAmount();
 
     void print();
+
+    virtual ~Road();
 };
 
 

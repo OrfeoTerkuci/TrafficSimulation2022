@@ -2,6 +2,8 @@
 
 Road::Road(unsigned int length, const string &roadName) : length(length), roadName(roadName) {}
 
+Road::Road() {}
+
 unsigned int Road::getLength() const {
     return length;
 }
@@ -34,20 +36,18 @@ void Road::addLight(TrafficLight *newLight) {
     trafficLights.push_back(newLight);
 }
 
-Road::~Road() {
-
-}
-
-Road::Road() {}
-
-void Road::print() {
-
-}
-
 int Road::getVehicleAmount() {
     return this->vehicles.size();
 }
 
 int Road::getTrafficLightsAmount() {
     return this->trafficLights.size();
+}
+
+void Road::print() {
+
+}
+
+Road::~Road() {
+
 }

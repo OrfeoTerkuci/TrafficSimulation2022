@@ -2,6 +2,8 @@
 
 Vehicle::Vehicle(double speed, double position) : speed(speed), position(position) , acceleration(0.0) {}
 
+Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) {}
+
 double Vehicle::getSpeed() const {
     return speed;
 }
@@ -26,12 +28,6 @@ double Vehicle::calculateSpeed() {
     return 0;
 }
 
-Vehicle::~Vehicle() {
-
-}
-
-Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) {}
-
 Road *Vehicle::getRoad() const {
     return road;
 }
@@ -41,5 +37,9 @@ void Vehicle::setRoad(Road *newRoad) {
 }
 
 void Vehicle::print() {
+
+}
+
+Vehicle::~Vehicle() {
 
 }
