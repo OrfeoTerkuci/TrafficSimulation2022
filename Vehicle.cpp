@@ -57,14 +57,25 @@ void Vehicle::calculateNewPosition() {
 }
 
 Vehicle* Vehicle::getNextVehicle() {
-    Vehicle* nextVehicle;
-    nextVehicle = new Vehicle();
 
-    for(Vehicle* v : this->road)
+    if(this->road->getVehicleAmount() <= 1){
+        return NULL;
+    }
+    else{
+        Vehicle* nextVehicle;
+        nextVehicle = new Vehicle(0 , this->getPosition());
+        double oldPosition = this->getPosition();
+        for(int i = 0; i < this->road->getVehicleAmount(); ++i){
+            Vehicle* currentVehicle = this->road->getVehicle(i);
+            if(currentVehicle->getPosition() > oldPosition && currentVehicle->getPosition() <= nextVehicle->getPosition()){
+                nextVehicle = currentVehicle;
+            }
+        }
+        return nextVehicle->getPosition() == oldPosition ? NULL : nextVehicle;
+    }
 
 
 
-    return nextVehicle;
 }
 
 void Vehicle::calulateFollowDistance() {
