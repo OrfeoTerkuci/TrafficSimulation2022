@@ -41,5 +41,9 @@ void Vehicle::print() {
 }
 
 Vehicle::~Vehicle() {
-
+    cout << "Vehicle specifications:" << endl;
+    cout << '\t' << "Name: " << this->road->getRoadName() << endl;
+    cout << '\t' << "Position: " << this->position << endl;
+    cout << '\t' << "Speed: " << this->speed << endl;
+    cout << '\t' << "Acceleration: " << this->acceleration << endl;
 }
