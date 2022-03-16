@@ -39,6 +39,10 @@ public:
 
     virtual ~Road();
 
+    int getVehicleAmount();
+
+    int getTrafficLightsAmount()
+
     void print();
 };
 

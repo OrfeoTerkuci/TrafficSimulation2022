@@ -43,3 +43,11 @@ Road::Road() {}
 void Road::print() {
 
 }
+
+int Road::getVehicleAmount() {
+    return this->vehicles.size();
+}
+
+int Road::getTrafficLightsAmount() {
+    return this->trafficLights.size();
+}
