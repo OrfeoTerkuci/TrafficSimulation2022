@@ -41,7 +41,7 @@ public:
 
     int getVehicleAmount();
 
-    int getTrafficLightsAmount()
+    int getTrafficLightsAmount();
 
     void print();
 };
