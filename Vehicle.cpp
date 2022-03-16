@@ -81,7 +81,7 @@ double Vehicle::calculateSpeedDifference() {
 }
 
 double Vehicle::calculateSpeedRestriction() {
-    return (MIN_FOLLOW_DISTANCE + max(0 , this->speed + ((this->speed * this->calculateSpeedDifference())/2* sqrt(MAX_ACCELERATION*MAX_BRAKE_FACTOR))))/this->calulateFollowDistance();
+    return (MIN_FOLLOW_DISTANCE + max(0.0 , this->speed + ((this->speed * this->calculateSpeedDifference())/2* sqrt(MAX_ACCELERATION*MAX_BRAKE_FACTOR))))/this->calulateFollowDistance();
 }
 
 void Vehicle::print() {
