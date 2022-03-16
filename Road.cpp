@@ -45,7 +45,12 @@ int Road::getTrafficLightsAmount() {
 }
 
 void Road::print() {
+    cout << "Road specifications: " << endl;
+    cout << '\t' << "Name: " << this->getRoadName() << endl;
+    cout << '\t' << "Length: " << this->getRoadName() << endl;
+    // Traffic lights
 
+    // Vehicles
 }
 
 Road::~Road() {
