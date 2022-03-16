@@ -208,21 +208,22 @@ bool TrafficSimulation::addRoad(Road *newRoad) {
 
 void TrafficSimulation::print() {
     if (!this->roads.empty()){
-        for(unsigned int i = 0; i < this->roads.size(); i++){
-            cout << "--------------------" << endl;
 
-            if(this->roads.size() == 1){
-                cout <<"Consists of " << this->roads.size() << " road: " << endl;
-            }
-            else{
-                cout <<"Consists of " << this->roads.size() << " roads: " << endl;
-            }
+        if(this->roads.size() == 1){
+            cout <<"Consists of " << this->roads.size() << " road: " << endl;
+        }
+        else{
+            cout <<"Consists of " << this->roads.size() << " roads: " << endl;
+        }
+
+        for(unsigned int i = 0; i < this->roads.size(); i++){
+            cout << endl << "--------------------";
 
             cout << endl;
 
             this->roads[i]->print();
 
-            cout << endl << "--------------------" << endl;
+            cout << endl;
 
             if(this->roads[i]->getTrafficLightsAmount() == 1){
                 cout << "Consist of " << this->roads[i]->getTrafficLightsAmount() << " traffic light." << endl;
@@ -238,7 +239,7 @@ void TrafficSimulation::print() {
                 this->roads[i]->getTrafficLights(j)->print();
             }
 
-            cout << endl << "--------------------" << endl;
+            cout << endl;
 
             if(this->roads[i]->getVehicleAmount() == 1){
                 cout << "Consist of " << this->roads[i]->getVehicleAmount() << " vehicle." << endl;
