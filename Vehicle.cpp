@@ -83,7 +83,7 @@ Vehicle* Vehicle::getNextVehicle() {
 
 }
 
-void Vehicle::calulateFollowDistance() {
+double Vehicle::calulateFollowDistance() {
 
 }
 
