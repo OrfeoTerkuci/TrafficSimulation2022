@@ -29,9 +29,11 @@ public:
 
     double calculateSpeed();
 
+    double calculatePosition();
+
     virtual ~Vehicle();
 
-    Road *getRoad() const;
+    Road* getRoad() const;
 
     void setRoad(Road *road);
 

@@ -186,8 +186,6 @@ TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename
 
 TrafficSimulation::TrafficSimulation() {}
 
-TrafficSimulation::~TrafficSimulation() {}
-
 const vector<Road *> &TrafficSimulation::getRoads() const {
     return roads;
 }
@@ -261,3 +259,5 @@ void TrafficSimulation::print() {
         cout << "There are no roads." << endl;
     }
 }
+
+TrafficSimulation::~TrafficSimulation() {}

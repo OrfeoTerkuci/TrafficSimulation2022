@@ -28,7 +28,11 @@ double Vehicle::calculateSpeed() {
     return 0;
 }
 
-Road *Vehicle::getRoad() const {
+double Vehicle::calculatePosition() {
+    return 0;
+}
+
+Road* Vehicle::getRoad() const {
     return road;
 }
 
@@ -38,7 +42,7 @@ void Vehicle::setRoad(Road *newRoad) {
 
 void Vehicle::print() {
     cout << "Vehicle specifications:" << endl;
-    cout << '\t' << "Name: " << this->road->getRoadName() << endl;
+    cout << '\t' << "Road: " << this->road->getRoadName() << endl;
     cout << '\t' << "Position: " << this->position << endl;
     cout << '\t' << "Speed: " << this->speed << endl;
     cout << '\t' << "Acceleration: " << this->acceleration << endl;

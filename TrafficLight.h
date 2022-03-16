@@ -37,9 +37,9 @@ public:
 
     void setRoad(Road* newRoad);
 
-    virtual ~TrafficLight();
-
     void print();
+
+    virtual ~TrafficLight();
 };
 
 

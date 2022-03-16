@@ -3,6 +3,8 @@
 
 TrafficLight::TrafficLight(unsigned int cyclus, Road *road) : cyclus(cyclus), road(road) {}
 
+TrafficLight::TrafficLight() {}
+
 int TrafficLight::getCyclus() const {
     return cyclus;
 }
@@ -27,12 +29,6 @@ void TrafficLight::setRoad(Road* newRoad) {
     TrafficLight::road = newRoad;
 }
 
-TrafficLight::~TrafficLight() {
-
-}
-
-TrafficLight::TrafficLight() {}
-
 unsigned int TrafficLight::getPosition() const {
     return position;
 }
@@ -46,4 +42,8 @@ void TrafficLight::print() {
     cout << '\t' << "In road " << this->road->getRoadName() << endl;
     cout << '\t' << "On position " << this->position << endl;
     cout << '\t' << "Has " << this->cyclus << " Cycles" << endl;
+}
+
+TrafficLight::~TrafficLight() {
+
 }
