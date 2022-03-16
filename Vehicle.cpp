@@ -79,16 +79,20 @@ Vehicle* Vehicle::getNextVehicle() {
         return nextVehicle->getPosition() == oldPosition ? NULL : nextVehicle;
     }
 
-
-
 }
 
 double Vehicle::calculateFollowDistance() {
-
+    if(this->getNextVehicle() == NULL){
+        return 0;
+    }
+    return abs(this->getPosition() - this->getNextVehicle()->getPosition());
 }
 
 double Vehicle::calculateSpeedDifference() {
-    return 0;
+    if(this->getNextVehicle() == NULL){
+        return 0;
+    }
+    return abs(this->getSpeed() - this->getNextVehicle()->getSpeed());
 }
 
 double Vehicle::calculateSpeedRestriction() {
