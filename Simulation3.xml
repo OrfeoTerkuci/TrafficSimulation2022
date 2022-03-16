@@ -1,0 +1,33 @@
+<Veerkerssimulatie>
+    <BAAN>
+        <naam>Middelheimlaan</naam>
+        <lengte>500</lengte>
+    </BAAN>
+    <BAAN>
+        <naam>Groeneborgenlaan</naam>
+        <lengte>600</lengte>
+    </BAAN>
+    <VERKEERSLICHT>
+        <baan>Middelheimlaan</baan>
+        <positie>400</positie>
+        <cyclus>20</cyclus>
+    </VERKEERSLICHT>
+    <VERKEERSLICHT>
+        <baan>Middelheimlaan</baan>
+        <positie>200</positie>
+        <cyclus>20</cyclus>
+    </VERKEERSLICHT>
+    <VERKEERSLICHT>
+        <baan>Groeneborgenlaan</baan>
+        <positie>150</positie>
+        <cyclus>15</cyclus>
+    </VERKEERSLICHT>
+    <VOERTUIG>
+        <baan>Middelheimlaan</baan>
+        <positie>20</positie>
+    </VOERTUIG>
+    <VOERTUIG>
+        <baan>Middelheimlaan</baan>
+        <positie>0</positie>
+    </VOERTUIG>
+</Veerkerssimulatie>
