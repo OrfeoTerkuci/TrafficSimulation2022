@@ -37,6 +37,10 @@ public:
 
     void setRoad(Road *road);
 
+    void calculateNewPosition();
+
+    void calculateNewSpeed();
+
     void print();
 };
 
