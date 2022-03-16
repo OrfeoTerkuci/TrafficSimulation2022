@@ -27,18 +27,6 @@ void Vehicle::setPosition(double newPosition) {
     Vehicle::position = newPosition;
 }
 
-double Vehicle::calculateAcceleration() {
-    return 0;
-}
-
-double Vehicle::calculateSpeed() {
-    return 0;
-}
-
-double Vehicle::calculatePosition() {
-    return 0;
-}
-
 Road* Vehicle::getRoad() const {
     return road;
 }
@@ -47,9 +35,21 @@ void Vehicle::setRoad(Road *newRoad) {
     Vehicle::road = newRoad;
 }
 
+void Vehicle::calculateNewAcceleration() {
+
+}
+
+void Vehicle::calculateNewSpeed() {
+
+}
+
 void Vehicle::calculateNewPosition() {
     this->position = this->position - (pow(this->speed, 2) / 2 * acceleration);
     this->speed = 0;
+}
+
+void Vehicle::calulateFollowDistance() {
+
 }
 
 void Vehicle::print() {

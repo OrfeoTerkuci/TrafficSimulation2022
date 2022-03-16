@@ -25,23 +25,21 @@ public:
 
     void setPosition(double newPosition);
 
-    double calculateAcceleration();
-
-    double calculateSpeed();
-
-    double calculatePosition();
-
-    virtual ~Vehicle();
-
     Road* getRoad() const;
 
     void setRoad(Road *road);
 
-    void calculateNewPosition();
+    void calculateNewAcceleration();
 
     void calculateNewSpeed();
 
+    void calculateNewPosition();
+
+    void calulateFollowDistance();
+
     void print();
+
+    virtual ~Vehicle();
 };
 
 
