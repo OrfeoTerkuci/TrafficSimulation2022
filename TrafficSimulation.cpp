@@ -234,7 +234,7 @@ void TrafficSimulation::print() {
 
             for (int j = 0; j < this->roads[i]->getTrafficLightsAmount(); ++j) {
                 cout << "Traffic light " << j + 1 << ":" << endl;
-                this->roads[i]->getTrafficLights(j)->print();
+                this->roads[i]->getTrafficLight(j)->print();
             }
 
             cout << endl;
@@ -250,7 +250,7 @@ void TrafficSimulation::print() {
 
             for (int k = 0; k < this->roads[i]->getVehicleAmount(); ++k) {
                 cout << "Vehicle " << k + 1 << ":" << endl;
-                this->roads[i]->getVehicles(k)->print();
+                this->roads[i]->getVehicle(k)->print();
                 cout << endl;
             }
         }

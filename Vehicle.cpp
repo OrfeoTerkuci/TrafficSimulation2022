@@ -48,6 +48,17 @@ void Vehicle::calculateNewPosition() {
     this->speed = 0;
 }
 
+Vehicle* Vehicle::getNextVehicle() {
+    Vehicle* nextVehicle;
+    nextVehicle = new Vehicle();
+
+    for(Vehicle* v : this->road)
+
+
+
+    return nextVehicle;
+}
+
 void Vehicle::calulateFollowDistance() {
 
 }

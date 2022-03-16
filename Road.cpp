@@ -8,11 +8,11 @@ unsigned int Road::getLength() const {
     return length;
 }
 
-TrafficLight* &Road::getTrafficLights(int index) {
+TrafficLight* &Road::getTrafficLight(int index) {
     return trafficLights.at(index);
 }
 
-Vehicle *&Road::getVehicles(int index) {
+Vehicle *&Road::getVehicle(int index) {
     return vehicles.at(index);
 }
 

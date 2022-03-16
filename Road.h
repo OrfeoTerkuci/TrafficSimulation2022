@@ -23,9 +23,11 @@ public:
 
     unsigned int getLength() const;
 
-    TrafficLight* &getTrafficLights(int index);
+    TrafficLight* &getTrafficLight(int index);
 
-    Vehicle* &getVehicles(int index);
+
+
+    Vehicle* &getVehicle(int index);
 
     void setLength(unsigned int newLength);
 

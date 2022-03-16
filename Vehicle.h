@@ -37,6 +37,8 @@ public:
 
     void calulateFollowDistance();
 
+    Vehicle* getNextVehicle();
+
     void print();
 
     virtual ~Vehicle();
