@@ -35,7 +35,7 @@ public:
 
     void calculateNewPosition();
 
-    double calulateFollowDistance();
+    double calculateFollowDistance();
 
     double calculateSpeedRestriction();
 
