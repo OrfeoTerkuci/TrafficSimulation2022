@@ -36,7 +36,12 @@ void Vehicle::setRoad(Road *newRoad) {
 }
 
 void Vehicle::calculateNewAcceleration() {
-
+    if(getNextVehicle() == NULL){
+        this->acceleration = MAX_ACCELERATION * (1- pow((this->speed/MAX_SPEED), 4));
+    }
+    else{
+        this->acceleration = MAX_ACCELERATION * (1- pow((this->speed/MAX_SPEED), 4) - pow(this->calculateSpeedRestriction(), 2));
+    }
 }
 
 void Vehicle::calculateNewSpeed() {
@@ -80,6 +85,14 @@ Vehicle* Vehicle::getNextVehicle() {
 
 void Vehicle::calulateFollowDistance() {
 
+}
+
+double Vehicle::calculateSpeedDifference() {
+    return 0;
+}
+
+double Vehicle::calculateSpeedRestriction() {
+    return (MIN_FOLLOW_DISTANCE + max(0 , this->speed + ((this->speed * this->calculateSpeedDifference())/2* sqrt(MAX_ACCELERATION*MAX_BRAKE_FACTOR))))/this->calulateFollowDistance();
 }
 
 void Vehicle::print() {
