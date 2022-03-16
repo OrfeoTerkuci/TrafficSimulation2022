@@ -44,7 +44,7 @@ void Vehicle::calculateNewSpeed() {
 
     if (tempSpeed > 0){
         this->speed = tempSpeed;
-        this->position = this->position + this->speed * SIMULATION_TIME + this->acceleration (pow(SIMULATION_TIME,2) / 2);
+        this->position = this->position + this->speed * SIMULATION_TIME + this->acceleration * (pow(SIMULATION_TIME,2) / 2);
     }
     else{
         calculateNewPosition();
