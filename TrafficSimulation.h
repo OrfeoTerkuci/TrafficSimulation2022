@@ -19,8 +19,6 @@ public:
 
     TrafficSimulation();
 
-    virtual ~TrafficSimulation();
-
     const vector<Road *> &getRoads() const;
 
     void setRoads(const vector<Road *> &newRoads);
@@ -34,6 +32,8 @@ public:
     bool parseVehicle(TiXmlElement* &root);
 
     void print();
+
+    virtual ~TrafficSimulation();
 };
 
 

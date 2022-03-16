@@ -217,8 +217,12 @@ void TrafficSimulation::print() {
             else{
                 cout <<"Consists of " << this->roads.size() << " roads: " << endl;
             }
+
+            cout << endl;
+
             this->roads[i]->print();
-            cout << "--------------------" << endl;
+
+            cout << endl << "--------------------" << endl;
 
             if(this->roads[i]->getTrafficLightsAmount() == 1){
                 cout << "Consist of " << this->roads[i]->getTrafficLightsAmount() << " traffic light." << endl;
@@ -227,9 +231,28 @@ void TrafficSimulation::print() {
                 cout << "Consist of " << this->roads[i]->getTrafficLightsAmount() << " traffic lights." << endl;
             }
 
+            cout << endl;
+
             for (int j = 0; j < this->roads[i]->getTrafficLightsAmount(); ++j) {
                 cout << "Traffic light " << j + 1 << ":" << endl;
                 this->roads[i]->getTrafficLights(j)->print();
+            }
+
+            cout << endl << "--------------------" << endl;
+
+            if(this->roads[i]->getVehicleAmount() == 1){
+                cout << "Consist of " << this->roads[i]->getVehicleAmount() << " vehicle." << endl;
+            }
+            else{
+                cout << "Consist of " << this->roads[i]->getVehicleAmount() << " vehicles." << endl;
+            }
+
+            cout << endl;
+
+            for (int k = 0; k < this->roads[i]->getVehicleAmount(); ++k) {
+                cout << "Vehicle " << k + 1 << ":" << endl;
+                this->roads[i]->getVehicles(k)->print();
+                cout << endl;
             }
         }
     }
