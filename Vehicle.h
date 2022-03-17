@@ -5,11 +5,14 @@
 #include <iostream>
 
 using namespace std;
+
+enum vehicleStatus{ max_speed , accelerate , decelerate , stopped };
+
 class Vehicle {
     double speed;
     double position;
     double acceleration;
-
+    vehicleStatus status;
     Road* road;
 
 public:

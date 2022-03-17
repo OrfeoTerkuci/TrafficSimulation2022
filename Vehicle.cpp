@@ -10,7 +10,7 @@ using namespace std;
 
 Vehicle::Vehicle(double speed, double position) : speed(speed), position(position) , acceleration(0.0) {}
 
-Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) {}
+Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , status(stopped) {}
 
 double Vehicle::getSpeed() const {
     return speed;
