@@ -11,7 +11,7 @@ using namespace std;
 
 Vehicle::Vehicle(double speed, double position) : speed(speed), position(position) , acceleration(0.0) {}
 
-Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , status(stopped) {}
+Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) {}
 
 double Vehicle::getCurrentMaxSpeed() const {
     return currentMaxSpeed;
@@ -30,7 +30,7 @@ void Vehicle::setSpeed(double newSpeed) {
 }
 
 double Vehicle::getVehiclePosition() const {
-    return this->position;
+    return position;
 }
 
 void Vehicle::setPosition(double newPosition) {
@@ -79,16 +79,15 @@ Vehicle* Vehicle::getNextVehicle() {
     }
     else{
         Vehicle* nextVehicle;
-        nextVehicle = new Vehicle(0 , this->getVehiclePosition());
-        double oldPosition = this->getVehiclePosition();
+        nextVehicle = new Vehicle(0 , this->getPosition());
+        double oldPosition = this->getPosition();
         for(int i = 0; i < this->road->getVehicleAmount(); ++i){
             Vehicle* currentVehicle = this->road->getVehicle(i);
-            if(currentVehicle->getVehiclePosition() > oldPosition && currentVehicle->getVehiclePosition() <=
-                                                                      nextVehicle->getVehiclePosition()){
+            if(currentVehicle->getPosition() > oldPosition && currentVehicle->getPosition() <= nextVehicle->getPosition()){
                 nextVehicle = currentVehicle;
             }
         }
-        return nextVehicle->getVehiclePosition() == oldPosition ? NULL : nextVehicle;
+        return nextVehicle->getPosition() == oldPosition ? NULL : nextVehicle;
     }
 
 }
@@ -97,7 +96,7 @@ double Vehicle::calculateFollowDistance() {
     if(this->getNextVehicle() == NULL){
         return 0;
     }
-    return abs(this->getVehiclePosition() - this->getNextVehicle()->getVehiclePosition());
+    return abs(this->getPosition() - this->getNextVehicle()->getPosition());
 }
 
 double Vehicle::calculateSpeedDifference() {
