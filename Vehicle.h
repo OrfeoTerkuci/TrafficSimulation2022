@@ -20,51 +20,128 @@ class Vehicle {
     vehicleStatus status;
     Road* road;
 
-public:
-    Vehicle(double speed, double position);
+    Vehicle* _initCheck;
 
+public:
+    /*
+     * ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
+     */
+    Vehicle(double speed, double position);
+    /*
+     * ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
+     */
     Vehicle();
 
+    bool properlyInitialized() const;
+
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getCurrentMaxSpeed");
+     */
     double getCurrentMaxSpeed() const;
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setCurrentMaxSpeed");
+     */
     void setCurrentMaxSpeed(double newCurrentMaxSpeed);
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getSpeed");
+     */
     double getSpeed() const;
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setSpeed");
+     */
     void setSpeed(double newSpeed);
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getVehiclePosition");
+     */
     double getVehiclePosition() const;
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setPosition");
+     */
     void setPosition(double newPosition);
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getRoad");
+     */
     Road* getRoad() const;
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setRoad");
+     */
     void setRoad(Road *road);
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewAcceleration");
+     */
     void calculateNewAcceleration(double maxSpeed);
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewSpeed");
+     */
     void calculateNewSpeed();
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewPosition");
+     */
     void calculateNewPosition();
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateFollowDistance");
+     */
     double calculateFollowDistance();
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateSpeedRestriction");
+     */
     double calculateSpeedRestriction();
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateSpeedDifference");
+     */
     double calculateSpeedDifference();
 
-    double calculareStopDecelerate();
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateStopDecelerate");
+     */
+    void calculateStopDecelerate();
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getNextVehicle");
+     */
     Vehicle* getNextVehicle();
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateStop");
+     */
     void simulateStop();
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateDecelerate");
+     */
     void simulateDecelerate();
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateAccelerate");
+     */
     void simulateAccelerate();
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulate");
+     */
+    void simulate();
+
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling print");
+     */
     void print();
 
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling destructor");
+     */
     virtual ~Vehicle();
 };
 

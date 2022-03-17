@@ -275,10 +275,11 @@ void TrafficSimulation::startSimulation() {
     while (!this->vehicles.empty()){
         for (long unsigned int i = 0; i < this->vehicles.size(); ++i){
             // Simulate vehicle
-
+            this->vehicles.at(i)->simulate();
         }
         for (long unsigned int j = 0; j < this->lights.size(); ++j) {
             // Simulate traffic light
+            this->lights.at(j)->simulate(count);
         }
         count++;
     }
