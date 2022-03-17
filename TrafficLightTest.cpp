@@ -2,12 +2,13 @@
 // Created by jason on 15/03/2022.
 //
 
-#include "TrafficSimulation.h"
-#include "gtest/gtest.h"
 
+#include "gtest/gtest.h"
 #include <iostream>
 
 using namespace std;
+
+#include "TrafficSimulation.h"
 
 class TrafficSimulationTest: public ::testing::Test {
 protected:
@@ -27,9 +28,14 @@ protected:
     }
 
     // Declares the variables your tests want to use.
-    TrafficSimulation ts_;
+    TrafficSimulation* ts;
 };
 
-TEST(TrafficSimulationTest DefaultConstructor){
-    EXPECT_TRUE(ts_.)
+TEST_F(TrafficSimulationTest, DefaultConstructor){
+    EXPECT_TRUE(ts->properlyInitialized());
+}
+
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
