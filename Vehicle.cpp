@@ -96,7 +96,7 @@ double Vehicle::calculateFollowDistance() {
     if(this->getNextVehicle() == NULL){
         return 0;
     }
-    return abs(this->getPosition() - this->getNextVehicle()->getPosition());
+    return abs(this->getVehiclePosition() - this->getNextVehicle()->getVehiclePosition());
 }
 
 double Vehicle::calculateSpeedDifference() {
@@ -110,7 +110,7 @@ double Vehicle::calculateSpeedRestriction() {
     return (MIN_FOLLOW_DISTANCE + max(0.0 , this->speed + ((this->speed * this->calculateSpeedDifference())/2* sqrt(MAX_ACCELERATION*MAX_BRAKE_FACTOR))))/this->calculateFollowDistance();
 }
 
-double Vehicle::calculareStopDecelerate() {
+double Vehicle::calculateStopDecelerate() {
     this->acceleration = -(MAX_BRAKE_FACTOR * this->speed)/(MAX_SPEED)
 }
 

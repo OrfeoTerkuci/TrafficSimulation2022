@@ -53,7 +53,7 @@ public:
 
     double calculateSpeedDifference();
 
-    double calculareStopDecelerate();
+    double calculateStopDecelerate();
 
     Vehicle* getNextVehicle();
 
