@@ -209,6 +209,8 @@ void Vehicle::print() {
     cout << '\t' << "-> Acceleration: " << this->acceleration << endl;
 
     cout << '\t' << "-> Status: " << this->getStatusString() << endl;
+
+    cout << endl;
 }
 
 Vehicle::~Vehicle() {
