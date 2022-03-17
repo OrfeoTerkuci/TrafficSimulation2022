@@ -72,6 +72,7 @@ Vehicle* TrafficLight::getNearestVehicle() {
 }
 
 void TrafficLight::simulate(int &count) {
+    // Check if the cycle has been completed
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling simulate");
     // Check if the cyclus has been completed
     if (count > this->getCyclus()){
@@ -80,13 +81,20 @@ void TrafficLight::simulate(int &count) {
     }
     if (this->getCurrentColor() == green){
         // Vehicles before the light may accelerate again
+        for (int i = 0; i < this->road->getVehicleAmount(); ++i) {
+            if(this->road->getVehicle(i)->getVehiclePosition() < this->getPosition()){
+                this->road->getVehicle(i)->simulateAccelerate();
+            }
+        }
     }
     if (this->getCurrentColor() == red){
         if ( (this->position - getNearestVehicle()->getVehiclePosition() ) <= SLOWING_DISTANCE){
             // Slow down
+            getNearestVehicle()->simulateDecelerate();
         }
         else if ( (this->position - getNearestVehicle()->getVehiclePosition() ) <= STOPPING_DISTANCE / 2){
             // Stop
+            getNearestVehicle()->simulateStop();
         }
     }
 

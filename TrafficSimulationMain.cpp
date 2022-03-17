@@ -8,7 +8,7 @@ using namespace std;
 int main(){
 TrafficSimulation ts("Simulation1.xml");
 //ts.print();
-ts.startSimulation();
+//ts.startSimulation();
 cout << DECELERATE;
 return 0;
 }

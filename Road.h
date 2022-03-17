@@ -16,10 +16,14 @@ class Road {
     vector<TrafficLight*> trafficLights;
     vector<Vehicle*> vehicles;
 
+    Road* _initCheck;
+
 public:
     Road(unsigned int length, const string &roadName);
 
     Road();
+
+    bool properlyInitialized() const;
 
     unsigned int getLength() const;
 
