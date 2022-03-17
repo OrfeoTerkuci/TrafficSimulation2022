@@ -229,8 +229,8 @@ bool TrafficSimulation::addRoad(Road *newRoad) {
     return true;
 }
 
-void TrafficSimulation::print() {
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling print");
+void TrafficSimulation::printAll() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling printAll");
     if (!this->roads.empty()){
 
         if(this->roads.size() == 1){
@@ -286,6 +286,19 @@ void TrafficSimulation::print() {
     }
 }
 
+
+
+void TrafficSimulation::print( int &count) {
+    while (!this->vehicles.empty()){
+        cout << "Time: " << count;
+        for (long unsigned int i = 0; i < this->vehicles.size(); ++i) {
+            cout << "Vehicle " << i;
+            this->vehicles.at(i)->print();
+        }
+    }
+
+}
+
 void TrafficSimulation::startSimulation() {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling startSimulation");
     int count = 0;
@@ -298,7 +311,7 @@ void TrafficSimulation::startSimulation() {
             // Simulate traffic light
             this->lights.at(j)->simulate(count);
         }
-
+        print(count);
         count++;
     }
 }

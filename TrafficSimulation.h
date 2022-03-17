@@ -70,9 +70,14 @@ public:
     bool parseVehicle(TiXmlElement* &root);
 
     /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling printAll");
+    */
+    void printAll();
+
+    /**
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling print");
     */
-    void print();
+    void print(int &count);
 
     /**
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimulation");

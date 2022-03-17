@@ -44,6 +44,8 @@ public:
      */
     void setCurrentMaxSpeed(double newCurrentMaxSpeed);
 
+    string getStatusString();
+
     /*
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getStatus");
      */

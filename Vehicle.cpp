@@ -31,6 +31,22 @@ void Vehicle::setCurrentMaxSpeed(double newCurrentMaxSpeed) {
     Vehicle::currentMaxSpeed = newCurrentMaxSpeed;
 }
 
+string Vehicle::getStatusString() {
+    if (status == max_speed){
+        return "Max Speed";
+    }
+    else if (status == accelerate){
+        return "Accelerating";
+    }
+    else if (status == decelerate){
+        return "Decelerating";
+    }
+    else if (status == stopping){
+        return "Stopping";
+    }
+    return "Stopped / Idle";
+}
+
 vehicleStatus Vehicle::getStatus() const {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getStatus");
     return status;
@@ -187,10 +203,12 @@ void Vehicle::simulate() {
 void Vehicle::print() {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling print");
     cout << "Vehicle specifications:" << endl;
-    cout << '\t' << "Road: " << this->road->getRoadName() << endl;
-    cout << '\t' << "Position: " << this->position << endl;
-    cout << '\t' << "Speed: " << this->speed << endl;
-    cout << '\t' << "Acceleration: " << this->acceleration << endl;
+    cout << '\t' << "-> Road: " << this->road->getRoadName() << endl;
+    cout << '\t' << "-> Position: " << this->position << endl;
+    cout << '\t' << "-> Speed: " << this->speed << endl;
+    cout << '\t' << "-> Acceleration: " << this->acceleration << endl;
+
+    cout << '\t' << "-> Status: " << this->getStatusString() << endl;
 }
 
 Vehicle::~Vehicle() {
