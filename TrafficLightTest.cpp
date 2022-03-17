@@ -51,8 +51,19 @@ TEST(ParserTest, Parser){
         EXPECT_TRUE(testFile.getRoads()[0]->getVehicle(i)->properlyInitialized());
         EXPECT_EQ((int)0, testFile.getRoads()[0]->getVehicle(i)->getSpeed());
     }
+}
+
+TEST(VehiclePosTest, Position){
+    TrafficSimulation testFile("Simulation1.xml");
     EXPECT_TRUE(testFile.getRoads()[0]->getVehicle(0)->getNextVehicle() == NULL);
     EXPECT_TRUE(testFile.getRoads()[0]->getVehicle(0) == testFile.getRoads()[0]->getVehicle(1)->getNextVehicle());
+}
+
+TEST(FailTEST, fails){
+    TrafficSimulation testFile("Simulation3.xml");
+    EXPECT_NE((unsigned int)1, testFile.getRoads().size());
+    EXPECT_FALSE(testFile.getRoads()[0]->getVehicle(0)->getVehiclePosition() == 0);
+    EXPECT_NE(testFile.getRoads()[0]->getVehicle(0)->getRoad()->getRoadName(), "Groeneborgenlaan");
 }
 
 int main(int argc, char **argv) {
