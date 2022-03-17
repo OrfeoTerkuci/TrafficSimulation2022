@@ -21,7 +21,7 @@ public:
 
     void setSpeed(double newSpeed);
 
-    double getPosition() const;
+    double getVehiclePosition() const;
 
     void setPosition(double newPosition);
 

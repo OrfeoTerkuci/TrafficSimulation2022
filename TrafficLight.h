@@ -37,6 +37,10 @@ public:
 
     void setRoad(Road* newRoad);
 
+    Vehicle* getNearestVehicle();
+
+    void simulate(int &count);
+
     void print();
 
     virtual ~TrafficLight();
