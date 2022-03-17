@@ -53,7 +53,11 @@ public:
 
     Vehicle* getNextVehicle();
 
-    void simulate(TrafficLight* trafficLight);
+    void simulateStop();
+
+    void simulateDecelerate();
+
+    void simulateNormal();
 
     void print();
 
