@@ -83,18 +83,21 @@ void TrafficLight::simulate(int &count) {
         // Vehicles before the light may accelerate again
         for (int i = 0; i < this->road->getVehicleAmount(); ++i) {
             if(this->road->getVehicle(i)->getVehiclePosition() < this->getPosition()){
-                this->road->getVehicle(i)->simulateAccelerate();
+                this->road->getVehicle(i)->setStatus(accelerate);
+                this->road->getVehicle(i)->simulate();
             }
         }
     }
     if (this->getCurrentColor() == red){
         if ( (this->position - getNearestVehicle()->getVehiclePosition() ) <= SLOWING_DISTANCE){
             // Slow down
-            getNearestVehicle()->simulateDecelerate();
+            getNearestVehicle()->setStatus(decelerate);
+            getNearestVehicle()->simulate();
         }
         else if ( (this->position - getNearestVehicle()->getVehiclePosition() ) <= STOPPING_DISTANCE / 2){
             // Stop
-            getNearestVehicle()->simulateStop();
+            getNearestVehicle()->setStatus(stopping);
+            getNearestVehicle()->simulate();
         }
     }
 

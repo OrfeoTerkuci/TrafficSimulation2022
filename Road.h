@@ -47,6 +47,8 @@ public:
 
     void addVehicle (Vehicle* newVehicle);
 
+    void removeVehicle(Vehicle* oldVehicle);
+
     void addLight (TrafficLight* newLight);
 
     int getVehicleAmount();

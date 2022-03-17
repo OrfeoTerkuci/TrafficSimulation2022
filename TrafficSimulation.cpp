@@ -298,6 +298,7 @@ void TrafficSimulation::startSimulation() {
             // Simulate traffic light
             this->lights.at(j)->simulate(count);
         }
+
         count++;
     }
 }

@@ -1,4 +1,5 @@
 #include "Road.h"
+#include "Vehicle.h"
 #include "DesignByContract.h"
 
 Road::Road(unsigned int length, const string &roadName) : length(length), roadName(roadName) , _initCheck(this) {
@@ -66,6 +67,14 @@ void Road::setVehicles(const vector<Vehicle *> &newVehicles) {
 void Road::addVehicle(Vehicle *newVehicle) {
     REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addVehicle");
     vehicles.push_back(newVehicle);
+}
+
+void Road::removeVehicle(Vehicle *oldVehicle) {
+    for (long unsigned int i = 0; i < this->vehicles.size(); ++i) {
+        if (oldVehicle == this->vehicles.at(i)){
+            delete this->vehicles.at(i);
+        }
+    }
 }
 
 void Road::addLight(TrafficLight *newLight) {
