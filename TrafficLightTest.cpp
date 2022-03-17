@@ -3,12 +3,12 @@
 //
 
 
-#include "gtest/gtest.h"
 #include <iostream>
-
-using namespace std;
+#include "gtest/gtest.h"
 
 #include "TrafficSimulation.h"
+
+using namespace std;
 
 class TrafficSimulationTest: public ::testing::Test {
 protected:
@@ -28,12 +28,14 @@ protected:
     }
 
     // Declares the variables your tests want to use.
-    TrafficSimulation* ts;
+    TrafficSimulation ts_;
 };
 
 TEST_F(TrafficSimulationTest, DefaultConstructor){
-    EXPECT_TRUE(ts->properlyInitialized());
+    EXPECT_TRUE(ts_.properlyInitialized());
 }
+
+
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);

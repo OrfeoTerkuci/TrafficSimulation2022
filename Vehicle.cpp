@@ -31,6 +31,16 @@ void Vehicle::setCurrentMaxSpeed(double newCurrentMaxSpeed) {
     Vehicle::currentMaxSpeed = newCurrentMaxSpeed;
 }
 
+vehicleStatus Vehicle::getStatus() const {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getStatus");
+    return status;
+}
+
+void Vehicle::setStatus(vehicleStatus status) {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setStatus");
+    Vehicle::status = status;
+}
+
 double Vehicle::getSpeed() const {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getSpeed");
     return speed;
@@ -125,10 +135,11 @@ Vehicle* Vehicle::getNextVehicle() {
     }
     else{
         Vehicle* nextVehicle;
-        nextVehicle = new Vehicle(0 , this->getVehiclePosition());
+        Vehicle* currentVehicle;
+        nextVehicle = this->road->getVehicle(0);
         double oldPosition = this->getVehiclePosition();
-        for(int i = 0; i < this->road->getVehicleAmount(); ++i){
-            Vehicle* currentVehicle = this->road->getVehicle(i);
+        for(int i = 1; i < this->road->getVehicleAmount(); ++i){
+            currentVehicle = this->road->getVehicle(i);
             if(currentVehicle->getVehiclePosition() > oldPosition && currentVehicle->getVehiclePosition() <= nextVehicle->getVehiclePosition()){
                 nextVehicle = currentVehicle;
             }
@@ -156,7 +167,20 @@ void Vehicle::simulateAccelerate() {
 }
 
 void Vehicle::simulate() {
+
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulate");
+    // Check status of vehicle
+    calculateNewSpeed();
+    if (status == decelerate){
+        calculateNewAcceleration(DECELERATE);
+    }
+    else{
+        calculateNewAcceleration();
+    }
+    // Check if vehicle fall of the road
+    if (this->getVehiclePosition() > this->road->getLength()){
+        this->road->removeVehicle(this);
+    }
 
 }
 

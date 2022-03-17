@@ -29,7 +29,7 @@ set(AdditionalSources
 set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp ${AdditionalSources} ${tinySources})
 
 # Set source files for DEBUG target
-set(DEBUG_SOURCE_FILES TrafficLightTest.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp ${AdditionalSources} ${tinySources})
+set(DEBUG_SOURCE_FILES  TrafficLightTest.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp ${AdditionalSources} ${tinySources})
 
 # Create RELEASE target
 add_executable(ts ${RELEASE_SOURCE_FILES})

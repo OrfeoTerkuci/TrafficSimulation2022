@@ -9,7 +9,7 @@ using namespace std;
 class TrafficLight;
 
 
-enum vehicleStatus{ max_speed , accelerate , decelerate , stopped };
+enum vehicleStatus{ max_speed , accelerate , decelerate , stopping , idle };
 
 class Vehicle {
     double speed;
@@ -43,6 +43,16 @@ public:
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setCurrentMaxSpeed");
      */
     void setCurrentMaxSpeed(double newCurrentMaxSpeed);
+
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getStatus");
+     */
+    vehicleStatus getStatus() const;
+
+    /*
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setStatus");
+     */
+    void setStatus(vehicleStatus status);
 
     /*
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getSpeed");
