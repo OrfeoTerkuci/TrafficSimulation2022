@@ -33,6 +33,8 @@ public:
 
     void print();
 
+    void startSimulation();
+
     virtual ~TrafficSimulation();
 };
 

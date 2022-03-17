@@ -260,4 +260,8 @@ void TrafficSimulation::print() {
     }
 }
 
+void TrafficSimulation::startSimulation() {
+
+}
+
 TrafficSimulation::~TrafficSimulation() {}
