@@ -29,27 +29,59 @@ public:
 
     bool properlyInitialized();
 
-
+    /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getRoads");
+    */
     const vector<Road *> & getRoads();
 
+    /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling setRoads");
+    */
     void setRoads(const vector<Road *> &newRoads);
 
+    /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addTrafficLight");
+    */
     void addTrafficLight(TrafficLight* &newLight);
 
+    /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addVehicle");
+    */
     void addVehicle(Vehicle* &newVehicle);
 
+    /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addRoad");
+    */
     bool addRoad(Road* newRoad);
 
+    /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseRoad");
+    */
     bool parseRoad(TiXmlElement* &root);
 
+    /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseTrafficLight");
+    */
     bool parseTrafficLight(TiXmlElement* &root);
 
+    /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseVehicle");
+    */
     bool parseVehicle(TiXmlElement* &root);
 
+    /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling print");
+    */
     void print();
 
+    /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimulation");
+    */
     void startSimulation();
 
+    /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling destructor");
+    */
     virtual ~TrafficSimulation();
 };
 
