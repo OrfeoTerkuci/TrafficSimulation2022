@@ -4,12 +4,14 @@
 #include "TrafficLight.h"
 #include "Vehicle.h"
 #include "Standard_Values.h"
+#include "DesignByContract.h"
 
 // c++ libs
 #include <stdexcept>
 
 //==== Parsing FUnctions ====//
 bool TrafficSimulation::parseRoad(TiXmlElement* &root){
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling parseRoad");
     // create road object
     Road *newRoad = new Road();
 
@@ -56,6 +58,7 @@ bool TrafficSimulation::parseRoad(TiXmlElement* &root){
 }
 
 bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling parseTrafficLight");
     // Create object
     TrafficLight* trafficLight = new TrafficLight();
 
@@ -105,6 +108,7 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
 }
 
 bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling parseVehicle");
     Vehicle* vehicle = new Vehicle();
 
     string tempn;
@@ -142,7 +146,7 @@ bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
 //==== Constructors and Destructor ====//
 TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename) {
     TiXmlDocument doc;
-
+    _initCheck = this;
     // File readable detection with error message
     try{
         if(!doc.LoadFile(this->filename.c_str())) {
@@ -168,43 +172,54 @@ TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename
     // Parsing of data
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
         string elemName = elem->Value();
-        if(elemName == BAANU){
-            if(!this->parseRoad(elem)){
+        if (elemName == BAANU) {
+            if (!this->parseRoad(elem)) {
                 cout << "Error: Could not make road" << endl;
             }
-        }
-        else if(elemName == VERKEERSLICHT){
-            if(!this->parseTrafficLight(elem)){
+        } else if (elemName == VERKEERSLICHT) {
+            if (!this->parseTrafficLight(elem)) {
                 cout << "Error: Could not make traffic light" << endl;
             }
-        }
-        else if(elemName == VOERTUIG){
-            if(!this->parseVehicle(elem)){
+        } else if (elemName == VOERTUIG) {
+            if (!this->parseVehicle(elem)) {
                 cout << "Error: Could not make vehicle" << endl;
             }
         }
     }
+    ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
 
-TrafficSimulation::TrafficSimulation() {}
 
-const vector<Road *> &TrafficSimulation::getRoads() const {
+
+TrafficSimulation::TrafficSimulation() {_initCheck = this;
+    ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");}
+
+bool TrafficSimulation::properlyInitialized() {
+    return  _initCheck == this;
+}
+
+const vector<Road *> & TrafficSimulation::getRoads() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling getRoads");
     return roads;
 }
 
 void TrafficSimulation::setRoads(const vector<Road *> &newRoads) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling setRoads");
     TrafficSimulation::roads = newRoads;
 }
 
 void TrafficSimulation::addTrafficLight(TrafficLight *&newLight) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addTrafficLight");
     this->lights.push_back(newLight);
 }
 
 void TrafficSimulation::addVehicle(Vehicle *&newVehicle) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addVehicle");
     this->vehicles.push_back(newVehicle);
 }
 
 bool TrafficSimulation::addRoad(Road *newRoad) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addRoad");
     for (unsigned int i = 0; i < this->roads.size(); ++i) {
         if(this->roads[i] == newRoad){
             return false;
@@ -215,6 +230,7 @@ bool TrafficSimulation::addRoad(Road *newRoad) {
 }
 
 void TrafficSimulation::print() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling print");
     if (!this->roads.empty()){
 
         if(this->roads.size() == 1){
@@ -271,6 +287,7 @@ void TrafficSimulation::print() {
 }
 
 void TrafficSimulation::startSimulation() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling startSimulation");
     int count = 0;
     while (!this->vehicles.empty()){
         for (long unsigned int i = 0; i < this->vehicles.size(); ++i){
@@ -284,4 +301,4 @@ void TrafficSimulation::startSimulation() {
     }
 }
 
-TrafficSimulation::~TrafficSimulation() {}
+TrafficSimulation::~TrafficSimulation() {REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling destructor");}

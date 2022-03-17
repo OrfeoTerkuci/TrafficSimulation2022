@@ -1,44 +1,64 @@
 #include "TrafficLight.h"
 #include "Vehicle.h"
 #include "Standard_Values.h"
+#include "DesignByContract.h"
 
-TrafficLight::TrafficLight(unsigned int cyclus, Road *road) : cyclus(cyclus), road(road) {}
+TrafficLight::TrafficLight(unsigned int cyclus, Road *road) : cyclus(cyclus), road(road) {
+    _initCheck = this;
+    ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
+}
 
-TrafficLight::TrafficLight() {}
+TrafficLight::TrafficLight() {
+    _initCheck = this;
+    ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
+}
 
-int TrafficLight::getCyclus() const {
+bool TrafficLight::properlyInitialized() {
+    return _initCheck == this;
+}
+
+int TrafficLight::getCyclus() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling getCyclus");
     return cyclus;
 }
 
 void TrafficLight::setCyclus(int newCyclus) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling setCyclus");
     TrafficLight::cyclus = newCyclus;
 }
 
-lightColor TrafficLight::getCurrentColor() const {
+lightColor TrafficLight::getCurrentColor() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling getCurrentColor");
     return currentColor;
 }
 
 void TrafficLight::setCurrentColor(lightColor newColor) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling setCurrentColor");
     TrafficLight::currentColor = newColor;
 }
 
 const Road* TrafficLight::getRoad() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling getRoad");
     return road;
 }
 
 void TrafficLight::setRoad(Road* newRoad) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling setRoad");
     TrafficLight::road = newRoad;
 }
 
-unsigned int TrafficLight::getPosition() const {
+unsigned int TrafficLight::getPosition() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling getPosition");
     return position;
 }
 
 void TrafficLight::setPosition(unsigned int newPosition) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling setPosition");
     TrafficLight::position = newPosition;
 }
 
 Vehicle* TrafficLight::getNearestVehicle() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling getNearestVehicle");
     double pos = this->getPosition();
     Vehicle* nearestVehicle = this->road->getVehicle(0);
     Vehicle* currentVehicle;
@@ -52,6 +72,7 @@ Vehicle* TrafficLight::getNearestVehicle() {
 }
 
 void TrafficLight::simulate(int &count) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling simulate");
     // Check if the cyclus has been completed
     if (count > this->getCyclus()){
         // Change light color
@@ -72,6 +93,7 @@ void TrafficLight::simulate(int &count) {
 }
 
 void TrafficLight::print() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling print");
     cout << "Traffic light specifications: " << endl;
     cout << '\t' << "In road " << this->road->getRoadName() << endl;
     cout << '\t' << "On position " << this->position << endl;
@@ -79,5 +101,7 @@ void TrafficLight::print() {
 }
 
 TrafficLight::~TrafficLight() {
-
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling destructor");
 }
+
+

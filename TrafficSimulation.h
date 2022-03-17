@@ -17,12 +17,20 @@ class TrafficSimulation {
     vector<Vehicle*> vehicles;
     vector<TrafficLight*> lights;
     vector<Road*> roads;
+
+    TrafficSimulation* _initCheck;
 public:
+    /**
+    ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
+    */
     TrafficSimulation(const string &filename);
 
     TrafficSimulation();
 
-    const vector<Road *> &getRoads() const;
+    bool properlyInitialized();
+
+
+    const vector<Road *> & getRoads();
 
     void setRoads(const vector<Road *> &newRoads);
 

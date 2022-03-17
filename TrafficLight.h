@@ -16,20 +16,24 @@ class TrafficLight {
     Road* road;
 
     unsigned int position;
+
+    TrafficLight* _initCheck;
 public:
     TrafficLight(unsigned int cyclus, Road *road);
 
     TrafficLight();
 
-    int getCyclus() const;
+    bool properlyInitialized();
+
+    int getCyclus();
 
     void setCyclus(int newCyclus);
 
-    unsigned int getPosition() const;
+    unsigned int getPosition();
 
     void setPosition(unsigned int newPosition);
 
-    lightColor getCurrentColor() const;
+    lightColor getCurrentColor();
 
     void setCurrentColor(lightColor newColor);
 
