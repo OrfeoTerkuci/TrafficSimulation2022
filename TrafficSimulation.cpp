@@ -96,6 +96,7 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
     for (unsigned int i = 0; i < this->roads.size(); ++i) {
         if (this->roads[i] == trafficLight->getRoad()){
             this->roads[i]->addLight(trafficLight);
+            this->addTrafficLight(trafficLight);
             break;
         }
     }
@@ -124,6 +125,7 @@ bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
                 if (tempn == this->roads[i]->getRoadName()) {
                     vehicle->setRoad(this->roads[i]);
                     this->roads[i]->addVehicle(vehicle);
+                    this->addVehicle(vehicle);
                     break;
                 }
             }
@@ -194,6 +196,14 @@ void TrafficSimulation::setRoads(const vector<Road *> &newRoads) {
     TrafficSimulation::roads = newRoads;
 }
 
+void TrafficSimulation::addTrafficLight(TrafficLight *&newLight) {
+    this->lights.push_back(newLight);
+}
+
+void TrafficSimulation::addVehicle(Vehicle *&newVehicle) {
+    this->vehicles.push_back(newVehicle);
+}
+
 bool TrafficSimulation::addRoad(Road *newRoad) {
     for (unsigned int i = 0; i < this->roads.size(); ++i) {
         if(this->roads[i] == newRoad){
@@ -261,7 +271,17 @@ void TrafficSimulation::print() {
 }
 
 void TrafficSimulation::startSimulation() {
+    int count = 0;
+    while (this->vehicles.size() > 0){
+        for (int i = 0; i < this->vehicles.size(); ++i){
+            // Simulate vehicle
 
+        }
+        for (int j = 0; j < this->lights.size(); ++j) {
+            // Simulate traffic light
+        }
+        count++;
+    }
 }
 
 TrafficSimulation::~TrafficSimulation() {}
