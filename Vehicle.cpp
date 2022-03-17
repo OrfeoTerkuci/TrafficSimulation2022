@@ -2,7 +2,6 @@
 #include "Vehicle.h"
 #include "Standard_Values.h"
 #include "DesignByContract.h"
-#include "TrafficLight.h"
 
 // build in libs
 #include <cmath>
@@ -47,11 +46,12 @@ void Vehicle::setRoad(Road *newRoad) {
 }
 
 void Vehicle::calculateNewAcceleration(double maxSpeed = MAX_SPEED) {
+    currentMaxSpeed = maxSpeed;
     if(getNextVehicle() == NULL){
-        this->acceleration = MAX_ACCELERATION * (1- pow((this->speed/maxSpeed), 4));
+        this->acceleration = MAX_ACCELERATION * (1- pow((this->speed/this->currentMaxSpeed), 4));
     }
     else{
-        this->acceleration = MAX_ACCELERATION * (1- pow((this->speed/maxSpeed), 4) - pow(this->calculateSpeedRestriction(), 2));
+        this->acceleration = MAX_ACCELERATION * (1- pow((this->speed/this->currentMaxSpeed), 4) - pow(this->calculateSpeedRestriction(), 2));
     }
 }
 
@@ -115,23 +115,18 @@ double Vehicle::calculareStopDecelerate() {
     this->acceleration = -(MAX_BRAKE_FACTOR * this->speed)/(MAX_SPEED)
 }
 
-void Vehicle::simulate(TrafficLight* trafficLight) {
-    lightColor color = trafficLight->getCurrentColor();
+void Vehicle::simulateStop() {
 
-    if (color == red and trafficLight->getPosition() - this->getPosition() <= 50){
-        if (trafficLight->getPosition() - this->getPosition() <= 15){
-            this->speed = 0;
-            this->acceleration = 0;
-        }
-        else{
-            this->calculateNewAcceleration(DECELERATE);
-            this->calculateNewSpeed();
-        }
-    }
-    else{
-        this->calculateNewAcceleration();
-        this->calculateNewSpeed();
-    }
+}
+
+void Vehicle::simulateDecelerate() {
+    this->calculateNewAcceleration(DECELERATE);
+    this->calculateNewSpeed();
+}
+
+void Vehicle::simulateAccelerate() {
+    this->calculateNewAcceleration();
+    this->calculateNewSpeed();
 }
 
 void Vehicle::print() {
