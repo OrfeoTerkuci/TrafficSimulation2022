@@ -57,7 +57,7 @@ public:
 
     void simulateDecelerate();
 
-    void simulateNormal();
+    void simulateAccelerate();
 
     void print();
 

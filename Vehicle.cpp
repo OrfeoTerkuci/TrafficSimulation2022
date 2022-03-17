@@ -115,22 +115,17 @@ double Vehicle::calculareStopDecelerate() {
 }
 
 void Vehicle::simulateStop() {
-    lightColor color = trafficLight->getCurrentColor();
 
-    if (color == red and trafficLight->getPosition() - this->getPosition() <= 50){
-        if (trafficLight->getPosition() - this->getPosition() <= 15){
-            this->speed = 0;
-            this->acceleration = 0;
-        }
-        else{
-            this->calculateNewAcceleration(DECELERATE);
-            this->calculateNewSpeed();
-        }
-    }
-    else{
-        this->calculateNewAcceleration();
-        this->calculateNewSpeed();
-    }
+}
+
+void Vehicle::simulateDecelerate() {
+    this->calculateNewAcceleration(DECELERATE);
+    this->calculateNewSpeed();
+}
+
+void Vehicle::simulateAccelerate() {
+    this->calculateNewAcceleration();
+    this->calculateNewSpeed();
 }
 
 void Vehicle::print() {
