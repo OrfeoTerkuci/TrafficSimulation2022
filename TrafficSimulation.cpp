@@ -271,7 +271,7 @@ void TrafficSimulation::print() {
 }
 
 void TrafficSimulation::startSimulation() {
-    int count = 0;
+    /*int count = 0;
     while (this->vehicles.size() > 0){
         for (int i = 0; i < this->vehicles.size(); ++i){
             // Simulate vehicle
@@ -281,7 +281,7 @@ void TrafficSimulation::startSimulation() {
             // Simulate traffic light
         }
         count++;
-    }
+    }*/
 }
 
 TrafficSimulation::~TrafficSimulation() {}
