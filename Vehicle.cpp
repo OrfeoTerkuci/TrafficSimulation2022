@@ -46,7 +46,7 @@ void Vehicle::setRoad(Road *newRoad) {
 }
 
 void Vehicle::calculateNewAcceleration(double maxSpeed = MAX_SPEED) {
-    currentMaxSpeed = maxSpeed;
+    this->currentMaxSpeed = maxSpeed;
     if(getNextVehicle() == NULL){
         this->acceleration = MAX_ACCELERATION * (1- pow((this->speed/this->currentMaxSpeed), 4));
     }
@@ -79,15 +79,15 @@ Vehicle* Vehicle::getNextVehicle() {
     }
     else{
         Vehicle* nextVehicle;
-        nextVehicle = new Vehicle(0 , this->getPosition());
-        double oldPosition = this->getPosition();
+        nextVehicle = new Vehicle(0 , this->getVehiclePosition());
+        double oldPosition = this->getVehiclePosition();
         for(int i = 0; i < this->road->getVehicleAmount(); ++i){
             Vehicle* currentVehicle = this->road->getVehicle(i);
-            if(currentVehicle->getPosition() > oldPosition && currentVehicle->getPosition() <= nextVehicle->getPosition()){
+            if(currentVehicle->getVehiclePosition() > oldPosition && currentVehicle->getVehiclePosition() <= nextVehicle->getVehiclePosition()){
                 nextVehicle = currentVehicle;
             }
         }
-        return nextVehicle->getPosition() == oldPosition ? NULL : nextVehicle;
+        return nextVehicle->getVehiclePosition() == oldPosition ? NULL : nextVehicle;
     }
 
 }
@@ -110,12 +110,13 @@ double Vehicle::calculateSpeedRestriction() {
     return (MIN_FOLLOW_DISTANCE + max(0.0 , this->speed + ((this->speed * this->calculateSpeedDifference())/2* sqrt(MAX_ACCELERATION*MAX_BRAKE_FACTOR))))/this->calculateFollowDistance();
 }
 
-double Vehicle::calculateStopDecelerate() {
-    this->acceleration = -(MAX_BRAKE_FACTOR * this->speed)/(MAX_SPEED)
+void Vehicle::calculateStopDecelerate() {
+    this->acceleration = -(MAX_BRAKE_FACTOR * this->speed)/(MAX_SPEED);
 }
 
 void Vehicle::simulateStop() {
-
+    this->calculateStopDecelerate();
+    this->calculateNewSpeed();
 }
 
 void Vehicle::simulateDecelerate() {
