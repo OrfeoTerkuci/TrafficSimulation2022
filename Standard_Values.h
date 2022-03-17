@@ -16,6 +16,7 @@
 #define SLOWING_DISTANCE        50.0
 #define STOPPING_DISTANCE       15.0
 #define SLOWING_FACTOR          0.4
+#define DECELERATE              6.64
 
 // Strings
 #define NAAM                    "naam"
