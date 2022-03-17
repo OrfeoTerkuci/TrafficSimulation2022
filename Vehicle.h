@@ -6,12 +6,17 @@
 
 using namespace std;
 
+class TrafficLight;
+
+
 enum vehicleStatus{ max_speed , accelerate , decelerate , stopped };
 
 class Vehicle {
     double speed;
     double position;
     double acceleration;
+    double currentMaxSpeed;
+
     vehicleStatus status;
     Road* road;
 
@@ -19,6 +24,10 @@ public:
     Vehicle(double speed, double position);
 
     Vehicle();
+
+    double getCurrentMaxSpeed() const;
+
+    void setCurrentMaxSpeed(double newCurrentMaxSpeed);
 
     double getSpeed() const;
 
@@ -32,7 +41,7 @@ public:
 
     void setRoad(Road *road);
 
-    void calculateNewAcceleration();
+    void calculateNewAcceleration(double maxSpeed);
 
     void calculateNewSpeed();
 
@@ -44,7 +53,11 @@ public:
 
     double calculateSpeedDifference();
 
+    double calculareStopDecelerate();
+
     Vehicle* getNextVehicle();
+
+    void simulate(TrafficLight* trafficLight);
 
     void print();
 

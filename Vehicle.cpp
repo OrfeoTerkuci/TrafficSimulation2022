@@ -2,15 +2,25 @@
 #include "Vehicle.h"
 #include "Standard_Values.h"
 #include "DesignByContract.h"
+#include "TrafficLight.h"
 
 // build in libs
 #include <cmath>
 
 using namespace std;
 
+
 Vehicle::Vehicle(double speed, double position) : speed(speed), position(position) , acceleration(0.0) {}
 
 Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , status(stopped) {}
+
+double Vehicle::getCurrentMaxSpeed() const {
+    return currentMaxSpeed;
+}
+
+void Vehicle::setCurrentMaxSpeed(double newCurrentMaxSpeed) {
+    Vehicle::currentMaxSpeed = newCurrentMaxSpeed;
+}
 
 double Vehicle::getSpeed() const {
     return speed;
@@ -36,12 +46,12 @@ void Vehicle::setRoad(Road *newRoad) {
     Vehicle::road = newRoad;
 }
 
-void Vehicle::calculateNewAcceleration() {
+void Vehicle::calculateNewAcceleration(double maxSpeed = MAX_SPEED) {
     if(getNextVehicle() == NULL){
-        this->acceleration = MAX_ACCELERATION * (1- pow((this->speed/MAX_SPEED), 4));
+        this->acceleration = MAX_ACCELERATION * (1- pow((this->speed/maxSpeed), 4));
     }
     else{
-        this->acceleration = MAX_ACCELERATION * (1- pow((this->speed/MAX_SPEED), 4) - pow(this->calculateSpeedRestriction(), 2));
+        this->acceleration = MAX_ACCELERATION * (1- pow((this->speed/maxSpeed), 4) - pow(this->calculateSpeedRestriction(), 2));
     }
 }
 
@@ -99,6 +109,29 @@ double Vehicle::calculateSpeedDifference() {
 
 double Vehicle::calculateSpeedRestriction() {
     return (MIN_FOLLOW_DISTANCE + max(0.0 , this->speed + ((this->speed * this->calculateSpeedDifference())/2* sqrt(MAX_ACCELERATION*MAX_BRAKE_FACTOR))))/this->calculateFollowDistance();
+}
+
+double Vehicle::calculareStopDecelerate() {
+    this->acceleration = -(MAX_BRAKE_FACTOR * this->speed)/(MAX_SPEED)
+}
+
+void Vehicle::simulate(TrafficLight* trafficLight) {
+    lightColor color = trafficLight->getCurrentColor();
+
+    if (color == red and trafficLight->getPosition() - this->getPosition() <= 50){
+        if (trafficLight->getPosition() - this->getPosition() <= 15){
+            this->speed = 0;
+            this->acceleration = 0;
+        }
+        else{
+            this->calculateNewAcceleration(DECELERATE);
+            this->calculateNewSpeed();
+        }
+    }
+    else{
+        this->calculateNewAcceleration();
+        this->calculateNewSpeed();
+    }
 }
 
 void Vehicle::print() {
