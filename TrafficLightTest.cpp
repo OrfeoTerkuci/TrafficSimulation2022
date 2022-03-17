@@ -9,6 +9,9 @@
 using namespace std;
 
 #include "TrafficSimulation.h"
+#include "Road.h"
+#include "TrafficLight.h"
+#include "Vehicle.h"
 
 class TrafficSimulationTest: public ::testing::Test {
 protected:
@@ -28,11 +31,28 @@ protected:
     }
 
     // Declares the variables your tests want to use.
-    TrafficSimulation* ts;
+    TrafficSimulation ts;
 };
 
 TEST_F(TrafficSimulationTest, DefaultConstructor){
-    EXPECT_TRUE(ts->properlyInitialized());
+    EXPECT_TRUE(ts.properlyInitialized());
+}
+
+TEST(ParserTest, Parser){
+    TrafficSimulation testFile("Simulation1.xml");
+    EXPECT_TRUE(testFile.getRoads()[0]->properlyInitialized());
+    EXPECT_TRUE(testFile.getRoads()[0]->getRoadName() == "Middelheimlaan" and testFile.getRoads()[0]->getLength() == 500);
+    EXPECT_TRUE(testFile.getRoads()[0]->getTrafficLight(0)->properlyInitialized());
+    EXPECT_EQ((unsigned int)1, testFile.getRoads()[0]->getTrafficLights().size());
+    EXPECT_EQ((unsigned int)400, testFile.getRoads()[0]->getTrafficLight(0)->getPosition());
+    EXPECT_EQ((int)20, testFile.getRoads()[0]->getTrafficLight(0)->getCyclus());
+    EXPECT_EQ((int)2, testFile.getRoads()[0]->getVehicleAmount());
+    for (int i = 0; i < testFile.getRoads()[0]->getVehicleAmount(); ++i) {
+        EXPECT_TRUE(testFile.getRoads()[0]->getVehicle(i)->properlyInitialized());
+        EXPECT_EQ((int)0, testFile.getRoads()[0]->getVehicle(i)->getSpeed());
+    }
+    EXPECT_TRUE(testFile.getRoads()[0]->getVehicle(0)->getNextVehicle() == NULL);
+    EXPECT_TRUE(testFile.getRoads()[0]->getVehicle(0) == testFile.getRoads()[0]->getVehicle(1)->getNextVehicle());
 }
 
 int main(int argc, char **argv) {
