@@ -1,11 +1,10 @@
 # TrafficSimulation 2022
 Project Software Engineering 2022. University of Antwerp.  
-Made by: Orfeo and Jason
+Made by: **Orfeo** and **Jason**
 
 ## Opdracht 1
-###Use-Case
-#### Legende
-V = Done  
+###Overzicht
+V = Implemented   
 X = Not implemented
 
 | Invoer                      | Prioriteit | Status |
