@@ -119,5 +119,3 @@ void TrafficLight::print() {
 TrafficLight::~TrafficLight() {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling destructor");
 }
-
-
