@@ -5,3 +5,5 @@
 #include "VehicleGenerator.h"
 
 VehicleGenerator::VehicleGenerator() {}
+
+VehicleGenerator::~VehicleGenerator() {}

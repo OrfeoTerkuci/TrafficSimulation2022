@@ -13,6 +13,7 @@ class VehicleGenerator {
 public:
     VehicleGenerator();
 
+    virtual ~VehicleGenerator();
 };
 
 
