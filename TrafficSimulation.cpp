@@ -349,8 +349,9 @@ void TrafficSimulation::startSimNoPrint() {
     int roadLength;
     Vehicle* currentVehicle;
     Road* currentRoad;
+
     while (!this->vehicles.empty()){
-        for (long unsigned int i = 0; i < this->vehicles.size(); ++i){
+        for (unsigned int i = 0; i < this->vehicles.size(); ++i){
             // Get current vehicle
             currentVehicle = this->vehicles.at(i);
             // Get current road
@@ -366,9 +367,12 @@ void TrafficSimulation::startSimNoPrint() {
                 this->vehicles.erase(vehicles.begin() + i);
             }
         }
-        for (long unsigned int j = 0; j < this->lights.size(); ++j) {
+        for (unsigned int j = 0; j < this->lights.size(); ++j) {
             // Simulate traffic light
-            this->lights.at(j)->simulate(count);
+            currentRoad = lights.at(j)->getRoad();
+            if(currentRoad->getVehicleAmount() > 0){
+                this->lights.at(j)->simulate(count);
+            }
         }
         count ++;
     }
