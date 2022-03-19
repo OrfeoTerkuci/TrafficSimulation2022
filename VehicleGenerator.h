@@ -10,14 +10,17 @@ class VehicleGenerator {
     Road* road;
     int frequentie;
 
+    VehicleGenerator* _initCheck;
 public:
     VehicleGenerator();
 
-    Road *getRoad() const;
+    bool properlyInitialized();
+
+    Road *getRoad();
 
     void setRoad(Road *newRoad);
 
-    double getFrequentie() const;
+    double getFrequentie();
 
     void setFrequentie(double newFrequentie);
 
