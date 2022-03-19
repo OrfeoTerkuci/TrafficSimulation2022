@@ -67,11 +67,22 @@ TEST(FailTest, fails){
     EXPECT_NE(testFile.getRoads()[0]->getVehicle(0)->getRoad()->getRoadName(), "Groeneborgenlaan");
 }
 
-TEST(SimTest, simulation){
+TEST(SimTest, simulation1){
     TrafficSimulation testFile("Simulation1.xml");
     EXPECT_FALSE(testFile.getRoads()[0]->getVehicleAmount() == 0);
     testFile.startSimNoPrint();
     EXPECT_TRUE(testFile.getRoads()[0]->getVehicleAmount() == 0);
+}
+
+TEST(SimTest, simulation2){
+    TrafficSimulation testFile("Simulation3.xml");
+    for (unsigned int i = 0; i < testFile.getRoads().size(); i++){
+        EXPECT_FALSE(testFile.getRoads()[i]->getVehicleAmount() == 0);
+    }
+    testFile.startSimNoPrint();
+    for (unsigned int i = 0; i < testFile.getRoads().size(); i++){
+        EXPECT_TRUE(testFile.getRoads()[i]->getVehicleAmount() == 0);
+    }
 }
 
 TEST(VehicleGeneratorTest, vehicleGenerator){
