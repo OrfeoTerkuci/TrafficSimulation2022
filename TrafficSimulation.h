@@ -85,6 +85,11 @@ public:
     void startSimulation();
 
     /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimNoPrint");
+    */
+    void startSimNoPrint();
+
+    /**
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling destructor");
     */
     virtual ~TrafficSimulation();
