@@ -5,7 +5,7 @@
 class VehicleGenerator {
     Road* road;
     int frequentie;
-
+    int cooldown;
     VehicleGenerator* _initCheck;
 public:
     VehicleGenerator();
@@ -20,7 +20,11 @@ public:
 
     void setFrequentie(double newFrequentie);
 
-    void simulate();
+    int getCooldown();
+
+    void setCooldown(int newCooldown);
+
+    bool simulate();
 
     virtual ~VehicleGenerator();
 };

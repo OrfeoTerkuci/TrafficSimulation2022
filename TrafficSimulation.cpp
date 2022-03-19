@@ -175,6 +175,8 @@ bool TrafficSimulation::parseVehicleGenerator(TiXmlElement *&root) {
         else if (elemName == FREQUENTIE) {
             tempf = atoi(elem->GetText());
             vehicleGenerator->setFrequentie(tempf);
+            // Set cooldown : 0 for instant generation upon simulation start
+            vehicleGenerator->setCooldown(tempf);
         }
     }
     return true;
@@ -344,10 +346,10 @@ void TrafficSimulation::printAll() {
 }
 
 void TrafficSimulation::print( int &count) {
-    if (!this->vehicles.empty()){
+    if (!this->vehicles.empty() || !this->vehicleGenerators.empty()){
         cout << "Time: " << count << endl;
         for (long unsigned int i = 0; i < this->vehicles.size(); ++i) {
-            cout << "Vehicle " << i << ": " << endl;
+            cout << "Vehicle " << i+1 << ": " << endl;
             this->vehicles.at(i)->print();
             cout << endl;
         }
@@ -365,7 +367,7 @@ void TrafficSimulation::startSimulation() {
 
     cout << "- Starting simulation" << endl;
 
-    while (!this->vehicles.empty()){
+    while (!this->vehicles.empty() || !this->vehicleGenerators.empty()){
         for (unsigned int i = 0; i < this->vehicles.size(); ++i){
             // Get current vehicle
             currentVehicle = this->vehicles.at(i);
@@ -389,12 +391,27 @@ void TrafficSimulation::startSimulation() {
                 this->lights.at(j)->simulate(count);
             }
         }
+        for (unsigned int k = 0; k < this->vehicleGenerators.size(); k++){
+            VehicleGenerator* currentGenerator;
+            currentGenerator = this->vehicleGenerators.at(k);
+            // Check if we can generate
+            if (currentGenerator->simulate())
+            {
+                // Generate new vehicle
+                Vehicle* newVehicle;
+                newVehicle = new Vehicle();
+                // Add vehicle to road
+                newVehicle->setRoad(currentGenerator->getRoad());
+                currentGenerator->getRoad()->addVehicle(newVehicle);
+                // Add vehicle to our simulation
+                this->addVehicle(newVehicle);
+            }
+        }
         print(count);
         count ++;
     }
     cout << "- There are no vehicles on the road network." << endl;
     cout << "- Ending simulation" << endl;
-
 }
 
 void TrafficSimulation::startSimNoPrint() {
@@ -405,7 +422,7 @@ void TrafficSimulation::startSimNoPrint() {
     Vehicle* currentVehicle;
     Road* currentRoad;
 
-    while (!this->vehicles.empty()){
+    while (!this->vehicles.empty() || !this->vehicleGenerators.empty()){
         for (unsigned int i = 0; i < this->vehicles.size(); ++i){
             // Get current vehicle
             currentVehicle = this->vehicles.at(i);
@@ -427,6 +444,21 @@ void TrafficSimulation::startSimNoPrint() {
             currentRoad = lights.at(j)->getRoad();
             if(currentRoad->getVehicleAmount() > 0){
                 this->lights.at(j)->simulate(count);
+            }
+        }
+        for (unsigned int k = 0; k < this->vehicleGenerators.size(); k++){
+            VehicleGenerator* currentGenerator;
+            currentGenerator = this->vehicleGenerators.at(k);
+            // Check if we can generate
+            if (currentGenerator->simulate())
+            {
+                // Generate new vehicle
+                Vehicle* newVehicle;
+                newVehicle = new Vehicle();
+                // Add vehicle to road
+                currentGenerator->getRoad()->addVehicle(newVehicle);
+                // Add vehicle to our simulation
+                this->addVehicle(newVehicle);
             }
         }
         count ++;
