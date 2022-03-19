@@ -25,7 +25,7 @@ public:
     /**
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
     */
-    TrafficSimulation(const string &filename);
+    explicit TrafficSimulation(const string &filename);
 
     TrafficSimulation();
 
