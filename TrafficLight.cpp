@@ -37,7 +37,7 @@ void TrafficLight::setCurrentColor(lightColor newColor) {
     TrafficLight::currentColor = newColor;
 }
 
-const Road* TrafficLight::getRoad() {
+Road* TrafficLight::getRoad(){
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling getRoad");
     return road;
 }
@@ -82,7 +82,7 @@ void TrafficLight::simulate(int &count) {
     if (this->getCurrentColor() == green){
         // Vehicles before the light may accelerate again
         for (int i = 0; i < this->road->getVehicleAmount(); ++i) {
-            if(this->road->getVehicle(i)->getVehiclePosition() < this->getPosition()){
+            if(this->road->getVehicleAmount() > 0 && this->road->getVehicle(i)->getVehiclePosition() < this->getPosition()){
                 this->road->getVehicle(i)->setStatus(accelerate);
                 this->road->getVehicle(i)->simulate();
             }

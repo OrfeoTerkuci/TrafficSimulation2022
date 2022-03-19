@@ -37,7 +37,7 @@ public:
 
     void setCurrentColor(lightColor newColor);
 
-    const Road* getRoad();
+    Road* getRoad();
 
     void setRoad(Road* newRoad);
 
