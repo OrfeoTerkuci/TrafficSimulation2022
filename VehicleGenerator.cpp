@@ -37,3 +37,7 @@ VehicleGenerator::~VehicleGenerator() {
 bool VehicleGenerator::properlyInitialized() {
     return _initCheck == this;
 }
+
+void VehicleGenerator::simulate() {
+
+}

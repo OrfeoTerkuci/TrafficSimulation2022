@@ -24,6 +24,8 @@ public:
 
     void setFrequentie(double newFrequentie);
 
+    void simulate();
+
     virtual ~VehicleGenerator();
 };
 
