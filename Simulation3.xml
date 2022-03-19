@@ -24,10 +24,14 @@
     </VERKEERSLICHT>
     <VOERTUIG>
         <baan>Middelheimlaan</baan>
-        <positie>20</positie>
+        <positie>30</positie>
     </VOERTUIG>
     <VOERTUIG>
         <baan>Middelheimlaan</baan>
+        <positie>0</positie>
+    </VOERTUIG>
+    <VOERTUIG>
+        <baan>Groeneborgenlaan</baan>
         <positie>0</positie>
     </VOERTUIG>
 </Veerkerssimulatie>
