@@ -1,3 +1,4 @@
+![alt text](https://upload.wikimedia.org/wikipedia/commons/e/e3/Universiteit_Antwerpen_logo.svg)
 # TrafficSimulation 2022
 Project Software Engineering 2022. University of Antwerp.  
 Made by: **Orfeo** and **Jason**
