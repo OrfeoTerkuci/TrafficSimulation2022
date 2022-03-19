@@ -3,3 +3,6 @@ cmake-build-debug
 tinyxml
 build
 .vscode
+tinyxml
+DesignByContract.h
+gtest/include/gtest/internal/gtest-linked_ptr.h

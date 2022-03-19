@@ -3,12 +3,12 @@
 #include "Standard_Values.h"
 #include "DesignByContract.h"
 
-TrafficLight::TrafficLight(unsigned int cyclus, Road *road) : cyclus(cyclus), road(road) {
+TrafficLight::TrafficLight(unsigned int cyclus, Road *road) : cyclus(cyclus), road(road) , currentColor(red) {
     _initCheck = this;
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
 
-TrafficLight::TrafficLight() {
+TrafficLight::TrafficLight() : currentColor(red) {
     _initCheck = this;
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
@@ -97,6 +97,11 @@ void TrafficLight::simulate(int &count) {
         else if ( (this->position - getNearestVehicle()->getVehiclePosition() ) <= STOPPING_DISTANCE / 2){
             // Stop
             getNearestVehicle()->setStatus(stopping);
+            getNearestVehicle()->simulate();
+        }
+        else{
+            // Clear to accelerate
+            getNearestVehicle()->setStatus(accelerate);
             getNearestVehicle()->simulate();
         }
     }

@@ -10,6 +10,23 @@ using namespace std;
 
 
 Vehicle::Vehicle(double speed, double position) : speed(speed), position(position) , acceleration(0.0) , _initCheck(this) {
+    // Check speed
+    if (speed == MAX_SPEED){
+        this->status = max_speed;
+    }
+    else if (speed == 0){
+        this->status = idle;
+    }
+    else if (this->acceleration > 0){
+        this->status = accelerate;
+    }
+    else if (this->acceleration < 0){
+        this->status = decelerate;
+    }
+    else {
+        this->status = stopping;
+    }
+
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 
@@ -186,23 +203,25 @@ void Vehicle::simulate() {
 
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulate");
     // Check status of vehicle
-    calculateNewSpeed();
+    
     if (status == decelerate){
         calculateNewAcceleration(DECELERATE);
     }
     else{
         calculateNewAcceleration();
     }
+    calculateNewSpeed();
+    
     // Check if vehicle fall of the road
+    /*
     if (this->getVehiclePosition() > this->road->getLength()){
-        this->road->removeVehicle(this);
+        this->road->removeVehicle(this); 
     }
-
+    */
 }
 
 void Vehicle::print() {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling print");
-    cout << "Vehicle specifications:" << endl;
     cout << '\t' << "-> Road: " << this->road->getRoadName() << endl;
     cout << '\t' << "-> Position: " << this->position << endl;
     cout << '\t' << "-> Speed: " << this->speed << endl;

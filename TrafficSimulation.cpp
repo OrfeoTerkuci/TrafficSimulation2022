@@ -289,11 +289,12 @@ void TrafficSimulation::printAll() {
 
 
 void TrafficSimulation::print( int &count) {
-    while (!this->vehicles.empty()){
-        cout << "Time: " << count;
+    if (!this->vehicles.empty()){
+        cout << "Time: " << count << endl;
         for (long unsigned int i = 0; i < this->vehicles.size(); ++i) {
-            cout << "Vehicle " << i;
+            cout << "Vehicle " << i << ": " << endl;
             this->vehicles.at(i)->print();
+            cout << endl;
         }
     }
 
@@ -302,18 +303,35 @@ void TrafficSimulation::print( int &count) {
 void TrafficSimulation::startSimulation() {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling startSimulation");
     int count = 0;
+    double vehiclePosition;
+    int roadLength;
+    Vehicle* currentVehicle;
+    Road* currentRoad;
     while (!this->vehicles.empty()){
         for (long unsigned int i = 0; i < this->vehicles.size(); ++i){
+            // Get current vehicle
+            currentVehicle = this->vehicles.at(i);
+            // Get current road
+            currentRoad = currentVehicle->getRoad();
             // Simulate vehicle
-            this->vehicles.at(i)->simulate();
+            currentVehicle->simulate();
+            vehiclePosition = currentVehicle->getVehiclePosition();
+            roadLength = currentRoad->getLength();
+            // Check if vehicle had gone off the road
+            if (vehiclePosition > roadLength){
+                // Remove the vehicle from the simulation
+                currentRoad->removeVehicle(currentVehicle);
+                this->vehicles.erase(vehicles.begin() + i);
+            }
         }
         for (long unsigned int j = 0; j < this->lights.size(); ++j) {
             // Simulate traffic light
             this->lights.at(j)->simulate(count);
         }
         print(count);
-        count++;
+        count ++;
     }
+    
 }
 
 TrafficSimulation::~TrafficSimulation() {REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling destructor");}

@@ -73,6 +73,7 @@ void Road::removeVehicle(Vehicle *oldVehicle) {
     for (long unsigned int i = 0; i < this->vehicles.size(); ++i) {
         if (oldVehicle == this->vehicles.at(i)){
             delete this->vehicles.at(i);
+            this->vehicles.erase(vehicles.begin() + i);
         }
     }
 }

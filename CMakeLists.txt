@@ -23,7 +23,9 @@ set(tinySources
 
 # Set Help Libraries
 set(AdditionalSources
-        Standard_Values.h)
+        Standard_Values.h
+        DesignByContract.h 
+        )
 
 # Set source files for RELEASE target
 set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp ${AdditionalSources} ${tinySources})

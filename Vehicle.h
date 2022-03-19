@@ -7,7 +7,7 @@
 using namespace std;
 
 class TrafficLight;
-
+class TrafficSimulation;
 
 enum vehicleStatus{ max_speed , accelerate , decelerate , stopping , idle };
 
@@ -19,7 +19,6 @@ class Vehicle {
 
     vehicleStatus status;
     Road* road;
-
     Vehicle* _initCheck;
 
 public:

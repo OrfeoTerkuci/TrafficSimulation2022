@@ -11,9 +11,9 @@ enum lightColor {red , green};
 class TrafficLight {
     unsigned int cyclus;
 
-    lightColor currentColor;
-
     Road* road;
+
+    lightColor currentColor;
 
     unsigned int position;
 
