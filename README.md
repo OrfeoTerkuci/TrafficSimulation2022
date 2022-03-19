@@ -1,4 +1,4 @@
-# TrafficSimulation2022
+# TrafficSimulation 2022
 Project Software Engineering 2022. University of Antwerp.  
 Made by: Orfeo and Jason
 
