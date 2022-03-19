@@ -12,6 +12,7 @@ using namespace std;
 #include "Road.h"
 #include "TrafficLight.h"
 #include "Vehicle.h"
+#include "VehicleGenerator.h"
 
 class TrafficSimulationTest: public ::testing::Test {
 protected:
@@ -71,6 +72,11 @@ TEST(SimTest, simulation){
     EXPECT_FALSE(testFile.getRoads()[0]->getVehicleAmount() == 0);
     testFile.startSimNoPrint();
     EXPECT_TRUE(testFile.getRoads()[0]->getVehicleAmount() == 0);
+}
+
+TEST(VehicleGeneratorTest, vehicleGenerator){
+    TrafficSimulation testFile("Simulation4.xml");
+    EXPECT_FALSE(testFile.getVehicleGenerators().empty());
 }
 
 int main(int argc, char **argv) {

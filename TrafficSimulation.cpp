@@ -239,6 +239,11 @@ bool TrafficSimulation::properlyInitialized() {
     return  _initCheck == this;
 }
 
+const vector<VehicleGenerator *> &TrafficSimulation::getVehicleGenerators() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling getVehicleGenerators");
+    return vehicleGenerators;
+}
+
 const vector<Road *> & TrafficSimulation::getRoads() {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling getRoads");
     return roads;

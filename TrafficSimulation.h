@@ -42,6 +42,11 @@ public:
     void setRoads(const vector<Road *> &newRoads);
 
     /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getVehicleGenerator");
+    */
+    const vector<VehicleGenerator *> &getVehicleGenerators();
+
+    /**
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addTrafficLight");
     */
     void addTrafficLight(TrafficLight* &newLight);
