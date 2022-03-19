@@ -27,5 +27,7 @@
 #define VOERTUIG                "VOERTUIG"
 #define POSITIE                 "positie"
 #define CYCLUS                  "cyclus"
+#define VOERTUIGGENERATOR       "VOERTUIGGENERATOR"
+#define FREQUENTIE              "frequentie"
 
 #endif //TRAFFICSIMULATION2022_STANDARD_VALUES_H

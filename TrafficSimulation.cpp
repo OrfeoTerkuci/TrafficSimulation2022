@@ -3,6 +3,7 @@
 #include "Road.h"
 #include "TrafficLight.h"
 #include "Vehicle.h"
+#include "VehicleGenerator.h"
 #include "Standard_Values.h"
 #include "DesignByContract.h"
 
@@ -143,6 +144,44 @@ bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
     return true;
 }
 
+bool TrafficSimulation::parseVehicleGenerator(TiXmlElement *&root) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling parseVehicleGenerator");
+    VehicleGenerator* vehicleGenerator = new VehicleGenerator();
+
+    string tempn;
+    int tempf;
+
+    for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
+        string elemName = elem->Value();
+        tempn = elem->GetText();
+
+        if(tempn.empty()){
+            delete vehicleGenerator;
+            return false;
+        }
+
+        if (elemName == BAANL) {
+            for (unsigned int i = 0; i < this->roads.size(); ++i) {
+                if (tempn == this->roads[i]->getRoadName()) {
+                    vehicleGenerator->setRoad(this->roads[i]);
+                    if (!this->addVehicleGenerator(vehicleGenerator)){
+                        delete vehicleGenerator;
+                        return false;
+                    }
+                    break;
+                }
+            }
+        }
+        else if (elemName == FREQUENTIE) {
+            tempf = atoi(elem->GetText());
+            vehicleGenerator->setFrequentie(tempf);
+        }
+    }
+    return true;
+}
+
+
+
 //==== Constructors and Destructor ====//
 TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename) {
     TiXmlDocument doc;
@@ -184,12 +223,14 @@ TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename
             if (!this->parseVehicle(elem)) {
                 cout << "Error: Could not make vehicle" << endl;
             }
+        } else if (elemName == VOERTUIGGENERATOR) {
+            if (!this->parseVehicleGenerator(elem)) {
+                cout << "Error: Could not make vehicle generator" << endl;
+            }
         }
     }
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
-
-
 
 TrafficSimulation::TrafficSimulation() {_initCheck = this;
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");}
@@ -226,6 +267,17 @@ bool TrafficSimulation::addRoad(Road *newRoad) {
         }
     }
     this->roads.push_back(newRoad);
+    return true;
+}
+
+bool TrafficSimulation::addVehicleGenerator(VehicleGenerator *newVehicleGenerator) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addVehicleGenerator");
+    for (unsigned int i = 0; i < this->vehicleGenerators.size(); ++i) {
+        if (this->vehicleGenerators[i]->getRoad() == newVehicleGenerator->getRoad()){
+            return false;
+        }
+    }
+    this->vehicleGenerators.push_back(newVehicleGenerator);
     return true;
 }
 
@@ -286,8 +338,6 @@ void TrafficSimulation::printAll() {
     }
 }
 
-
-
 void TrafficSimulation::print( int &count) {
     if (!this->vehicles.empty()){
         cout << "Time: " << count << endl;
@@ -339,7 +389,7 @@ void TrafficSimulation::startSimulation() {
     }
     cout << "- There are no vehicles on the road network." << endl;
     cout << "- Ending simulation" << endl;
-    
+
 }
 
 void TrafficSimulation::startSimNoPrint() {

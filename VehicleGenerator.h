@@ -8,10 +8,18 @@
 
 class VehicleGenerator {
     Road* road;
-    double frequentie;
+    int frequentie;
 
 public:
     VehicleGenerator();
+
+    Road *getRoad() const;
+
+    void setRoad(Road *newRoad);
+
+    double getFrequentie() const;
+
+    void setFrequentie(double newFrequentie);
 
     virtual ~VehicleGenerator();
 };

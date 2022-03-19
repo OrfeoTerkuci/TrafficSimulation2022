@@ -11,12 +11,14 @@ using namespace std;
 class Road;
 class Vehicle;
 class TrafficLight;
+class VehicleGenerator;
 
 class TrafficSimulation {
     string filename;
     vector<Vehicle*> vehicles;
     vector<TrafficLight*> lights;
     vector<Road*> roads;
+    vector<VehicleGenerator*> vehicleGenerators;
 
     TrafficSimulation* _initCheck;
 public:
@@ -55,6 +57,11 @@ public:
     bool addRoad(Road* newRoad);
 
     /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addVehicleGenerator");
+    */
+    bool addVehicleGenerator(VehicleGenerator* newVehicleGenerator);
+
+    /**
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseRoad");
     */
     bool parseRoad(TiXmlElement* &root);
@@ -68,6 +75,11 @@ public:
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseVehicle");
     */
     bool parseVehicle(TiXmlElement* &root);
+
+    /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseVehicleGenerator");
+    */
+    bool parseVehicleGenerator(TiXmlElement* &root);
 
     /**
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling printAll");
