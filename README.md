@@ -22,7 +22,7 @@ X = Not implemented
 | Rijden Van Voertuig               | Verplicht  | V      |
 | Simulatie Van Verkeerslicht       | Verplicht  | V      |
 | Automatische Simulatie            | Verplicht  | V      |
-| Simulatie Met Voertuigengenerator | Belangrijk | X      |
+| Simulatie Met Voertuigengenerator | Belangrijk | V      |
 
 ### Commentaar:
 ...
