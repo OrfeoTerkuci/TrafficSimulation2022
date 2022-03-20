@@ -110,7 +110,6 @@ TEST(SimTest, simulation5){
     EXPECT_FALSE(testFile.getVehicleGenerators().empty());
     EXPECT_TRUE(testFile.getVehicles().empty());
     testFile.startSimUntilCount();
-    testFile.startSimUntilCount();
     EXPECT_NE((unsigned int)MAX_VEHICLES, testFile.getVehicles().size());
     EXPECT_EQ((unsigned int)MAX_VEHICLES * testFile.getVehicleGenerators().size(), testFile.getVehicles().size());
 }
