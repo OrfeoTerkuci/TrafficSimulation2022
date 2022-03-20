@@ -52,9 +52,15 @@ public:
 
     /**
     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getVehicleGenerator");
-    * 
+    *
     */
     const vector<VehicleGenerator *> &getVehicleGenerators();
+
+    /**
+    * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getVehicles");
+    *
+    */
+    const vector<Vehicle *> &getVehicles();
 
     /**
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addTrafficLight");

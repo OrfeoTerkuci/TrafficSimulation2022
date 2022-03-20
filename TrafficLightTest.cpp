@@ -85,7 +85,7 @@ TEST(VehicleGeneratorTest, vehicleGenerator){
     TrafficSimulation testFile("Simulation4.xml");
     EXPECT_FALSE(testFile.getVehicleGenerators().empty());
     testFile.startSimUntilCount();
-    EXPECT_EQ((unsigned int)MAX_VEHICLES, testFile.getRoads().size());
+    EXPECT_EQ((unsigned int)MAX_VEHICLES, testFile.getVehicles().size());
 }
 
 int main(int argc, char **argv) {

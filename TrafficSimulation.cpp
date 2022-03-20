@@ -265,6 +265,11 @@ void TrafficSimulation::setRoads(const vector<Road *> &newRoads) {
     ENSURE(TrafficSimulation::roads == newRoads , "setRoads failed");
 }
 
+const vector<Vehicle *> &TrafficSimulation::getVehicles(){
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getVehicles");
+    return vehicles;
+}
+
 void TrafficSimulation::addTrafficLight(TrafficLight *&newLight) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addTrafficLight");
     this->lights.push_back(newLight);
@@ -409,6 +414,8 @@ void TrafficSimulation::startSimulation() {
                 // Generate new vehicle
                 Vehicle* newVehicle;
                 newVehicle = new Vehicle();
+                // Add road to vehicle
+                newVehicle->setRoad(currentGenerator->getRoad());
                 // Add vehicle to road
                 newVehicle->setRoad(currentGenerator->getRoad());
                 currentGenerator->getRoad()->addVehicle(newVehicle);
@@ -464,6 +471,8 @@ void TrafficSimulation::startSimNoPrint() {
                 // Generate new vehicle
                 Vehicle* newVehicle;
                 newVehicle = new Vehicle();
+                // Add road to vehicle
+                newVehicle->setRoad(currentGenerator->getRoad());
                 // Add vehicle to road
                 currentGenerator->getRoad()->addVehicle(newVehicle);
                 // Add vehicle to our simulation
