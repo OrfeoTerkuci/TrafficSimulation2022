@@ -10,17 +10,25 @@ class TrafficLight;
 class Vehicle;
 
 class Road {
+    // Parsed variables
     unsigned int length;
-
     string roadName;
+    // Necessary containers for implementation
     vector<TrafficLight*> trafficLights;
     vector<Vehicle*> vehicles;
-
+    // Self-pointer
     Road* _initCheck;
 
 public:
+
+    /*
+     * ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
+     */
     Road(unsigned int length, const string &roadName);
 
+    /*
+     * ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
+     */
     Road();
 
     bool properlyInitialized() const;

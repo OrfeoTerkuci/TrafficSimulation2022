@@ -1,8 +1,11 @@
 #include "Road.h"
 #include "Vehicle.h"
 #include "DesignByContract.h"
+#include <typeinfo>
 
 Road::Road(unsigned int length, const string &roadName) : length(length), roadName(roadName) , _initCheck(this) {
+    REQUIRE( *typeid(length).name() == 'i' && length >= 0, "Length is not a number");
+    REQUIRE( *typeid(roadName).name() == 's' && roadName.length() > 0 , "Road has no name" );
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 
