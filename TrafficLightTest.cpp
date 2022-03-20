@@ -8,6 +8,7 @@ using namespace std;
 #include "TrafficLight.h"
 #include "Vehicle.h"
 #include "VehicleGenerator.h"
+#include "Standard_Values.h"
 
 class TrafficSimulationTest: public ::testing::Test {
 protected:
@@ -83,6 +84,8 @@ TEST(SimTest, simulation2){
 TEST(VehicleGeneratorTest, vehicleGenerator){
     TrafficSimulation testFile("Simulation4.xml");
     EXPECT_FALSE(testFile.getVehicleGenerators().empty());
+    testFile.startSimUntilCount();
+    EXPECT_EQ((unsigned int)MAX_VEHICLES, testFile.getRoads().size());
 }
 
 int main(int argc, char **argv) {

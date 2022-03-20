@@ -163,7 +163,7 @@ void Vehicle::calculateStopDecelerate() {
 Vehicle* Vehicle::getNextVehicle() {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getNextVehicle");
 
-    if(this->road->getVehicleAmount() <= 1){
+    if(this->road == NULL || this->road->getVehicleAmount() <= 1){
         return NULL;
     }
     else{

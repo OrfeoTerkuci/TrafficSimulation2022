@@ -474,4 +474,58 @@ void TrafficSimulation::startSimNoPrint() {
     }
 }
 
+void TrafficSimulation::startSimUntilCount() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling startSimUntilCount");
+    REQUIRE(!this->vehicleGenerators.empty(), "This type of simulation works only for traffic simulations with a vehicle generator");
+    int count = 0;
+    double vehiclePosition;
+    int roadLength;
+    Vehicle* currentVehicle;
+    Road* currentRoad;
+
+    while (this->vehicles.size() != MAX_VEHICLES && !this->vehicleGenerators.empty()){
+        for (unsigned int i = 0; i < this->vehicles.size(); ++i){
+            // Get current vehicle
+            currentVehicle = this->vehicles.at(i);
+            // Get current road
+            currentRoad = currentVehicle->getRoad();
+            // Simulate vehicle
+            currentVehicle->simulate();
+            vehiclePosition = currentVehicle->getVehiclePosition();
+            roadLength = currentRoad->getLength();
+            // Check if vehicle had gone off the road
+            if (vehiclePosition > roadLength){
+                // Remove the vehicle from the simulation
+                currentRoad->removeVehicle(currentVehicle);
+                this->vehicles.erase(vehicles.begin() + i);
+            }
+        }
+        for (unsigned int j = 0; j < this->lights.size(); ++j) {
+            // Simulate traffic light
+            currentRoad = lights.at(j)->getRoad();
+            if(currentRoad->getVehicleAmount() > 0){
+                this->lights.at(j)->simulate(count);
+            }
+        }
+        for (unsigned int k = 0; k < this->vehicleGenerators.size(); k++){
+            VehicleGenerator* currentGenerator;
+            currentGenerator = this->vehicleGenerators.at(k);
+            // Check if we can generate
+            if (currentGenerator->simulate())
+            {
+                // Generate new vehicle
+                Vehicle* newVehicle;
+                newVehicle = new Vehicle();
+                // Add road to vehicle
+                newVehicle->setRoad(currentGenerator->getRoad());
+                // Add vehicle to road
+                currentGenerator->getRoad()->addVehicle(newVehicle);
+                // Add vehicle to our simulation
+                this->addVehicle(newVehicle);
+            }
+        }
+        count ++;
+    }
+}
+
 TrafficSimulation::~TrafficSimulation() {REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling destructor");}

@@ -129,6 +129,11 @@ public:
     void startSimNoPrint();
 
     /**
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimUntilCount");
+    */
+    void startSimUntilCount();
+
+    /**
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling destructor");
     */
     virtual ~TrafficSimulation();

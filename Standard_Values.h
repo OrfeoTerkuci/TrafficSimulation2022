@@ -26,4 +26,7 @@
 #define VOERTUIGGENERATOR       "VOERTUIGGENERATOR"
 #define FREQUENTIE              "frequentie"
 
+// Vehiclegenerator test values
+#define MAX_VEHICLES            50
+
 #endif //TRAFFICSIMULATION2022_STANDARD_VALUES_H

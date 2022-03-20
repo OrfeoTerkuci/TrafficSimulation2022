@@ -6,8 +6,8 @@
 using namespace std;
 
 int main(){
-TrafficSimulation ts("Simulation3.xml");
+TrafficSimulation ts("Simulation4.xml");
 //ts.printAll();
-ts.startSimulation();
+ts.startSimUntilCount();
 return 0;
 }
