@@ -2,9 +2,12 @@
 #include "Vehicle.h"
 #include "Standard_Values.h"
 #include "DesignByContract.h"
+#include <typeinfo>
 
-VehicleGenerator::VehicleGenerator() : road(), frequentie() , cooldown() {
+VehicleGenerator::VehicleGenerator() : road(), frequentie(0) , cooldown(0) {
     _initCheck = this;
+    ENSURE(VehicleGenerator::frequentie == 0 , "frequentie was not properly initialized");
+    ENSURE(VehicleGenerator::cooldown == 0 , "cooldown was not properly initialized");
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
 
@@ -15,17 +18,21 @@ Road *VehicleGenerator::getRoad(){
 
 void VehicleGenerator::setRoad(Road *newRoad) {
     REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling setRoad");
+    REQUIRE(*typeid(newRoad).name() == 'P' , "setRoad was called with invalid parameter");
     VehicleGenerator::road = newRoad;
+    ENSURE(VehicleGenerator::road == newRoad , "setRoad failed");
 }
 
-double VehicleGenerator::getFrequentie(){
+int VehicleGenerator::getFrequentie(){
     REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling getFrequentie");
     return frequentie;
 }
 
-void VehicleGenerator::setFrequentie(double newFrequentie) {
+void VehicleGenerator::setFrequentie(int newFrequentie) {
     REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling setFrequentie");
+    REQUIRE(*typeid(newFrequentie).name() == 'i' , "setFrequentie was called with invalid parameter");
     VehicleGenerator::frequentie = newFrequentie;
+    ENSURE(VehicleGenerator::frequentie == newFrequentie , "setFrequentie failed");
 }
 
 int VehicleGenerator::getCooldown() {
@@ -35,7 +42,9 @@ int VehicleGenerator::getCooldown() {
 
 void VehicleGenerator::setCooldown(int newCooldown) {
     REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling setCooldown");
+    REQUIRE(*typeid(newCooldown).name() == 'i' , "setCooldown was called with invalid parameter");
     VehicleGenerator::cooldown = newCooldown;
+    ENSURE(VehicleGenerator::cooldown == newCooldown , "setCooldown failed");
 }
 
 VehicleGenerator::~VehicleGenerator() {
