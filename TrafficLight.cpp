@@ -5,7 +5,7 @@
 #include <typeinfo>
 
 TrafficLight::TrafficLight(unsigned int cyclus, Road *road) : cyclus(cyclus), road(road) , currentColor(red) {
-    REQUIRE(*typeid(cyclus).name() == 'j' && cyclus >= 0 , "Constructor was called with invalid cyclus");
+    REQUIRE(*typeid(cyclus).name() == 'j' && cyclus >= 0 , "constructor was called with invalid cyclus");
     REQUIRE(*typeid(road).name() == 'P' , "constructor was called with invalid road");
     _initCheck = this;
     ENSURE(TrafficLight::cyclus == cyclus , "cyclus was not properly initialized");
