@@ -6,7 +6,7 @@
 // Description : Declarations for design by contract in C++
 //============================================================================
 
-#include <assert.h>
+#include <cassert>
 
 #define REQUIRE(assertion, what) \
 	if (!(assertion)) __assert (what, __FILE__, __LINE__)
