@@ -36,7 +36,7 @@ TEST_F(TrafficSimulationTest, DefaultConstructor){
 }
 
 TEST(ParserTest, Parser){
-    TrafficSimulation testFile("Simulation1.xml");
+    TrafficSimulation testFile(SIM1);
     EXPECT_TRUE(testFile.getRoads()[0]->properlyInitialized());
     EXPECT_TRUE(testFile.getRoads()[0]->getRoadName() == "Middelheimlaan" and testFile.getRoads()[0]->getLength() == 500);
     EXPECT_TRUE(testFile.getRoads()[0]->getTrafficLight(0)->properlyInitialized());
@@ -51,27 +51,27 @@ TEST(ParserTest, Parser){
 }
 
 TEST(VehiclePosTest, Position){
-    TrafficSimulation testFile("Simulation1.xml");
+    TrafficSimulation testFile(SIM1);
     EXPECT_TRUE(testFile.getRoads()[0]->getVehicle(0)->getNextVehicle() == NULL);
     EXPECT_TRUE(testFile.getRoads()[0]->getVehicle(0) == testFile.getRoads()[0]->getVehicle(1)->getNextVehicle());
 }
 
 TEST(FailTest, fails){
-    TrafficSimulation testFile("Simulation3.xml");
+    TrafficSimulation testFile(SIM3);
     EXPECT_NE((unsigned int)1, testFile.getRoads().size());
     EXPECT_FALSE(testFile.getRoads()[0]->getVehicle(0)->getVehiclePosition() == 0);
     EXPECT_NE(testFile.getRoads()[0]->getVehicle(0)->getRoad()->getRoadName(), "Groeneborgenlaan");
 }
 
 TEST(SimTest, simulation1){
-    TrafficSimulation testFile("Simulation1.xml");
+    TrafficSimulation testFile(SIM1);
     EXPECT_FALSE(testFile.getRoads()[0]->getVehicleAmount() == 0);
     testFile.startSimNoPrint();
     EXPECT_TRUE(testFile.getRoads()[0]->getVehicleAmount() == 0);
 }
 
 TEST(SimTest, simulation2){
-    TrafficSimulation testFile("Simulation3.xml");
+    TrafficSimulation testFile(SIM3);
     for (unsigned int i = 0; i < testFile.getRoads().size(); i++){
         EXPECT_FALSE(testFile.getRoads()[i]->getVehicleAmount() == 0);
     }
@@ -82,7 +82,7 @@ TEST(SimTest, simulation2){
 }
 
 TEST(VehicleGeneratorTest, vehicleGenerator){
-    TrafficSimulation testFile("Simulation4.xml");
+    TrafficSimulation testFile(SIM4);
     EXPECT_FALSE(testFile.getVehicleGenerators().empty());
     testFile.startSimUntilCount();
     EXPECT_EQ((unsigned int)MAX_VEHICLES, testFile.getVehicles().size());

@@ -29,4 +29,11 @@
 // Vehiclegenerator test values
 #define MAX_VEHICLES            50
 
+// xml file names
+#define SIM1                    "Simulation1.xml"
+#define SIM2                    "Simulation2.xml"
+#define SIM3                    "Simulation3.xml"
+#define SIM4                    "Simulation4.xml"
+
+
 #endif //TRAFFICSIMULATION2022_STANDARD_VALUES_H
