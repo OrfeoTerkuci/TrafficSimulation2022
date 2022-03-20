@@ -114,6 +114,17 @@ TEST(SimTest, simulation5){
     EXPECT_EQ((unsigned int)MAX_VEHICLES * testFile.getVehicleGenerators().size(), testFile.getVehicles().size());
 }
 
+TEST(SimTest, simulation6){
+    // test on simulation file 6, vehicle generator + normal vehicles
+    TrafficSimulation testFile(SIM6);
+    EXPECT_FALSE(testFile.getVehicleGenerators().empty());
+    EXPECT_FALSE(testFile.getVehicles().empty());
+    testFile.startSimUntilCount();
+    EXPECT_FALSE(testFile.getVehicles().empty());
+    EXPECT_TRUE(testFile.getRoads()[0]->getVehicleAmount() == 0);
+    EXPECT_FALSE(testFile.getRoads()[1]->getVehicleAmount() == 0);
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
