@@ -272,27 +272,43 @@ const vector<Vehicle *> &TrafficSimulation::getVehicles(){
 
 void TrafficSimulation::addTrafficLight(TrafficLight *&newLight) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addTrafficLight");
+    REQUIRE(*typeid(newLight).name() == 'P' , "addTrafficLight was called with invalid parameter");
+    unsigned int* oldSize = new unsigned int;
+    *oldSize = lights.size();
     this->lights.push_back(newLight);
+    ENSURE(*oldSize == lights.size() - 1 , "addTrafficLight failed");
+    delete oldSize;
 }
 
 void TrafficSimulation::addVehicle(Vehicle *&newVehicle) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addVehicle");
+    REQUIRE(*typeid(newVehicle).name() == 'P' , "addVehicle was called with invalid parameter");
+    unsigned int* oldSize = new unsigned int;
+    *oldSize = vehicles.size();
     this->vehicles.push_back(newVehicle);
+    ENSURE(*oldSize == vehicles.size() - 1 , "addVehicle failed");
+    delete oldSize;
 }
 
 bool TrafficSimulation::addRoad(Road *newRoad) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addRoad");
+    REQUIRE(*typeid(newRoad).name() == 'P' , "addRoad was called with invalid parameter");
     for (unsigned int i = 0; i < this->roads.size(); ++i) {
         if(this->roads[i] == newRoad){
             return false;
         }
     }
+    unsigned int* oldSize = new unsigned int;
+    *oldSize = roads.size();
     this->roads.push_back(newRoad);
+    ENSURE(*oldSize == roads.size() - 1 , "addRoad failed");
+    delete oldSize;
     return true;
 }
 
 bool TrafficSimulation::addVehicleGenerator(VehicleGenerator *newVehicleGenerator) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addVehicleGenerator");
+    REQUIRE (*typeid(newVehicleGenerator).name() == 'P' , "addVehicleGenerator was called with invalid parameter");
     for (unsigned int i = 0; i < this->vehicleGenerators.size(); ++i) {
         if (this->vehicleGenerators[i]->getRoad() == newVehicleGenerator->getRoad()){
             return false;

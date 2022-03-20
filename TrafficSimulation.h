@@ -38,7 +38,8 @@ public:
     bool properlyInitialized();
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getRoads");
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getRoads");
+     * @return A vector of pointers to Road elements
     */
     const vector<Road *> & getRoads();
 
@@ -52,7 +53,7 @@ public:
 
     /**
     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getVehicleGenerator");
-    *
+    * @return A vector of pointers to VehicleGenerator elements
     */
     const vector<VehicleGenerator *> &getVehicleGenerators();
 
@@ -68,12 +69,19 @@ public:
     void addTrafficLight(TrafficLight* &newLight);
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addVehicle");
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addVehicle");
+     * REQUIRE(*typeid(newVehicle).name() == 'P' , "addVehicle was called with invalid parameter");
+     * ENSURE(*oldSize == vehicles.size() - 1 , "addVehicle failed");
+     * @param newVehicle A pointer to a Vehicle element
     */
     void addVehicle(Vehicle* &newVehicle);
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addRoad");
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addRoad");
+     * REQUIRE(*typeid(newRoad).name() == 'P' , "addRoad was called with invalid parameter");
+     * ENSURE(*oldSize == roads.size() - 1 , "addRoad failed");
+     * @param newRoad A pointer to a Road element
+     * @return True if the addition was successful
     */
     bool addRoad(Road* newRoad);
 
