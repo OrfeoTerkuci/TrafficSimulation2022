@@ -32,10 +32,12 @@ protected:
 };
 
 TEST_F(TrafficSimulationTest, DefaultConstructor){
+    // test if the object is properly initialized
     EXPECT_TRUE(ts.properlyInitialized());
 }
 
 TEST(ParserTest, Parser){
+    // test if the parser fully works
     TrafficSimulation testFile(SIM1);
     EXPECT_TRUE(testFile.getRoads()[0]->properlyInitialized());
     EXPECT_TRUE(testFile.getRoads()[0]->getRoadName() == "Middelheimlaan" and testFile.getRoads()[0]->getLength() == 500);
@@ -51,12 +53,14 @@ TEST(ParserTest, Parser){
 }
 
 TEST(VehiclePosTest, Position){
+    // test if the car is parsed right
     TrafficSimulation testFile(SIM1);
     EXPECT_TRUE(testFile.getRoads()[0]->getVehicle(0)->getNextVehicle() == NULL);
     EXPECT_TRUE(testFile.getRoads()[0]->getVehicle(0) == testFile.getRoads()[0]->getVehicle(1)->getNextVehicle());
 }
 
 TEST(FailTest, fails){
+    // test on fails
     TrafficSimulation testFile(SIM3);
     EXPECT_NE((unsigned int)1, testFile.getRoads().size());
     EXPECT_FALSE(testFile.getRoads()[0]->getVehicle(0)->getVehiclePosition() == 0);
@@ -64,6 +68,7 @@ TEST(FailTest, fails){
 }
 
 TEST(OnlyRoadTest, EmptyRoad){
+    // test if there is an empty road
     TrafficSimulation testFile(SIM2);
     EXPECT_FALSE(testFile.getRoads().empty());
     EXPECT_TRUE(testFile.getVehicles().empty());
@@ -71,13 +76,15 @@ TEST(OnlyRoadTest, EmptyRoad){
 }
 
 TEST(SimTest, simulation1){
+    // test on simulation file 1, basic trafficSimulation
     TrafficSimulation testFile(SIM1);
     EXPECT_FALSE(testFile.getRoads()[0]->getVehicleAmount() == 0);
     testFile.startSimNoPrint();
     EXPECT_TRUE(testFile.getRoads()[0]->getVehicleAmount() == 0);
 }
 
-TEST(SimTest, simulation2){
+TEST(SimTest, simulation3){
+    // test on simulation file 3, multiple roads
     TrafficSimulation testFile(SIM3);
     for (unsigned int i = 0; i < testFile.getRoads().size(); i++){
         EXPECT_FALSE(testFile.getRoads()[i]->getVehicleAmount() == 0);
@@ -88,7 +95,8 @@ TEST(SimTest, simulation2){
     }
 }
 
-TEST(VehicleGeneratorTest, vehicleGenerator){
+TEST(SimTest, simulation4){
+    // test on simulation file 4, vehicle generator
     TrafficSimulation testFile(SIM4);
     EXPECT_FALSE(testFile.getVehicleGenerators().empty());
     EXPECT_TRUE(testFile.getVehicles().empty());
@@ -96,14 +104,15 @@ TEST(VehicleGeneratorTest, vehicleGenerator){
     EXPECT_EQ((unsigned int)MAX_VEHICLES, testFile.getVehicles().size());
 }
 
-TEST(VehicleGeneratorTestMultRoads, vehicleGenerator2){
+TEST(SimTest, simulation5){
+    // test on simulation file 5, vehicle generator multiple roads
     TrafficSimulation testFile(SIM5);
     EXPECT_FALSE(testFile.getVehicleGenerators().empty());
     EXPECT_TRUE(testFile.getVehicles().empty());
     testFile.startSimUntilCount();
     testFile.startSimUntilCount();
     EXPECT_NE((unsigned int)MAX_VEHICLES, testFile.getVehicles().size());
-    EXPECT_EQ((unsigned int)MAX_VEHICLES * testFile.getRoads().size(), testFile.getVehicles().size());
+    EXPECT_EQ((unsigned int)MAX_VEHICLES * testFile.getVehicleGenerators().size(), testFile.getVehicles().size());
 }
 
 int main(int argc, char **argv) {

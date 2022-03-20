@@ -521,7 +521,7 @@ void TrafficSimulation::startSimUntilCount() {
     Vehicle* currentVehicle;
     Road* currentRoad;
 
-    while (this->vehicles.size() != MAX_VEHICLES * this->roads.size()){
+    while (this->vehicles.size() != MAX_VEHICLES * this->vehicleGenerators.size()){
         for (unsigned int i = 0; i < this->vehicles.size(); ++i){
             // Get current vehicle
             currentVehicle = this->vehicles.at(i);
@@ -564,7 +564,7 @@ void TrafficSimulation::startSimUntilCount() {
         }
         count ++;
     }
-    ENSURE(vehicles.size() == MAX_VEHICLES * this->roads.size(), "Simulation ended before reaching vehicle limit");
+    ENSURE(vehicles.size() == MAX_VEHICLES * this->vehicleGenerators.size(), "Simulation ended before reaching vehicle limit");
 }
 
 TrafficSimulation::~TrafficSimulation() {
