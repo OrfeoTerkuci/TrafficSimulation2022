@@ -64,6 +64,12 @@ public:
     const vector<Vehicle *> &getVehicles();
 
     /**
+    * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getLights");
+    * @return A vector of pointers to TrafficLight elements
+    */
+    const vector<TrafficLight *> &getLights();
+
+    /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addTrafficLight");
      * REQUIRE(*typeid(newLight).name() == 'P' , "addTrafficLight was called with invalid parameter");
      * ENSURE(*oldSize == lights.size() - 1 , "addTrafficLight failed");

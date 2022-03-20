@@ -27,7 +27,7 @@
 #define FREQUENTIE              "frequentie"
 
 // Vehiclegenerator test values
-#define MAX_VEHICLES            50
+#define MAX_VEHICLES            20
 
 // xml file names
 #define SIM1                    "Simulation1.xml"

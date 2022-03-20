@@ -265,6 +265,11 @@ void TrafficSimulation::setRoads(const vector<Road *> &newRoads) {
     ENSURE(TrafficSimulation::roads == newRoads , "setRoads failed");
 }
 
+const vector<TrafficLight *> &TrafficSimulation::getLights() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getLights");
+    return lights;
+}
+
 const vector<Vehicle *> &TrafficSimulation::getVehicles(){
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getVehicles");
     return vehicles;

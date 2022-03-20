@@ -63,6 +63,13 @@ TEST(FailTest, fails){
     EXPECT_NE(testFile.getRoads()[0]->getVehicle(0)->getRoad()->getRoadName(), "Groeneborgenlaan");
 }
 
+TEST(OnlyRoadTest, EmptyRoad){
+    TrafficSimulation testFile(SIM2);
+    EXPECT_FALSE(testFile.getRoads().empty());
+    EXPECT_TRUE(testFile.getVehicles().empty());
+    EXPECT_TRUE(testFile.getLights().empty());
+}
+
 TEST(SimTest, simulation1){
     TrafficSimulation testFile(SIM1);
     EXPECT_FALSE(testFile.getRoads()[0]->getVehicleAmount() == 0);
