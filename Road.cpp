@@ -10,6 +10,8 @@ Road::Road(unsigned int length, const string &roadName) : length(length), roadNa
     */
     REQUIRE( *typeid(length).name() == 'j' && length >= 0, "Length is not a number or is negative");
     REQUIRE( *typeid(roadName).name() == 'N' && roadName.length() > 0 , "Road has no name" );
+    ENSURE(Road::length == length , "Length was not properly initialized");
+    ENSURE(Road::roadName == roadName , "roadName was not properly initialized");
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 
