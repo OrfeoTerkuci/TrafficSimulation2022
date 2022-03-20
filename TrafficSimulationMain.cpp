@@ -1,15 +1,15 @@
 #include "TrafficSimulation.h"
-#include "Exceptions.h"
 #include "DesignByContract.h"
 #include "Standard_Values.h"
 
 using namespace std;
 
 int main(){
-//TrafficSimulation ts(SIM1);
-//TrafficSimulation ts(SIM2);
-//TrafficSimulation ts(SIM3);
-TrafficSimulation ts(SIM4);
+// Task 1
+//TrafficSimulation ts(SIM1); // Basic Simulation
+//TrafficSimulation ts(SIM2); // Empty road simulation
+//TrafficSimulation ts(SIM3); // Multiple Roads simulation
+TrafficSimulation ts(SIM4); // VehicleGenerator sim
 //ts.printAll();
 ts.startSimulation();
 return 0;
