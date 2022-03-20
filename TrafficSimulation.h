@@ -23,10 +23,16 @@ class TrafficSimulation {
     TrafficSimulation* _initCheck;
 public:
     /**
-    ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
+    * REQUIRE(*typeid(filename).name() == 'N' , "constructor was called with invalid filename");
+    * ENSURE(TrafficSimulation::filename == filename , "filename was not properly initialized");
+    * ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
+    * @param filename The TO BE PARSED file's name
     */
     explicit TrafficSimulation(const string &filename);
 
+    /**
+     * ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
+     */
     TrafficSimulation();
 
     bool properlyInitialized();
@@ -37,12 +43,16 @@ public:
     const vector<Road *> & getRoads();
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling setRoads");
+    * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling setRoads");
+    * REQUIRE(*typeid(newRoads).name() == 'S' , "setRoads was called with invalid parameter");
+    * ENSURE(TrafficSimulation::roads == newRoads , "setRoads failed");
+    * @param newRoads A vector of pointers to Road elements
     */
     void setRoads(const vector<Road *> &newRoads);
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getVehicleGenerator");
+    * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getVehicleGenerator");
+    * 
     */
     const vector<VehicleGenerator *> &getVehicleGenerators();
 
@@ -67,22 +77,34 @@ public:
     bool addVehicleGenerator(VehicleGenerator* newVehicleGenerator);
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseRoad");
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseRoad");
+     * REQUIRE(*typeid(root).name() == 'P' , "parseRoad was called with invalid parameter");
+     * @param root A pointer to a TiXmlElement
+     * @return True if parsing was successful
     */
     bool parseRoad(TiXmlElement* &root);
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseTrafficLight");
+    * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseTrafficLight");
+    * REQUIRE(*typeid(root).name() == 'P' , "parseTrafficLight was called with invali parameter");
+    * @param root A pointer to a TiXmlElement
+    * @return True if parsing was successful
     */
     bool parseTrafficLight(TiXmlElement* &root);
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseVehicle");
+    * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseVehicle");
+    * REQUIRE(*typeid(root).name() == 'P' , "parseVehicle was called with invalid parameter");
+    * @param root A pointer to a TiXmlElement
+    * @return True if parsing was successful
     */
     bool parseVehicle(TiXmlElement* &root);
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseVehicleGenerator");
+    * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseVehicleGenerator");
+    * REQUIRE(*typeid(root).name() == 'P' , "parseVehicleGenerator was called with invalid parameter");
+    * @param root A pointer to a TiXmlElement
+    * @return True if parsing was successful
     */
     bool parseVehicleGenerator(TiXmlElement* &root);
 

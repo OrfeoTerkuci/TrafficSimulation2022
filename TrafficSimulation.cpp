@@ -6,13 +6,14 @@
 #include "VehicleGenerator.h"
 #include "Standard_Values.h"
 #include "DesignByContract.h"
-
+#include <typeinfo>
 // c++ libs
 #include <stdexcept>
 
 //==== Parsing FUnctions ====//
 bool TrafficSimulation::parseRoad(TiXmlElement* &root){
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling parseRoad");
+    REQUIRE(*typeid(root).name() == 'P' , "parseRoad was called with invalid parameter");
     // create road object
     Road *newRoad = new Road();
 
@@ -60,6 +61,7 @@ bool TrafficSimulation::parseRoad(TiXmlElement* &root){
 
 bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling parseTrafficLight");
+    REQUIRE(*typeid(root).name() == 'P' , "parseTrafficLight was called with invali parameter");
     // Create object
     TrafficLight* trafficLight = new TrafficLight();
 
@@ -110,6 +112,7 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
 
 bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling parseVehicle");
+    REQUIRE(*typeid(root).name() == 'P' , "parseVehicle was called with invalid parameter");
     Vehicle* vehicle = new Vehicle();
 
     string tempn;
@@ -146,6 +149,7 @@ bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
 
 bool TrafficSimulation::parseVehicleGenerator(TiXmlElement *&root) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling parseVehicleGenerator");
+    REQUIRE(*typeid(root).name() == 'P' , "parseVehicleGenerator was called with invalid parameter");
     VehicleGenerator* vehicleGenerator = new VehicleGenerator();
 
     string tempn;
@@ -186,6 +190,7 @@ bool TrafficSimulation::parseVehicleGenerator(TiXmlElement *&root) {
 
 //==== Constructors and Destructor ====//
 TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename) {
+    REQUIRE(*typeid(filename).name() == 'N' , "constructor was called with invalid filename");
     TiXmlDocument doc;
     _initCheck = this;
     // File readable detection with error message
@@ -231,11 +236,13 @@ TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename
             }
         }
     }
+    ENSURE(TrafficSimulation::filename == filename , "filename was not properly initialized");
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
 
 TrafficSimulation::TrafficSimulation() {_initCheck = this;
-    ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");}
+    ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
+    }
 
 bool TrafficSimulation::properlyInitialized() {
     return  _initCheck == this;
@@ -253,7 +260,9 @@ const vector<Road *> & TrafficSimulation::getRoads() {
 
 void TrafficSimulation::setRoads(const vector<Road *> &newRoads) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling setRoads");
+    REQUIRE(*typeid(newRoads).name() == 'S' , "setRoads was called with invalid parameter");
     TrafficSimulation::roads = newRoads;
+    ENSURE(TrafficSimulation::roads == newRoads , "setRoads failed");
 }
 
 void TrafficSimulation::addTrafficLight(TrafficLight *&newLight) {
