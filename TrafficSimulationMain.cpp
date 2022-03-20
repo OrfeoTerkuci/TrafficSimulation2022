@@ -11,6 +11,6 @@ int main(){
 //TrafficSimulation ts(SIM3);
 TrafficSimulation ts(SIM4);
 //ts.printAll();
-ts.startSimUntilCount();
+ts.startSimulation();
 return 0;
 }
