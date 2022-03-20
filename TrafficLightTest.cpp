@@ -91,8 +91,19 @@ TEST(SimTest, simulation2){
 TEST(VehicleGeneratorTest, vehicleGenerator){
     TrafficSimulation testFile(SIM4);
     EXPECT_FALSE(testFile.getVehicleGenerators().empty());
+    EXPECT_TRUE(testFile.getVehicles().empty());
     testFile.startSimUntilCount();
     EXPECT_EQ((unsigned int)MAX_VEHICLES, testFile.getVehicles().size());
+}
+
+TEST(VehicleGeneratorTestMultRoads, vehicleGenerator2){
+    TrafficSimulation testFile(SIM5);
+    EXPECT_FALSE(testFile.getVehicleGenerators().empty());
+    EXPECT_TRUE(testFile.getVehicles().empty());
+    testFile.startSimUntilCount();
+    testFile.startSimUntilCount();
+    EXPECT_NE((unsigned int)MAX_VEHICLES, testFile.getVehicles().size());
+    EXPECT_EQ((unsigned int)MAX_VEHICLES * testFile.getRoads().size(), testFile.getVehicles().size());
 }
 
 int main(int argc, char **argv) {
