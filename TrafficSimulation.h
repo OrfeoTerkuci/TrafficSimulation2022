@@ -59,12 +59,15 @@ public:
 
     /**
     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getVehicles");
-    *
+    * @return A vector of pointers to Vehicle elements
     */
     const vector<Vehicle *> &getVehicles();
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addTrafficLight");
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addTrafficLight");
+     * REQUIRE(*typeid(newLight).name() == 'P' , "addTrafficLight was called with invalid parameter");
+     * ENSURE(*oldSize == lights.size() - 1 , "addTrafficLight failed");
+     * @param newLight A pointer to a TrafficLight element
     */
     void addTrafficLight(TrafficLight* &newLight);
 
@@ -80,19 +83,24 @@ public:
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addRoad");
      * REQUIRE(*typeid(newRoad).name() == 'P' , "addRoad was called with invalid parameter");
      * ENSURE(*oldSize == roads.size() - 1 , "addRoad failed");
+     * ENSURE(*oldSize == roads.size() , "addRoad: vector modified when it shouldn't");
      * @param newRoad A pointer to a Road element
      * @return True if the addition was successful
     */
     bool addRoad(Road* newRoad);
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addVehicleGenerator");
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addVehicleGenerator");
+     * REQUIRE (*typeid(newVehicleGenerator).name() == 'P' , "addVehicleGenerator was called with invalid parameter");
+     * ENSURE(*oldSize == vehicleGenerators.size() , "addVehicleGenerator : vector modified when it shouldn't");
+     * ENSURE(*oldSize == vehicleGenerators.size() - 1 , "addVehicleGenerator failed");
     */
     bool addVehicleGenerator(VehicleGenerator* newVehicleGenerator);
 
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseRoad");
      * REQUIRE(*typeid(root).name() == 'P' , "parseRoad was called with invalid parameter");
+     
      * @param root A pointer to a TiXmlElement
      * @return True if parsing was successful
     */
@@ -123,27 +131,31 @@ public:
     bool parseVehicleGenerator(TiXmlElement* &root);
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling printAll");
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling printAll");
     */
     void printAll();
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling print");
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling print");
     */
     void print(int &count);
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimulation");
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimulation");
+     * ENSURE(vehicles.empty() , "Simulation ended when it shouldn't");
     */
     void startSimulation();
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimNoPrint");
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimNoPrint");
+     * ENSURE(vehicles.empty() || vehicleGenerators.empty() , "Simulation ended when it shouldn't");
     */
     void startSimNoPrint();
 
     /**
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimUntilCount");
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimUntilCount");
+     * REQUIRE(!this->vehicleGenerators.empty(), "This type of simulation works only for traffic simulations with a vehicle generator");
+     * ENSURE(vehicles.size() == MAX_VEHICLES , "Simulation ended before reaching vehicle limit");
     */
     void startSimUntilCount();
 

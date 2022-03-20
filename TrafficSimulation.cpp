@@ -293,13 +293,14 @@ void TrafficSimulation::addVehicle(Vehicle *&newVehicle) {
 bool TrafficSimulation::addRoad(Road *newRoad) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addRoad");
     REQUIRE(*typeid(newRoad).name() == 'P' , "addRoad was called with invalid parameter");
+    unsigned int* oldSize = new unsigned int;
+    *oldSize = roads.size();
     for (unsigned int i = 0; i < this->roads.size(); ++i) {
         if(this->roads[i] == newRoad){
+            ENSURE(*oldSize == roads.size() , "addRoad: vector modified when it shouldn't");
             return false;
         }
     }
-    unsigned int* oldSize = new unsigned int;
-    *oldSize = roads.size();
     this->roads.push_back(newRoad);
     ENSURE(*oldSize == roads.size() - 1 , "addRoad failed");
     delete oldSize;
@@ -309,12 +310,16 @@ bool TrafficSimulation::addRoad(Road *newRoad) {
 bool TrafficSimulation::addVehicleGenerator(VehicleGenerator *newVehicleGenerator) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addVehicleGenerator");
     REQUIRE (*typeid(newVehicleGenerator).name() == 'P' , "addVehicleGenerator was called with invalid parameter");
+    unsigned int* oldSize = new unsigned int;
+    *oldSize = vehicleGenerators.size();
     for (unsigned int i = 0; i < this->vehicleGenerators.size(); ++i) {
         if (this->vehicleGenerators[i]->getRoad() == newVehicleGenerator->getRoad()){
+            ENSURE(*oldSize == vehicleGenerators.size() , "addVehicleGenerator : vector modified when it shouldn't");
             return false;
         }
     }
     this->vehicleGenerators.push_back(newVehicleGenerator);
+    ENSURE(*oldSize == vehicleGenerators.size() - 1 , "addVehicleGenerator failed");
     return true;
 }
 
@@ -376,6 +381,7 @@ void TrafficSimulation::printAll() {
 }
 
 void TrafficSimulation::print( int &count) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling print");
     if (!this->vehicles.empty() || !this->vehicleGenerators.empty()){
         cout << "Time: " << count << endl;
         for (long unsigned int i = 0; i < this->vehicles.size(); ++i) {
@@ -444,6 +450,7 @@ void TrafficSimulation::startSimulation() {
     }
     cout << "- There are no vehicles on the road network." << endl;
     cout << "- Ending simulation" << endl;
+    ENSURE(vehicles.empty() , "Simulation ended when it shouldn't");
 }
 
 void TrafficSimulation::startSimNoPrint() {
@@ -497,6 +504,7 @@ void TrafficSimulation::startSimNoPrint() {
         }
         count ++;
     }
+    ENSURE(vehicles.empty() || vehicleGenerators.empty() , "Simulation ended when it shouldn't");
 }
 
 void TrafficSimulation::startSimUntilCount() {
@@ -508,7 +516,7 @@ void TrafficSimulation::startSimUntilCount() {
     Vehicle* currentVehicle;
     Road* currentRoad;
 
-    while (this->vehicles.size() != MAX_VEHICLES && !this->vehicleGenerators.empty()){
+    while (this->vehicles.size() != MAX_VEHICLES){
         for (unsigned int i = 0; i < this->vehicles.size(); ++i){
             // Get current vehicle
             currentVehicle = this->vehicles.at(i);
@@ -551,6 +559,9 @@ void TrafficSimulation::startSimUntilCount() {
         }
         count ++;
     }
+    ENSURE(vehicles.size() == MAX_VEHICLES , "Simulation ended before reaching vehicle limit");
 }
 
-TrafficSimulation::~TrafficSimulation() {REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling destructor");}
+TrafficSimulation::~TrafficSimulation() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling destructor");
+    }
