@@ -26,3 +26,6 @@ X = Not implemented
 
 ### Commentaar:
 ...
+
+## Opdracht 2
+...
