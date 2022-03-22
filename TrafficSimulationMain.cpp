@@ -5,20 +5,27 @@
 using namespace std;
 
 int main(){
-// Task 1
+//* Task 1 *//
+
+//==== Normal simulation files ====//
 //TrafficSimulation ts(SIM1); // Basic Simulation
 //TrafficSimulation ts(SIM2); // Empty road simulation
 //TrafficSimulation ts(SIM3); // Multiple Roads simulation
+
+//==== Vehicle generator files ====//
 //TrafficSimulation ts(SIM4); // VehicleGenerator sim
 //TrafficSimulation ts(SIM5); // VehicleGenerator sim with multiple roads
 //TrafficSimulation ts(SIM6); // VehicleGenerator sim and with cars on different roads
+
+//==== Files with errors ====//
 TrafficSimulation ts(SIM7); // Normal simulation, with invalid road length
 //TrafficSimulation ts(SIM8); // Normal simulation, with invalid traffic-light position
 //TrafficSimulation ts(SIM9); // Normal simulation, with invalid vehicle position
-//TrafficSimulation ts(SIM10); // Normal simulation, with invalid vehicle generator frequencies
+//TrafficSimulation ts(SIM10); // Vehicle generator simulation, with invalid vehicle generator frequencies
+//TrafficSimulation testFile(SIM11): // Normal simulation, with empty parameter for road
 
 //ts.printAll();
-//ts.startSimUntilCount();
-//ts.startSimulation();
+//ts.startSimUntilCount(); // Simulates until there is a maximum vehicle count reached --> Standard_Values --> MAX_VEHICLES
+//ts.startSimulation(); // Simulate current loaded file
 return 0;
 }

@@ -27,18 +27,21 @@ bool TrafficSimulation::parseRoad(TiXmlElement* &root){
     // Parsing
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
         string elemName = elem->Value();
-        if(elemName == NAAM){
+
+        if(elem->NoChildren()){
+            delete newRoad;
+            REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
+            return false;
+        }
+        else {
             tempn = elem->GetText();
-            if(tempn.empty()){
-                delete newRoad;
-                return false;
-            }
-            else{
-                newRoad->setRoadName(tempn);
-            }
+        }
+
+        if(elemName == NAAM){
+            newRoad->setRoadName(tempn);
         }
         else if(elemName == LENGTE){
-            tempi = convertStrToInt(elem->GetText());
+            tempi = convertStrToInt(tempn);
             if(tempi <= 0){
                 delete newRoad;
                 REQUIRE(tempi >= 0, "Road length is not valid");
@@ -76,12 +79,15 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
     // Parsing
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
         string elemName = elem->Value();
-        tempn = elem->GetText();
 
         // if elem is empty, end parsing and return false
-        if(tempn.empty()){
+        if(elem->NoChildren()){
             delete trafficLight;
+            REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
             return false;
+        }
+        else{
+            tempn = elem->GetText();
         }
 
         if(elemName == BAANL){
@@ -134,12 +140,15 @@ bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
 
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
         string elemName = elem->Value();
-        tempn = elem->GetText();
 
         // if elem is empty, end parsing and return false
-        if(tempn.empty()){
+        if(elem->NoChildren()){
             delete vehicle;
+            REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
             return false;
+        }
+        else{
+            tempn = elem->GetText();
         }
 
         if(elemName == BAANL){
@@ -176,12 +185,17 @@ bool TrafficSimulation::parseVehicleGenerator(TiXmlElement *&root) {
 
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
         string elemName = elem->Value();
-        tempn = elem->GetText();
 
-        if(tempn.empty()){
+        // if elem is empty, end parsing and return false
+        if(elem->NoChildren()){
             delete vehicleGenerator;
+            REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
             return false;
         }
+        else{
+            tempn = elem->GetText();
+        }
+
         if (elemName == BAANL) {
             for (unsigned int i = 0; i < this->roads.size(); ++i) {
                 if (tempn == this->roads[i]->getRoadName()) {
