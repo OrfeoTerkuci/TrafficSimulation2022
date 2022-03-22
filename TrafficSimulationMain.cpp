@@ -11,10 +11,11 @@ int main(){
 //TrafficSimulation ts(SIM3); // Multiple Roads simulation
 //TrafficSimulation ts(SIM4); // VehicleGenerator sim
 //TrafficSimulation ts(SIM5); // VehicleGenerator sim with multiple roads
-TrafficSimulation ts(SIM6); // VehicleGenerator sim and with cars on differebt roads
+//TrafficSimulation ts(SIM6); // VehicleGenerator sim and with cars on differebt roads
+TrafficSimulation ts(SIM7); // Normal simulation, with invalid road length
 
 //ts.printAll();
-ts.startSimUntilCount();
+//ts.startSimUntilCount();
 //ts.startSimulation();
 return 0;
 }

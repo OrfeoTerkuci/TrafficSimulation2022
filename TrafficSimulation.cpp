@@ -6,11 +6,21 @@
 #include "VehicleGenerator.h"
 #include "Standard_Values.h"
 #include "DesignByContract.h"
-#include <typeinfo>
+
 // c++ libs
 #include <stdexcept>
+#include <typeinfo>
+#include <sstream>
 
-//==== Parsing FUnctions ====//
+//==== Extra Functions ====//
+int convertStrToInt(string input){
+    int tempi = 0;
+    stringstream temps(input);
+    temps >> tempi;
+    return tempi;
+}
+
+//==== Parsing Functions ====//
 bool TrafficSimulation::parseRoad(TiXmlElement* &root){
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling parseRoad");
     REQUIRE(*typeid(root).name() == 'P' , "parseRoad was called with invalid parameter");
@@ -19,7 +29,7 @@ bool TrafficSimulation::parseRoad(TiXmlElement* &root){
 
     // temp values
     string tempn;
-    unsigned int tempi;
+    int tempi;
 
     // Parsing
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
@@ -35,9 +45,10 @@ bool TrafficSimulation::parseRoad(TiXmlElement* &root){
             }
         }
         else if(elemName == LENGTE){
-            tempi = atoi(elem->GetText());
-            if(tempi == 0){
+            tempi = convertStrToInt(elem->GetText());
+            if(tempi <= 0){
                 delete newRoad;
+                REQUIRE(tempi >= 0, "Road length is not valid");
                 return false;
             }
             else{
@@ -67,7 +78,7 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
 
     // Create temp values
     string tempn;
-    unsigned int tempi;
+    int tempi;
 
     // Parsing
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
@@ -89,11 +100,21 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
             }
         }
         else if(elemName == POSITIE){
-            tempi = atoi(elem->GetText());
+            tempi = convertStrToInt(elem->GetText());
+            if (tempi < 0){
+                delete trafficLight;
+                REQUIRE(tempi > 0, "Position is not valid");
+                return false;
+            }
             trafficLight->setPosition(tempi);
         }
         else if(elemName == CYCLUS){
-            tempi = atoi(elem->GetText());
+            tempi = convertStrToInt(elem->GetText());
+            if (tempi <= 0){
+                delete trafficLight;
+                REQUIRE(tempi >= 0, "Cycle is not valid");
+                return false;
+            }
             trafficLight->setCyclus(tempi);
         }
     }
@@ -139,7 +160,12 @@ bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
             }
         }
         else if(elemName == POSITIE){
-            tempi = atoi(elem->GetText());
+            tempi = convertStrToInt(elem->GetText());
+            if (tempi < 0){
+                delete vehicle;
+                REQUIRE(tempi > 0, "Position is not valid");
+                return false;
+            }
             vehicle->setPosition(tempi);
         }
     }
@@ -177,7 +203,12 @@ bool TrafficSimulation::parseVehicleGenerator(TiXmlElement *&root) {
             }
         }
         else if (elemName == FREQUENTIE) {
-            tempf = atoi(elem->GetText());
+            tempf = convertStrToInt(elem->GetText());
+            if (tempf < 0){
+                delete vehicleGenerator;
+                REQUIRE(tempf > 0, "Frequentie is not valid");
+                return false;
+            }
             vehicleGenerator->setFrequentie(tempf);
             // Set cooldown : 0 for instant generation upon simulation start
             vehicleGenerator->setCooldown(tempf);

@@ -125,6 +125,12 @@ TEST(SimTest, simulation6){
     EXPECT_FALSE(testFile.getRoads()[1]->getVehicleAmount() == 0);
 }
 
+TEST(SimTest, simulationFail){
+    //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM7));
+    EXPECT_ANY_THROW(TrafficSimulation testFile(SIM8));
+    //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM9));
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
