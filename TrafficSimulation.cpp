@@ -206,7 +206,7 @@ bool TrafficSimulation::parseVehicleGenerator(TiXmlElement *&root) {
             tempf = convertStrToInt(elem->GetText());
             if (tempf < 0){
                 delete vehicleGenerator;
-                REQUIRE(tempf > 0, "Frequentie is not valid");
+                REQUIRE(tempf > 0, "Frequency is not valid");
                 return false;
             }
             vehicleGenerator->setFrequentie(tempf);

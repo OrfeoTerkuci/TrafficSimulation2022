@@ -39,5 +39,6 @@
 #define SIM7                    "Simulation7.xml"
 #define SIM8                    "Simulation8.xml"
 #define SIM9                    "Simulation9.xml"
+#define SIM10                   "Simulation10.xml"
 
 #endif //TRAFFICSIMULATION2022_STANDARD_VALUES_H

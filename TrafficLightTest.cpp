@@ -127,8 +127,9 @@ TEST(SimTest, simulation6){
 
 TEST(SimTest, simulationFail){
     //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM7));
-    EXPECT_ANY_THROW(TrafficSimulation testFile(SIM8));
+    //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM8));
     //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM9));
+    EXPECT_ANY_THROW(TrafficSimulation testFile(SIM10));
 }
 
 int main(int argc, char **argv) {
