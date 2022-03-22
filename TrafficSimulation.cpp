@@ -189,7 +189,6 @@ bool TrafficSimulation::parseVehicleGenerator(TiXmlElement *&root) {
             delete vehicleGenerator;
             return false;
         }
-
         if (elemName == BAANL) {
             for (unsigned int i = 0; i < this->roads.size(); ++i) {
                 if (tempn == this->roads[i]->getRoadName()) {
