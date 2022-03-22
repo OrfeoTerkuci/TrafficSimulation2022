@@ -6,19 +6,12 @@
 #include "VehicleGenerator.h"
 #include "Standard_Values.h"
 #include "DesignByContract.h"
+#include "ExtraFunctions.cpp"
 
 // c++ libs
 #include <stdexcept>
 #include <typeinfo>
 #include <sstream>
-
-//==== Extra Functions ====//
-int convertStrToInt(string input){
-    int tempi = 0;
-    stringstream temps(input);
-    temps >> tempi;
-    return tempi;
-}
 
 //==== Parsing Functions ====//
 bool TrafficSimulation::parseRoad(TiXmlElement* &root){
