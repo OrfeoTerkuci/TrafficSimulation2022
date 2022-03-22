@@ -569,4 +569,4 @@ void TrafficSimulation::startSimUntilCount() {
 
 TrafficSimulation::~TrafficSimulation() {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling destructor");
-    }
+}
