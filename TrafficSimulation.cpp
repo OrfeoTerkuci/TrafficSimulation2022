@@ -160,6 +160,7 @@ bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
                     break;
                 }
             }
+            return false;
         }
         else if(elemName == POSITIE){
             tempi = convertStrToInt(elem->GetText());
