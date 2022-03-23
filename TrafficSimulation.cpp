@@ -41,7 +41,7 @@ bool TrafficSimulation::parseRoad(TiXmlElement* &root){
             newRoad->setRoadName(tempn);
         }
         else if(elemName == LENGTE){
-            tempi = convertStringToInt(tempn);
+            tempi = convertStrToInt(tempn);
             if(tempi <= 0){
                 delete newRoad;
                 REQUIRE(tempi >= 0, "Road length is not valid");
@@ -99,7 +99,7 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
             }
         }
         else if(elemName == POSITIE){
-            tempi = convertStringToInt(elem->GetText());
+            tempi = convertStrToInt(elem->GetText());
             if (tempi < 0){
                 delete trafficLight;
                 REQUIRE(tempi > 0, "Position is not valid");
@@ -108,7 +108,7 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
             trafficLight->setPosition(tempi);
         }
         else if(elemName == CYCLUS){
-            tempi = convertStringToInt(elem->GetText());
+            tempi = convertStrToInt(elem->GetText());
             if (tempi <= 0){
                 delete trafficLight;
                 REQUIRE(tempi >= 0, "Cycle is not valid");
@@ -160,7 +160,7 @@ bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
             }
         }
         else if(elemName == POSITIE){
-            tempi = convertStringToInt(tempn);
+            tempi = convertStrToInt(tempn);
             if (tempi < 0){
                 delete vehicle;
                 REQUIRE(tempi > 0, "Position is not valid");
@@ -206,7 +206,7 @@ bool TrafficSimulation::parseVehicleGenerator(TiXmlElement *&root) {
             }
         }
         else if (elemName == FREQUENTIE) {
-            tempf = convertStringToInt(elem->GetText());
+            tempf = convertStrToInt(elem->GetText());
             if (tempf < 0){
                 delete vehicleGenerator;
                 REQUIRE(tempf > 0, "Frequency is not valid");
