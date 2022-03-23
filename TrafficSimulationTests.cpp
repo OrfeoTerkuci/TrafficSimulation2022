@@ -126,6 +126,7 @@ TEST(SimTest, simulation6){
 }
 
 TEST(SimTest, simulationSucces){
+    // test on files that does suppose to work
     EXPECT_NO_THROW(TrafficSimulation testFile(SIM1));
     EXPECT_NO_THROW(TrafficSimulation testFile2(SIM2));
     EXPECT_NO_THROW(TrafficSimulation testFile3(SIM3));
@@ -135,6 +136,7 @@ TEST(SimTest, simulationSucces){
 }
 
 TEST(SimTest, simulationFail){
+    // test on files with invalid parameters
     //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM7));
     //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM8));
     //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM9));
