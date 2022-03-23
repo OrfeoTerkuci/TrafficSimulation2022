@@ -5,7 +5,7 @@
 using namespace std;
 
 //==== Extra Functions ====//
-int convertStrToInt(string input){
+int convertStringToInt(string input){
     int tempi = 0;
     stringstream temps(input);
     temps >> tempi;

@@ -28,7 +28,7 @@ set(AdditionalSources
         )
 
 # Set source files for RELEASE target
-set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp VehicleGenerator.cpp ExtraFunctions.cpp ${AdditionalSources} ${tinySources})
+set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp VehicleGenerator.cpp ${AdditionalSources} ${tinySources})
 
 # Set source files for DEBUG target
 set(DEBUG_SOURCE_FILES  TrafficLightTest.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp VehicleGenerator.cpp ${AdditionalSources} ${tinySources})

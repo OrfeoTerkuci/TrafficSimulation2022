@@ -6,7 +6,7 @@
 #include "VehicleGenerator.h"
 #include "Standard_Values.h"
 #include "DesignByContract.h"
-#include "ExtraFunctions.cpp"
+#include "ExtraFunctions.h"
 
 // c++ libs
 #include <stdexcept>
@@ -41,7 +41,7 @@ bool TrafficSimulation::parseRoad(TiXmlElement* &root){
             newRoad->setRoadName(tempn);
         }
         else if(elemName == LENGTE){
-            tempi = convertStrToInt(tempn);
+            tempi = convertStringToInt(tempn);
             if(tempi <= 0){
                 delete newRoad;
                 REQUIRE(tempi >= 0, "Road length is not valid");
@@ -99,7 +99,7 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
             }
         }
         else if(elemName == POSITIE){
-            tempi = convertStrToInt(elem->GetText());
+            tempi = convertStringToInt(elem->GetText());
             if (tempi < 0){
                 delete trafficLight;
                 REQUIRE(tempi > 0, "Position is not valid");
@@ -108,7 +108,7 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
             trafficLight->setPosition(tempi);
         }
         else if(elemName == CYCLUS){
-            tempi = convertStrToInt(elem->GetText());
+            tempi = convertStringToInt(elem->GetText());
             if (tempi <= 0){
                 delete trafficLight;
                 REQUIRE(tempi >= 0, "Cycle is not valid");
@@ -136,7 +136,7 @@ bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
     Vehicle* vehicle = new Vehicle();
 
     string tempn;
-    unsigned int tempi;
+    int tempi;
 
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
         string elemName = elem->Value();
@@ -160,10 +160,10 @@ bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
                     break;
                 }
             }
-            return false;
+            //return false;
         }
         else if(elemName == POSITIE){
-            tempi = convertStrToInt(elem->GetText());
+            tempi = convertStringToInt(elem->GetText());
             if (tempi < 0){
                 delete vehicle;
                 REQUIRE(tempi > 0, "Position is not valid");
@@ -210,7 +210,7 @@ bool TrafficSimulation::parseVehicleGenerator(TiXmlElement *&root) {
             }
         }
         else if (elemName == FREQUENTIE) {
-            tempf = convertStrToInt(elem->GetText());
+            tempf = convertStringToInt(elem->GetText());
             if (tempf < 0){
                 delete vehicleGenerator;
                 REQUIRE(tempf > 0, "Frequency is not valid");
@@ -414,6 +414,22 @@ void TrafficSimulation::printAll() {
             for (int k = 0; k < this->roads[i]->getVehicleAmount(); ++k) {
                 cout << "Vehicle " << k + 1 << ":" << endl;
                 this->roads[i]->getVehicle(k)->print();
+                cout << endl;
+            }
+
+            if(this->vehicleGenerators.size() == 1){
+                cout << "Consists of " << vehicleGenerators.size() << " Vehicle Generator: " << endl;
+            }
+            else if(this->vehicleGenerators.size() > 1){
+                cout << "Consists of " << vehicleGenerators.size() << " Vehicle Generators: " << endl;
+            }
+
+            cout << endl;
+
+            for (long unsigned int l = 0; l < this->vehicleGenerators.size(); ++l) {
+                cout << "Vehicle Generator " << l << " : " << endl;
+                cout << '\t' << "-> Road: " << this->vehicleGenerators[l]->getRoad()->getRoadName() << endl;
+                cout << '\t' << "-> Frequency: " << this->vehicleGenerators[l]->getFrequentie() << endl;
                 cout << endl;
             }
         }
