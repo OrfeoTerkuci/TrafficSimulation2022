@@ -125,6 +125,15 @@ TEST(SimTest, simulation6){
     EXPECT_FALSE(testFile.getRoads()[1]->getVehicleAmount() == 0);
 }
 
+TEST(SimTest, simulationSucces){
+    EXPECT_NO_THROW(TrafficSimulation testFile(SIM1));
+    EXPECT_NO_THROW(TrafficSimulation testFile2(SIM2));
+    EXPECT_NO_THROW(TrafficSimulation testFile3(SIM3));
+    EXPECT_NO_THROW(TrafficSimulation testFile4(SIM4));
+    EXPECT_NO_THROW(TrafficSimulation testFile5(SIM5));
+    EXPECT_NO_THROW(TrafficSimulation testFile6(SIM6));
+}
+
 TEST(SimTest, simulationFail){
     //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM7));
     //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM8));
