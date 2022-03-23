@@ -126,14 +126,20 @@ TEST(SimTest, simulation6){
 }
 
 TEST(SimTest, simulationFail){
-    //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM7));
+    ASSERT_EXIT(TrafficSimulation testFile(SIM7) , testing::KilledBySignal(SIGABRT) , "Road length is not valid");
     //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM8));
+    ASSERT_EXIT(TrafficSimulation testFile(SIM8) , testing::KilledBySignal(SIGABRT) , "Position is not valid");
     //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM9));
+    ASSERT_EXIT(TrafficSimulation testFile(SIM9) , testing::KilledBySignal(SIGABRT) , "Position is not valid");
     //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM10));
-    EXPECT_ANY_THROW(TrafficSimulation testFile(SIM11));
+    ASSERT_EXIT(TrafficSimulation testFile(SIM10) , testing::KilledBySignal(SIGABRT) , "Frequency is not valid");
+    //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM11));
+    ASSERT_EXIT(TrafficSimulation testFile(SIM11) , testing::KilledBySignal(SIGABRT) , "One of the parameters was empty");
 }
+
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
+
     return RUN_ALL_TESTS();
 }
