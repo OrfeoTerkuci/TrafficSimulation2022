@@ -3,26 +3,30 @@
 Project Software Engineering 2022. University of Antwerp.  
 Made by: **Orfeo Terkuci** and **Jason Liu**
 
-## Opdracht 1
+## Versie 1.0
 ### Overzicht
 V = Implemented   
 X = Not implemented
 
 | Invoer                      | Prioriteit | Status |
-|-----------------------------|------------|--------|
+|-----------------------------|:------------:|:--------:|
 | Verkeerssituatie Inlezen    | Verplicht  | V      | 
 | Voertuigengenerator Inlezen | Belangrijk | V      |
 
 | Uitvoer         | Prioriteit | Status |
-|-----------------|------------|--------|
+|-----------------|:------------:|:--------:|
 | Simpele Uitvoer | Verplicht  | V      |
 
 | Simulatie                         | Prioriteit | Status |
-|-----------------------------------|------------|--------|
+|-----------------------------------|:------------:|:--------:|
 | Rijden Van Voertuig               | Verplicht  | V      |
 | Simulatie Van Verkeerslicht       | Verplicht  | V      |
 | Automatische Simulatie            | Verplicht  | V      |
 | Simulatie Met Voertuigengenerator | Belangrijk | V      |
 
 ### Commentaar:
-...
+Parser must have it's own class.  
+Simulation must not stop at an error --> generate log file.  
+Simulation functions post-condition must be added.  
+
+

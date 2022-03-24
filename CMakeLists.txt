@@ -27,11 +27,19 @@ set(AdditionalSources
         DesignByContract.h
         )
 
+set(sources
+        TrafficSimulation.cpp
+        TrafficLight.cpp
+        Vehicle.cpp
+        Road.cpp
+        VehicleGenerator.cpp
+        )
+
 # Set source files for RELEASE target
-set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp VehicleGenerator.cpp ${AdditionalSources} ${tinySources})
+set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp ${sources} ${AdditionalSources} ${tinySources})
 
 # Set source files for DEBUG target
-set(DEBUG_SOURCE_FILES TrafficSimulationTests.cpp TrafficSimulation.cpp TrafficLight.cpp Vehicle.cpp Road.cpp VehicleGenerator.cpp ${AdditionalSources} ${tinySources})
+set(DEBUG_SOURCE_FILES TrafficSimulationTests.cpp ${sources} ${AdditionalSources} ${tinySources})
 
 # Create RELEASE target
 add_executable(ts ${RELEASE_SOURCE_FILES})
