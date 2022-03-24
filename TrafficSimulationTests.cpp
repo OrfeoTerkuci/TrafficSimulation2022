@@ -147,6 +147,145 @@ TEST(SimTest, simulationFail){
     ASSERT_EXIT(TrafficSimulation testFile(SIM11) , testing::KilledBySignal(SIGABRT) , "One of the parameters was empty");
 }
 
+TEST(FunctionsTest , Vehicle_Test){
+    Road* testRoad = new Road(500 , "TestRoad");
+    Vehicle testVehicle(50 , 100);
+    const unsigned int testPosition1 = 100;
+    const unsigned int testPosition2 = 6;
+
+    EXPECT_TRUE( testVehicle.properlyInitialized() );
+    // Position getter and setter test
+    EXPECT_EQ( testVehicle.getVehiclePosition() , testPosition1 );
+    testVehicle.setPosition(testPosition2);
+    EXPECT_EQ( testVehicle.getVehiclePosition() , testPosition2);
+    // Road getter and setter test
+    EXPECT_NE(testVehicle.getRoad() , testRoad );
+    testVehicle.setRoad(testRoad);
+    EXPECT_EQ(testVehicle.getRoad() , testRoad );
+    EXPECT_EQ( testVehicle.getAcceleration() , 0.0 );
+    testVehicle.setAcceleration(4.7);
+    EXPECT_EQ( testVehicle.getAcceleration() , 4.7 );
+    EXPECT_EQ( testVehicle.getSpeed() , 50 );
+    testVehicle.setSpeed(4);
+    EXPECT_EQ( testVehicle.getSpeed() , 4 );
+    EXPECT_EQ( testVehicle.getCurrentMaxSpeed() , MAX_SPEED);
+    testVehicle.setCurrentMaxSpeed(5);
+    EXPECT_EQ( testVehicle.getCurrentMaxSpeed() , 5);
+    EXPECT_NE( testVehicle.getStatus() , idle );
+     testVehicle.setStatus(idle);
+    EXPECT_EQ( testVehicle.getStatus() , idle );
+    EXPECT_EQ( testVehicle.getStatusString() , "Stopped / Idle" );
+}
+
+TEST(FunctionsTest , Road_Test){
+    Road* testRoad = new Road();
+    Vehicle* testVehicle = new Vehicle();
+    vector<Vehicle*> vehiclesVector;
+    vehiclesVector.push_back(testVehicle);
+    TrafficLight* testLight = new TrafficLight(20 , testRoad);
+    vector<TrafficLight*> lightsVector;
+    lightsVector.push_back(testLight);
+    vector<TrafficLight*> emptyLightsVector;
+
+    EXPECT_TRUE( testRoad->properlyInitialized() );
+    // Length getter and setter test
+    const unsigned int testLength1 = 0;
+    const unsigned int testLength2 = 5;
+    EXPECT_EQ( testRoad->getLength() , testLength1 );
+    testRoad->setLength(5);
+
+    EXPECT_EQ(testRoad->getLength() , testLength2);
+    // Name getter and setter test
+    EXPECT_EQ( testRoad->getRoadName() , "" );
+    testRoad->setRoadName("Middelheimlaan" );
+    EXPECT_EQ( testRoad->getRoadName() , "Middelheimlaan" );
+    // Vehicle addition test
+    EXPECT_EQ( testRoad->getVehicleAmount() , 0 );
+    EXPECT_NE( testRoad->getVehicles() , vehiclesVector );
+    testRoad->addVehicle(testVehicle);
+    EXPECT_EQ( testRoad->getVehicleAmount() , 1 );
+    EXPECT_EQ( testRoad->getVehicles() , vehiclesVector );
+    EXPECT_EQ( testRoad->getVehicle(0) , testVehicle );
+    // Vehicle removal test
+    testRoad->removeVehicle(testVehicle);
+    EXPECT_EQ( testRoad->getVehicleAmount() , 0);
+    EXPECT_NE( testRoad->getVehicles() , vehiclesVector );
+    // Vehicles setter test
+    testRoad->setVehicles(vehiclesVector);
+    EXPECT_EQ( testRoad->getVehicleAmount() , 1 );
+    EXPECT_EQ( testRoad->getVehicles() , vehiclesVector );
+    // TrafficLights addition test
+    EXPECT_EQ( testRoad->getTrafficLightsAmount() , 0);
+    EXPECT_NE( testRoad->getTrafficLights() , lightsVector );
+    testRoad->addLight(testLight);
+    EXPECT_EQ( testRoad->getTrafficLightsAmount() , 1);
+    EXPECT_EQ( testRoad->getTrafficLight(0) , testLight );
+    EXPECT_EQ( testRoad->getTrafficLights() , lightsVector );
+    // TrafficLights setter test
+    testRoad->setTrafficLights(emptyLightsVector);
+    EXPECT_EQ( testRoad->getTrafficLightsAmount() , 0);
+    EXPECT_NE( testRoad->getTrafficLights() , lightsVector );
+    testRoad->setTrafficLights(lightsVector);
+    EXPECT_EQ( testRoad->getTrafficLightsAmount() , 1);
+    EXPECT_EQ( testRoad->getTrafficLight(0) , testLight );
+    EXPECT_EQ( testRoad->getTrafficLights() , lightsVector );
+
+}
+
+TEST(FunctionsTest , TrafficLight_Test){
+    Road* testRoad = new Road(60 , "TestRoad");
+    Road* testRoad2 = new Road(500 , "TestRoad2");
+    Vehicle* testVehicle = new Vehicle(10 , 50);
+    testRoad2->addVehicle(testVehicle);
+    TrafficLight testLight(20 , testRoad);
+    EXPECT_TRUE( testLight.properlyInitialized() );
+    // Color getter and setter test
+    EXPECT_EQ( testLight.getCurrentColor() , red );
+    testLight.setCurrentColor(green);
+    EXPECT_EQ( testLight.getCurrentColor() , green );
+    // Position getter and setter test
+    const unsigned int testPosition = 30;
+    EXPECT_NE( testLight.getPosition() , testPosition );
+    testLight.setPosition(30);
+    EXPECT_EQ( testLight.getPosition() , testPosition );
+    // Cyclus getter and setter test
+    EXPECT_EQ( testLight.getCyclus() , 20 );
+    testLight.setCyclus(100);
+    EXPECT_EQ( testLight.getCyclus() , 100 );
+    // Road getter and setter test
+    EXPECT_EQ( testLight.getRoad() , testRoad );
+    testLight.setRoad(testRoad2);
+    EXPECT_NE( testLight.getRoad() , testRoad );
+    // Nearest vehicle getter test
+    testRoad->addVehicle(testVehicle);
+    EXPECT_EQ( testLight.getNearestVehicle() , testVehicle);
+}
+
+TEST(FunctionsTest , VehicleGenerator_Test){
+    VehicleGenerator testGenerator;
+    Road* testRoad = new Road(500 , "Unnamed");
+    EXPECT_TRUE( testGenerator.properlyInitialized() );
+    // Test cooldown getter and setter
+    EXPECT_EQ( testGenerator.getCooldown() , 0);
+    testGenerator.setCooldown(3);
+    EXPECT_EQ( testGenerator.getCooldown() , 3 );
+    // Test frequency getter and setter
+    EXPECT_EQ( testGenerator.getFrequentie() , 0 );
+    testGenerator.setFrequentie(5);
+    EXPECT_EQ( testGenerator.getFrequentie() , 5 );
+    // Test road getter and setter
+    EXPECT_NE( testGenerator.getRoad() , testRoad );
+    testGenerator.setRoad(testRoad);
+    EXPECT_EQ( testGenerator.getRoad() , testRoad );
+    // Test simulation function
+    for (int i = 0; i < 3; ++i) {
+        EXPECT_FALSE( testGenerator.simulate() );
+    }
+    EXPECT_TRUE( testGenerator.simulate() );
+    EXPECT_FALSE( testGenerator.simulate() );
+
+}
+
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);

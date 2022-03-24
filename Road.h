@@ -115,6 +115,7 @@ public:
     /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addVehicle");
      * REQUIRE(*typeid(newVehicle).name() == 'P' , "addVehicle was called with invalid parameter");
+     * REQUIRE(newVehicle->properlyInitialized() , "addVehicle was called with uninitialized parameter");
      * ENSURE(*oldSize == vehicles.size() - 1 , "addVehicle failed");
      * @param newVehicle A pointer to a Vehicle element
      */
@@ -123,6 +124,7 @@ public:
     /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling removeVehicle");
      * REQUIRE(*typeid(oldVehicle).name() == 'P' , "removeVehicle was called with invalid parameter");
+     * REQUIRE(oldVehicle->properlyInitialized() , "removeVehicle was called with uninitialized parameter");
      * ENSURE(*oldSize == vehicles.size() + 1 , "removeVehicle failed");
      */
     void removeVehicle(Vehicle* oldVehicle);
@@ -130,6 +132,7 @@ public:
     /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addLight");
      * REQUIRE(*typeid(newLight).name() == 'P' , "addLight was called with invalid parameter");
+     * REQUIRE(newLight->properlyInitialized(), "addLight was called with uninitialized parameter");
      * ENSURE(*oldSize == trafficLights.size() - 1 , "addLight failed");
      */
     void addLight (TrafficLight* newLight);

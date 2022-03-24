@@ -100,10 +100,9 @@ bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
         }
         else if(elemName == POSITIE){
             tempi = convertStrToInt(elem->GetText());
-            if (tempi < 0){
+            if (tempi < 0 || tempi > int(trafficLight->getRoad()->getLength()) ){
                 delete trafficLight;
-                REQUIRE(tempi > 0, "Position is not valid");
-                return false;
+                REQUIRE(false, "Position is not valid");
             }
             trafficLight->setPosition(tempi);
         }
@@ -312,6 +311,7 @@ const vector<Vehicle *> &TrafficSimulation::getVehicles(){
 void TrafficSimulation::addTrafficLight(TrafficLight *&newLight) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addTrafficLight");
     REQUIRE(*typeid(newLight).name() == 'P' , "addTrafficLight was called with invalid parameter");
+    REQUIRE(newLight->properlyInitialized() , "addTrafficLight was called with uninitialized parameter");
     unsigned int* oldSize = new unsigned int;
     *oldSize = lights.size();
     this->lights.push_back(newLight);
@@ -322,6 +322,7 @@ void TrafficSimulation::addTrafficLight(TrafficLight *&newLight) {
 void TrafficSimulation::addVehicle(Vehicle *&newVehicle) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addVehicle");
     REQUIRE(*typeid(newVehicle).name() == 'P' , "addVehicle was called with invalid parameter");
+    REQUIRE(newVehicle->properlyInitialized() , "addVehicle was called with uninitialized parameter");
     unsigned int* oldSize = new unsigned int;
     *oldSize = vehicles.size();
     this->vehicles.push_back(newVehicle);
@@ -332,6 +333,7 @@ void TrafficSimulation::addVehicle(Vehicle *&newVehicle) {
 bool TrafficSimulation::addRoad(Road *newRoad) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addRoad");
     REQUIRE(*typeid(newRoad).name() == 'P' , "addRoad was called with invalid parameter");
+    REQUIRE(newRoad->properlyInitialized() , "addRoad was called with uninitialized parameter");
     unsigned int* oldSize = new unsigned int;
     *oldSize = roads.size();
     for (unsigned int i = 0; i < this->roads.size(); ++i) {
@@ -349,8 +351,10 @@ bool TrafficSimulation::addRoad(Road *newRoad) {
 bool TrafficSimulation::addVehicleGenerator(VehicleGenerator *newVehicleGenerator) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling addVehicleGenerator");
     REQUIRE (*typeid(newVehicleGenerator).name() == 'P' , "addVehicleGenerator was called with invalid parameter");
+    REQUIRE (newVehicleGenerator->properlyInitialized() , "addVehicleGenerator was called with uninitialized parameter");
     unsigned int* oldSize = new unsigned int;
     *oldSize = vehicleGenerators.size();
+    // Check if the vehicle generator is already present
     for (unsigned int i = 0; i < this->vehicleGenerators.size(); ++i) {
         if (this->vehicleGenerators[i]->getRoad() == newVehicleGenerator->getRoad()){
             ENSURE(*oldSize == vehicleGenerators.size() , "addVehicleGenerator : vector modified when it shouldn't");
@@ -466,6 +470,7 @@ void TrafficSimulation::startSimulation() {
             currentRoad = currentVehicle->getRoad();
             // Simulate vehicle
             currentVehicle->simulate();
+            // Get vehicle position
             vehiclePosition = currentVehicle->getVehiclePosition();
             roadLength = currentRoad->getLength();
             // Check if vehicle had gone off the road

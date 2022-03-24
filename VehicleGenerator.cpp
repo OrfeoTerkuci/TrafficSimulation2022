@@ -19,6 +19,7 @@ Road *VehicleGenerator::getRoad(){
 void VehicleGenerator::setRoad(Road *newRoad) {
     REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling setRoad");
     REQUIRE(*typeid(newRoad).name() == 'P' , "setRoad was called with invalid parameter");
+    REQUIRE(newRoad->properlyInitialized() , "setRoad was called with uninitialized parameter");
     VehicleGenerator::road = newRoad;
     ENSURE(VehicleGenerator::road == newRoad , "setRoad failed");
 }
@@ -30,7 +31,8 @@ int VehicleGenerator::getFrequentie(){
 
 void VehicleGenerator::setFrequentie(int newFrequentie) {
     REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling setFrequentie");
-    REQUIRE(*typeid(newFrequentie).name() == 'i' , "setFrequentie was called with invalid parameter");
+    REQUIRE(*typeid(newFrequentie).name() == 'i' , "setFrequentie was called with invalid parameter : wrong type");
+    REQUIRE(newFrequentie >= 0 , "setFrequentie was called with invalid parameter : negative frequence");
     VehicleGenerator::frequentie = newFrequentie;
     ENSURE(VehicleGenerator::frequentie == newFrequentie , "setFrequentie failed");
 }
@@ -42,7 +44,8 @@ int VehicleGenerator::getCooldown() {
 
 void VehicleGenerator::setCooldown(int newCooldown) {
     REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling setCooldown");
-    REQUIRE(*typeid(newCooldown).name() == 'i' , "setCooldown was called with invalid parameter");
+    REQUIRE(*typeid(newCooldown).name() == 'i' , "setCooldown was called with invalid parameter : wrong type");
+    REQUIRE(newCooldown >= 0 , "setCooldown was called with invalid parameter : negative cooldown");
     VehicleGenerator::cooldown = newCooldown;
     ENSURE(VehicleGenerator::cooldown == newCooldown , "setCooldown failed");
 }

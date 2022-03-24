@@ -30,6 +30,7 @@
 #define MAX_VEHICLES            20
 
 // xml file names
+#define SIM0                    "Simulation0.xml"
 #define SIM1                    "Simulation1.xml"
 #define SIM2                    "Simulation2.xml"
 #define SIM3                    "Simulation3.xml"

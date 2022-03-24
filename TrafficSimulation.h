@@ -1,5 +1,5 @@
-#ifndef TRAFFICSIMULATION2022_TRAFFICSIMULATIONREADER_H
-#define TRAFFICSIMULATION2022_TRAFFICSIMULATIONREADER_H
+#ifndef TRAFFICSIMULATION2022_TRAFFICSIMULATION_H
+#define TRAFFICSIMULATION2022_TRAFFICSIMULATION_H
 #include <string>
 #include <vector>
 #include <fstream>
@@ -72,6 +72,7 @@ public:
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addTrafficLight");
      * REQUIRE(*typeid(newLight).name() == 'P' , "addTrafficLight was called with invalid parameter");
+     * REQUIRE(newLight->properlyInitialized() , "addTrafficLight was called with uninitialized parameter");
      * ENSURE(*oldSize == lights.size() - 1 , "addTrafficLight failed");
      * @param newLight A pointer to a TrafficLight element
     */
@@ -80,6 +81,7 @@ public:
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addVehicle");
      * REQUIRE(*typeid(newVehicle).name() == 'P' , "addVehicle was called with invalid parameter");
+     * REQUIRE(newVehicle->properlyInitialized() , "addVehicle was called with uninitialized parameter");
      * ENSURE(*oldSize == vehicles.size() - 1 , "addVehicle failed");
      * @param newVehicle A pointer to a Vehicle element
     */
@@ -88,6 +90,7 @@ public:
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addRoad");
      * REQUIRE(*typeid(newRoad).name() == 'P' , "addRoad was called with invalid parameter");
+     * REQUIRE(newRoad->properlyInitialized() , "addRoad was called with uninitialized parameter");
      * ENSURE(*oldSize == roads.size() - 1 , "addRoad failed");
      * ENSURE(*oldSize == roads.size() , "addRoad: vector modified when it shouldn't");
      * @param newRoad A pointer to a Road element
@@ -98,6 +101,7 @@ public:
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addVehicleGenerator");
      * REQUIRE (*typeid(newVehicleGenerator).name() == 'P' , "addVehicleGenerator was called with invalid parameter");
+     * REQUIRE (newVehicleGenerator->properlyInitialized() , "addVehicleGenerator was called with uninitialized parameter");
      * ENSURE(*oldSize == vehicleGenerators.size() , "addVehicleGenerator : vector modified when it shouldn't");
      * ENSURE(*oldSize == vehicleGenerators.size() - 1 , "addVehicleGenerator failed");
     */
@@ -184,4 +188,4 @@ public:
 };
 
 
-#endif //TRAFFICSIMULATION2022_TRAFFICSIMULATIONREADER_H
+#endif //TRAFFICSIMULATION2022_TRAFFICSIMULATION_H

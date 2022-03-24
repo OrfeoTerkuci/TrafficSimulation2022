@@ -7,6 +7,7 @@
 TrafficLight::TrafficLight(unsigned int cyclus, Road *road) : cyclus(cyclus), road(road) , currentColor(red) {
     REQUIRE(*typeid(cyclus).name() == 'j' && cyclus >= 0 , "constructor was called with invalid cyclus");
     REQUIRE(*typeid(road).name() == 'P' , "constructor was called with invalid road");
+    REQUIRE(road->properlyInitialized() , "constructor was called with invalid road");
     _initCheck = this;
     ENSURE(TrafficLight::cyclus == cyclus , "cyclus was not properly initialized");
     ENSURE(TrafficLight::road == road , "road was not properly initialized");
@@ -56,6 +57,7 @@ Road* TrafficLight::getRoad(){
 void TrafficLight::setRoad(Road* newRoad) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling setRoad");
     REQUIRE(*typeid(newRoad).name() == 'P' , "setRoad was called with invalid parameter");
+    REQUIRE(newRoad->properlyInitialized() , "setRoad was called with uninitialized parameter");
     TrafficLight::road = newRoad;
     ENSURE(TrafficLight::road == newRoad , "setRoad failed");
 }

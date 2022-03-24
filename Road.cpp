@@ -1,5 +1,6 @@
 #include "Road.h"
 #include "Vehicle.h"
+#include "TrafficLight.h"
 #include "DesignByContract.h"
 #include <typeinfo>
 
@@ -15,8 +16,9 @@ Road::Road(unsigned int length, const string &roadName) : length(length), roadNa
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 
-Road::Road() : length(0) , _initCheck(this) {
+Road::Road() : length(0) , roadName("") , _initCheck(this) {
     ENSURE(length == 0 , "Length was not properly initialized");
+    ENSURE(roadName == "" , "roadName was not properly initialized");
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 
@@ -90,6 +92,7 @@ void Road::setVehicles(const vector<Vehicle *> &newVehicles) {
 void Road::addVehicle(Vehicle *newVehicle) {
     REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addVehicle");
     REQUIRE(*typeid(newVehicle).name() == 'P' , "addVehicle was called with invalid parameter");
+    REQUIRE(newVehicle->properlyInitialized() , "addVehicle was called with uninitialized parameter");
     unsigned int* oldSize = new unsigned int;
     *oldSize = vehicles.size();
     vehicles.push_back(newVehicle);
@@ -100,6 +103,7 @@ void Road::addVehicle(Vehicle *newVehicle) {
 void Road::removeVehicle(Vehicle *oldVehicle) {
     REQUIRE(properlyInitialized() , "Road wasn't initialized when calling removeVehicle");
     REQUIRE(*typeid(oldVehicle).name() == 'P' , "removeVehicle was called with invalid parameter");
+    REQUIRE(oldVehicle->properlyInitialized() , "removeVehicle was called with uninitialized parameter");
     unsigned int* oldSize = new unsigned int;
     *oldSize = vehicles.size();
     for (long unsigned int i = 0; i < this->vehicles.size(); ++i) {
@@ -115,6 +119,7 @@ void Road::removeVehicle(Vehicle *oldVehicle) {
 void Road::addLight(TrafficLight *newLight) {
     REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addLight");
     REQUIRE(*typeid(newLight).name() == 'P' , "addLight was called with invalid parameter");
+    REQUIRE(newLight->properlyInitialized(), "addLight was called with uninitialized parameter");
     unsigned int* oldSize = new unsigned int;
     *oldSize = trafficLights.size();
     trafficLights.push_back(newLight);
