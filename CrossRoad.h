@@ -18,6 +18,10 @@ public:
     virtual ~CrossRoad();
 
     void addRoad(Road* road, int position);
+
+    const map<Road *, int> &getRoads() const;
+
+    void setRoads(const map<Road *, int> &newRoads);
 };
 
 

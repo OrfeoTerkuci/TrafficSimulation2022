@@ -7,6 +7,8 @@
 #include "Road.h"
 #include "Vehicle.h"
 #include "VehicleGenerator.h"
+#include "CrossRoad.h"
+
 #include "tinyxml/tinyxml.h"
 #include "Standard_Values.h"
 #include "DesignByContract.h"
@@ -21,7 +23,41 @@
 using namespace std;
 
 bool parseCrossRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
+    REQUIRE(trafficSimulation.properlyInitialized(), "TrafficSimulation was not initialized when calling parseCrossRoad");
+    // create new object
+    CrossRoad* crossRoad = new CrossRoad();
 
+    // temp values
+    string tempn;
+    int tempi;
+
+    // parsing
+    for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
+        string elemname = elem->Value();
+
+        if(elem->NoChildren()){
+            delete crossRoad;
+            ENSURE(!elem->NoChildren(), "One of the parameters was empty");
+            return false;
+        }
+
+        tempn = elem->GetText();
+
+        if (elemname.find(BAAN_POSITIE) != string::npos){
+            eraseSubStr(elemname, BAAN_POSITIE);
+            tempi = convertStrToInt(elemname);
+            for (int i = 0; i < trafficSimulation.getRoads().size(); ++i) {
+                if (trafficSimulation.getRoads()[i]->getRoadName() == tempn){
+                    crossRoad->addRoad(trafficSimulation.getRoads()[i], tempi);
+                    break;
+                }
+            }
+        }
+    }
+    if (crossRoad->getRoads().size() > 1){
+        return true;
+    }
+    return false;
 }
 
 bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
@@ -274,6 +310,10 @@ void parseTrafficSimulationX(TrafficSimulation &trafficSimulation){
         } else if (elemName == VOERTUIGGENERATOR) {
             if (!parseVehicleGenerator(elem, trafficSimulation)) {
                 cout << "Error: Could not make vehicle generator" << endl;
+            }
+        } else if (elemName == KRUISPUNT) {
+            if (!parseCrossRoad(elem, trafficSimulation)){
+                cout << "Error: Could not make crossroad" << endl;
             }
         }
     }

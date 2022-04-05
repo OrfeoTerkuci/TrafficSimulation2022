@@ -12,6 +12,7 @@ class Road;
 class Vehicle;
 class TrafficLight;
 class VehicleGenerator;
+class CrossRoad;
 
 class TrafficSimulation {
     string filename;
@@ -19,6 +20,7 @@ class TrafficSimulation {
     vector<TrafficLight*> lights;
     vector<Road*> roads;
     vector<VehicleGenerator*> vehicleGenerators;
+    vector<CrossRoad*> crossRoads;
 
     TrafficSimulation* _initCheck;
 public:
