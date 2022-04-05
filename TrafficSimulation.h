@@ -91,6 +91,8 @@ public:
     */
     void addVehicle(Vehicle* &newVehicle);
 
+    void addCrossRoad(CrossRoad* crossRoad);
+
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addRoad");
      * REQUIRE(*typeid(newRoad).name() == 'P' , "addRoad was called with invalid parameter");

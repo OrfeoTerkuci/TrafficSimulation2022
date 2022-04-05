@@ -42,11 +42,14 @@ bool parseCrossRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         }
 
         tempn = elem->GetText();
-
-        if (elemname.find(BAAN_POSITIE) != string::npos){
-            eraseSubStr(elemname, BAAN_POSITIE);
-            tempi = convertStrToInt(elemname);
-            for (int i = 0; i < trafficSimulation.getRoads().size(); ++i) {
+        if (elemname == BAANL){
+            TiXmlAttribute* atr = elem->FirstAttribute();
+            string pos;
+            if (atr != NULL){
+                pos = atr->Value();
+            }
+            tempi = convertStrToInt(pos);
+            for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); ++i) {
                 if (trafficSimulation.getRoads()[i]->getRoadName() == tempn){
                     crossRoad->addRoad(trafficSimulation.getRoads()[i], tempi);
                     break;
@@ -55,8 +58,10 @@ bool parseCrossRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         }
     }
     if (crossRoad->getRoads().size() > 1){
+        trafficSimulation.addCrossRoad(crossRoad);
         return true;
     }
+    delete crossRoad;
     return false;
 }
 

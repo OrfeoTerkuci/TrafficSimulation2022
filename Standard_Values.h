@@ -47,6 +47,7 @@
 #define SIM9                    "Simulation9.xml"
 #define SIM10                   "Simulation10.xml"
 #define SIM11                   "Simulation11.xml"
+#define SIM12                   "Simulation12.xml"
 
 // file types
 #define XMLL                    ".xml"
