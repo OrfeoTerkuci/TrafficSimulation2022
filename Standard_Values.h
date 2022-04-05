@@ -43,4 +43,10 @@
 #define SIM10                   "Simulation10.xml"
 #define SIM11                   "Simulation11.xml"
 
+// file types
+#define XMLL                    ".xml"
+#define XMLU                    ".XML"
+#define JSONL                   ".json"
+#define JSONU                   ".JSON"
+
 #endif //TRAFFICSIMULATION2022_STANDARD_VALUES_H
