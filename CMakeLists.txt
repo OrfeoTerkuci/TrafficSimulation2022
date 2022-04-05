@@ -30,7 +30,7 @@ set(AdditionalSources
 # Set Parsers
 set(parsers
         ParserJSON.cpp
-        ParserXML.cpp)
+        )
 
 # Set Sources
 set(sources
@@ -43,7 +43,7 @@ set(sources
 
 
 # Set source files for RELEASE target
-set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp ${sources} ${AdditionalSources} ${tinySources} ${parsers})
+set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp ${sources} ${AdditionalSources} ${tinySources} ${parsers} ParserXML.h)
 
 # Set source files for DEBUG target
 set(DEBUG_SOURCE_FILES TrafficSimulationTests.cpp ${sources} ${AdditionalSources} ${tinySources} ${parsers})

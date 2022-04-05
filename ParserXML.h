@@ -1,3 +1,6 @@
+#ifndef TRAFFICSIMULATION2022_PARSERXML_H
+#define TRAFFICSIMULATION2022_PARSERXML_H
+
 // custom headers
 #include "TrafficSimulation.h"
 #include "TrafficLight.h"
@@ -269,3 +272,5 @@ void parseTrafficSimulation(TrafficSimulation &trafficSimulation){
         }
     }
 }
+
+#endif //TRAFFICSIMULATION2022_PARSERXML_H

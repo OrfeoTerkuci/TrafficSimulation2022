@@ -154,6 +154,9 @@ public:
     */
     bool parseVehicleGenerator(TiXmlElement* &root);
 
+    void parseXML();
+
+    void parseJSON();
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling printAll");
     */
