@@ -3,3 +3,11 @@
 //
 
 #include "CrossRoad.h"
+
+CrossRoad::CrossRoad() {}
+
+CrossRoad::~CrossRoad() {}
+
+void CrossRoad::addRoad(Road *road, int position) {
+    roads[road] = position;
+}

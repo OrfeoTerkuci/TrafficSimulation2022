@@ -12,6 +12,12 @@ class Road;
 
 class CrossRoad {
     map<Road*, int> roads;
+public:
+    CrossRoad();
+
+    virtual ~CrossRoad();
+
+    void addRoad(Road* road, int position);
 };
 
 
