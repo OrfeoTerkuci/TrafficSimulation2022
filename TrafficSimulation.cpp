@@ -382,6 +382,8 @@ void TrafficSimulation::startSimUntilCount() {
 
 TrafficSimulation::~TrafficSimulation() {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling destructor");
+
+    // Deleting every object, from memory
     for (unsigned int i = 0; i < roads.size(); ++i) {
         delete roads[i];
     }
@@ -400,12 +402,16 @@ TrafficSimulation::~TrafficSimulation() {
     for (unsigned int i = 0; i < vehicleGenerators.size(); ++i) {
         delete vehicleGenerators[i];
     }
+
+    // clearing lists
     roads.clear();
     lights.clear();
     busStops.clear();
     crossRoads.clear();
     vehicles.clear();
     vehicleGenerators.clear();
+
+    // ensuring every list is empty
     ENSURE(roads.empty(), "Roads are not properly destructed");
     ENSURE(lights.empty(), "Lights are not properly destructed");
     ENSURE(busStops.empty(), "Bus stops are not properly destructed");
