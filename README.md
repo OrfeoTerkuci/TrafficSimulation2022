@@ -3,10 +3,11 @@
 Project Software Engineering 2022. University of Antwerp.  
 Made by: **Orfeo Terkuci** and **Jason Liu**
 
-## Versie 1.0
-### Overzicht
 V = Implemented   
 X = Not implemented
+
+## Versie 1.0
+### Overzicht
 
 | Invoer                      | Prioriteit | Status |
 |-----------------------------|:------------:|:--------:|
@@ -30,3 +31,7 @@ Simulation must not stop at an error --> generate log file.
 Simulation functions post-condition must be added.  
 
 
+## Vesrie 2.0  
+### Overzicht  
+### Comentaar:
+...  
