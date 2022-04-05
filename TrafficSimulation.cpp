@@ -232,6 +232,9 @@ TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename
     else if (filename.find(JSONU) != string::npos or filename.find(JSONL) != string::npos){
         parseJSON();
     }
+    else {
+        cout << "No compatible parser for this type of file" << endl;
+    }
     ENSURE(TrafficSimulation::filename == filename , "filename was not properly initialized");
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
