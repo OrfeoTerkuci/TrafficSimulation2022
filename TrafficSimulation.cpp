@@ -607,3 +607,7 @@ void TrafficSimulation::parseJSON() {
 void TrafficSimulation::addCrossRoad(CrossRoad* crossRoad) {
     crossRoads.push_back(crossRoad);
 }
+
+void TrafficSimulation::addBusStop(BusStop* busStop) {
+    busStops.push_back(busStop);
+}

@@ -13,6 +13,7 @@ class Vehicle;
 class TrafficLight;
 class VehicleGenerator;
 class CrossRoad;
+class BusStop;
 
 class TrafficSimulation {
     string filename;
@@ -21,6 +22,7 @@ class TrafficSimulation {
     vector<Road*> roads;
     vector<VehicleGenerator*> vehicleGenerators;
     vector<CrossRoad*> crossRoads;
+    vector<BusStop*> busStops;
 
     TrafficSimulation* _initCheck;
 public:
@@ -92,6 +94,8 @@ public:
     void addVehicle(Vehicle* &newVehicle);
 
     void addCrossRoad(CrossRoad* crossRoad);
+
+    void addBusStop(BusStop* busStop);
 
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addRoad");

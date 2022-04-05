@@ -8,6 +8,7 @@
 #include "Vehicle.h"
 #include "VehicleGenerator.h"
 #include "CrossRoad.h"
+#include "BusStop.h"
 
 #include "tinyxml/tinyxml.h"
 #include "Standard_Values.h"
@@ -23,7 +24,45 @@
 using namespace std;
 
 bool parseBusStop(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
-    return false;
+    // create new object
+    BusStop* busStop = new BusStop();
+
+    // temp values
+    string tempn;
+    int tempi;
+
+    // parsing
+    for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
+        string elemname = elem->Value();
+
+        if(elem->NoChildren()){
+            delete busStop;
+            ENSURE(!elem->NoChildren(), "One of the parameters was empty");
+            return false;
+        }
+
+        tempn = elem->GetText();
+
+        if (elemname == BAANL){
+            for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); i++){
+                if (trafficSimulation.getRoads()[i]->getRoadName() == tempn){
+                    busStop->setRoad(trafficSimulation.getRoads()[i]);
+                }
+            }
+        } else if (elemname == WACHTTIJD) {
+            tempi = convertStrToInt(tempn);
+            busStop->setWaitTime(tempi);
+        } else if (elemname == POSITIE) {
+            tempi = convertStrToInt(tempn);
+            busStop->setPosition(tempi);
+        }
+        else{
+            cout << "Not recognized parameter" << endl;
+            return false;
+        }
+    }
+    trafficSimulation.addBusStop(busStop);
+    return true;
 }
 
 bool parseCrossRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
@@ -44,7 +83,6 @@ bool parseCrossRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
             ENSURE(!elem->NoChildren(), "One of the parameters was empty");
             return false;
         }
-
         tempn = elem->GetText();
         if (elemname == BAANL){
             TiXmlAttribute* atr = elem->FirstAttribute();
