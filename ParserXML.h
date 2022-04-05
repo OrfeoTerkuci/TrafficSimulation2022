@@ -22,6 +22,10 @@
 
 using namespace std;
 
+bool parseBusStop(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
+    return false;
+}
+
 bool parseCrossRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     REQUIRE(trafficSimulation.properlyInitialized(), "TrafficSimulation was not initialized when calling parseCrossRoad");
     // create new object
@@ -319,6 +323,10 @@ void parseTrafficSimulationX(TrafficSimulation &trafficSimulation){
         } else if (elemName == KRUISPUNT) {
             if (!parseCrossRoad(elem, trafficSimulation)){
                 cout << "Error: Could not make crossroad" << endl;
+            }
+        } else if (elemName == BUSHALTE) {
+            if (!parseBusStop(elem, trafficSimulation)) {
+                cout << "Error: Could not make bus stop" << endl;
             }
         }
     }
