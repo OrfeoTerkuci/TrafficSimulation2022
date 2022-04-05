@@ -31,7 +31,7 @@ Simulation must not stop at an error --> generate log file.
 Simulation functions post-condition must be added.  
 
 
-## Vesrie 2.0  
+## Versie 2.0  
 ### Overzicht  
 ### Comentaar:
 ...  
