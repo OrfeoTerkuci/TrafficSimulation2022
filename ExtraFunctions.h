@@ -25,34 +25,34 @@ void eraseSubStr(string &mainStr, const string &toErase)
 }
 
 bool compareTwoFilesTXT(const string &fileName1, const string &fileName2){
-    ifstream file1, file2;
-
-    file1.open(fileName1.c_str(), ios::binary | ios::ate);
-    file2.open(fileName2.c_str(), ios::binary | ios::ate);
+    ifstream file1(fileName1.c_str(), ios::in |ios::binary | ios::ate);
+    ifstream file2(fileName2.c_str(), ios::in |ios::binary | ios::ate);
 
     if (file1.fail() || file2.fail()){
+        file1.close();
+        file2.close();
         return false; // one of the files couldn't be opened
     }
     else if (file1.tellg() != file2.tellg()){
+        file1.close();
+        file2.close();
         return false; // file sizes doesn't match
     }
 
-    bool evaluate = true;
+    char *lin1 = NULL;
+    char *lin2 = NULL;
 
-    char fileChar1;
-    char fileChar2;
-
-    while (evaluate){
-        fileChar1 = file1.get();
-        fileChar2 = file2.get();
-
-        if (fileChar1 != fileChar2){
-            cout << "files are different" << endl;
+    while (!file1.eof() && !file2.eof()){
+        file1.getline(lin1, 1);
+        file2.getline(lin2, 1);
+        if (*lin1 != *lin2){
+            file1.close();
+            file2.close();
             return false;
         }
-        if (fileChar1 == EOF || fileChar2 == EOF){
-            evaluate = false;
-        }
     }
+
+    file1.close();
+    file2.close();
     return true;
 }
