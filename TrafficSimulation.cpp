@@ -225,50 +225,12 @@ bool TrafficSimulation::parseVehicleGenerator(TiXmlElement *&root) {
 //==== Constructors and Destructor ====//
 TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename) {
     REQUIRE(*typeid(filename).name() == 'N' , "constructor was called with invalid filename");
-    TiXmlDocument doc;
     _initCheck = this;
-    // File readable detection with error message
-    try{
-        if(!doc.LoadFile(this->filename.c_str())) {
-            cerr << doc.ErrorDesc() << endl;
-            throw 1;
-        }
+    if (filename.find(XMLL) != string::npos or filename.find(XMLU) != string::npos){
+        parseXML();
     }
-
-    catch(int error){
-        if(error == 1){
-            cout << "File not readable" << endl;
-        }
-    }
-
-    // Check if file has elements to parse
-    TiXmlElement* root = doc.FirstChildElement();
-
-    if(root == NULL) {
-        cerr << "Failed to load file: No root element." << endl;
-        doc.Clear();
-    }
-
-    // Parsing of data
-    for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
-        string elemName = elem->Value();
-        if (elemName == BAANU) {
-            if (!this->parseRoad(elem)) {
-                cout << "Error: Could not make road" << endl;
-            }
-        } else if (elemName == VERKEERSLICHT) {
-            if (!this->parseTrafficLight(elem)) {
-                cout << "Error: Could not make traffic light" << endl;
-            }
-        } else if (elemName == VOERTUIG) {
-            if (!this->parseVehicle(elem)) {
-                cout << "Error: Could not make vehicle" << endl;
-            }
-        } else if (elemName == VOERTUIGGENERATOR) {
-            if (!this->parseVehicleGenerator(elem)) {
-                cout << "Error: Could not make vehicle generator" << endl;
-            }
-        }
+    else if (filename.find(JSONU) != string::npos or filename.find(JSONL) != string::npos){
+        parseJSON();
     }
     ENSURE(TrafficSimulation::filename == filename , "filename was not properly initialized");
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
@@ -632,5 +594,9 @@ const string &TrafficSimulation::getFilename() const {
 }
 
 void TrafficSimulation::parseXML() {
+    parseTrafficSimulationX(*this);
+}
+
+void TrafficSimulation::parseJSON() {
 
 }

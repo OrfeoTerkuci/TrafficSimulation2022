@@ -10,7 +10,6 @@
 #include "tinyxml/tinyxml.h"
 #include "Standard_Values.h"
 #include "DesignByContract.h"
-#include "ExtraFunctions.h"
 
 // build in libs
 #include <iostream>
@@ -226,7 +225,7 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
     return true;
 }
 
-void parseTrafficSimulation(TrafficSimulation &trafficSimulation){
+void parseTrafficSimulationX(TrafficSimulation &trafficSimulation){
     TiXmlDocument doc;
     // File readable detection with error message
     try{
