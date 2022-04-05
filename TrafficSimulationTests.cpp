@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -136,6 +137,12 @@ TEST(SimTest, simulationSucces){
 }
 
 TEST(SimTest, simulationFail){
+    // log file
+    ofstream logOutput;
+
+    // write in a file
+    logOutput.open("TestLog/newLog.txt");
+
     ASSERT_EXIT(TrafficSimulation testFile(SIM7) , testing::KilledBySignal(SIGABRT) , "Road length is not valid");
     //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM8));
     ASSERT_EXIT(TrafficSimulation testFile(SIM8) , testing::KilledBySignal(SIGABRT) , "Position is not valid");

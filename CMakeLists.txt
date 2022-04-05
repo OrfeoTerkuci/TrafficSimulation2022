@@ -34,11 +34,12 @@ set(sources
         Vehicle.cpp
         Road.cpp
         VehicleGenerator.cpp
-        )
+        CrossRoad.cpp
+        BusStop.cpp)
 
 
 # Set source files for RELEASE target
-set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp ${sources} ${AdditionalSources} ${tinySources} ParserJSON.h CrossRoad.cpp CrossRoad.h BusStop.cpp BusStop.h)
+set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp ${sources} ${AdditionalSources} ${tinySources})
 
 # Set source files for DEBUG target
 set(DEBUG_SOURCE_FILES TrafficSimulationTests.cpp ${sources} ${AdditionalSources} ${tinySources})
@@ -48,6 +49,9 @@ add_executable(ts ${RELEASE_SOURCE_FILES})
 
 # Create DEBUG target
 add_executable(ts_debug ${DEBUG_SOURCE_FILES})
+
+# Create External function test targer
+add_executable(ES_test ExtraFunctionTest.cpp)
 
 # Link library
 target_link_libraries(ts_debug gtest)

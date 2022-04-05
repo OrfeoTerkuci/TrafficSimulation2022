@@ -123,7 +123,7 @@ bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
 
         if(elem->NoChildren()){
             delete newRoad;
-            REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
+            ENSURE(!elem->NoChildren(), "One of the parameters was empty");
             return false;
         }
 
@@ -173,7 +173,7 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         // if elem is empty, end parsing and return false
         if(elem->NoChildren()){
             delete vehicle;
-            REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
+            ENSURE(!elem->NoChildren(), "One of the parameters was empty");
             return false;
         }
         tempn = elem->GetText();
@@ -192,7 +192,7 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
             tempi = convertStrToInt(tempn);
             if (tempi < 0){
                 delete vehicle;
-                REQUIRE(tempi > 0, "Position is not valid");
+                ENSURE(tempi > 0, "Position is not valid");
                 return false;
             }
             vehicle->setPosition(tempi);
@@ -222,7 +222,7 @@ bool parseTrafficLight(TiXmlElement* &root, TrafficSimulation &trafficSimulation
         // if elem is empty, end parsing and return false
         if(elem->NoChildren()){
             delete trafficLight;
-            REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
+            ENSURE(!elem->NoChildren(), "One of the parameters was empty");
             return false;
         }
 
@@ -241,7 +241,7 @@ bool parseTrafficLight(TiXmlElement* &root, TrafficSimulation &trafficSimulation
             tempi = convertStrToInt(elem->GetText());
             if (tempi < 0 || tempi > int(trafficLight->getRoad()->getLength()) ){
                 delete trafficLight;
-                REQUIRE(false, "Position is not valid");
+                ENSURE(false, "Position is not valid");
             }
             trafficLight->setPosition(tempi);
         }
@@ -249,7 +249,7 @@ bool parseTrafficLight(TiXmlElement* &root, TrafficSimulation &trafficSimulation
             tempi = convertStrToInt(elem->GetText());
             if (tempi <= 0){
                 delete trafficLight;
-                REQUIRE(tempi >= 0, "Cycle is not valid");
+                ENSURE(tempi >= 0, "Cycle is not valid");
                 return false;
             }
             trafficLight->setCyclus(tempi);
@@ -282,7 +282,7 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
         // if elem is empty, end parsing and return false
         if(elem->NoChildren()){
             delete vehicleGenerator;
-            REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
+            ENSURE(!elem->NoChildren(), "One of the parameters was empty");
             return false;
         }
         tempn = elem->GetText();
@@ -304,7 +304,7 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
             tempf = convertStrToInt(elem->GetText());
             if (tempf < 0){
                 delete vehicleGenerator;
-                REQUIRE(tempf > 0, "Frequency is not valid");
+                ENSURE(tempf > 0, "Frequency is not valid");
                 return false;
             }
             vehicleGenerator->setFrequentie(tempf);
