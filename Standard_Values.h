@@ -29,6 +29,7 @@
 #define WACHTTIJD               "wachttijd"
 #define KRUISPUNT               "KRUISPUNT"
 #define TYPE                    "type"
+#define BAAN_POSITIE            "baan positie ="
 
 // Vehiclegenerator test values
 #define MAX_VEHICLES            20
