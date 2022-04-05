@@ -27,6 +27,12 @@ set(AdditionalSources
         DesignByContract.h
         )
 
+# Set Parsers
+set(parsers
+        ParserJSON.cpp
+        ParserXML.cpp)
+
+# Set Sources
 set(sources
         TrafficSimulation.cpp
         TrafficLight.cpp
@@ -35,11 +41,12 @@ set(sources
         VehicleGenerator.cpp
         )
 
+
 # Set source files for RELEASE target
-set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp ${sources} ${AdditionalSources} ${tinySources})
+set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp ${sources} ${AdditionalSources} ${tinySources} ${parsers})
 
 # Set source files for DEBUG target
-set(DEBUG_SOURCE_FILES TrafficSimulationTests.cpp ${sources} ${AdditionalSources} ${tinySources})
+set(DEBUG_SOURCE_FILES TrafficSimulationTests.cpp ${sources} ${AdditionalSources} ${tinySources} ${parsers})
 
 # Create RELEASE target
 add_executable(ts ${RELEASE_SOURCE_FILES})
