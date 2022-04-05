@@ -69,6 +69,8 @@ public:
     */
     const vector<TrafficLight *> &getLights();
 
+    const string &getFilename() const;
+
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addTrafficLight");
      * REQUIRE(*typeid(newLight).name() == 'P' , "addTrafficLight was called with invalid parameter");
