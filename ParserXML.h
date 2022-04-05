@@ -20,6 +20,10 @@
 
 using namespace std;
 
+bool parseCrossRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
+
+}
+
 bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     REQUIRE(trafficSimulation.properlyInitialized(), "TrafficSimulation was not initialized when calling parseRoad");
     REQUIRE(*typeid(root).name() == 'P' , "parseRoad was called with invalid parameter");
@@ -109,6 +113,9 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
                 return false;
             }
             vehicle->setPosition(tempi);
+        }
+        else if (elemName == TYPE){
+            vehicle->setType(tempn);
         }
     }
 

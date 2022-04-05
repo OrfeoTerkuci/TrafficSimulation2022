@@ -14,13 +14,19 @@ enum vehicleStatus{ accelerate , decelerate , stopping , idle };
 class Vehicle {
     double speed;
     double position;
+public:
+    const string &getType() const;
+
+    void setType(const string &type);
+
+private:
     double acceleration;
     double currentMaxSpeed;
+    string type;
 
     vehicleStatus status;
     Road* road;
     Vehicle* _initCheck;
-
 public:
     /**
      * REQUIRE(*typeid(speed).name() == 'd' , "constructor called with invalid speed parameter");

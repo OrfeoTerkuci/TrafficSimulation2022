@@ -274,3 +274,11 @@ Vehicle::~Vehicle() {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling destructor");
 
 }
+
+const string &Vehicle::getType() const {
+    return type;
+}
+
+void Vehicle::setType(const string &type) {
+    Vehicle::type = type;
+}

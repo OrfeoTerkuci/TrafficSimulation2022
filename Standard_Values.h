@@ -25,6 +25,10 @@
 #define CYCLUS                  "cyclus"
 #define VOERTUIGGENERATOR       "VOERTUIGGENERATOR"
 #define FREQUENTIE              "frequentie"
+#define BUSHALTE                "BUSHALTE"
+#define WACHTTIJD               "wachttijd"
+#define KRUISPUNT               "KRUISPUNT"
+#define TYPE                    "type"
 
 // Vehiclegenerator test values
 #define MAX_VEHICLES            20
