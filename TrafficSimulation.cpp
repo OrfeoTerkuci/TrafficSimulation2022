@@ -14,214 +14,6 @@
 #include <typeinfo>
 #include <sstream>
 
-//==== Parsing Functions ====//
-bool TrafficSimulation::parseRoad(TiXmlElement* &root){
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling parseRoad");
-    REQUIRE(*typeid(root).name() == 'P' , "parseRoad was called with invalid parameter");
-    // create road object
-    Road *newRoad = new Road();
-
-    // temp values
-    string tempn;
-    int tempi;
-
-    // Parsing
-    for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
-        string elemName = elem->Value();
-
-        if(elem->NoChildren()){
-            delete newRoad;
-            REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
-            return false;
-        }
-
-        tempn = elem->GetText();
-
-
-        if(elemName == NAAM){
-            newRoad->setRoadName(tempn);
-        }
-        else if(elemName == LENGTE){
-            tempi = convertStrToInt(tempn);
-            if(tempi <= 0){
-                delete newRoad;
-                REQUIRE(tempi >= 0, "Road length is not valid");
-                return false;
-            }
-            else{
-                newRoad->setLength(tempi);
-            }
-        }
-    }
-
-    // Check if road already exists + add road
-    if(newRoad->getLength() > 0 and !newRoad->getRoadName().empty()){
-        if(!this->addRoad(newRoad)){
-            delete newRoad;
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-    return false;
-}
-
-bool TrafficSimulation::parseTrafficLight(TiXmlElement* &root){
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling parseTrafficLight");
-    REQUIRE(*typeid(root).name() == 'P' , "parseTrafficLight was called with invali parameter");
-    // Create object
-    TrafficLight* trafficLight = new TrafficLight();
-
-    // Create temp values
-    string tempn;
-    int tempi;
-
-    // Parsing
-    for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
-        string elemName = elem->Value();
-
-        // if elem is empty, end parsing and return false
-        if(elem->NoChildren()){
-            delete trafficLight;
-            REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
-            return false;
-        }
-
-        tempn = elem->GetText();
-
-
-        if(elemName == BAANL){
-            for (unsigned int i = 0; i < this->roads.size(); ++i) {
-                if (tempn == this->roads[i]->getRoadName()) {
-                    trafficLight->setRoad(this->roads[i]);
-                    break;
-                }
-            }
-        }
-        else if(elemName == POSITIE){
-            tempi = convertStrToInt(elem->GetText());
-            if (tempi < 0 || tempi > int(trafficLight->getRoad()->getLength()) ){
-                delete trafficLight;
-                REQUIRE(false, "Position is not valid");
-            }
-            trafficLight->setPosition(tempi);
-        }
-        else if(elemName == CYCLUS){
-            tempi = convertStrToInt(elem->GetText());
-            if (tempi <= 0){
-                delete trafficLight;
-                REQUIRE(tempi >= 0, "Cycle is not valid");
-                return false;
-            }
-            trafficLight->setCyclus(tempi);
-        }
-    }
-
-    // add traffic light to road
-    for (unsigned int i = 0; i < this->roads.size(); ++i) {
-        if (this->roads[i] == trafficLight->getRoad()){
-            this->roads[i]->addLight(trafficLight);
-            this->addTrafficLight(trafficLight);
-            break;
-        }
-    }
-
-    return true;
-}
-
-bool TrafficSimulation::parseVehicle(TiXmlElement* &root){
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling parseVehicle");
-    REQUIRE(*typeid(root).name() == 'P' , "parseVehicle was called with invalid parameter");
-    Vehicle* vehicle = new Vehicle();
-
-    string tempn;
-    int tempi;
-
-    for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
-        string elemName = elem->Value();
-
-        // if elem is empty, end parsing and return false
-        if(elem->NoChildren()){
-            delete vehicle;
-            REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
-            return false;
-        }
-        tempn = elem->GetText();
-
-        if(elemName == BAANL){
-            for (unsigned int i = 0; i < this->roads.size(); ++i) {
-                if (tempn == this->roads[i]->getRoadName()) {
-                    vehicle->setRoad(this->roads[i]);
-                    this->roads[i]->addVehicle(vehicle);
-                    this->addVehicle(vehicle);
-                    break;
-                }
-            }
-        }
-        else if(elemName == POSITIE){
-            tempi = convertStrToInt(tempn);
-            if (tempi < 0){
-                delete vehicle;
-                REQUIRE(tempi > 0, "Position is not valid");
-                return false;
-            }
-            vehicle->setPosition(tempi);
-        }
-    }
-
-    return true;
-}
-
-bool TrafficSimulation::parseVehicleGenerator(TiXmlElement *&root) {
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling parseVehicleGenerator");
-    REQUIRE(*typeid(root).name() == 'P' , "parseVehicleGenerator was called with invalid parameter");
-    VehicleGenerator* vehicleGenerator = new VehicleGenerator();
-
-    string tempn;
-    int tempf;
-
-    for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
-        string elemName = elem->Value();
-
-        // if elem is empty, end parsing and return false
-        if(elem->NoChildren()){
-            delete vehicleGenerator;
-            REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
-            return false;
-        }
-        tempn = elem->GetText();
-
-
-        if (elemName == BAANL) {
-            for (unsigned int i = 0; i < this->roads.size(); ++i) {
-                if (tempn == this->roads[i]->getRoadName()) {
-                    vehicleGenerator->setRoad(this->roads[i]);
-                    if (!this->addVehicleGenerator(vehicleGenerator)){
-                        delete vehicleGenerator;
-                        return false;
-                    }
-                    break;
-                }
-            }
-        }
-        else if (elemName == FREQUENTIE) {
-            tempf = convertStrToInt(elem->GetText());
-            if (tempf < 0){
-                delete vehicleGenerator;
-                REQUIRE(tempf > 0, "Frequency is not valid");
-                return false;
-            }
-            vehicleGenerator->setFrequentie(tempf);
-            // Set cooldown : 0 for instant generation upon simulation start
-            vehicleGenerator->setCooldown(tempf);
-        }
-    }
-    return true;
-}
-
-
-
 //==== Constructors and Destructor ====//
 TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename) {
     REQUIRE(*typeid(filename).name() == 'N' , "constructor was called with invalid filename");
@@ -590,6 +382,37 @@ void TrafficSimulation::startSimUntilCount() {
 
 TrafficSimulation::~TrafficSimulation() {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling destructor");
+    for (unsigned int i = 0; i < roads.size(); ++i) {
+        delete roads[i];
+    }
+    for (unsigned int i = 0; i < lights.size(); ++i) {
+        delete lights[i];
+    }
+    for (unsigned int i = 0; i < busStops.size(); ++i) {
+        delete busStops[i];
+    }
+    for (unsigned int i = 0; i < crossRoads.size(); ++i) {
+        delete crossRoads[i];
+    }
+    for (unsigned int i = 0; i < vehicles.size(); ++i) {
+        delete vehicles[i];
+    }
+    for (unsigned int i = 0; i < vehicleGenerators.size(); ++i) {
+        delete vehicleGenerators[i];
+    }
+    roads.clear();
+    lights.clear();
+    busStops.clear();
+    crossRoads.clear();
+    vehicles.clear();
+    vehicleGenerators.clear();
+    ENSURE(roads.empty(), "Roads are not properly destructed");
+    ENSURE(lights.empty(), "Lights are not properly destructed");
+    ENSURE(busStops.empty(), "Bus stops are not properly destructed");
+    ENSURE(crossRoads.empty(), "Crossroads are not properly destructed");
+    ENSURE(vehicles.empty(), "Vehicles are not properly destructed");
+    ENSURE(vehicleGenerators.empty(), "Vehicle generators are not properly destructed");
+
 }
 
 const string &TrafficSimulation::getFilename() const {
