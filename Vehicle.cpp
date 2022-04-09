@@ -275,10 +275,10 @@ Vehicle::~Vehicle() {
 
 }
 
-const string &Vehicle::getType() const {
+const vehicleType &Vehicle::getType() const {
     return type;
 }
 
-void Vehicle::setType(const string &type) {
+void Vehicle::setType(const vehicleType &type) {
     Vehicle::type = type;
 }

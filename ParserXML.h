@@ -176,9 +176,31 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
             ENSURE(!elem->NoChildren(), "One of the parameters was empty");
             return false;
         }
+
         tempn = elem->GetText();
 
-        if(elemName == BAANL){
+        if (elemName == TYPE){
+            if (tempn == AUTO){
+                vehicle->setType(T_AUTO);
+            }
+            else if ( tempn == BUS ){
+                vehicle->setType(T_BUS);
+            }
+            else if ( tempn == BRANDWEERWAGEN ){
+                vehicle->setType(T_FIRETRUCK);
+            }
+            else if ( tempn == ZIEKENWAGEN ){
+                vehicle->setType(T_AMBULANCE);
+            }
+            else if ( tempn == POLITIECOMBI ){
+                vehicle->setType(T_POLICE);
+            }
+            else{
+                // Set default type
+                vehicle->setType(T_AUTO);
+            }
+        }
+        else if(elemName == BAANL){
             for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); ++i) {
                 if (tempn == trafficSimulation.getRoads()[i]->getRoadName()) {
                     vehicle->setRoad(trafficSimulation.getRoads()[i]);
@@ -196,9 +218,6 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
                 return false;
             }
             vehicle->setPosition(tempi);
-        }
-        else if (elemName == TYPE){
-            vehicle->setType(tempn);
         }
     }
 
@@ -285,8 +304,8 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
             ENSURE(!elem->NoChildren(), "One of the parameters was empty");
             return false;
         }
-        tempn = elem->GetText();
 
+        tempn = elem->GetText();
 
         if (elemName == BAANL) {
             for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); ++i) {
@@ -311,6 +330,25 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
             // Set cooldown : 0 for instant generation upon simulation start
             vehicleGenerator->setCooldown(tempf);
         }
+        if (tempn == AUTO){
+                vehicleGenerator->setType(T_AUTO);
+            }
+            else if ( tempn == BUS ){
+                vehicleGenerator->setType(T_BUS);
+            }
+            else if ( tempn == BRANDWEERWAGEN ){
+                vehicleGenerator->setType(T_FIRETRUCK);
+            }
+            else if ( tempn == ZIEKENWAGEN ){
+                vehicleGenerator->setType(T_AMBULANCE);
+            }
+            else if ( tempn == POLITIECOMBI ){
+                vehicleGenerator->setType(T_POLICE);
+            }
+            else{
+                // Set default type
+                vehicleGenerator->setType(T_AUTO);
+            }
     }
     return true;
 }

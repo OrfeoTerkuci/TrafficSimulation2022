@@ -50,8 +50,15 @@ void VehicleGenerator::setCooldown(int newCooldown) {
     ENSURE(VehicleGenerator::cooldown == newCooldown , "setCooldown failed");
 }
 
-VehicleGenerator::~VehicleGenerator() {
-    REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling destructor");
+vehicleType VehicleGenerator::getType(){
+    REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling setCooldown");
+    return type;
+}
+
+void VehicleGenerator::setType(vehicleType newType){
+    REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling setType");
+    VehicleGenerator::type = newType;
+    ENSURE(VehicleGenerator::type == newType , "setType failed");
 }
 
 bool VehicleGenerator::properlyInitialized() {
@@ -82,4 +89,8 @@ bool VehicleGenerator::simulate() {
     }
     // Return if we can generate or not
     return canGenerate;
+}
+
+VehicleGenerator::~VehicleGenerator() {
+    REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling destructor");
 }

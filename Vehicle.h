@@ -2,6 +2,7 @@
 #define TRAFFICSIMULATION2022_VOERTUIG_H
 
 #include "Road.h"
+#include "Standard_Values.h"
 #include <iostream>
 
 using namespace std;
@@ -9,20 +10,18 @@ using namespace std;
 class TrafficLight;
 class TrafficSimulation;
 
-enum vehicleStatus{ accelerate , decelerate , stopping , idle };
-
 class Vehicle {
     double speed;
     double position;
 public:
-    const string &getType() const;
+    const vehicleType &getType() const;
 
-    void setType(const string &type);
+    void setType(const vehicleType &type);
 
 private:
     double acceleration;
     double currentMaxSpeed;
-    string type;
+    vehicleType type;
 
     vehicleStatus status;
     Road* road;
@@ -149,40 +148,40 @@ public:
      * REQUIRE(maxSpeed >= 0 , "calculateNewAcceleration was called with invalid parameter : negative maxSpeed");
      * @param maxSpeed The MAX_SPEED modifier of the vehicle
      */
-    void calculateNewAcceleration(double maxSpeed);
+    virtual void calculateNewAcceleration(double maxSpeed);
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewSpeed");
      * ENSURE(Vehicle::speed == tempSpeed , "calculateNewSpeed failed");
      */
-    void calculateNewSpeed();
+    virtual void calculateNewSpeed();
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewPosition");
      * ENSURE(Vehicle::speed == 0.0 , "calculateNewPosition failed");
      */
-    void calculateNewPosition();
+    virtual void calculateNewPosition();
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateFollowDistance");
      * 
      */
-    double calculateFollowDistance();
+    virtual double calculateFollowDistance();
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateSpeedRestriction");
      */
-    double calculateSpeedRestriction();
+    virtual double calculateSpeedRestriction();
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateSpeedDifference");
      */
-    double calculateSpeedDifference();
+    virtual double calculateSpeedDifference();
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateStopDecelerate");
      */
-    void calculateStopDecelerate();
+    virtual void calculateStopDecelerate();
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getNextVehicle");
@@ -193,27 +192,27 @@ public:
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateStop");
      */
-    void simulateStop();
+    virtual void simulateStop();
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateDecelerate");
      */
-    void simulateDecelerate();
+    virtual void simulateDecelerate();
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateAccelerate");
      */
-    void simulateAccelerate();
+    virtual void simulateAccelerate();
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulate");
      */
-    void simulate();
+    virtual void simulate();
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling print");
      */
-    void print();
+    virtual void print();
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling destructor");

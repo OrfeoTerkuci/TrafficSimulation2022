@@ -6,6 +6,7 @@ class VehicleGenerator {
     Road* road;
     int frequentie;
     int cooldown;
+    vehicleType type;
     VehicleGenerator* _initCheck;
 public:
 
@@ -62,6 +63,10 @@ public:
      * @param newCooldown The new cooldown of the VehicleGenerator
      */
     void setCooldown(int newCooldown);
+
+    vehicleType getType();
+
+    void setType(const vehicleType newType);
 
     /**
      * REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling simulate");
