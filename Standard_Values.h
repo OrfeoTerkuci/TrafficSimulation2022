@@ -2,17 +2,51 @@
 #define TRAFFICSIMULATION2022_STANDARD_VALUES_H
 
 
-// Values
-#define LENGTH                  4.0
-#define MAX_SPEED               16.6
-#define MAX_ACCELERATION        1.44
-#define MAX_BRAKE_FACTOR        4.61
-#define MIN_FOLLOW_DISTANCE     4.0
-#define SIMULATION_TIME         0.0166
-#define SLOWING_DISTANCE        50.0
-#define STOPPING_DISTANCE       15.0
-#define SLOWING_FACTOR          0.4
-#define DECELERATE              6.64
+// General Values
+#define SIMULATION_TIME                 0.0166
+#define SLOWING_DISTANCE                50.0
+#define STOPPING_DISTANCE               15.0
+#define SLOWING_FACTOR                  0.4
+// Vehicle type : AUTO
+#define LENGTH                          4.0
+#define MAX_SPEED                       16.6
+#define MAX_ACCELERATION                1.44
+#define MAX_BRAKE_FACTOR                4.61
+#define MIN_FOLLOW_DISTANCE             4.0
+#define DECELERATE                      SLOWING_FACTOR * MAX_SPEED
+// Vehicle type: BUS
+#define BUS_LENGTH                      12.0
+#define BUS_MAX_SPEED                   11.4
+#define BUS_MAX_ACCELERATION            1.22
+#define BUS_MAX_BRAKE_FACTOR            4.29
+#define BUS_MIN_FOLLOW_DISTANCE         12.0
+#define BUS_DECELERATE                  SLOWING_FACTOR * BUS_MAX_SPEED
+// Vehicle type: BRANDWEERWAGEN
+#define FIRETRUCK_LENGTH                10.0
+#define FIRETRUCK_MAX_SPEED             14.6
+#define FIRETRUCK_MAX_ACCELERATION      1.33
+#define FIRETRUCK_MAX_BRAKE_FACTOR      4.56
+#define FIRETRUCK_MIN_FOLLOW_DISTANCE   10.0
+#define FIRETRUCK_DECELERATE            SLOWING_FACTOR * FIRETRUCK_MAX_SPEED
+// Vehicle type: ZIEKENWAGEN
+#define AMBULANCE_LENGTH                8.0
+#define AMBULANCE_MAX_SPEED             15.5
+#define AMBULANCE_MAX_ACCELERATION      1.44
+#define AMBULANCE_MAX_BRAKE_FACTOR      4.47
+#define AMBULANCE_MIN_FOLLOW_DISTANCE   8.0
+#define AMBULANCE_DECELERATE            SLOWING_FACTOR * AMBULANCE_MAX_SPEED
+// Vehicle type: POLITIECOMBI
+#define POLICE_LENGTH                   6.0
+#define POLICE_MAX_SPEED                17.2
+#define POLICE_MAX_ACCELERATION         1.55
+#define POLICE_MAX_BRAKE_FACTOR         4.92
+#define POLICE_MIN_FOLLOW_DISTANCE      6.0
+#define POLICE_DECELERATE               SLOWING_FACTOR * POLICE_MAX_SPEED
+
+// Enumerations
+
+enum vehicleStatus{ accelerate , decelerate , stopping , idle };
+enum vehicleType{ T_AUTO , T_BUS , T_FIRETRUCK , T_AMBULANCE , T_POLICE };
 
 // Strings
 #define NAAM                    "naam"
@@ -30,7 +64,12 @@
 #define KRUISPUNT               "KRUISPUNT"
 #define TYPE                    "type"
 #define BAAN_POSITIE            "baan positie ="
-
+// Vehicle type strings
+#define AUTO                    "auto"
+#define BUS                     "bus"
+#define BRANDWEERWAGEN          "brandweerwagen"
+#define ZIEKENWAGEN             "ziekenwagen"
+#define POLITIECOMBI            "politiecombi"
 // Vehiclegenerator test values
 #define MAX_VEHICLES            20
 
