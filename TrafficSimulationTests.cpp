@@ -312,13 +312,18 @@ bool checktype(const Vehicle* &vehicle){
     }
     return false;
 }
-TEST(SimTest, TypeTest){
+
+TEST(TypeTest, typeTS){
     TrafficSimulation ts(SIM14);
     for (unsigned int i = 0; i < ts.getVehicles().size(); ++i) {
         EXPECT_TRUE(checktype((const Vehicle *&) ts.getVehicles()[i]));
     }
 }
 
+TEST(TypeTest, typeParse){
+    Vehicle* vehicle;
+    EXPECT_TRUE()
+}
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
