@@ -160,6 +160,30 @@ public:
      */
     virtual void calculateNewAcceleration(double maxSpeed);
 
+    double getV_length() const;
+
+    void setV_length(double v_length);
+
+    double getV_max_speed() const;
+
+    void setV_max_speed(double v_max_speed);
+
+    double getV_max_acceleration() const;
+
+    void setV_max_acceleration(double v_max_acceleration);
+
+    double getV_max_brakefactor() const;
+
+    void setV_max_brakefactor(double v_max_brakefactor);
+
+    double getV_min_followDistance() const;
+
+    void setV_min_followDistance(double v_min_followDistance);
+
+    double getV_decelerate() const;
+
+    void setV_decelerate(double v_decelerate);
+
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewSpeed");
      * ENSURE(Vehicle::speed == tempSpeed , "calculateNewSpeed failed");

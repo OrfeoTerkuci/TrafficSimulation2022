@@ -29,7 +29,7 @@ Vehicle::Vehicle(double speed, double position , vehicleType type) : speed(speed
     ENSURE(Vehicle::speed == speed , "speed was not properly initialized");
     ENSURE(Vehicle::position == position , "position was not properly initialized");
     ENSURE(Vehicle::acceleration == 0.0 , "acceleration was not properly initialized");
-    ENSURE(Vehicle::currentMaxSpeed == MAX_SPEED , "currentMaxSpeed was not properly initialized");
+    ENSURE(Vehicle::currentMaxSpeed == v_max_speed , "currentMaxSpeed was not properly initialized");
     ENSURE(Vehicle::type == type , "vehicleType was not properly initialized");
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
@@ -184,7 +184,7 @@ double Vehicle::calculateFollowDistance() {
 
 double Vehicle::calculateSpeedRestriction() {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateSpeedRestriction");
-    return (v_min_followDistance + max(0.0 , this->speed + ((this->speed * this->calculateSpeedDifference())/2* sqrt(v_max_acceleration*v_max_brakefactor))))/this->calculateFollowDistance();
+    return (v_min_followDistance + max(0.0 , this->speed + ((this->speed * this->calculateSpeedDifference())/2* sqrt(v_max_acceleration * v_max_brakefactor))))/this->calculateFollowDistance();
 }
 
 double Vehicle::calculateSpeedDifference() {
@@ -236,7 +236,7 @@ void Vehicle::simulateDecelerate() {
 
 void Vehicle::simulateAccelerate() {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateAccelerate");
-    this->calculateNewAcceleration(v_max_acceleration);
+    this->calculateNewAcceleration(v_max_speed);
     this->calculateNewSpeed();
 }
 
@@ -253,7 +253,7 @@ void Vehicle::simulate() {
         // Update status
         setStatus(speed == 0 && acceleration == 0 ? idle : stopping);
     }
-    else if (status == accelerate){
+    else{
         simulateAccelerate();
         // Update status
         setStatus(accelerate);
@@ -285,19 +285,12 @@ const vehicleType &Vehicle::getType() const {
 
 void Vehicle::setType(const vehicleType &type) {
     Vehicle::type = type;
+    setStandardValues();
 }
 
 void Vehicle::setStandardValues() {
-    if(type == T_AUTO){
-        v_length = LENGTH;
-        v_max_speed = MAX_SPEED;
-        v_max_acceleration = MAX_ACCELERATION;
-        v_max_brakefactor = MAX_BRAKE_FACTOR;
-        v_min_followDistance = MIN_FOLLOW_DISTANCE;
-        v_decelerate = DECELERATE;
 
-    }
-    else if (type == T_AMBULANCE){
+    if (type == T_AMBULANCE){
         v_length = AMBULANCE_LENGTH;
         v_max_speed = AMBULANCE_MAX_SPEED;
         v_max_acceleration = AMBULANCE_MAX_ACCELERATION;
@@ -329,4 +322,61 @@ void Vehicle::setStandardValues() {
         v_min_followDistance = POLICE_MIN_FOLLOW_DISTANCE;
         v_decelerate = POLICE_DECELERATE;
     }
+    else{
+        v_length = LENGTH;
+        v_max_speed = MAX_SPEED;
+        v_max_acceleration = MAX_ACCELERATION;
+        v_max_brakefactor = MAX_BRAKE_FACTOR;
+        v_min_followDistance = MIN_FOLLOW_DISTANCE;
+        v_decelerate = DECELERATE;
+    }
+    currentMaxSpeed = v_max_speed;
+}
+
+double Vehicle::getV_length() const {
+    return v_length;
+}
+
+void Vehicle::setV_length(double v_length) {
+    Vehicle::v_length = v_length;
+}
+
+double Vehicle::getV_max_speed() const {
+    return v_max_speed;
+}
+
+void Vehicle::setV_max_speed(double v_max_speed) {
+    Vehicle::v_max_speed = v_max_speed;
+}
+
+double Vehicle::getV_max_acceleration() const {
+    return v_max_acceleration;
+}
+
+void Vehicle::setV_max_acceleration(double v_max_acceleration) {
+    Vehicle::v_max_acceleration = v_max_acceleration;
+}
+
+double Vehicle::getV_max_brakefactor() const {
+    return v_max_brakefactor;
+}
+
+void Vehicle::setV_max_brakefactor(double v_max_brakefactor) {
+    Vehicle::v_max_brakefactor = v_max_brakefactor;
+}
+
+double Vehicle::getV_min_followDistance() const {
+    return v_min_followDistance;
+}
+
+void Vehicle::setV_min_followDistance(double v_min_followDistance) {
+    Vehicle::v_min_followDistance = v_min_followDistance;
+}
+
+double Vehicle::getV_decelerate() const {
+    return v_decelerate;
+}
+
+void Vehicle::setV_decelerate(double v_decelerate) {
+    Vehicle::v_decelerate = v_decelerate;
 }

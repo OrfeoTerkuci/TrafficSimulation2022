@@ -4,7 +4,8 @@
 #include "DesignByContract.h"
 #include <typeinfo>
 
-VehicleGenerator::VehicleGenerator() : road(), frequentie(0) , cooldown(0) {
+VehicleGenerator::VehicleGenerator() : road(), frequentie(0) , cooldown(0) , type(T_AUTO) {
+
     _initCheck = this;
     ENSURE(VehicleGenerator::frequentie == 0 , "frequentie was not properly initialized");
     ENSURE(VehicleGenerator::cooldown == 0 , "cooldown was not properly initialized");
@@ -58,6 +59,21 @@ vehicleType VehicleGenerator::getType(){
 void VehicleGenerator::setType(vehicleType newType){
     REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling setType");
     VehicleGenerator::type = newType;
+    if(type == T_AMBULANCE){
+        setMin_distance(AMBULANCE_LENGTH);
+    }
+    else if (type == T_FIRETRUCK){
+        setMin_distance(FIRETRUCK_LENGTH);
+    }
+    else if (type == T_BUS){
+        setMin_distance(BUS_LENGTH);
+    }
+    else if (type == T_POLICE){
+        setMin_distance(POLICE_LENGTH);
+    }
+    else{
+        setMin_distance(LENGTH);
+    }
     ENSURE(VehicleGenerator::type == newType , "setType failed");
 }
 
@@ -78,7 +94,7 @@ bool VehicleGenerator::simulate() {
         Vehicle* currentVehicle;
         currentVehicle = this->road->getVehicle(i);
         double currentPosition = currentVehicle->getVehiclePosition();
-        if (currentPosition > 0 && currentPosition < 2 * LENGTH ) {
+        if (currentPosition > 0 && currentPosition < 2 * getMin_distance() ) {
             canGenerate = false;
         }
     }
@@ -93,4 +109,12 @@ bool VehicleGenerator::simulate() {
 
 VehicleGenerator::~VehicleGenerator() {
     REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling destructor");
+}
+
+double VehicleGenerator::getMin_distance() const {
+    return min_distance;
+}
+
+void VehicleGenerator::setMin_distance(double min_distance) {
+    VehicleGenerator::min_distance = min_distance;
 }

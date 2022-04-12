@@ -7,6 +7,7 @@ class VehicleGenerator {
     int frequentie;
     int cooldown;
     vehicleType type;
+    double min_distance;
     VehicleGenerator* _initCheck;
 public:
 
@@ -16,6 +17,10 @@ public:
      * ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
      */
     VehicleGenerator();
+
+    double getMin_distance() const;
+
+    void setMin_distance(double min_distance);
 
     bool properlyInitialized();
 

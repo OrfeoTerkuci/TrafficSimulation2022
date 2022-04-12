@@ -1,4 +1,8 @@
 <VERKEERSSIMULATIE>
+    <BAAN>
+        <naam>Middelheimlaan</naam>
+        <lengte>500</lengte>
+    </BAAN>
     <VOERTUIGGENERATOR>
         <baan>Middelheimlaan</baan>
         <frequentie>5</frequentie>
