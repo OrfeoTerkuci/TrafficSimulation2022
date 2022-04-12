@@ -210,7 +210,7 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         tempn = elem->GetText();
 
         if (elemName == TYPE){
-            if(setTypeParser(tempn, vehicle)){
+            if(!setTypeParser(tempn, vehicle)){
                 delete vehicle;
                 return false;
             }
