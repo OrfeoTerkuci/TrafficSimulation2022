@@ -1,5 +1,7 @@
 // custom libs
 #include "ParserXML.h"
+#include "TrafficSimulation.h"
+
 
 // c++ libs
 #include <stdexcept>
@@ -431,4 +433,8 @@ void TrafficSimulation::addCrossRoad(CrossRoad* crossRoad) {
 
 void TrafficSimulation::addBusStop(BusStop* busStop) {
     busStops.push_back(busStop);
+}
+
+void TrafficSimulation::writeToFile() {
+
 }

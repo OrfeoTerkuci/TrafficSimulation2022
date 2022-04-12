@@ -11,17 +11,26 @@ class TrafficLight;
 class TrafficSimulation;
 
 class Vehicle {
+    // Standard members
     double speed;
     double position;
-
     double acceleration;
     double currentMaxSpeed;
+    // Type specific members
     vehicleType type;
+    double v_length;
+    double v_max_speed;
+    double v_max_acceleration;
+    double v_max_brakefactor;
+    double v_min_followDistance;
+    double v_decelerate;
 
     vehicleStatus status;
     Road* road;
     Vehicle* _initCheck;
 public:
+
+    void setStandardValues();
     const vehicleType &getType() const;
 
     void setType(const vehicleType &type);
