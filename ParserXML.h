@@ -13,7 +13,6 @@
 #include "tinyxml/tinyxml.h"
 #include "Standard_Values.h"
 #include "DesignByContract.h"
-#include "ExtraFunctions.h"
 
 // build in libs
 #include <iostream>
@@ -23,6 +22,13 @@
 #include <sstream>
 
 using namespace std;
+
+int convertStrToInt(string input){
+    int tempi = 0;
+    stringstream temps(input);
+    temps >> tempi;
+    return tempi;
+}
 
 bool parseBusStop(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     REQUIRE(trafficSimulation.properlyInitialized(), "TrafficSimulation was not initialized when calling parseBusStop");

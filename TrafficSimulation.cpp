@@ -1,11 +1,4 @@
 // custom libs
-#include "TrafficSimulation.h"
-#include "Road.h"
-#include "TrafficLight.h"
-#include "Vehicle.h"
-#include "VehicleGenerator.h"
-#include "Standard_Values.h"
-#include "DesignByContract.h"
 #include "ParserXML.h"
 
 // c++ libs

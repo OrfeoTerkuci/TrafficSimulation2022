@@ -1,7 +1,6 @@
 #ifndef TRAFFICSIMULATION2022_STANDARD_VALUES_H
 #define TRAFFICSIMULATION2022_STANDARD_VALUES_H
 
-
 // General Values
 #define SIMULATION_TIME                 0.0166
 #define SLOWING_DISTANCE                50.0
