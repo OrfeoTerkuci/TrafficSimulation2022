@@ -23,6 +23,13 @@
 
 using namespace std;
 
+int convertStrToInt(string input){
+    int tempi = 0;
+    stringstream temps(input);
+    temps >> tempi;
+    return tempi;
+}
+
 bool parseBusStop(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     REQUIRE(trafficSimulation.properlyInitialized(), "TrafficSimulation was not initialized when calling parseBusStop");
     // create new object
