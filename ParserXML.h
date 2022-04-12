@@ -13,6 +13,7 @@
 #include "tinyxml/tinyxml.h"
 #include "Standard_Values.h"
 #include "DesignByContract.h"
+#include "ExtraFunctions.h"
 
 // build in libs
 #include <iostream>

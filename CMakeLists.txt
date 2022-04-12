@@ -35,7 +35,8 @@ set(sources
         Road.cpp
         VehicleGenerator.cpp
         CrossRoad.cpp
-        BusStop.cpp)
+        BusStop.cpp
+        )
 
 
 # Set source files for RELEASE target

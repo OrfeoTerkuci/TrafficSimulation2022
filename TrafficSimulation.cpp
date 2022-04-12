@@ -6,7 +6,6 @@
 #include "VehicleGenerator.h"
 #include "Standard_Values.h"
 #include "DesignByContract.h"
-#include "ExtraFunctions.h"
 #include "ParserXML.h"
 
 // c++ libs
