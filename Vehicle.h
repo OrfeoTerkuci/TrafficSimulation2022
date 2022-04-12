@@ -13,12 +13,7 @@ class TrafficSimulation;
 class Vehicle {
     double speed;
     double position;
-public:
-    const vehicleType &getType() const;
 
-    void setType(const vehicleType &type);
-
-private:
     double acceleration;
     double currentMaxSpeed;
     vehicleType type;
@@ -27,6 +22,9 @@ private:
     Road* road;
     Vehicle* _initCheck;
 public:
+    const vehicleType &getType() const;
+
+    void setType(const vehicleType &type);
     /**
      * REQUIRE(*typeid(speed).name() == 'd' , "constructor called with invalid speed parameter");
      * REQUIRE(*typeid(position).name() == 'd' , "constructor called with invalid position parameter");
