@@ -293,6 +293,12 @@ TEST(FunctionsTest , VehicleGenerator_Test){
 
 }
 
+TEST(SimTest, TypeTest){
+    TrafficSimulation ts(SIM14);
+    for (int i = 0; i < ts.getVehicles(); ++i) {
+        if (ts.getVehicles()[i]->getType() )
+    }
+}
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
