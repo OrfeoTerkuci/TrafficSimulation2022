@@ -34,16 +34,19 @@ public:
      * ENSURE(Vehicle::position == position , "position was not properly initialized");
      * ENSURE(Vehicle::acceleration == 0.0 , "acceleration was not properly initialized");
      * ENSURE(Vehicle::currentMaxSpeed == MAX_SPEED , "currentMaxSpeed was not properly initialized");
+     * ENSURE(Vehicle::type == type , "vehicleType was not properly initialized");
      * ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
      * @param speed The speed of the vehicle
      * @param position The position of the vehicle on the road
+     * @param type The vehicle type
      */
-    Vehicle(double speed, double position);
+    Vehicle(double speed, double position , vehicleType type = T_AUTO);
     /**
      * ENSURE(Vehicle::speed == 0.0 , "speed was not properly initialized");
      * ENSURE(Vehicle::position == 0.0 , "position was not properly initialized");
      * ENSURE(Vehicle::acceleration == 0.0 , "acceleration was not properly initialized");
      * ENSURE(Vehicle::currentMaxSpeed == MAX_SPEED , "currentMaxSpeed was not properly initialized");
+     * ENSURE(Vehicle::type == T_AUTO , "vehicleType was not properly initialized");
      * ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
      */
     Vehicle();

@@ -160,7 +160,7 @@ bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     return false;
 }
 
-void setTypeParser(const string &tempn, Vehicle* &vehicle){
+bool setTypeParser(const string &tempn, Vehicle* &vehicle){
     if (tempn == AUTO){
         vehicle->setType(T_AUTO);
     }
@@ -177,9 +177,9 @@ void setTypeParser(const string &tempn, Vehicle* &vehicle){
         vehicle->setType(T_POLICE);
     }
     else{
-        // Set default type
-        vehicle->setType(T_AUTO);
+        return false;
     }
+    return true;
 }
 
 bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
@@ -203,7 +203,10 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         tempn = elem->GetText();
 
         if (elemName == TYPE){
-            setTypeParser(tempn, vehicle);
+            if(setTypeParser(tempn, vehicle)){
+                delete vehicle;
+                return false;
+            }
         }
         else if(elemName == BAANL){
             for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); ++i) {
