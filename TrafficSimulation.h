@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "tinyxml/tinyxml.h"
+#include "Standard_Values.h"
 using namespace std;
 
 class Road;
@@ -136,7 +137,7 @@ public:
     */
     void startSimulation();
 
-    void outputTXT()
+    void outputFile(fileFunctionType type);
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimNoPrint");
      * ENSURE(vehicles.empty() || vehicleGenerators.empty() , "Simulation ended when it shouldn't");

@@ -1,10 +1,12 @@
 // custom libs
 #include "ParserXML.h"
+#include "TrafficSimulation.h"
 
 // c++ libs
 #include <stdexcept>
 #include <typeinfo>
 #include <sstream>
+#include <filesystem>
 
 //==== Constructors and Destructor ====//
 TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename) {
@@ -19,6 +21,7 @@ TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename
     else {
         cout << "No compatible parser for this type of file" << endl;
     }
+    outputFile(create);
     ENSURE(TrafficSimulation::filename == filename , "filename was not properly initialized");
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
@@ -372,6 +375,65 @@ void TrafficSimulation::startSimUntilCount() {
     ENSURE(vehicles.size() == MAX_VEHICLES * this->vehicleGenerators.size(), "Simulation ended before reaching vehicle limit");
 }
 
+const string &TrafficSimulation::getFilename() const {
+    return filename;
+}
+
+void TrafficSimulation::parseXML() {
+    parseTrafficSimulationX(*this);
+}
+
+void TrafficSimulation::parseJSON() {
+
+}
+
+void TrafficSimulation::addCrossRoad(CrossRoad* crossRoad) {
+    crossRoads.push_back(crossRoad);
+}
+
+void TrafficSimulation::addBusStop(BusStop* busStop) {
+    busStops.push_back(busStop);
+}
+
+void TrafficSimulation::outputFile(fileFunctionType type) {
+    // find file name
+    string newFileName = filename.substr(0, filename.find("."));
+    newFileName += ".txt";
+
+    if (type == create){
+        // create file
+        fstream outputFile(newFileName.c_str(), ios::app | ios::ate);
+
+        // write in file
+        outputFile << "TrafficSimulation: " << filename << '\n' << '\n';
+
+        // close file
+        outputFile.close();
+    }
+    else if (type == update) {
+        // open file
+        fstream outputFile;
+        outputFile.open(newFileName.c_str(), ios::app | ios::ate);
+
+        // write file
+
+
+        // close file
+        outputFile.close();
+    }
+    else if (type == closing) {
+        // open file
+        fstream outputFile;
+        outputFile.open(newFileName.c_str(), ios::app | ios::ate);
+
+        // write file
+
+
+        // close file
+        outputFile.close();
+    }
+}
+
 TrafficSimulation::~TrafficSimulation() {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling destructor");
 
@@ -411,24 +473,4 @@ TrafficSimulation::~TrafficSimulation() {
     ENSURE(vehicles.empty(), "Vehicles are not properly destructed");
     ENSURE(vehicleGenerators.empty(), "Vehicle generators are not properly destructed");
 
-}
-
-const string &TrafficSimulation::getFilename() const {
-    return filename;
-}
-
-void TrafficSimulation::parseXML() {
-    parseTrafficSimulationX(*this);
-}
-
-void TrafficSimulation::parseJSON() {
-
-}
-
-void TrafficSimulation::addCrossRoad(CrossRoad* crossRoad) {
-    crossRoads.push_back(crossRoad);
-}
-
-void TrafficSimulation::addBusStop(BusStop* busStop) {
-    busStops.push_back(busStop);
 }
