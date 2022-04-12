@@ -320,10 +320,6 @@ TEST(TypeTest, typeTS){
     }
 }
 
-TEST(TypeTest, typeParse){
-    Vehicle* vehicle;
-    EXPECT_TRUE()
-}
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
