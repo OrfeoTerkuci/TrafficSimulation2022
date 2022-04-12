@@ -10,6 +10,7 @@ using namespace std;
 #include "Vehicle.h"
 #include "VehicleGenerator.h"
 #include "Standard_Values.h"
+#include "ParserXML.h"
 
 class TrafficSimulationTest: public ::testing::Test {
 protected:
@@ -322,7 +323,7 @@ TEST(TypeTest, typeTS){
 
 TEST(TypeTest, typeParse){
     Vehicle* vehicle;
-    EXPECT_TRUE()
+    EXPECT_TRUE(setTypeParser("auto", vehicle));
 }
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
