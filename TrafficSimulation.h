@@ -117,51 +117,6 @@ public:
     */
     bool addVehicleGenerator(VehicleGenerator* newVehicleGenerator);
 
-    /**
-     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseRoad");
-     * REQUIRE(*typeid(root).name() == 'P' , "parseRoad was called with invalid parameter");
-     * REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
-     * REQUIRE(tempi >= 0, "Road length is not valid");
-     
-     * @param root A pointer to a TiXmlElement
-     * @return True if parsing was successful
-    */
-    bool parseRoad(TiXmlElement* &root);
-
-    /**
-     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseTrafficLight");
-     * REQUIRE(*typeid(root).name() == 'P' , "parseTrafficLight was called with invali parameter");
-     * REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
-     * REQUIRE(tempi >= 0, "Cycle is not valid");
-     * REQUIRE(tempi > 0, "Position is not valid");
-
-     * @param root A pointer to a TiXmlElement
-     * @return True if parsing was successful
-    */
-    bool parseTrafficLight(TiXmlElement* &root);
-
-    /**
-     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseVehicle");
-     * REQUIRE(*typeid(root).name() == 'P' , "parseVehicle was called with invalid parameter");
-     * REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
-     * REQUIRE(tempi > 0, "Position is not valid");
-
-     * @param root A pointer to a TiXmlElement
-     * @return True if parsing was successful
-    */
-    bool parseVehicle(TiXmlElement* &root);
-
-    /**
-     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling parseVehicleGenerator");
-     * REQUIRE(*typeid(root).name() == 'P' , "parseVehicleGenerator was called with invalid parameter");
-     * REQUIRE(!elem->NoChildren(), "One of the parameters was empty");
-     * REQUIRE(tempf > 0, "Frequency is not valid");
-
-     * @param root A pointer to a TiXmlElement
-     * @return True if parsing was successful
-    */
-    bool parseVehicleGenerator(TiXmlElement* &root);
-
     void parseXML();
 
     void parseJSON();
