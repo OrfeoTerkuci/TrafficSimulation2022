@@ -24,6 +24,7 @@
 using namespace std;
 
 bool parseBusStop(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
+    REQUIRE(trafficSimulation.properlyInitialized(), "TrafficSimulation was not initialized when calling parseBusStop");
     // create new object
     BusStop* busStop = new BusStop();
 
