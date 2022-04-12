@@ -35,23 +35,28 @@ set(sources
         Road.cpp
         VehicleGenerator.cpp
         CrossRoad.cpp
-        BusStop.cpp)
+        BusStop.cpp
+        )
 
 
 # Set source files for RELEASE target
-set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp ${sources} ${AdditionalSources} ${tinySources})
+set(RELEASE_SOURCE_FILES TrafficSimulationMain.cpp ${sources} ${AdditionalSources} ${tinySources} ParserXML.cpp)
 
 # Set source files for DEBUG target
 set(DEBUG_SOURCE_FILES TrafficSimulationTests.cpp ${sources} ${AdditionalSources} ${tinySources})
 
 # Create RELEASE target
 add_executable(ts ${RELEASE_SOURCE_FILES})
-
+set_target_properties("ts" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/TestFiles/XML" )
 # Create DEBUG target
 add_executable(ts_debug ${DEBUG_SOURCE_FILES})
 
+set_target_properties("ts_debug" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/TestFiles/XML" )
+
 # Create External function test targer
 add_executable(ES_test ExtraFunctionTest.cpp)
+
+set_target_properties("ES_test" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/TestFiles/XML" )
 
 # Link library
 target_link_libraries(ts_debug gtest)

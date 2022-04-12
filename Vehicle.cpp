@@ -9,7 +9,7 @@
 using namespace std;
 
 
-Vehicle::Vehicle(double speed, double position) : speed(speed), position(position) , acceleration(0.0) , currentMaxSpeed(MAX_SPEED) , _initCheck(this) {
+Vehicle::Vehicle(double speed, double position , vehicleType type) : speed(speed), position(position) , acceleration(0.0) , currentMaxSpeed(MAX_SPEED) , type(type), _initCheck(this) {
     REQUIRE(*typeid(speed).name() == 'd' , "constructor called with invalid speed parameter");
     REQUIRE(*typeid(position).name() == 'd' , "constructor called with invalid position parameter");
     // Check speed
@@ -29,14 +29,16 @@ Vehicle::Vehicle(double speed, double position) : speed(speed), position(positio
     ENSURE(Vehicle::position == position , "position was not properly initialized");
     ENSURE(Vehicle::acceleration == 0.0 , "acceleration was not properly initialized");
     ENSURE(Vehicle::currentMaxSpeed == MAX_SPEED , "currentMaxSpeed was not properly initialized");
+    ENSURE(Vehicle::type == type , "vehicleType was not properly initialized");
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 
-Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , currentMaxSpeed(MAX_SPEED) , _initCheck(this) {
+Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , currentMaxSpeed(MAX_SPEED) , type(T_AUTO) , _initCheck(this) {
     ENSURE(Vehicle::speed == 0.0 , "speed was not properly initialized");
     ENSURE(Vehicle::position == 0.0 , "position was not properly initialized");
     ENSURE(Vehicle::acceleration == 0.0 , "acceleration was not properly initialized");
     ENSURE(Vehicle::currentMaxSpeed == MAX_SPEED , "currentMaxSpeed was not properly initialized");
+    ENSURE(Vehicle::type == T_AUTO , "vehicleType was not properly initialized");
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 
