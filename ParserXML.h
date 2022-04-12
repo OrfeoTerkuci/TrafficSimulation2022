@@ -160,6 +160,28 @@ bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     return false;
 }
 
+void setTypeParser(const string &tempn, Vehicle* &vehicle){
+    if (tempn == AUTO){
+        vehicle->setType(T_AUTO);
+    }
+    else if ( tempn == BUS ){
+        vehicle->setType(T_BUS);
+    }
+    else if ( tempn == BRANDWEERWAGEN ){
+        vehicle->setType(T_FIRETRUCK);
+    }
+    else if ( tempn == ZIEKENWAGEN ){
+        vehicle->setType(T_AMBULANCE);
+    }
+    else if ( tempn == POLITIECOMBI ){
+        vehicle->setType(T_POLICE);
+    }
+    else{
+        // Set default type
+        vehicle->setType(T_AUTO);
+    }
+}
+
 bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     REQUIRE(trafficSimulation.properlyInitialized(), "TrafficSimulation was not initialized when calling parseVehicle");
     REQUIRE(*typeid(root).name() == 'P' , "parseVehicle was called with invalid parameter");
@@ -181,25 +203,7 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         tempn = elem->GetText();
 
         if (elemName == TYPE){
-            if (tempn == AUTO){
-                vehicle->setType(T_AUTO);
-            }
-            else if ( tempn == BUS ){
-                vehicle->setType(T_BUS);
-            }
-            else if ( tempn == BRANDWEERWAGEN ){
-                vehicle->setType(T_FIRETRUCK);
-            }
-            else if ( tempn == ZIEKENWAGEN ){
-                vehicle->setType(T_AMBULANCE);
-            }
-            else if ( tempn == POLITIECOMBI ){
-                vehicle->setType(T_POLICE);
-            }
-            else{
-                // Set default type
-                vehicle->setType(T_AUTO);
-            }
+            setTypeParser(tempn, vehicle);
         }
         else if(elemName == BAANL){
             for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); ++i) {

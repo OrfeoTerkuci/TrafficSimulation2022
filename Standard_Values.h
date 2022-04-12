@@ -88,6 +88,7 @@ enum vehicleType{ T_AUTO , T_BUS , T_FIRETRUCK , T_AMBULANCE , T_POLICE };
 #define SIM11                   "Simulation11.xml"
 #define SIM12                   "Simulation12.xml"
 #define SIM13                   "Simulation13.xml"
+#define SIM14                   "Simulation14.xml"
 
 // file types
 #define XMLL                    ".xml"

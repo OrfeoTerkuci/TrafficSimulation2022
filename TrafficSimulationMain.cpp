@@ -25,10 +25,13 @@ int main(){
 //TrafficSimulation testFile(SIM11); // Normal simulation, with empty parameter for road
 
 //==== Crossroad files ====//
-TrafficSimulation ts(SIM12);
+//TrafficSimulation ts(SIM12);
 
 //==== Busstop ====//
 //TrafficSimulation ts(SIM13);
+
+//==== Vehicle Type ====//
+TrafficSimulation ts(SIM14);
 
 //==== Simulation functions ====//
 //ts.printAll();
