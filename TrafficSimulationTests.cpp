@@ -9,7 +9,6 @@ using namespace std;
 #include "TrafficLight.h"
 #include "Vehicle.h"
 #include "VehicleGenerator.h"
-#include "Standard_Values.h"
 
 class TrafficSimulationTest: public ::testing::Test {
 protected:
