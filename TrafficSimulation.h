@@ -136,6 +136,7 @@ public:
     */
     void startSimulation();
 
+    void outputTXT()
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimNoPrint");
      * ENSURE(vehicles.empty() || vehicleGenerators.empty() , "Simulation ended when it shouldn't");

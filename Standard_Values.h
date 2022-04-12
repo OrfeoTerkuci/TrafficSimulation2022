@@ -46,6 +46,7 @@
 
 enum vehicleStatus{ accelerate , decelerate , stopping , idle };
 enum vehicleType{ T_AUTO , T_BUS , T_FIRETRUCK , T_AMBULANCE , T_POLICE };
+enum fileFunctionType{close, create, update};
 
 // Strings
 #define NAAM                    "naam"
