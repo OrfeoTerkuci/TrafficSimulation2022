@@ -293,10 +293,29 @@ TEST(FunctionsTest , VehicleGenerator_Test){
 
 }
 
+bool checktype(const Vehicle* &vehicle){
+    vehicleType type = vehicle->getType();
+    if (type == T_AMBULANCE){
+        return true;
+    }
+    else if (type == T_AUTO){
+        return true;
+    }
+    else if (type == T_BUS){
+        return true;
+    }
+    else if (type == T_FIRETRUCK){
+        return true;
+    }
+    else if (type == T_POLICE){
+        return true;
+    }
+    return false;
+}
 TEST(SimTest, TypeTest){
     TrafficSimulation ts(SIM14);
-    for (int i = 0; i < ts.getVehicles(); ++i) {
-        if (ts.getVehicles()[i]->getType() )
+    for (unsigned int i = 0; i < ts.getVehicles().size(); ++i) {
+        EXPECT_TRUE(checktype((const Vehicle *&) ts.getVehicles()[i]));
     }
 }
 
