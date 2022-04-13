@@ -197,6 +197,7 @@ bool setTypeParser(const string &tempn, Vehicle* &vehicle){
     else{
         return false;
     }
+    vehicle->setStandardValues();
     return true;
 }
 

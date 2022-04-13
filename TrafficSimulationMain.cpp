@@ -8,7 +8,7 @@ int main(){
 
 //==== Normal simulation files ====//
 //TrafficSimulation ts(SIM0); // Single vehicle , long road
-//TrafficSimulation ts(SIM1); // Basic Simulation
+TrafficSimulation ts(SIM1); // Basic Simulation
 //TrafficSimulation ts(SIM2); // Empty road simulation
 TrafficSimulation ts(SIM3); // Multiple Roads simulation
 
