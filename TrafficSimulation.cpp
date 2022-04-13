@@ -261,6 +261,7 @@ void TrafficSimulation::startSimulation() {
             }
         }
         print(count);
+        outputFile(update, count);
         count ++;
     }
     cout << "- There are no vehicles on the road network." << endl;
@@ -436,9 +437,6 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
 
         // close file
         outputNewFile.close();
-
-        // update current situation
-        outputFile(update, 0);
 
     }
     else if (type == update) {
