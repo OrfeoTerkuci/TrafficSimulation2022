@@ -10,7 +10,7 @@ int main(){
 //TrafficSimulation ts(SIM0); // Single vehicle , long road
 //TrafficSimulation ts(SIM1); // Basic Simulation
 //TrafficSimulation ts(SIM2); // Empty road simulation
-TrafficSimulation ts(SIM3); // Multiple Roads simulation
+//TrafficSimulation ts(SIM3); // Multiple Roads simulation
 
 //==== Vehicle generator files ====//
 //TrafficSimulation ts(SIM4); // VehicleGenerator sim
@@ -32,6 +32,9 @@ TrafficSimulation ts(SIM3); // Multiple Roads simulation
 
 //==== Vehicle Type ====//
 //TrafficSimulation ts(SIM14);
+
+//==== Different types of vehicles ====//
+TrafficSimulation ts(SIM15);
 
 //==== Simulation functions ====//
 //ts.printAll();

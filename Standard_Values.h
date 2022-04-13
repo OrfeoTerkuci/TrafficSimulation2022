@@ -89,6 +89,7 @@ enum fileFunctionType{closing, create, update};
 #define SIM12                   "Simulation12.xml"
 #define SIM13                   "Simulation13.xml"
 #define SIM14                   "Simulation14.xml"
+#define SIM15                   "Simulation15.xml"
 
 // file types
 #define XMLL                    ".xml"
