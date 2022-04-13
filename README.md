@@ -4,7 +4,8 @@ Project Software Engineering 2022. University of Antwerp.
 Made by: **Orfeo Terkuci** and **Jason Liu**
 
 V = Implemented   
-X = Not implemented
+X = Not implemented  
+I = Implemented but not done
 
 ## Versie 1.0
 ### Overzicht
@@ -42,10 +43,10 @@ Simulation functions post-condition must be added.
 |1.4  | Bushaltes Inlezen           | Belangrijk   | V        |
 |1.5  | Kruispunten Inlezen         | Belangrijk   | V        |
 
-|Case | Uitvoer                 | Prioriteit   | Status   |
-|:---:|-------------------------|:------------:|:--------:|
-|2.1  | Simpele Uitvoer         | Verplicht    | V        |
-|2.2  | Grafische impressie     | Belangrijk   |          |
+|Case | Uitvoer                 | Prioriteit   | Status |
+|:---:|-------------------------|:------------:|:------:|
+|2.1  | Simpele Uitvoer         | Verplicht    |   V    |
+|2.2  | Grafische impressie     | Belangrijk   |   I    |
 
 |Case | Simulatie                         | Prioriteit   | Status   |
 |:---:|-----------------------------------|:------------:|:--------:|
