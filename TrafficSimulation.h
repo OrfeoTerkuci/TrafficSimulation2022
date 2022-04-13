@@ -18,6 +18,7 @@ class BusStop;
 
 class TrafficSimulation {
     string filename;
+    string outputFileName;
     vector<Vehicle*> vehicles;
     vector<TrafficLight*> lights;
     vector<Road*> roads;
@@ -137,7 +138,7 @@ public:
     */
     void startSimulation();
 
-    void outputFile(fileFunctionType type);
+    void outputFile(fileFunctionType type, int timestamp);
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimNoPrint");
      * ENSURE(vehicles.empty() || vehicleGenerators.empty() , "Simulation ended when it shouldn't");

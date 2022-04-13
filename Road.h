@@ -9,6 +9,7 @@ using namespace std;
 
 class TrafficLight;
 class Vehicle;
+class BusStop;
 
 class Road {
     // Parsed variables
@@ -17,6 +18,9 @@ class Road {
     // Necessary containers for implementation
     vector<TrafficLight*> trafficLights;
     vector<Vehicle*> vehicles;
+    vector<BusStop*> busStops;
+
+private:
     // Self-pointer
     Road* _initCheck;
 
@@ -91,6 +95,10 @@ public:
      */
     Vehicle* &getVehicle(unsigned int index);
 
+    const vector<BusStop *> &getBusStops() const;
+
+    void setBusStops(const vector<BusStop *> &newBusStops);
+
     /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling setLength");
      * REQUIRE( *typeid(newLength).name() == 'j' , "setLength was called with invalid parameter");
@@ -121,6 +129,8 @@ public:
      * @param newVehicle A pointer to a Vehicle element
      */
     void addVehicle (Vehicle* newVehicle);
+
+    void addBusStop (BusStop* newBusStop);
 
     /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling removeVehicle");

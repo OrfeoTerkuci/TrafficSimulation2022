@@ -116,6 +116,10 @@ void Road::removeVehicle(Vehicle *oldVehicle) {
     delete oldSize;
 }
 
+void Road::addBusStop(BusStop *newBusStop) {
+    busStops.push_back(newBusStop);
+}
+
 void Road::addLight(TrafficLight *newLight) {
     REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addLight");
     REQUIRE(*typeid(newLight).name() == 'P' , "addLight was called with invalid parameter");
@@ -145,4 +149,12 @@ void Road::print() {
 
 Road::~Road() {
     REQUIRE(properlyInitialized() , "Road wasn't initialized when calling destructor");
+}
+
+const vector<BusStop *> &Road::getBusStops() const {
+    return busStops;
+}
+
+void Road::setBusStops(const vector<BusStop *> &newBusStops) {
+    Road::busStops = newBusStops;
 }

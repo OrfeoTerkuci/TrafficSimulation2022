@@ -8,6 +8,8 @@
 #include <sstream>
 #include <filesystem>
 
+using namespace std;
+
 //==== Constructors and Destructor ====//
 TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename) {
     REQUIRE(*typeid(filename).name() == 'N' , "constructor was called with invalid filename");
@@ -21,7 +23,7 @@ TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename
     else {
         cout << "No compatible parser for this type of file" << endl;
     }
-    outputFile(create);
+    outputFile(create, 0);
     ENSURE(TrafficSimulation::filename == filename , "filename was not properly initialized");
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
@@ -395,28 +397,102 @@ void TrafficSimulation::addBusStop(BusStop* busStop) {
     busStops.push_back(busStop);
 }
 
-void TrafficSimulation::outputFile(fileFunctionType type) {
+void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
     // find file name
-    string newFileName = filename.substr(0, filename.find("."));
+    string newFileName = filename.substr(0, filename.find('.'));
     newFileName += ".txt";
 
     if (type == create){
         // create file
-        fstream outputFile(newFileName.c_str(), ios::app | ios::ate);
+        FILE* codefile;
+        bool doesntExists = true;
+        fstream outputNewFile;
+        int i = 0;
+        while (doesntExists){
+            i++;
+            codefile = fopen(newFileName.c_str(), "r");
+            if (codefile){
+                newFileName = filename.substr(0, filename.find('.'));
+                stringstream intStr;
+                intStr << i;
+                newFileName += '(';
+                newFileName += intStr.str();
+                newFileName += ')';
+                newFileName += ".txt";
+            }
+            else {
+                outputNewFile.open(newFileName.c_str(), ios::app | ios::ate);
+                outputFileName = newFileName;
+                doesntExists = false;
+            }
+        }
 
         // write in file
-        outputFile << "TrafficSimulation: " << filename << '\n' << '\n';
+        outputNewFile << "TrafficSimulation: " << filename << '\n' << '\n';
 
         // close file
-        outputFile.close();
+        outputNewFile.close();
+
+        // update current situation
+        outputFile(update, 0);
+
     }
     else if (type == update) {
         // open file
         fstream outputFile;
-        outputFile.open(newFileName.c_str(), ios::app | ios::ate);
+        outputFile.open(outputFileName.c_str(),ios::app | ios::ate);
+
+        if (outputFile.fail()) {
+            cout << "File doesn't exist" << endl;
+        }
 
         // write file
+        outputFile << "Time: ";
+        outputFile << timestamp;
+        outputFile << '\n';
 
+        for (unsigned int j = 0; j < roads.size(); ++j) {
+            int roadLenghth = roads[j]->getLength();
+            outputFile << roads[j]->getRoadName();
+            outputFile << '\t';
+            outputFile << "| ";
+            for (int k = 0; k < roadLenghth; ++k) {
+                bool road = false;
+                for (int l = 0; l < roads[j]->getVehicleAmount(); ++l) {
+                    if((int) roads[j]->getVehicle(l)->getVehiclePosition() == k){
+                        if (roads[j]->getVehicle(l)->getType() == T_POLICE){
+                            outputFile << "PPPPPPPP";
+                            roadLenghth -= 8;
+                        } else if (roads[j]->getVehicle(l)->getType() == T_FIRETRUCK){
+                            outputFile << "FFFFFFFFFF";
+                            roadLenghth -= 10;
+                        } else if (roads[j]->getVehicle(l)->getType() == T_BUS){
+                            outputFile << "BBBBBBBBBBBB";
+                            roadLenghth -= 12;
+                        } else if (roads[j]->getVehicle(l)->getType() == T_AMBULANCE){
+                            outputFile << "ZZZZZZZZ";
+                            roadLenghth -= 8;
+                        } else if (roads[j]->getVehicle(l)->getType() == T_AUTO){
+                            outputFile << "AAAA";
+                            roadLenghth -= 4;
+                        }
+                    } else {
+                        road = true;
+                    }
+                }
+                if (road){
+                    outputFile << "=";
+                }
+            }
+            outputFile << '\n';
+            outputFile << '\t';
+            outputFile << '>';
+            for (int i = 0; i < roads[j]->getBusStops().size(); ++i) {
+                if (roads[j]->getBusStops()[i]){
+
+                }
+            }
+        }
 
         // close file
         outputFile.close();

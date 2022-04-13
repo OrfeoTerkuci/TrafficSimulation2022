@@ -55,6 +55,7 @@ bool parseBusStop(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
             for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); i++){
                 if (trafficSimulation.getRoads()[i]->getRoadName() == tempn){
                     busStop->setRoad(trafficSimulation.getRoads()[i]);
+                    trafficSimulation.getRoads()[i]->addBusStop(busStop);
                 }
             }
         } else if (elemname == WACHTTIJD) {
