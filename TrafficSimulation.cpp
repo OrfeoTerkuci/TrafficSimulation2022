@@ -396,7 +396,11 @@ void TrafficSimulation::addCrossRoad(CrossRoad* crossRoad) {
 void TrafficSimulation::addBusStop(BusStop* busStop) {
     busStops.push_back(busStop);
 }
-
+void addSpaces(fstream &file, int spaceAmount){
+    for (int i = 0; i < spaceAmount; ++i) {
+        file << " ";
+    }
+}
 void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
     // find file name
     string newFileName = filename.substr(0, filename.find('.'));
@@ -450,48 +454,77 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
         outputFile << "Time: ";
         outputFile << timestamp;
         outputFile << '\n';
-
         for (unsigned int j = 0; j < roads.size(); ++j) {
+            int nameLenghth = 26;
             int roadLenghth = roads[j]->getLength();
+            nameLenghth -= roads[j]->getRoadName().size();
             outputFile << roads[j]->getRoadName();
-            outputFile << '\t';
+            addSpaces(outputFile, nameLenghth);
             outputFile << "| ";
             for (int k = 0; k < roadLenghth; ++k) {
-                bool road = false;
+                int count = 0;
                 for (int l = 0; l < roads[j]->getVehicleAmount(); ++l) {
-                    if((int) roads[j]->getVehicle(l)->getVehiclePosition() == k){
-                        if (roads[j]->getVehicle(l)->getType() == T_POLICE){
-                            outputFile << "PPPPPPPP";
-                            roadLenghth -= 8;
-                        } else if (roads[j]->getVehicle(l)->getType() == T_FIRETRUCK){
-                            outputFile << "FFFFFFFFFF";
-                            roadLenghth -= 10;
-                        } else if (roads[j]->getVehicle(l)->getType() == T_BUS){
-                            outputFile << "BBBBBBBBBBBB";
-                            roadLenghth -= 12;
-                        } else if (roads[j]->getVehicle(l)->getType() == T_AMBULANCE){
-                            outputFile << "ZZZZZZZZ";
-                            roadLenghth -= 8;
-                        } else if (roads[j]->getVehicle(l)->getType() == T_AUTO){
-                            outputFile << "AAAA";
-                            roadLenghth -= 4;
-                        }
+                    if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+8 and roads[j]->getVehicle(l)->getType() == T_POLICE){
+                        outputFile << "P";
+                    } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+8 and roads[j]->getVehicle(l)->getType() == T_AMBULANCE){
+                        outputFile << "Z";
+                    } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+4 and roads[j]->getVehicle(l)->getType() == T_AUTO){
+                        outputFile << "A";
+                    } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+12 and roads[j]->getVehicle(l)->getType() == T_BUS){
+                        outputFile << "B";
+                    } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+10 and roads[j]->getVehicle(l)->getType() == T_FIRETRUCK){
+                        outputFile << "F";
                     } else {
-                        road = true;
+                        count++;
                     }
                 }
-                if (road){
+                if (count == roads[j]->getVehicleAmount()){
                     outputFile << "=";
                 }
             }
             outputFile << '\n';
             outputFile << '\t';
-            outputFile << '>';
-            for (int i = 0; i < roads[j]->getBusStops().size(); ++i) {
-                if (roads[j]->getBusStops()[i]){
-
+            outputFile << "> verkeerslichten";
+            addSpaces(outputFile, 5);
+            outputFile << "| ";
+            for (int i = 0; i < roadLenghth; ++i) {
+                int lightsAmount = 0;
+                for (int k = 0; k < roads[j]->getTrafficLightsAmount(); ++k) {
+                    if (roads[j]->getTrafficLights()[k]->getPosition() == (unsigned) i){
+                        if (roads[j]->getTrafficLight(k)->getCurrentColor() == green){
+                            outputFile << "G";
+                        }
+                        else {
+                            outputFile << "R";
+                        }
+                    }
+                    else if (roads[j]->getTrafficLight(k)->getPosition()-15 == (unsigned) i){
+                        outputFile << '|';
+                    }
+                    else {
+                        lightsAmount++;
+                    }
+                }
+                if (lightsAmount == roads[j]->getTrafficLightsAmount()){
+                    outputFile << ' ';
                 }
             }
+            outputFile << '\n';
+            outputFile << '\t';
+            outputFile << "> bushaltes";
+            addSpaces(outputFile, 11);
+            outputFile << "| ";
+            for (int i = 0; i < roadLenghth; ++i) {
+                for (unsigned int k = 0; k < roads[j]->getBusStops().size(); ++k) {
+                    if (roads[j]->getBusStops()[k]->getPosition() == i){
+                        outputFile << "B";
+                    }
+                    else {
+                        outputFile << " ";
+                    }
+                }
+            }
+            outputFile << '\n';
         }
 
         // close file
