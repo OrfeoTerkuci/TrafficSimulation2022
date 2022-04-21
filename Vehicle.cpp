@@ -140,145 +140,6 @@ void Vehicle::setRoad(Road *newRoad) {
     ENSURE(Vehicle::road == newRoad , "setRoad failed");
 }
 
-void Vehicle::calculateNewAcceleration(double maxSpeed) {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewAcceleration");
-    REQUIRE(*typeid(maxSpeed).name() == 'd' , "calculateNewAcceleration was called with invalid parameter : wrong type");
-    REQUIRE(maxSpeed >= 0 , "calculateNewAcceleration was called with invalid parameter : negative maxSpeed");
-    setCurrentMaxSpeed(maxSpeed);
-    if(getNextVehicle() == NULL){
-        setAcceleration(v_max_acceleration * (1- pow((this->speed/this->currentMaxSpeed), 4)));
-    }
-    else{
-        setAcceleration(v_max_acceleration * (1- pow((this->speed/this->currentMaxSpeed), 4) - pow(this->calculateSpeedRestriction(), 2)));
-    }
-}
-
-void Vehicle::calculateNewSpeed() {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewSpeed");
-    double tempSpeed = this->speed + this->acceleration * SIMULATION_TIME;
-
-    if (tempSpeed > 0){
-        setSpeed(tempSpeed);
-        //ENSURE(Vehicle::speed == tempSpeed , "calculateNewSpeed failed");
-        setPosition(this->position + this->speed * SIMULATION_TIME + this->acceleration * (pow(SIMULATION_TIME,2) / 2));
-    }
-    else{
-        calculateNewPosition();
-    }
-}
-
-void Vehicle::calculateNewPosition() {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewPosition");
-    setPosition(this->position - (pow(this->speed, 2) / 2 * acceleration));
-    setSpeed(0);
-    //ENSURE(Vehicle::speed == 0.0 , "calculateNewPosition failed");
-}
-
-double Vehicle::calculateFollowDistance() {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateFollowDistance");
-    if(this->getNextVehicle() == NULL){
-        return 0;
-    }
-    return abs(this->getVehiclePosition() - this->getNextVehicle()->getVehiclePosition());
-}
-
-double Vehicle::calculateSpeedRestriction() {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateSpeedRestriction");
-    return (v_min_followDistance + max(0.0 , this->speed + ((this->speed * this->calculateSpeedDifference())/2* sqrt(v_max_acceleration * v_max_brakefactor))))/this->calculateFollowDistance();
-}
-
-double Vehicle::calculateSpeedDifference() {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateSpeedDifference");
-    if(this->getNextVehicle() == NULL){
-        return 0;
-    }
-    return abs(this->getSpeed() - this->getNextVehicle()->getSpeed());
-}
-
-void Vehicle::calculateStopDecelerate() {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateStopDecelerate");
-    setAcceleration(-(v_max_brakefactor * this->speed)/(v_max_speed));
-}
-
-Vehicle* Vehicle::getNextVehicle() {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getNextVehicle");
-
-    if(this->road == NULL || this->road->getVehicleAmount() <= 1){
-        return NULL;
-    }
-    else{
-        Vehicle* nextVehicle;
-        Vehicle* currentVehicle;
-        nextVehicle = this->road->getVehicle(0);
-        double oldPosition = this->getVehiclePosition();
-        for(int i = 1; i < this->road->getVehicleAmount(); ++i){
-            currentVehicle = this->road->getVehicle(i);
-            if(currentVehicle->getVehiclePosition() > oldPosition && currentVehicle->getVehiclePosition() <= nextVehicle->getVehiclePosition()){
-                nextVehicle = currentVehicle;
-            }
-        }
-        return nextVehicle->getVehiclePosition() == oldPosition ? NULL : nextVehicle;
-    }
-
-}
-
-void Vehicle::simulateStop() {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateStop");
-    this->calculateStopDecelerate();
-    this->calculateNewSpeed();
-}
-
-void Vehicle::simulateDecelerate() {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateDecelerate");
-    this->calculateNewAcceleration(v_decelerate);
-    this->calculateNewSpeed();
-}
-
-void Vehicle::simulateAccelerate() {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateAccelerate");
-    this->calculateNewAcceleration(v_max_speed);
-    this->calculateNewSpeed();
-}
-
-void Vehicle::simulate() {
-
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulate");
-    // Check status of vehicle
-
-    if (status == decelerate){
-        simulateDecelerate();
-    }
-    else if (status == stopping){
-        simulateStop();
-        // Update status
-        setStatus(speed == 0 && acceleration == 0 ? idle : stopping);
-    }
-    else{
-        simulateAccelerate();
-        // Update status
-        setStatus(accelerate);
-    }
-
-
-}
-
-void Vehicle::print() {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling print");
-    cout << '\t' << "-> Road: " << this->road->getRoadName() << endl;
-    cout << '\t' << "-> Position: " << this->position << endl;
-    cout << '\t' << "-> Speed: " << this->speed << endl;
-    cout << '\t' << "-> Acceleration: " << this->acceleration << endl;
-
-    cout << '\t' << "-> Status: " << this->getStatusString() << endl;
-
-    cout << endl;
-}
-
-Vehicle::~Vehicle() {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling destructor");
-
-}
-
 const vehicleType &Vehicle::getType() const {
     return type;
 }
@@ -379,4 +240,184 @@ double Vehicle::getV_decelerate() const {
 
 void Vehicle::setV_decelerate(double v_decelerate) {
     Vehicle::v_decelerate = v_decelerate;
+}
+
+void Vehicle::calculateNewAcceleration(double maxSpeed) {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewAcceleration");
+    REQUIRE(*typeid(maxSpeed).name() == 'd' , "calculateNewAcceleration was called with invalid parameter : wrong type");
+    REQUIRE(maxSpeed >= 0 , "calculateNewAcceleration was called with invalid parameter : negative maxSpeed");
+    setCurrentMaxSpeed(maxSpeed);
+    if(getNextVehicle() == NULL){
+        setAcceleration(v_max_acceleration * (1- pow((this->speed/this->currentMaxSpeed), 4)));
+    }
+    else{
+        setAcceleration(v_max_acceleration * (1- pow((this->speed/this->currentMaxSpeed), 4) - pow(this->calculateSpeedRestriction(), 2)));
+    }
+}
+
+void Vehicle::calculateNewSpeed() {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewSpeed");
+    double tempSpeed = this->speed + this->acceleration * SIMULATION_TIME;
+
+    if (tempSpeed > 0){
+        setSpeed(tempSpeed);
+        //ENSURE(Vehicle::speed == tempSpeed , "calculateNewSpeed failed");
+        setPosition(this->position + this->speed * SIMULATION_TIME + this->acceleration * (pow(SIMULATION_TIME,2) / 2));
+    }
+    else{
+        calculateNewPosition();
+    }
+}
+
+void Vehicle::calculateNewPosition() {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewPosition");
+    setPosition(this->position - (pow(this->speed, 2) / 2 * acceleration));
+    setSpeed(0);
+    //ENSURE(Vehicle::speed == 0.0 , "calculateNewPosition failed");
+}
+
+double Vehicle::calculateFollowDistance() {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateFollowDistance");
+    if(this->getNextVehicle() == NULL){
+        return 0;
+    }
+    return abs(this->getVehiclePosition() - this->getNextVehicle()->getVehiclePosition());
+}
+
+double Vehicle::calculateSpeedRestriction() {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateSpeedRestriction");
+    return (v_min_followDistance + max(0.0 , this->speed + ((this->speed * this->calculateSpeedDifference())/2* sqrt(v_max_acceleration * v_max_brakefactor))))/this->calculateFollowDistance();
+}
+
+double Vehicle::calculateSpeedDifference() {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateSpeedDifference");
+    if(this->getNextVehicle() == NULL){
+        return 0;
+    }
+    return abs(this->getSpeed() - this->getNextVehicle()->getSpeed());
+}
+
+void Vehicle::calculateStopDecelerate() {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateStopDecelerate");
+    setAcceleration(-(v_max_brakefactor * this->speed)/(v_max_speed));
+}
+
+Vehicle* Vehicle::getNextVehicle() {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getNextVehicle");
+
+    if(this->road == NULL || this->road->getVehicleAmount() <= 1){
+        return NULL;
+    }
+    else{
+        Vehicle* nextVehicle;
+        Vehicle* currentVehicle;
+        nextVehicle = this;
+        double oldPosition = this->getVehiclePosition();
+        double nextPos = this->road->getLength();
+        for(int i = 1; i < this->road->getVehicleAmount(); ++i){
+            currentVehicle = this->road->getVehicle(i);
+            if(currentVehicle->getVehiclePosition() > oldPosition && currentVehicle->getVehiclePosition() <= nextPos){
+                nextVehicle = currentVehicle;
+                nextPos = nextVehicle->getVehiclePosition();
+            }
+        }
+        return nextVehicle->getVehiclePosition() == oldPosition ? NULL : nextVehicle;
+    }
+
+}
+
+void Vehicle::simulateStop() {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateStop");
+    this->calculateNewSpeed();
+    this->calculateStopDecelerate();
+}
+
+void Vehicle::simulateDecelerate() {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateDecelerate");
+    this->calculateNewSpeed();
+    this->calculateNewAcceleration(v_decelerate);
+}
+
+void Vehicle::simulateAccelerate() {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateAccelerate");
+    this->calculateNewSpeed();
+    this->calculateNewAcceleration(v_max_speed);
+}
+
+void Vehicle::simulate() {
+
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulate");
+    // Check status of vehicle
+    double oldPos = this->position;
+    double oldSpeed = this->speed;
+    double oldAcc = this->acceleration;
+    if (status == decelerate){
+        simulateDecelerate();
+    }
+    else if (status == stopping){
+        simulateStop();
+        // Update status
+        setStatus(speed == 0 && acceleration == 0 ? idle : stopping);
+    }
+    else{
+        if( (getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - ( this->position + v_length) > v_min_followDistance) || getNextVehicle() == NULL){
+            if(this->getNextVehicle() != NULL){
+                cout << this->position + v_length << " and next vehicle " << getNextVehicle()->getVehiclePosition();
+            }
+            simulateAccelerate();
+            // Update status
+            setStatus(accelerate);
+        }
+    }
+    if(getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - ( this->position + v_length) < v_min_followDistance){
+        if(this->getNextVehicle() != NULL){
+            cout << this->position + v_length << " and next vehicle " << getNextVehicle()->getVehiclePosition();
+        }
+        setPosition(oldPos);
+        setSpeed(oldSpeed);
+        setAcceleration(oldAcc);
+        setStatus(decelerate);
+        simulateDecelerate();
+    }
+
+}
+
+void Vehicle::print() {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling print");
+    cout << '\t' << "-> Road: " << this->road->getRoadName() << endl;
+    cout << '\t' << "-> Position: " << this->position << endl;
+    cout << '\t' << "-> Speed: " << this->speed << endl;
+    cout << '\t' << "-> Acceleration: " << this->acceleration << endl;
+
+    cout << '\t' << "-> Status: " << this->getStatusString() << endl;
+
+    cout << '\t' << "-> Type: " << this->getTypeString() << endl;
+
+    cout << endl;
+}
+
+Vehicle::~Vehicle() {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling destructor");
+
+}
+
+string Vehicle::getTypeString() const {
+    if(this->type == T_AUTO){
+        return "Auto";
+    }
+    else if(this->type == T_AMBULANCE){
+        return "Ambulance";
+    }
+    else if(this->type == T_BUS){
+        return "Bus";
+    }
+    else if(this->type == T_FIRETRUCK){
+        return "Firetruck";
+    }
+    else if(this->type == T_POLICE){
+        return "Police";
+    }
+    else{
+        return "";
+    }
 }

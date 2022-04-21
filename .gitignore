@@ -4,4 +4,7 @@ tinyxml
 build
 .vscode
 tinyxml
-DesignByContract.h
+*.txt
+*.html
+ts
+ts_debug
