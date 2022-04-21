@@ -46,7 +46,7 @@ Simulation functions post-condition must be added.
 |Case | Uitvoer                 | Prioriteit   | Status |
 |:---:|-------------------------|:------------:|:------:|
 |2.1  | Simpele Uitvoer         | Verplicht    |   V    |
-|2.2  | Grafische impressie     | Belangrijk   |   P    |
+|2.2  | Grafische impressie     | Belangrijk   |   V    |
 
 |Case | Simulatie                         | Prioriteit   | Status |
 |:---:|-----------------------------------|:------------:|:------:|
