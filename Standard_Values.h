@@ -46,7 +46,7 @@
 
 enum vehicleStatus{ accelerate , decelerate , stopping , idle };
 enum vehicleType{ T_AUTO , T_BUS , T_FIRETRUCK , T_AMBULANCE , T_POLICE };
-enum fileFunctionType{closing, create, update};
+enum fileFunctionType{ closing , create , update};
 
 // Strings
 #define NAAM                    "naam"
@@ -64,6 +64,7 @@ enum fileFunctionType{closing, create, update};
 #define KRUISPUNT               "KRUISPUNT"
 #define TYPE                    "type"
 #define BAAN_POSITIE            "baan positie ="
+
 // Vehicle type strings
 #define AUTO                    "auto"
 #define BUS                     "bus"
@@ -98,5 +99,6 @@ enum fileFunctionType{closing, create, update};
 #define JSONU                   ".JSON"
 #define OUTPUT_DIRECTORY        "./OutputLog/"
 #define TXTL                    ".txt"
+#define HTMLL                   ".html"
 
 #endif //TRAFFICSIMULATION2022_STANDARD_VALUES_H

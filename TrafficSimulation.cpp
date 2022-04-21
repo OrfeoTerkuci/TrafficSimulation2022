@@ -266,6 +266,7 @@ void TrafficSimulation::startSimulation() {
     }
     cout << "- There are no vehicles on the road network." << endl;
     cout << "- Ending simulation" << endl;
+    outputFile(closing, 0);
     ENSURE(vehicles.empty() , "Simulation ended when it shouldn't");
 }
 
@@ -405,14 +406,18 @@ void addSpaces(fstream &file, int spaceAmount){
 void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
     // find file name
     string newFileName = OUTPUT_DIRECTORY + filename.substr(0, filename.find('.'));
+    string newFileNameHTML = newFileName + HTMLL;
     newFileName += TXTL;
 
     if (type == create){
         // create file
         FILE* codefile;
+
+        // TXT
         bool doesntExists = true;
         fstream outputNewFile;
         int i = 0;
+
         while (doesntExists){
             i++;
             codefile = fopen(newFileName.c_str(), "r");
@@ -432,8 +437,43 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
             }
         }
 
+        // HTML
+        doesntExists = true;
+        fstream outputNewFileHTML;
+        i = 0;
+        while (doesntExists){
+            i++;
+            codefile = fopen(newFileNameHTML.c_str(), "r");
+            if (codefile){
+                newFileNameHTML = OUTPUT_DIRECTORY + filename.substr(0, filename.size() - 4);
+                stringstream intStr;
+                intStr << i;
+                newFileNameHTML += '(';
+                newFileNameHTML += intStr.str();
+                newFileNameHTML += ')';
+                newFileNameHTML += HTMLL;
+            }
+            else {
+                outputNewFileHTML.open(newFileNameHTML.c_str(), ios::app | ios::ate);
+                outputFileNameHTML = newFileNameHTML;
+                doesntExists = false;
+            }
+        }
+
         // write in file
+        // TXT
         outputNewFile << "TrafficSimulation: " << filename << '\n' << '\n';
+        // HTML
+        outputNewFileHTML << "<!DOCTYPE html>\n"
+                             "<html>\n"
+                             "<head>\n"
+                             "<title>";
+        outputNewFileHTML << "TrafficSimulation: " << filename << "</title>\n" << '\n';
+        outputNewFileHTML << "</head>\n"
+                             "<body>\n";
+
+        outputNewFileHTML << "<h1>";
+        outputNewFileHTML << "TrafficSimulation: " << filename << "</h1>\n" << '\n';
 
         // close file
         outputNewFile.close();
@@ -442,16 +482,26 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
     else if (type == update) {
         // open file
         fstream outputFile;
+        fstream outputFileHTML;
         outputFile.open(outputFileName.c_str(),ios::app | ios::ate);
+        outputFileHTML.open(outputFileNameHTML.c_str(), ios::app | ios::ate);
 
         if (outputFile.fail()) {
-            cout << "File doesn't exist" << endl;
+            cout << "TXT File doesn't exist" << endl;
+        }
+        if (outputFileHTML.fail()) {
+            cout << "HTML File doesn't exist" << endl;
         }
 
         // write file
         outputFile << "Time: ";
         outputFile << timestamp;
         outputFile << '\n';
+
+        outputFileHTML << "<h2>";
+        outputFileHTML << "Time: ";
+        outputFileHTML << timestamp;
+        outputFileHTML << "</h2>\n";
         for (unsigned int j = 0; j < roads.size(); ++j) {
             int nameLenghth = 26;
             int roadLenghth = roads[j]->getLength();
@@ -459,27 +509,40 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
             outputFile << roads[j]->getRoadName();
             addSpaces(outputFile, nameLenghth);
             outputFile << "| ";
+
+            outputFileHTML << "<h3>";
+            outputFileHTML << roads[j]->getRoadName();
+            addSpaces(outputFileHTML, nameLenghth);
+            outputFileHTML << "| ";
+
             for (int k = 0; k < roadLenghth; ++k) {
                 int count = 0;
                 for (int l = 0; l < roads[j]->getVehicleAmount(); ++l) {
                     if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+8 and roads[j]->getVehicle(l)->getType() == T_POLICE){
                         outputFile << "P";
+                        outputFileHTML << "<span style=\"color: #0000ff\">P</span>";
                     } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+8 and roads[j]->getVehicle(l)->getType() == T_AMBULANCE){
                         outputFile << "Z";
+                        outputFileHTML << "<span style = \"color: #00ff00\">Z</span>";
                     } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+4 and roads[j]->getVehicle(l)->getType() == T_AUTO){
                         outputFile << "A";
+                        outputFileHTML << "<span style = \" color: #fd7924\">A</span>";
                     } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+12 and roads[j]->getVehicle(l)->getType() == T_BUS){
                         outputFile << "B";
+                        outputFileHTML << "<span style = \" color: #ffff00\">B</span>";
                     } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+10 and roads[j]->getVehicle(l)->getType() == T_FIRETRUCK){
                         outputFile << "F";
+                        outputFileHTML << "<span style = \"color: #ff0000\">F</span>";
                     } else {
                         count++;
                     }
                 }
                 if (count == roads[j]->getVehicleAmount()){
                     outputFile << "=";
+                    outputFileHTML << "=";
                 }
             }
+            outputFileHTML << "</h3>\n";
             outputFile << '\n';
             outputFile << '\t';
             outputFile << "> verkeerslichten";
@@ -491,13 +554,16 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                     if (roads[j]->getTrafficLights()[k]->getPosition() == (unsigned) i){
                         if (roads[j]->getTrafficLight(k)->getCurrentColor() == green){
                             outputFile << "G";
+                            outputFileHTML << "<span style = \" color: #00ff00>G</span>";
                         }
                         else {
                             outputFile << "R";
+                            outputFileHTML << "<span style = \" color: #ff0000>>R</span>";
                         }
                     }
                     else if (roads[j]->getTrafficLight(k)->getPosition()-15 == (unsigned) i){
                         outputFile << '|';
+                        outputFileHTML << '|';
                     }
                     else {
                         lightsAmount++;
@@ -505,6 +571,7 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                 }
                 if (lightsAmount == roads[j]->getTrafficLightsAmount()){
                     outputFile << ' ';
+                    outputFileHTML << ' ';
                 }
             }
             outputFile << '\n';
@@ -531,10 +598,11 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
     else if (type == closing) {
         // open file
         fstream outputFile;
-        outputFile.open(newFileName.c_str(), ios::app | ios::ate);
+        outputFile.open(newFileNameHTML.c_str(), ios::app | ios::ate);
 
         // write file
-
+        outputFile << "</body>\n"
+                      "</html>";
 
         // close file
         outputFile.close();

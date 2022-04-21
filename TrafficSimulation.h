@@ -19,6 +19,7 @@ class BusStop;
 class TrafficSimulation {
     string filename;
     string outputFileName;
+    string outputFileNameHTML;
     vector<Vehicle*> vehicles;
     vector<TrafficLight*> lights;
     vector<Road*> roads;
