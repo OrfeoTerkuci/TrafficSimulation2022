@@ -404,8 +404,8 @@ void addSpaces(fstream &file, int spaceAmount){
 }
 void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
     // find file name
-    string newFileName = filename.substr(0, filename.find('.'));
-    newFileName += ".txt";
+    string newFileName = OUTPUT_DIRECTORY + filename.substr(0, filename.find('.'));
+    newFileName += TXTL;
 
     if (type == create){
         // create file
@@ -417,13 +417,13 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
             i++;
             codefile = fopen(newFileName.c_str(), "r");
             if (codefile){
-                newFileName = filename.substr(0, filename.find('.'));
+                newFileName = filename.substr(0, newFileName.size() - 4);
                 stringstream intStr;
                 intStr << i;
                 newFileName += '(';
                 newFileName += intStr.str();
                 newFileName += ')';
-                newFileName += ".txt";
+                newFileName += TXTL;
             }
             else {
                 outputNewFile.open(newFileName.c_str(), ios::app | ios::ate);

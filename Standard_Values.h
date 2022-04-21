@@ -96,5 +96,7 @@ enum fileFunctionType{closing, create, update};
 #define XMLU                    ".XML"
 #define JSONL                   ".json"
 #define JSONU                   ".JSON"
+#define OUTPUT_DIRECTORY        "./OutputLog/"
+#define TXTL                    ".txt"
 
 #endif //TRAFFICSIMULATION2022_STANDARD_VALUES_H
