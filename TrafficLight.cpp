@@ -92,7 +92,7 @@ void TrafficLight::simulate(int &count) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling simulate");
     REQUIRE(*typeid(count).name() == 'i' , "simulate was called with invalid parameter");
     // Check if the cyclus has been completed
-    if (count > this->getCyclus()){
+    if (count % this->getCyclus() == 0){
         // Change light color
         this->setCurrentColor(this->getCurrentColor() == green ? red : green);
     }

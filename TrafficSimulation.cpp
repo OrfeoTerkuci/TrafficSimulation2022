@@ -417,7 +417,7 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
             i++;
             codefile = fopen(newFileName.c_str(), "r");
             if (codefile){
-                newFileName = filename.substr(0, newFileName.size() - 4);
+                newFileName = OUTPUT_DIRECTORY + filename.substr(0, filename.size() - 4);
                 stringstream intStr;
                 intStr << i;
                 newFileName += '(';
