@@ -33,6 +33,8 @@ public:
     void setStandardValues();
     const vehicleType &getType() const;
 
+    string getTypeString() const;
+
     void setType(const vehicleType &type);
     /**
      * REQUIRE(*typeid(speed).name() == 'd' , "constructor called with invalid speed parameter");

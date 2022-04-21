@@ -492,7 +492,9 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
         if (outputFileHTML.fail()) {
             cout << "HTML File doesn't exist" << endl;
         }
-
+        if(timestamp == 213){
+            cout << "";
+        }
         // write file
         outputFile << "Time: ";
         outputFile << timestamp;
