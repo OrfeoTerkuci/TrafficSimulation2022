@@ -589,16 +589,25 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
             outputFile << "> bushaltes";
             addSpaces(outputFile, 11);
             outputFile << "| ";
+
+            outputFileHTML << "<h4>";
+            outputFileHTML << '\t';
+            outputFileHTML << "> bushaltes";
+            addSpaces(outputFileHTML, 5);
+            outputFileHTML << "| ";
             for (int i = 0; i < roadLenghth; ++i) {
                 for (unsigned int k = 0; k < roads[j]->getBusStops().size(); ++k) {
                     if (roads[j]->getBusStops()[k]->getPosition() == i){
                         outputFile << "B";
+                        outputFileHTML << "B";
                     }
                     else {
                         outputFile << " ";
+                        outputFileHTML << "<span style = \" color: #ffffff\">=</span>";
                     }
                 }
             }
+            outputFileHTML  << "</h4>\n";
             outputFile << '\n';
         }
 
