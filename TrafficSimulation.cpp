@@ -543,22 +543,30 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                 }
             }
             outputFileHTML << "</h3>\n";
+
             outputFile << '\n';
             outputFile << '\t';
             outputFile << "> verkeerslichten";
             addSpaces(outputFile, 5);
             outputFile << "| ";
+
+            outputFileHTML << "<h4>";
+            outputFileHTML << '\t';
+            outputFileHTML << "> verkeerslichten";
+            addSpaces(outputFileHTML, 5);
+            outputFileHTML << "| ";
+
             for (int i = 0; i < roadLenghth; ++i) {
                 int lightsAmount = 0;
                 for (int k = 0; k < roads[j]->getTrafficLightsAmount(); ++k) {
                     if (roads[j]->getTrafficLights()[k]->getPosition() == (unsigned) i){
                         if (roads[j]->getTrafficLight(k)->getCurrentColor() == green){
                             outputFile << "G";
-                            outputFileHTML << "<span style = \" color: #00ff00>G</span>";
+                            outputFileHTML << "<span style = \" color: #00ff00\">G</span>";
                         }
                         else {
                             outputFile << "R";
-                            outputFileHTML << "<span style = \" color: #ff0000>>R</span>";
+                            outputFileHTML << "<span style = \" color: #ff0000\">R</span>";
                         }
                     }
                     else if (roads[j]->getTrafficLight(k)->getPosition()-15 == (unsigned) i){
@@ -571,9 +579,11 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                 }
                 if (lightsAmount == roads[j]->getTrafficLightsAmount()){
                     outputFile << ' ';
-                    outputFileHTML << ' ';
+                    outputFileHTML << "<span style = \" color: #ffffff\">=</span>";
                 }
             }
+            outputFileHTML  << "</h4>\n";
+
             outputFile << '\n';
             outputFile << '\t';
             outputFile << "> bushaltes";
