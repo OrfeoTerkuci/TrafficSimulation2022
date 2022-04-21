@@ -5,7 +5,7 @@ Made by: **Orfeo Terkuci** and **Jason Liu**
 
 V = Implemented   
 X = Not implemented  
-I = Implemented but not done
+P = Partially implemented
 
 ## Versie 1.0
 ### Overzicht
@@ -46,7 +46,7 @@ Simulation functions post-condition must be added.
 |Case | Uitvoer                 | Prioriteit   | Status |
 |:---:|-------------------------|:------------:|:------:|
 |2.1  | Simpele Uitvoer         | Verplicht    |   V    |
-|2.2  | Grafische impressie     | Belangrijk   |   I    |
+|2.2  | Grafische impressie     | Belangrijk   |   P    |
 
 |Case | Simulatie                         | Prioriteit   | Status   |
 |:---:|-----------------------------------|:------------:|:--------:|
