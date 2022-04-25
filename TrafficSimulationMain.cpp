@@ -34,7 +34,10 @@ int main(){
 //TrafficSimulation ts(SIM14);
 
 //==== Different types of vehicles ====//
-TrafficSimulation ts(SIM15);
+//TrafficSimulation ts(SIM15);
+
+//==== Crossroads ====//
+TrafficSimulation ts(SIM16);
 
 //==== Simulation functions ====//
 //ts.printAll();

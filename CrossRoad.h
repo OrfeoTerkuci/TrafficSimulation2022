@@ -19,7 +19,7 @@ public:
 
     void addRoad(Road* road, int position);
 
-    const map<Road *, int> &getRoads() const;
+    map<Road *, int> &getRoads();
 
     void setRoads(const map<Road *, int> &newRoads);
 };

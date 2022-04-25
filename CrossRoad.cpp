@@ -12,7 +12,7 @@ void CrossRoad::addRoad(Road *road, int position) {
     roads[road] = position;
 }
 
-const map<Road *, int> &CrossRoad::getRoads() const {
+map<Road *, int> &CrossRoad::getRoads(){
     return roads;
 }
 

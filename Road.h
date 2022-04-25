@@ -10,6 +10,7 @@ using namespace std;
 class TrafficLight;
 class Vehicle;
 class BusStop;
+class CrossRoad;
 
 class Road {
     // Parsed variables
@@ -19,8 +20,8 @@ class Road {
     vector<TrafficLight*> trafficLights;
     vector<Vehicle*> vehicles;
     vector<BusStop*> busStops;
+    vector<CrossRoad*> crossRaods;
 
-private:
     // Self-pointer
     Road* _initCheck;
 
@@ -99,6 +100,10 @@ public:
 
     void setBusStops(const vector<BusStop *> &newBusStops);
 
+    const vector<CrossRoad *> &getCrossRaods() const;
+
+    void setCrossRaods(const vector<CrossRoad *> &newCrossRaods);
+
     /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling setLength");
      * REQUIRE( *typeid(newLength).name() == 'j' , "setLength was called with invalid parameter");
@@ -131,6 +136,8 @@ public:
     void addVehicle (Vehicle* newVehicle);
 
     void addBusStop (BusStop* newBusStop);
+
+    void addCrossRoad(CrossRoad* crossRoad);
 
     /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling removeVehicle");

@@ -103,6 +103,7 @@ bool parseCrossRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
             for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); ++i) {
                 if (trafficSimulation.getRoads()[i]->getRoadName() == tempn){
                     crossRoad->addRoad(trafficSimulation.getRoads()[i], tempi);
+                    trafficSimulation.getRoads()[i]->addCrossRoad(crossRoad);
                     break;
                 }
             }

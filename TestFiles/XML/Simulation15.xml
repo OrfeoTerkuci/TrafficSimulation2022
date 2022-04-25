@@ -28,4 +28,9 @@
         <positie>400</positie>
         <cyclus>20</cyclus>
     </VERKEERSLICHT>
+    <BUSHALTE>
+        <baan>Middelheimlaan</baan>
+        <positie>250</positie>
+        <wachttijd>20</wachttijd>
+    </BUSHALTE>
 </VERKEERSSIMULATIE>

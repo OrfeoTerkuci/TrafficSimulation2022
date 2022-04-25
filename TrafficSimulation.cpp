@@ -379,6 +379,10 @@ void TrafficSimulation::startSimUntilCount() {
     ENSURE(vehicles.size() == MAX_VEHICLES * this->vehicleGenerators.size(), "Simulation ended before reaching vehicle limit");
 }
 
+const vector<CrossRoad *> &TrafficSimulation::getCrossRoads() const {
+    return crossRoads;
+}
+
 const string &TrafficSimulation::getFilename() const {
     return filename;
 }
@@ -394,7 +398,6 @@ void TrafficSimulation::parseJSON() {
 void TrafficSimulation::addCrossRoad(CrossRoad* crossRoad) {
     crossRoads.push_back(crossRoad);
 }
-
 void TrafficSimulation::addBusStop(BusStop* busStop) {
     busStops.push_back(busStop);
 }
@@ -403,6 +406,7 @@ void addSpaces(fstream &file, int spaceAmount){
         file << " ";
     }
 }
+
 void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
     // find file name
     string newFileName = OUTPUT_DIRECTORY + filename.substr(0, filename.find('.'));
@@ -492,9 +496,6 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
         if (outputFileHTML.fail()) {
             cout << "HTML File doesn't exist" << endl;
         }
-        if(timestamp == 213){
-            cout << "";
-        }
         // write file
         outputFile << "Time: ";
         outputFile << timestamp;
@@ -508,6 +509,7 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
             int nameLenghth = 26;
             int roadLenghth = roads[j]->getLength();
             nameLenghth -= roads[j]->getRoadName().size();
+            string roadnm = roads[j]->getRoadName();
             outputFile << roads[j]->getRoadName();
             addSpaces(outputFile, nameLenghth);
             outputFile << "| ";
@@ -545,74 +547,115 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                 }
             }
             outputFileHTML << "</h3>\n";
-
             outputFile << '\n';
-            outputFile << '\t';
-            outputFile << "> verkeerslichten";
-            addSpaces(outputFile, 5);
-            outputFile << "| ";
 
-            outputFileHTML << "<h4>";
-            outputFileHTML << '\t';
-            outputFileHTML << "> verkeerslichten";
-            addSpaces(outputFileHTML, 5);
-            outputFileHTML << "| ";
+            if (roads[j]->getTrafficLightsAmount() != 0){
+                outputFile << '\t';
+                outputFile << "> verkeerslichten";
+                addSpaces(outputFile, 5);
+                outputFile << "| ";
 
-            for (int i = 0; i < roadLenghth; ++i) {
-                int lightsAmount = 0;
-                for (int k = 0; k < roads[j]->getTrafficLightsAmount(); ++k) {
-                    if (roads[j]->getTrafficLights()[k]->getPosition() == (unsigned) i){
-                        if (roads[j]->getTrafficLight(k)->getCurrentColor() == green){
-                            outputFile << "G";
-                            outputFileHTML << "<span style = \" color: #00ff00\">G</span>";
+                outputFileHTML << "<h4>";
+                outputFileHTML << '\t';
+                outputFileHTML << "> verkeerslichten";
+                outputFileHTML << "| ";
+
+                for (int i = 0; i < roadLenghth; ++i) {
+                    int lightsAmount = 0;
+                    for (int k = 0; k < roads[j]->getTrafficLightsAmount(); ++k) {
+                        if (roads[j]->getTrafficLights()[k]->getPosition() == (unsigned) i){
+                            if (roads[j]->getTrafficLight(k)->getCurrentColor() == green){
+                                outputFile << "G";
+                                outputFileHTML << "<span style = \" color: #00ff00\">G</span>";
+                            }
+                            else {
+                                outputFile << "R";
+                                outputFileHTML << "<span style = \" color: #ff0000\">R</span>";
+                            }
+                        }
+                        else if (roads[j]->getTrafficLight(k)->getPosition()-15 == (unsigned) i){
+                            outputFile << '|';
+                            outputFileHTML << '|';
                         }
                         else {
-                            outputFile << "R";
-                            outputFileHTML << "<span style = \" color: #ff0000\">R</span>";
+                            lightsAmount++;
                         }
                     }
-                    else if (roads[j]->getTrafficLight(k)->getPosition()-15 == (unsigned) i){
-                        outputFile << '|';
-                        outputFileHTML << '|';
-                    }
-                    else {
-                        lightsAmount++;
+                    if (lightsAmount == roads[j]->getTrafficLightsAmount()){
+                        outputFile << ' ';
+                        outputFileHTML << "<span style = \" color: #ffffff\">=</span>\n";
                     }
                 }
-                if (lightsAmount == roads[j]->getTrafficLightsAmount()){
-                    outputFile << ' ';
-                    outputFileHTML << "<span style = \" color: #ffffff\">=</span>";
-                }
+                outputFileHTML  << "</h4>\n";
             }
-            outputFileHTML  << "</h4>\n";
 
-            outputFile << '\n';
-            outputFile << '\t';
-            outputFile << "> bushaltes";
-            addSpaces(outputFile, 11);
-            outputFile << "| ";
+            if(!roads[j]->getBusStops().empty()){
+                outputFile << '\n';
+                outputFile << '\t';
+                outputFile << "> bushaltes";
+                addSpaces(outputFile, 11);
+                outputFile << "| ";
 
-            outputFileHTML << "<h4>";
-            outputFileHTML << '\t';
-            outputFileHTML << "> bushaltes";
-            addSpaces(outputFileHTML, 5);
-            outputFileHTML << "| ";
-            for (int i = 0; i < roadLenghth; ++i) {
-                bool bushalteExist = false;
-                for (unsigned int k = 0; k < roads[j]->getBusStops().size(); ++k) {
-                    if (roads[j]->getBusStops()[k]->getPosition() == i){
-                        outputFile << "B";
-                        outputFileHTML << "B";
-                        bushalteExist = true;
+                outputFileHTML << "<h4>";
+                outputFileHTML << '\t';
+                outputFileHTML << "> bushaltes";
+                outputFileHTML << "| ";
+                for (int i = 0; i < roadLenghth; ++i) {
+                    bool bushalteExist = false;
+                    for (unsigned int k = 0; k < roads[j]->getBusStops().size(); ++k) {
+                        if (roads[j]->getBusStops()[k]->getPosition() == i){
+                            outputFile << "B";
+                            outputFileHTML << "<span style = \"color: #FFA500 ; background-color: #ffff00\">B</span>";
+                            bushalteExist = true;
+                        }
+                        else if (roads[j]->getBusStops()[k]->getPosition() - 15 == i){
+                            outputFile << "|";
+                            outputFileHTML << "|";
+                            bushalteExist = true;
+                        }
+                    }
+                    if (!bushalteExist){
+                        outputFile << " ";
+                        outputFileHTML << "<span style = \" color: #ffffff\">=</span>\n";
                     }
                 }
-                if (!bushalteExist){
-                    outputFile << " ";
-                    outputFileHTML << "<span style = \" color: #ffffff\">=</span>";
-                }
+                outputFileHTML  << "</h4>\n";
+                outputFile << '\n';
             }
-            outputFileHTML  << "</h4>\n";
-            outputFile << '\n';
+
+            if (!roads[j]->getCrossRaods().empty()){
+                outputFile << '\t';
+                outputFile << "> kruispunten";
+                addSpaces(outputFile, 9);
+                outputFile << "| ";
+
+                outputFileHTML << "<h4>";
+                outputFileHTML << '\t';
+                outputFileHTML << "> kruispunten";
+                outputFileHTML << "| ";
+
+                for (int i = 0; i < roadLenghth; ++i) {
+                    bool crossRoadExist = false;
+                    for (unsigned int k = 0; k < roads[j]->getCrossRaods().size(); ++k) {
+                        map<Road*, int>::iterator it = roads[j]->getCrossRaods().at(k)->getRoads().begin();
+                        while (it != roads[j]->getCrossRaods().at(k)->getRoads().end()){
+                            if (it->first == roads[j] and i == it->second){
+                                outputFile << "K";
+                                outputFileHTML << "K";
+                                crossRoadExist = true;
+                                break;
+                            }
+                            it++;
+                        }
+                    }
+                    if (!crossRoadExist){
+                        outputFile << " ";
+                        outputFileHTML << "<span style = \" color: #ffffff\">=</span>\n";
+                    }
+                }
+                outputFileHTML << "</h4>\n";
+                outputFile << "\n";
+            }
         }
 
         // close file
@@ -672,3 +715,4 @@ TrafficSimulation::~TrafficSimulation() {
     ENSURE(vehicleGenerators.empty(), "Vehicle generators are not properly destructed");
 
 }
+

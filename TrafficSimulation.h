@@ -76,6 +76,8 @@ public:
     */
     const vector<TrafficLight *> &getLights();
 
+    const vector<CrossRoad *> &getCrossRoads() const;
+
     const string &getFilename() const;
 
     /**

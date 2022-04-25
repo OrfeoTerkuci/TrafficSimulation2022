@@ -158,3 +158,15 @@ const vector<BusStop *> &Road::getBusStops() const {
 void Road::setBusStops(const vector<BusStop *> &newBusStops) {
     Road::busStops = newBusStops;
 }
+
+const vector<CrossRoad *> &Road::getCrossRaods() const {
+    return crossRaods;
+}
+
+void Road::setCrossRaods(const vector<CrossRoad *> &newCrossRaods) {
+    Road::crossRaods = newCrossRaods;
+}
+
+void Road::addCrossRoad(CrossRoad *crossRoad) {
+    crossRaods.push_back(crossRoad);
+}
