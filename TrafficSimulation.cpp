@@ -497,164 +497,177 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
             cout << "HTML File doesn't exist" << endl;
         }
         // write file
-        outputFile << "Time: ";
-        outputFile << timestamp;
-        outputFile << '\n';
-
-        outputFileHTML << "<h2>";
-        outputFileHTML << "Time: ";
-        outputFileHTML << timestamp;
-        outputFileHTML << "</h2>\n";
-        for (unsigned int j = 0; j < roads.size(); ++j) {
-            int nameLenghth = 26;
-            int roadLenghth = roads[j]->getLength();
-            nameLenghth -= roads[j]->getRoadName().size();
-            string roadnm = roads[j]->getRoadName();
-            outputFile << roads[j]->getRoadName();
-            addSpaces(outputFile, nameLenghth);
-            outputFile << "| ";
-
-            outputFileHTML << "<h3>";
-            outputFileHTML << roads[j]->getRoadName();
-            addSpaces(outputFileHTML, nameLenghth);
-            outputFileHTML << "| ";
-
-            for (int k = 0; k < roadLenghth; ++k) {
-                int count = 0;
-                for (int l = 0; l < roads[j]->getVehicleAmount(); ++l) {
-                    if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+8 and roads[j]->getVehicle(l)->getType() == T_POLICE){
-                        outputFile << "P";
-                        outputFileHTML << "<span style=\"color: #0000ff\">P</span>";
-                    } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+8 and roads[j]->getVehicle(l)->getType() == T_AMBULANCE){
-                        outputFile << "Z";
-                        outputFileHTML << "<span style = \"color: #00ff00\">Z</span>";
-                    } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+4 and roads[j]->getVehicle(l)->getType() == T_AUTO){
-                        outputFile << "A";
-                        outputFileHTML << "<span style = \" color: #fd7924\">A</span>";
-                    } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+12 and roads[j]->getVehicle(l)->getType() == T_BUS){
-                        outputFile << "B";
-                        outputFileHTML << "<span style = \" color: #ffff00\">B</span>";
-                    } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and k < (int) roads[j]->getVehicle(l)->getVehiclePosition()+10 and roads[j]->getVehicle(l)->getType() == T_FIRETRUCK){
-                        outputFile << "F";
-                        outputFileHTML << "<span style = \"color: #ff0000\">F</span>";
-                    } else {
-                        count++;
-                    }
-                }
-                if (count == roads[j]->getVehicleAmount()){
-                    outputFile << "=";
-                    outputFileHTML << "=";
-                }
-            }
-            outputFileHTML << "</h3>\n";
+        if(roads.empty()){
+            outputFile << "No roads in this simulation\n";
+            outputFileHTML << "<p>No roads in this simulation</p>";
+        }
+        else {
+            outputFile << "Time: ";
+            outputFile << timestamp;
             outputFile << '\n';
 
-            if (roads[j]->getTrafficLightsAmount() != 0){
-                outputFile << '\t';
-                outputFile << "> verkeerslichten";
-                addSpaces(outputFile, 5);
+            outputFileHTML << "<h2>";
+            outputFileHTML << "Time: ";
+            outputFileHTML << timestamp;
+            outputFileHTML << "</h2>\n";
+            for (unsigned int j = 0; j < roads.size(); ++j) {
+                int nameLenghth = 26;
+                int roadLenghth = roads[j]->getLength();
+                nameLenghth -= roads[j]->getRoadName().size();
+                string roadnm = roads[j]->getRoadName();
+                outputFile << roads[j]->getRoadName();
+                addSpaces(outputFile, nameLenghth);
                 outputFile << "| ";
 
-                outputFileHTML << "<h4>";
-                outputFileHTML << '\t';
-                outputFileHTML << "> verkeerslichten";
+                outputFileHTML << "<h3>";
+                outputFileHTML << roads[j]->getRoadName();
+                addSpaces(outputFileHTML, nameLenghth);
                 outputFileHTML << "| ";
 
-                for (int i = 0; i < roadLenghth; ++i) {
-                    int lightsAmount = 0;
-                    for (int k = 0; k < roads[j]->getTrafficLightsAmount(); ++k) {
-                        if (roads[j]->getTrafficLights()[k]->getPosition() == (unsigned) i){
-                            if (roads[j]->getTrafficLight(k)->getCurrentColor() == green){
-                                outputFile << "G";
-                                outputFileHTML << "<span style = \" color: #00ff00\">G</span>";
-                            }
-                            else {
-                                outputFile << "R";
-                                outputFileHTML << "<span style = \" color: #ff0000\">R</span>";
-                            }
-                        }
-                        else if (roads[j]->getTrafficLight(k)->getPosition()-15 == (unsigned) i){
-                            outputFile << '|';
-                            outputFileHTML << '|';
-                        }
-                        else {
-                            lightsAmount++;
-                        }
-                    }
-                    if (lightsAmount == roads[j]->getTrafficLightsAmount()){
-                        outputFile << ' ';
-                        outputFileHTML << "<span style = \" color: #ffffff\">=</span>\n";
-                    }
-                }
-                outputFileHTML  << "</h4>\n";
-            }
-
-            if(!roads[j]->getBusStops().empty()){
-                outputFile << '\n';
-                outputFile << '\t';
-                outputFile << "> bushaltes";
-                addSpaces(outputFile, 11);
-                outputFile << "| ";
-
-                outputFileHTML << "<h4>";
-                outputFileHTML << '\t';
-                outputFileHTML << "> bushaltes";
-                outputFileHTML << "| ";
-                for (int i = 0; i < roadLenghth; ++i) {
-                    bool bushalteExist = false;
-                    for (unsigned int k = 0; k < roads[j]->getBusStops().size(); ++k) {
-                        if (roads[j]->getBusStops()[k]->getPosition() == i){
+                for (int k = 0; k < roadLenghth; ++k) {
+                    int count = 0;
+                    for (int l = 0; l < roads[j]->getVehicleAmount(); ++l) {
+                        if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and
+                            k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + 8 and
+                            roads[j]->getVehicle(l)->getType() == T_POLICE) {
+                            outputFile << "P";
+                            outputFileHTML << "<span style=\"color: #0000ff\">P</span>";
+                        } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and
+                                   k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + 8 and
+                                   roads[j]->getVehicle(l)->getType() == T_AMBULANCE) {
+                            outputFile << "Z";
+                            outputFileHTML << "<span style = \"color: #00ff00\">Z</span>";
+                        } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and
+                                   k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + 4 and
+                                   roads[j]->getVehicle(l)->getType() == T_AUTO) {
+                            outputFile << "A";
+                            outputFileHTML << "<span style = \" color: #fd7924\">A</span>";
+                        } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and
+                                   k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + 12 and
+                                   roads[j]->getVehicle(l)->getType() == T_BUS) {
                             outputFile << "B";
-                            outputFileHTML << "<span style = \"color: #FFA500 ; background-color: #ffff00\">B</span>";
-                            bushalteExist = true;
-                        }
-                        else if (roads[j]->getBusStops()[k]->getPosition() - 15 == i){
-                            outputFile << "|";
-                            outputFileHTML << "|";
-                            bushalteExist = true;
+                            outputFileHTML << "<span style = \" color: #ffff00\">B</span>";
+                        } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and
+                                   k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + 10 and
+                                   roads[j]->getVehicle(l)->getType() == T_FIRETRUCK) {
+                            outputFile << "F";
+                            outputFileHTML << "<span style = \"color: #ff0000\">F</span>";
+                        } else {
+                            count++;
                         }
                     }
-                    if (!bushalteExist){
-                        outputFile << " ";
-                        outputFileHTML << "<span style = \" color: #ffffff\">=</span>\n";
+                    if (count == roads[j]->getVehicleAmount()) {
+                        outputFile << "=";
+                        outputFileHTML << "=";
                     }
                 }
-                outputFileHTML  << "</h4>\n";
+                outputFileHTML << "</h3>\n";
                 outputFile << '\n';
-            }
 
-            if (!roads[j]->getCrossRaods().empty()){
-                outputFile << '\t';
-                outputFile << "> kruispunten";
-                addSpaces(outputFile, 9);
-                outputFile << "| ";
+                if (roads[j]->getTrafficLightsAmount() != 0) {
+                    outputFile << '\t';
+                    outputFile << "> verkeerslichten";
+                    addSpaces(outputFile, 5);
+                    outputFile << "| ";
 
-                outputFileHTML << "<h4>";
-                outputFileHTML << '\t';
-                outputFileHTML << "> kruispunten";
-                outputFileHTML << "| ";
+                    outputFileHTML << "<h4>";
+                    outputFileHTML << '\t';
+                    outputFileHTML << "> verkeerslichten";
+                    outputFileHTML << "| ";
 
-                for (int i = 0; i < roadLenghth; ++i) {
-                    bool crossRoadExist = false;
-                    for (unsigned int k = 0; k < roads[j]->getCrossRaods().size(); ++k) {
-                        map<Road*, int>::iterator it = roads[j]->getCrossRaods().at(k)->getRoads().begin();
-                        while (it != roads[j]->getCrossRaods().at(k)->getRoads().end()){
-                            if (it->first == roads[j] and i == it->second){
-                                outputFile << "K";
-                                outputFileHTML << "K";
-                                crossRoadExist = true;
-                                break;
+                    for (int i = 0; i < roadLenghth; ++i) {
+                        int lightsAmount = 0;
+                        for (int k = 0; k < roads[j]->getTrafficLightsAmount(); ++k) {
+                            if (roads[j]->getTrafficLights()[k]->getPosition() == (unsigned) i) {
+                                if (roads[j]->getTrafficLight(k)->getCurrentColor() == green) {
+                                    outputFile << "G";
+                                    outputFileHTML << "<span style = \" color: #00ff00\">G</span>";
+                                } else {
+                                    outputFile << "R";
+                                    outputFileHTML << "<span style = \" color: #ff0000\">R</span>";
+                                }
+                            } else if (roads[j]->getTrafficLight(k)->getPosition() - 15 == (unsigned) i) {
+                                outputFile << '|';
+                                outputFileHTML << '|';
+                            } else {
+                                lightsAmount++;
                             }
-                            it++;
+                        }
+                        if (lightsAmount == roads[j]->getTrafficLightsAmount()) {
+                            outputFile << ' ';
+                            outputFileHTML << "<span style = \" color: #ffffff\">=</span>\n";
                         }
                     }
-                    if (!crossRoadExist){
-                        outputFile << " ";
-                        outputFileHTML << "<span style = \" color: #ffffff\">=</span>\n";
-                    }
+                    outputFileHTML << "</h4>\n";
+                    outputFile << '\n';
                 }
-                outputFileHTML << "</h4>\n";
-                outputFile << "\n";
+
+                if (!roads[j]->getBusStops().empty()) {
+                    outputFile << '\t';
+                    outputFile << "> bushaltes";
+                    addSpaces(outputFile, 11);
+                    outputFile << "| ";
+
+                    outputFileHTML << "<h4>";
+                    outputFileHTML << '\t';
+                    outputFileHTML << "> bushaltes";
+                    outputFileHTML << "| ";
+                    for (int i = 0; i < roadLenghth; ++i) {
+                        bool bushalteExist = false;
+                        for (unsigned int k = 0; k < roads[j]->getBusStops().size(); ++k) {
+                            if (roads[j]->getBusStops()[k]->getPosition() == i) {
+                                outputFile << "B";
+                                outputFileHTML
+                                        << "<span style = \"color: #FFA500 ; background-color: #ffff00\">B</span>";
+                                bushalteExist = true;
+                            } else if (roads[j]->getBusStops()[k]->getPosition() - 15 == i) {
+                                outputFile << "|";
+                                outputFileHTML << "|";
+                                bushalteExist = true;
+                            }
+                        }
+                        if (!bushalteExist) {
+                            outputFile << " ";
+                            outputFileHTML << "<span style = \" color: #ffffff\">=</span>\n";
+                        }
+                    }
+                    outputFileHTML << "</h4>\n";
+                    outputFile << '\n';
+                }
+
+                if (!roads[j]->getCrossRaods().empty()) {
+                    outputFile << '\t';
+                    outputFile << "> kruispunten";
+                    addSpaces(outputFile, 9);
+                    outputFile << "| ";
+
+                    outputFileHTML << "<h4>";
+                    outputFileHTML << '\t';
+                    outputFileHTML << "> kruispunten";
+                    outputFileHTML << "| ";
+
+                    for (int i = 0; i < roadLenghth; ++i) {
+                        bool crossRoadExist = false;
+                        for (unsigned int k = 0; k < roads[j]->getCrossRaods().size(); ++k) {
+                            map<Road *, int>::iterator it = roads[j]->getCrossRaods().at(k)->getRoads().begin();
+                            while (it != roads[j]->getCrossRaods().at(k)->getRoads().end()) {
+                                if (it->first == roads[j] and i == it->second) {
+                                    outputFile << "K";
+                                    outputFileHTML << "K";
+                                    crossRoadExist = true;
+                                    break;
+                                }
+                                it++;
+                            }
+                        }
+                        if (!crossRoadExist) {
+                            outputFile << " ";
+                            outputFileHTML << "<span style = \" color: #ffffff\">=</span>\n";
+                        }
+                    }
+                    outputFileHTML << "</h4>\n";
+                    outputFile << "\n";
+                }
             }
         }
 
