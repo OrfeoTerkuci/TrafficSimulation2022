@@ -172,17 +172,16 @@ TEST(SimTest, simulationSucces){
 }
 
 TEST(SimTest, simulationFail){
-    TrafficSimulation testFile(SIM7);
+    TrafficSimulation testFile1(SIM7);
     EXPECT_TRUE(FileCompare("TestLog/newLog.txt", "Permanent_logs/sim7log.txt"));
-    /*ASSERT_EXIT(TrafficSimulation testFile(SIM7) , testing::KilledBySignal(SIGABRT) , "Road length is not valid");
-    //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM8));
-    ASSERT_EXIT(TrafficSimulation testFile(SIM8) , testing::KilledBySignal(SIGABRT) , "Position is not valid");
-    //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM9));
-    ASSERT_EXIT(TrafficSimulation testFile(SIM9) , testing::KilledBySignal(SIGABRT) , "Position is not valid");
-    //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM10));
-    ASSERT_EXIT(TrafficSimulation testFile(SIM10) , testing::KilledBySignal(SIGABRT) , "Frequency is not valid");
-    //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM11));
-    ASSERT_EXIT(TrafficSimulation testFile(SIM11) , testing::KilledBySignal(SIGABRT) , "One of the parameters was empty");*/
+    TrafficSimulation testFile2(SIM8);
+    EXPECT_TRUE(FileCompare("TestLog/newLog.txt", "Permanent_logs/sim8log.txt"));
+    TrafficSimulation testFile3(SIM9);
+    EXPECT_TRUE(FileCompare("TestLog/newLog.txt", "Permanent_logs/sim9log.txt"));
+    TrafficSimulation testFile4(SIM10);
+    EXPECT_TRUE(FileCompare("TestLog/newLog.txt", "Permanent_logs/sim10log.txt"));
+    TrafficSimulation testFile5(SIM11);
+    EXPECT_TRUE(FileCompare("TestLog/newLog.txt", "Permanent_logs/sim11log.txt"));
 }
 
 TEST(FunctionsTest , Vehicle_Test){
