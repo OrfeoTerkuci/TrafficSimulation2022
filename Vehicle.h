@@ -24,7 +24,9 @@ class Vehicle {
     double v_max_brakefactor;
     double v_min_followDistance;
     double v_decelerate;
-
+    // Bus specific members
+    bool slowing_bus;
+    bool stopping_bus;
     vehicleStatus status;
     Road* road;
     Vehicle* _initCheck;
@@ -185,6 +187,14 @@ public:
     double getV_decelerate() const;
 
     void setV_decelerate(double new_v_decelerate);
+
+    bool isSlowing_bus() const;
+
+    void setSlowing_bus(bool new_slowing_bus);
+
+    bool isStopping_bus() const;
+
+    void setStopping_bus(bool new_stopping_bus);
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewSpeed");

@@ -35,7 +35,7 @@ void BusStop::setRoad(Road *newRoad) {
 
 Vehicle *BusStop::getNearestBus() {
     double pos = this->getPosition();
-    Vehicle *nearestVehicle = NULL;
+    Vehicle* nearestVehicle = NULL;
     Vehicle* currentVehicle;
     // Get bus type vehicles
     vector<Vehicle*> buses;
@@ -59,19 +59,26 @@ Vehicle *BusStop::getNearestBus() {
 void BusStop::simulateBusStop() {
     // Declare variables
     Vehicle* currentVehicle = getNearestBus();
+    if(currentVehicle == NULL){
+        return;
+    }
     if(currentVehicle->getType() == T_BUS) {
-        // Check if within slowing distance
-        if (position - currentVehicle->getVehiclePosition() < SLOWING_DISTANCE) {
-            currentVehicle->setStatus(decelerate);
-        }
-            // check if within stopping distance
-        else if (position - currentVehicle->getVehiclePosition() < STOPPING_DISTANCE) {
+        // Check if within stopping distance
+        if (position - currentVehicle->getVehiclePosition() < STOPPING_DISTANCE) {
             currentVehicle->setStatus(stopping);
+            currentVehicle->setStopping_bus(true);
+        }
+        // check if within slowing distance
+        else if (position - currentVehicle->getVehiclePosition() < SLOWING_DISTANCE) {
+            currentVehicle->setStatus(decelerate);
+            currentVehicle->setSlowing_bus(true);
         }
         // Check cooldown
         if(currentVehicle->getStatus() == idle){
             if(cooldown == 0){
                 currentVehicle->setStatus(accelerate);
+                currentVehicle->setSlowing_bus(false);
+                currentVehicle->setStopping_bus(false);
                 cooldown = waitTime;
             }
             else{

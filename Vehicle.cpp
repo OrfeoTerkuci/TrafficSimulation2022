@@ -9,7 +9,10 @@
 using namespace std;
 
 
-Vehicle::Vehicle(double speed, double position , vehicleType type) : speed(speed), position(position) , acceleration(0.0) , type(type), _initCheck(this) {
+Vehicle::Vehicle(double speed, double position , vehicleType type) :
+    speed(speed), position(position) , acceleration(0.0) , type(type),
+    slowing_bus(false) , stopping_bus(false) , _initCheck(this)
+    {
     REQUIRE(*typeid(speed).name() == 'd' , "constructor called with invalid speed parameter");
     REQUIRE(*typeid(position).name() == 'd' , "constructor called with invalid position parameter");
    /* // Check speed
@@ -32,16 +35,20 @@ Vehicle::Vehicle(double speed, double position , vehicleType type) : speed(speed
     ENSURE(Vehicle::acceleration == 0.0 , "acceleration was not properly initialized");
     ENSURE(Vehicle::currentMaxSpeed == v_max_speed , "currentMaxSpeed was not properly initialized");
     ENSURE(Vehicle::type == type , "vehicleType was not properly initialized");
+    ENSURE(!Vehicle::slowing_bus , "slowing_bus was not properly initialized");
+    ENSURE(!Vehicle::stopping_bus, "stopping_bus was not properly initialized");
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 
-Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , type(T_AUTO) , status(accelerate), _initCheck(this) {
+Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , type(T_AUTO) , slowing_bus(false) , stopping_bus(false) , status(accelerate), _initCheck(this) {
     setStandardValues();
     ENSURE(Vehicle::speed == 0.0 , "speed was not properly initialized");
     ENSURE(Vehicle::position == 0.0 , "position was not properly initialized");
     ENSURE(Vehicle::acceleration == 0.0 , "acceleration was not properly initialized");
     ENSURE(Vehicle::currentMaxSpeed == v_max_speed , "currentMaxSpeed was not properly initialized");
     ENSURE(Vehicle::type == T_AUTO , "vehicleType was not properly initialized");
+    ENSURE(!Vehicle::slowing_bus , "slowing_bus was not properly initialized");
+    ENSURE(!Vehicle::stopping_bus, "stopping_bus was not properly initialized");
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 
@@ -243,13 +250,29 @@ void Vehicle::setV_decelerate(double new_v_decelerate) {
     Vehicle::v_decelerate = new_v_decelerate;
 }
 
+bool Vehicle::isSlowing_bus() const {
+    return slowing_bus;
+}
+
+void Vehicle::setSlowing_bus(bool new_slowing_bus) {
+    Vehicle::slowing_bus = new_slowing_bus;
+}
+
+bool Vehicle::isStopping_bus() const {
+    return stopping_bus;
+}
+
+void Vehicle::setStopping_bus(bool new_stopping_bus) {
+    Vehicle::stopping_bus = new_stopping_bus;
+}
+
 void Vehicle::calculateNewAcceleration(double maxSpeed) {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewAcceleration");
     REQUIRE(*typeid(maxSpeed).name() == 'd' , "calculateNewAcceleration was called with invalid parameter : wrong type");
     REQUIRE(maxSpeed >= 0 , "calculateNewAcceleration was called with invalid parameter : negative maxSpeed");
     setCurrentMaxSpeed(maxSpeed);
     if(getNextVehicle() == NULL){
-        setAcceleration(v_max_acceleration * (1- pow((this->speed/this->currentMaxSpeed), 4)));
+        setAcceleration(v_max_acceleration * ( 1- pow( (this->speed/this->currentMaxSpeed), 4) ) );
     }
     else{
         setAcceleration(v_max_acceleration * (1- pow((this->speed/this->currentMaxSpeed), 4) - pow(this->calculateSpeedRestriction(), 2)));
@@ -287,7 +310,7 @@ double Vehicle::calculateFollowDistance() {
 
 double Vehicle::calculateSpeedRestriction() {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateSpeedRestriction");
-    return (v_min_followDistance + max(0.0 , this->speed + ((this->speed * this->calculateSpeedDifference())/2* sqrt(v_max_acceleration * v_max_brakefactor))))/this->calculateFollowDistance();
+    return (v_min_followDistance + max(0.0 , this->speed + ( (this->speed * this->calculateSpeedDifference()) / ( 2 * sqrt(v_max_acceleration * v_max_brakefactor) ) ) ) / this->calculateFollowDistance() );
 }
 
 double Vehicle::calculateSpeedDifference() {
@@ -300,7 +323,7 @@ double Vehicle::calculateSpeedDifference() {
 
 void Vehicle::calculateStopDecelerate() {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateStopDecelerate");
-    setAcceleration(-(v_max_brakefactor * this->speed)/(v_max_speed));
+    setAcceleration( -(v_max_brakefactor * this->speed) / (v_max_speed) );
 }
 
 Vehicle* Vehicle::getNextVehicle() {
@@ -329,20 +352,20 @@ Vehicle* Vehicle::getNextVehicle() {
 
 void Vehicle::simulateStop() {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateStop");
-    this->calculateNewSpeed();
     this->calculateStopDecelerate();
+    this->calculateNewSpeed();
 }
 
 void Vehicle::simulateDecelerate() {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateDecelerate");
-    this->calculateNewSpeed();
     this->calculateNewAcceleration(v_decelerate);
+    this->calculateNewSpeed();
 }
 
 void Vehicle::simulateAccelerate() {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling simulateAccelerate");
-    this->calculateNewSpeed();
     this->calculateNewAcceleration(v_max_speed);
+    this->calculateNewSpeed();
 }
 
 void Vehicle::simulate() {
@@ -359,6 +382,11 @@ void Vehicle::simulate() {
         simulateStop();
         // Update status
         setStatus(speed == 0 && acceleration == 0 ? idle : stopping);
+    }
+    else if (status == stopping && speed <= 0.001){
+        setStatus(idle);
+        setSpeed(0);
+        setAcceleration(0);
     }
     else{
         if( (getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - ( this->position + v_length) > v_min_followDistance) || getNextVehicle() == NULL){
