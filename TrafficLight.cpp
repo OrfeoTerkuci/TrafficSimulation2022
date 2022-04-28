@@ -15,7 +15,7 @@ TrafficLight::TrafficLight(unsigned int cyclus, Road *road) : cyclus(cyclus), ro
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
 
-TrafficLight::TrafficLight() : currentColor(red) {
+TrafficLight::TrafficLight() : road(NULL), currentColor(red){
     _initCheck = this;
     ENSURE(TrafficLight::currentColor == red , "currentColor was not properly initialized");
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");

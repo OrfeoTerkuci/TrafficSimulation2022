@@ -44,8 +44,9 @@ bool parseBusStop(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         string elemname = elem->Value();
 
         if(elem->NoChildren()){
-            delete busStop;
-            ENSURE(!elem->NoChildren(), "One of the parameters was empty");
+            busStop->setPosition(0);
+            busStop->setWaitTime(0);
+            busStop->setRoad(NULL);
             return false;
         }
 
@@ -88,8 +89,8 @@ bool parseCrossRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         string elemname = elem->Value();
 
         if(elem->NoChildren()){
-            delete crossRoad;
-            ENSURE(!elem->NoChildren(), "One of the parameters was empty");
+            crossRoad->addRoad(NULL, 0);
+            crossRoad->addRoad(NULL, 0);
             return false;
         }
         tempn = elem->GetText();
@@ -113,7 +114,6 @@ bool parseCrossRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         trafficSimulation.addCrossRoad(crossRoad);
         return true;
     }
-    delete crossRoad;
     return false;
 }
 
@@ -142,8 +142,6 @@ bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         string elemName = elem->Value();
 
         if(elem->NoChildren()){
-            delete newRoad;
-            ENSURE(!elem->NoChildren(), "One of the parameters was empty");
             return false;
         }
 
@@ -156,9 +154,7 @@ bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         else if(elemName == LENGTE){
             tempi = convertStrToInt(tempn);
             if(tempi <= 0){
-                delete newRoad;
-                REQUIRE(tempi >= 0, "Road length is not valid");
-                return false;
+                newRoad->setLength(0);
             }
             else{
                 newRoad->setLength(tempi);
@@ -169,13 +165,13 @@ bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     // Check if road already exists + add road
     if(newRoad->getLength() > 0 and !newRoad->getRoadName().empty()){
         if(!trafficSimulation.addRoad(newRoad)){
-            delete newRoad;
             return false;
         }
         else{
             return true;
         }
     }
+    delete newRoad;
     return false;
 }
 
@@ -225,8 +221,9 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
 
         // if elem is empty, end parsing and return false
         if(elem->NoChildren()){
-            delete vehicle;
-            ENSURE(!elem->NoChildren(), "One of the parameters was empty");
+            vehicle->setType(T_NULL);
+            vehicle->setRoad(NULL);
+            vehicle->setPosition(0);
             return false;
         }
 
@@ -234,7 +231,7 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
 
         if (elemName == TYPE){
             if(!setTypeParser(tempn, vehicle)){
-                delete vehicle;
+                vehicle->setType(T_NULL);
                 return false;
             }
         }
@@ -251,14 +248,12 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         else if(elemName == POSITIE){
             tempi = convertStrToInt(tempn);
             if (tempi < 0){
-                delete vehicle;
-                ENSURE(tempi > 0, "Position is not valid");
+                vehicle->setPosition(0);
                 return false;
             }
             vehicle->setPosition(tempi);
         }
     }
-
     return true;
 }
 
@@ -289,8 +284,9 @@ bool parseTrafficLight(TiXmlElement* &root, TrafficSimulation &trafficSimulation
 
         // if elem is empty, end parsing and return false
         if(elem->NoChildren()){
-            delete trafficLight;
-            ENSURE(!elem->NoChildren(), "One of the parameters was empty");
+            trafficLight->setPosition(0);
+            trafficLight->setRoad(NULL);
+            trafficLight->setCyclus(0);
             return false;
         }
 
@@ -304,20 +300,23 @@ bool parseTrafficLight(TiXmlElement* &root, TrafficSimulation &trafficSimulation
                     break;
                 }
             }
+            if (trafficLight->getRoad() == NULL){
+                delete trafficLight;
+                return false;
+            }
         }
         else if(elemName == POSITIE){
             tempi = convertStrToInt(elem->GetText());
             if (tempi < 0 || tempi > int(trafficLight->getRoad()->getLength()) ){
-                delete trafficLight;
-                ENSURE(false, "Position is not valid");
+                trafficLight->setPosition(0);
+                return false;
             }
             trafficLight->setPosition(tempi);
         }
         else if(elemName == CYCLUS){
             tempi = convertStrToInt(elem->GetText());
             if (tempi <= 0){
-                delete trafficLight;
-                ENSURE(tempi >= 0, "Cycle is not valid");
+                trafficLight->setCyclus(0);
                 return false;
             }
             trafficLight->setCyclus(tempi);
@@ -332,7 +331,6 @@ bool parseTrafficLight(TiXmlElement* &root, TrafficSimulation &trafficSimulation
             break;
         }
     }
-
     return true;
 }
 
@@ -359,8 +357,10 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
 
         // if elem is empty, end parsing and return false
         if(elem->NoChildren()){
-            delete vehicleGenerator;
-            ENSURE(!elem->NoChildren(), "One of the parameters was empty");
+            vehicleGenerator->setType(T_NULL);
+            vehicleGenerator->setRoad(NULL);
+            vehicleGenerator->setFrequentie(0);
+            vehicleGenerator->setCooldown(0);
             return false;
         }
 
@@ -371,7 +371,7 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
                 if (tempn == trafficSimulation.getRoads()[i]->getRoadName()) {
                     vehicleGenerator->setRoad(trafficSimulation.getRoads()[i]);
                     if (!trafficSimulation.addVehicleGenerator(vehicleGenerator)){
-                        delete vehicleGenerator;
+                        vehicleGenerator->setRoad(NULL);
                         return false;
                     }
                     break;
@@ -381,8 +381,7 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
         else if (elemName == FREQUENTIE) {
             tempf = convertStrToInt(elem->GetText());
             if (tempf < 0){
-                delete vehicleGenerator;
-                ENSURE(tempf > 0, "Frequency is not valid");
+                vehicleGenerator->setFrequentie(0);
                 return false;
             }
             vehicleGenerator->setFrequentie(tempf);
@@ -391,23 +390,23 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
         }
         if (tempn == AUTO){
                 vehicleGenerator->setType(T_AUTO);
-            }
-            else if ( tempn == BUS ){
-                vehicleGenerator->setType(T_BUS);
-            }
-            else if ( tempn == BRANDWEERWAGEN ){
-                vehicleGenerator->setType(T_FIRETRUCK);
-            }
-            else if ( tempn == ZIEKENWAGEN ){
-                vehicleGenerator->setType(T_AMBULANCE);
-            }
-            else if ( tempn == POLITIECOMBI ){
-                vehicleGenerator->setType(T_POLICE);
-            }
-            else{
-                // Set default type
-                vehicleGenerator->setType(T_AUTO);
-            }
+        }
+        else if ( tempn == BUS ){
+            vehicleGenerator->setType(T_BUS);
+        }
+        else if ( tempn == BRANDWEERWAGEN ){
+            vehicleGenerator->setType(T_FIRETRUCK);
+        }
+        else if ( tempn == ZIEKENWAGEN ){
+            vehicleGenerator->setType(T_AMBULANCE);
+        }
+        else if ( tempn == POLITIECOMBI ){
+            vehicleGenerator->setType(T_POLICE);
+        }
+        else{
+            // Set default type
+            vehicleGenerator->setType(T_AUTO);
+        }
     }
     return true;
 }
@@ -436,32 +435,56 @@ void parseTrafficSimulationX(TrafficSimulation &trafficSimulation){
         doc.Clear();
     }
 
+    // log file
+    ofstream logOutput;
+
+    // write in a file
+    logOutput.open("TestLog/newLog.txt");
+
     // Parsing of data
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
         string elemName = elem->Value();
         if (elemName == BAANU) {
             if (!parseRoad(elem, trafficSimulation)) {
                 cout << "Error: Could not make road" << endl;
+                logOutput << false << '\n';
+            } else {
+                logOutput << true << '\n';
             }
         } else if (elemName == VERKEERSLICHT) {
             if (!parseTrafficLight(elem, trafficSimulation)) {
                 cout << "Error: Could not make traffic light" << endl;
+                logOutput << false << '\n';
+            } else {
+                logOutput << true << '\n';
             }
         } else if (elemName == VOERTUIG) {
             if (!parseVehicle(elem, trafficSimulation)) {
                 cout << "Error: Could not make vehicle" << endl;
+                logOutput << false << '\n';
+            } else {
+                logOutput << true << '\n';
             }
         } else if (elemName == VOERTUIGGENERATOR) {
             if (!parseVehicleGenerator(elem, trafficSimulation)) {
                 cout << "Error: Could not make vehicle generator" << endl;
+                logOutput << false << '\n';
+            } else {
+                logOutput << true << '\n';
             }
         } else if (elemName == KRUISPUNT) {
             if (!parseCrossRoad(elem, trafficSimulation)){
                 cout << "Error: Could not make crossroad" << endl;
+                logOutput << false << '\n';
+            } else {
+                logOutput << true << '\n';
             }
         } else if (elemName == BUSHALTE) {
             if (!parseBusStop(elem, trafficSimulation)) {
                 cout << "Error: Could not make bus stop" << endl;
+                logOutput << false << '\n';
+            } else {
+                logOutput << true << '\n';
             }
         }
     }

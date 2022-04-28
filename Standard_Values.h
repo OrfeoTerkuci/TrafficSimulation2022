@@ -45,7 +45,7 @@
 // Enumerations
 
 enum vehicleStatus{ accelerate , decelerate , stopping , idle };
-enum vehicleType{ T_AUTO , T_BUS , T_FIRETRUCK , T_AMBULANCE , T_POLICE };
+enum vehicleType{ T_AUTO , T_BUS , T_FIRETRUCK , T_AMBULANCE , T_POLICE , T_NULL};
 enum fileFunctionType{ closing , create , update};
 
 // Strings
