@@ -362,18 +362,12 @@ void Vehicle::simulate() {
     }
     else{
         if( (getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - ( this->position + v_length) > v_min_followDistance) || getNextVehicle() == NULL){
-            if(this->getNextVehicle() != NULL){
-                cout << this->position + v_length << " and next vehicle " << getNextVehicle()->getVehiclePosition();
-            }
             simulateAccelerate();
             // Update status
             setStatus(accelerate);
         }
     }
     if(getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - ( this->position + v_length) < v_min_followDistance){
-        if(this->getNextVehicle() != NULL){
-            cout << this->position + v_length << " and next vehicle " << getNextVehicle()->getVehiclePosition();
-        }
         setPosition(oldPos);
         setSpeed(oldSpeed);
         setAcceleration(oldAcc);

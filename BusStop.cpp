@@ -3,14 +3,11 @@
 //
 
 #include "BusStop.h"
+#include "Vehicle.h"
 
-BusStop::BusStop(int waitTime, int position, Road *road) : waitTime(waitTime), position(position), road(road) {}
+BusStop::BusStop(int waitTime, int position, Road *road) : cooldown(waitTime) , waitTime(waitTime), position(position), road(road) {}
 
-BusStop::BusStop() {}
-
-BusStop::~BusStop() {
-
-}
+BusStop::BusStop() : cooldown(0) , waitTime(0), position(0), road(NULL)  {}
 
 int BusStop::getWaitTime() const {
     return waitTime;
@@ -34,4 +31,56 @@ Road *BusStop::getRoad() const {
 
 void BusStop::setRoad(Road *newRoad) {
     BusStop::road = newRoad;
+}
+
+Vehicle *BusStop::getNearestBus() {
+    double pos = this->getPosition();
+    Vehicle *nearestVehicle = NULL;
+    Vehicle* currentVehicle;
+    // Get bus type vehicles
+    vector<Vehicle*> buses;
+    for (unsigned int j = 0; j < this->road->getVehicleAmount(); ++j) {
+        currentVehicle = this->road->getVehicle(j);
+        // Check for correct type
+        if(currentVehicle->getType() == T_BUS && currentVehicle->getVehiclePosition() < pos){
+            buses.push_back(currentVehicle);
+            // Update nearest vehicle
+            if(buses.size() == 1){
+                nearestVehicle = currentVehicle;
+            }
+            else if(nearestVehicle->getVehiclePosition() < currentVehicle->getVehiclePosition()){
+                nearestVehicle = currentVehicle;
+            }
+        }
+    }
+    return nearestVehicle;
+}
+
+void BusStop::simulateBusStop() {
+    // Declare variables
+    Vehicle* currentVehicle = getNearestBus();
+    if(currentVehicle->getType() == T_BUS) {
+        // Check if within slowing distance
+        if (position - currentVehicle->getVehiclePosition() < SLOWING_DISTANCE) {
+            currentVehicle->setStatus(decelerate);
+        }
+            // check if within stopping distance
+        else if (position - currentVehicle->getVehiclePosition() < STOPPING_DISTANCE) {
+            currentVehicle->setStatus(stopping);
+        }
+        // Check cooldown
+        if(currentVehicle->getStatus() == idle){
+            if(cooldown == 0){
+                currentVehicle->setStatus(accelerate);
+                cooldown = waitTime;
+            }
+            else{
+                cooldown--;
+            }
+        }
+    }
+}
+
+BusStop::~BusStop() {
+
 }
