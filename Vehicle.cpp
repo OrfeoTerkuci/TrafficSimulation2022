@@ -11,7 +11,7 @@ using namespace std;
 
 Vehicle::Vehicle(double speed, double position , vehicleType type) :
     speed(speed), position(position) , acceleration(0.0) , type(type),
-    slowing_bus(false) , stopping_bus(false) , _initCheck(this)
+    slowing_bus(false) , stopping_bus(false) , leaving_bus(false) , _initCheck(this)
     {
     REQUIRE(*typeid(speed).name() == 'd' , "constructor called with invalid speed parameter");
     REQUIRE(*typeid(position).name() == 'd' , "constructor called with invalid position parameter");
@@ -37,10 +37,11 @@ Vehicle::Vehicle(double speed, double position , vehicleType type) :
     ENSURE(Vehicle::type == type , "vehicleType was not properly initialized");
     ENSURE(!Vehicle::slowing_bus , "slowing_bus was not properly initialized");
     ENSURE(!Vehicle::stopping_bus, "stopping_bus was not properly initialized");
+    ENSURE(!Vehicle::leaving_bus, "leaving_bus was not properly initialized");
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 
-Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , type(T_AUTO) , slowing_bus(false) , stopping_bus(false) , status(accelerate), _initCheck(this) {
+Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , type(T_AUTO) , slowing_bus(false) , stopping_bus(false)  , leaving_bus(false), status(accelerate) , _initCheck(this) {
     setStandardValues();
     ENSURE(Vehicle::speed == 0.0 , "speed was not properly initialized");
     ENSURE(Vehicle::position == 0.0 , "position was not properly initialized");
@@ -49,6 +50,7 @@ Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , type(T_AUT
     ENSURE(Vehicle::type == T_AUTO , "vehicleType was not properly initialized");
     ENSURE(!Vehicle::slowing_bus , "slowing_bus was not properly initialized");
     ENSURE(!Vehicle::stopping_bus, "stopping_bus was not properly initialized");
+    ENSURE(!Vehicle::leaving_bus, "leaving_bus was not properly initialized");
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 
@@ -266,6 +268,14 @@ void Vehicle::setStopping_bus(bool new_stopping_bus) {
     Vehicle::stopping_bus = new_stopping_bus;
 }
 
+bool Vehicle::isLeaving_bus() const {
+    return leaving_bus;
+}
+
+void Vehicle::setLeaving_bus(bool leaving_bus) {
+    Vehicle::leaving_bus = leaving_bus;
+}
+
 void Vehicle::calculateNewAcceleration(double maxSpeed) {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewAcceleration");
     REQUIRE(*typeid(maxSpeed).name() == 'd' , "calculateNewAcceleration was called with invalid parameter : wrong type");
@@ -381,12 +391,13 @@ void Vehicle::simulate() {
     else if (status == stopping){
         simulateStop();
         // Update status
-        setStatus(speed == 0 && acceleration == 0 ? idle : stopping);
-    }
-    else if (status == stopping && speed <= 0.001){
-        setStatus(idle);
-        setSpeed(0);
-        setAcceleration(0);
+        if (speed <= 0.001) {
+            setStatus(idle);
+            setSpeed(0);
+            setAcceleration(0);
+        } else {
+            setStatus(stopping);
+        }
     }
     else{
         if( (getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - ( this->position + v_length) > v_min_followDistance) || getNextVehicle() == NULL){

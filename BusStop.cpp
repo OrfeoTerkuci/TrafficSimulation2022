@@ -63,28 +63,35 @@ void BusStop::simulateBusStop() {
         return;
     }
     if(currentVehicle->getType() == T_BUS) {
-        // Check if within stopping distance
-        if (position - currentVehicle->getVehiclePosition() < STOPPING_DISTANCE) {
-            currentVehicle->setStatus(stopping);
-            currentVehicle->setStopping_bus(true);
-        }
-        // check if within slowing distance
-        else if (position - currentVehicle->getVehiclePosition() < SLOWING_DISTANCE) {
-            currentVehicle->setStatus(decelerate);
-            currentVehicle->setSlowing_bus(true);
-        }
         // Check cooldown
         if(currentVehicle->getStatus() == idle){
             if(cooldown == 0){
                 currentVehicle->setStatus(accelerate);
                 currentVehicle->setSlowing_bus(false);
                 currentVehicle->setStopping_bus(false);
+                currentVehicle->setLeaving_bus(true);
                 cooldown = waitTime;
             }
             else{
                 cooldown--;
             }
         }
+        if(currentVehicle->isLeaving_bus()){
+            return;
+        }
+        // Check if within stopping distance
+        if (position - ( currentVehicle->getVehiclePosition() + currentVehicle->getV_length() ) < STOPPING_DISTANCE && !currentVehicle->isStopping_bus() ) {
+            currentVehicle->setStatus(stopping);
+            currentVehicle->setStopping_bus(true);
+            currentVehicle->setSlowing_bus(false);
+        }
+        // check if within slowing distance
+        else if (position - ( currentVehicle->getVehiclePosition() + currentVehicle->getV_length() ) < SLOWING_DISTANCE && !( currentVehicle->isStopping_bus() || currentVehicle->isSlowing_bus() ) ) {
+            currentVehicle->setStatus(decelerate);
+            currentVehicle->setSlowing_bus(true);
+            currentVehicle->setStopping_bus(false);
+        }
+
     }
 }
 

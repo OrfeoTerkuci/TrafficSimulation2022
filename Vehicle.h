@@ -27,6 +27,7 @@ class Vehicle {
     // Bus specific members
     bool slowing_bus;
     bool stopping_bus;
+    bool leaving_bus;
     vehicleStatus status;
     Road* road;
     Vehicle* _initCheck;
@@ -195,6 +196,10 @@ public:
     bool isStopping_bus() const;
 
     void setStopping_bus(bool new_stopping_bus);
+
+    bool isLeaving_bus() const;
+
+    void setLeaving_bus(bool leaving_bus);
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewSpeed");

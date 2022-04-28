@@ -22,7 +22,7 @@ int main(){
 //TrafficSimulation ts(SIM8); // Normal simulation, with invalid traffic-light position
 //TrafficSimulation ts(SIM9); // Normal simulation, with invalid vehicle position
 //TrafficSimulation ts(SIM10); // Vehicle generator simulation, with invalid vehicle generator frequencies
-TrafficSimulation testFile(SIM11); // Normal simulation, with empty parameter for road
+//TrafficSimulation testFile(SIM11); // Normal simulation, with empty parameter for road
 
 //==== Crossroad files ====//
 //TrafficSimulation ts(SIM12);
