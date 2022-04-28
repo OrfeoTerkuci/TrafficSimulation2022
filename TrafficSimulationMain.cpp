@@ -34,7 +34,7 @@ TrafficSimulation testFile(SIM11); // Normal simulation, with empty parameter fo
 //TrafficSimulation ts(SIM14);
 
 //==== Different types of vehicles ====//
-//TrafficSimulation ts(SIM15);
+TrafficSimulation ts(SIM15);
 
 //==== Crossroads ====//
 //TrafficSimulation ts(SIM16);
@@ -42,7 +42,7 @@ TrafficSimulation testFile(SIM11); // Normal simulation, with empty parameter fo
 //==== Simulation functions ====//
 //ts.printAll();
 //ts.startSimulation(false, false, true); // Simulates until there is a maximum vehicle count reached --> Standard_Values --> MAX_VEHICLES
-//ts.startSimulation(); // Simulate current loaded file
+ts.startSimulation(); // Simulate current loaded file
 
 return 0;
 }

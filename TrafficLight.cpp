@@ -94,32 +94,42 @@ void TrafficLight::simulate(int &count) {
     // Check if the cyclus has been completed
     if (count % this->getCyclus() == 0){
         // Change light color
-        this->setCurrentColor(this->getCurrentColor() == green ? red : green);
+//        this->setCurrentColor(this->getCurrentColor() == green ? red : green);
     }
+    Vehicle* currentVehicle;
     if (this->getCurrentColor() == green){
         // Vehicles before the light may accelerate again
         for (int i = 0; i < this->road->getVehicleAmount(); ++i) {
-            if(this->road->getVehicleAmount() > 0 && this->road->getVehicle(i)->getVehiclePosition() + this->road->getVehicle(i)->getV_length()  < this->getPosition()){
+            currentVehicle = this->road->getVehicle(i);
+            // Check for bus slowing down or stopping
+            if(currentVehicle->isSlowing_bus() || currentVehicle->isStopping_bus()){
+                continue;
+            }
+            if(this->road->getVehicleAmount() > 0 && currentVehicle->getVehiclePosition() + currentVehicle->getV_length()  < this->getPosition()){
                 this->road->getVehicle(i)->setStatus(accelerate);
-                this->road->getVehicle(i)->simulate();
+                currentVehicle->simulate();
             }
         }
     }
     if (this->getCurrentColor() == red){
-        if ( (this->position - ( getNearestVehicle()->getVehiclePosition() + getNearestVehicle()->getV_length() ) ) <= SLOWING_DISTANCE){
-            // Slow down
-            getNearestVehicle()->setStatus(decelerate);
-            getNearestVehicle()->simulate();
+        currentVehicle = this->getNearestVehicle();
+        if ( currentVehicle->getType() != T_AUTO && currentVehicle->getType() != T_BUS){
+            return;
         }
-        else if ( (this->position - ( getNearestVehicle()->getVehiclePosition() + getNearestVehicle()->getV_length() ) ) <= STOPPING_DISTANCE / 2){
+        if ( (this->position - ( currentVehicle->getVehiclePosition() + currentVehicle->getV_length() ) ) <= SLOWING_DISTANCE){
+            // Slow down
+            currentVehicle->setStatus(decelerate);
+            currentVehicle->simulate();
+        }
+        else if ( (this->position - ( currentVehicle->getVehiclePosition() + currentVehicle->getV_length() ) ) <= STOPPING_DISTANCE && (this->position - ( currentVehicle->getVehiclePosition() + currentVehicle->getV_length() ) ) >= STOPPING_DISTANCE / 2 ){
             // Stop
-            getNearestVehicle()->setStatus(stopping);
-            getNearestVehicle()->simulate();
+            currentVehicle->setStatus(stopping);
+            currentVehicle->simulate();
         }
         else{
             // Clear to accelerate
-            getNearestVehicle()->setStatus(accelerate);
-            getNearestVehicle()->simulate();
+            currentVehicle->setStatus(accelerate);
+            currentVehicle->simulate();
         }
     }
 

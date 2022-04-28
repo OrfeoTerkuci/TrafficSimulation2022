@@ -247,9 +247,12 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE) 
                 this->lights.at(j)->simulate(count);
             }
         }
-        for (unsigned int k = 0; k < this->vehicleGenerators.size(); k++){
+        for (unsigned int k = 0; k < this->busStops.size(); ++k) {
+            this->busStops.at(k)->simulateBusStop();
+        }
+        for (unsigned int l = 0; l < this->vehicleGenerators.size(); l++){
             VehicleGenerator* currentGenerator;
-            currentGenerator = this->vehicleGenerators.at(k);
+            currentGenerator = this->vehicleGenerators.at(l);
             // Check if we can generate
             if (currentGenerator->simulate())
             {
