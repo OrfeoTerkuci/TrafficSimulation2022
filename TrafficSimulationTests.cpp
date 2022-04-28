@@ -92,7 +92,9 @@ TEST(VehiclePosTest, Position){
     // test if the car position is the right position
     TrafficSimulation testFile(SIM1);
     EXPECT_TRUE(testFile.getRoads()[0]->getVehicle(0)->getNextVehicle() == NULL);
-//    EXPECT_TRUE(testFile.getRoads()[0]->getVehicle(0) == testFile.getRoads()[0]->getVehicle(1)->getNextVehicle());
+    Vehicle* vehicle = testFile.getRoads()[0]->getVehicle(0);
+    Vehicle* vehicle1 = testFile.getRoads()[0]->getVehicle(1)->getNextVehicle();
+    EXPECT_TRUE(vehicle1 == vehicle);
 }
 
 TEST(FailTest, fails){

@@ -315,7 +315,7 @@ Vehicle* Vehicle::getNextVehicle() {
         nextVehicle = this;
         double oldPosition = this->getVehiclePosition();
         double nextPos = this->road->getLength();
-        for(int i = 1; i < this->road->getVehicleAmount(); ++i){
+        for(int i = 0; i < this->road->getVehicleAmount(); ++i){
             currentVehicle = this->road->getVehicle(i);
             if(currentVehicle->getVehiclePosition() > oldPosition && currentVehicle->getVehiclePosition() <= nextPos){
                 nextVehicle = currentVehicle;
