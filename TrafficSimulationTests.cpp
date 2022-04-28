@@ -326,6 +326,11 @@ TEST(SimTest, simulation16){
     EXPECT_TRUE(ts.getVehicles().empty());
 }
 
+TEST(FileTEST, exist){
+    TrafficSimulation ts(SIM1);
+    ts.startSimulation();
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
