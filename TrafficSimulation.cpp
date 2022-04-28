@@ -388,11 +388,12 @@ const string &TrafficSimulation::getFilename() const {
 }
 
 void TrafficSimulation::parseXML() {
+    REQUIRE(this->properlyInitialized(), "Trafficsimulation is properly initialized when calling parseXML");
     parseTrafficSimulationX(*this);
 }
 
 void TrafficSimulation::parseJSON() {
-
+    // parse JSON file
 }
 
 void TrafficSimulation::addCrossRoad(CrossRoad* crossRoad) {
@@ -401,6 +402,7 @@ void TrafficSimulation::addCrossRoad(CrossRoad* crossRoad) {
 void TrafficSimulation::addBusStop(BusStop* busStop) {
     busStops.push_back(busStop);
 }
+
 void addSpaces(fstream &file, int spaceAmount){
     for (int i = 0; i < spaceAmount; ++i) {
         file << " ";
@@ -408,6 +410,8 @@ void addSpaces(fstream &file, int spaceAmount){
 }
 
 void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling outpputFile");
+
     // find file name
     string newFileName = OUTPUT_DIRECTORY + filename.substr(0, filename.find('.'));
     string newFileNameHTML = newFileName + HTMLL;
@@ -481,14 +485,28 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
 
         // close file
         outputNewFile.close();
+        outputNewFileHTML.close();
+
+        outputNewFile.open(outputFileName.c_str(), ios::binary);
+        ENSURE(outputNewFile.good(), "TXT outputfile doesn't exist");
+        outputNewFile.close();
+        ENSURE(!outputNewFile.is_open(), "File is still open");
+
+        outputNewFileHTML.open(outputFileNameHTML.c_str(), ios::binary);
+        ENSURE(outputNewFileHTML.good(), "HTML outputfile doesn't exist");
+        outputNewFileHTML.close();
+        ENSURE(!outputNewFileHTML.is_open(), "File is still open");
 
     }
     else if (type == update) {
         // open file
         fstream outputFile;
         fstream outputFileHTML;
-        outputFile.open(outputFileName.c_str(),ios::app | ios::ate);
-        outputFileHTML.open(outputFileNameHTML.c_str(), ios::app | ios::ate);
+        outputFile.open(outputFileName.c_str(),ios::app | ios::ate | ios::binary);
+        outputFileHTML.open(outputFileNameHTML.c_str(), ios::app | ios::ate | ios::binary);
+
+        REQUIRE(!outputFile.fail(), "TXT file exists");
+        REQUIRE(!outputFileHTML.fail(), "HTML file exists");
 
         if (outputFile.fail()) {
             cout << "TXT File doesn't exist" << endl;
@@ -673,11 +691,15 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
 
         // close file
         outputFile.close();
+        ENSURE(!outputFile.is_open(), "TXT-file is closed");
+        outputFileHTML.close();
+        ENSURE(!outputFileHTML.is_open(), "HTML-file is closed");
     }
     else if (type == closing) {
         // open file
         fstream outputFile;
-        outputFile.open(newFileNameHTML.c_str(), ios::app | ios::ate);
+        outputFile.open(newFileNameHTML.c_str(), ios::app | ios::ate | ios::binary);
+        REQUIRE(!outputFile.fail(), "File doesn't exist");
 
         // write file
         outputFile << "</body>\n"
@@ -685,6 +707,7 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
 
         // close file
         outputFile.close();
+        ENSURE(!outputFile.is_open(), "HTML-file is closed");
     }
 }
 

@@ -12,7 +12,7 @@ using namespace std;
 Vehicle::Vehicle(double speed, double position , vehicleType type) : speed(speed), position(position) , acceleration(0.0) , type(type), _initCheck(this) {
     REQUIRE(*typeid(speed).name() == 'd' , "constructor called with invalid speed parameter");
     REQUIRE(*typeid(position).name() == 'd' , "constructor called with invalid position parameter");
-    // Check speed
+   /* // Check speed
     if (speed == 0){
         this->status = idle;
     }
@@ -24,7 +24,8 @@ Vehicle::Vehicle(double speed, double position , vehicleType type) : speed(speed
     }
     else {
         this->status = stopping;
-    }
+    }*/
+    this->status = accelerate;
     setStandardValues();
     ENSURE(Vehicle::speed == speed , "speed was not properly initialized");
     ENSURE(Vehicle::position == position , "position was not properly initialized");
@@ -81,11 +82,11 @@ vehicleStatus Vehicle::getStatus() const {
     return status;
 }
 
-void Vehicle::setStatus(vehicleStatus status) {
+void Vehicle::setStatus(vehicleStatus newStatus) {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setStatus");
     REQUIRE(status == accelerate || status == decelerate || status == stopping || status == idle
             , "setStatus was called with invalid parameter");
-    Vehicle::status = status;
+    Vehicle::status = newStatus;
     ENSURE(Vehicle::status == status , "setStatus failed");
 }
 
@@ -144,8 +145,8 @@ const vehicleType &Vehicle::getType() const {
     return type;
 }
 
-void Vehicle::setType(const vehicleType &type) {
-    Vehicle::type = type;
+void Vehicle::setType(const vehicleType &newType) {
+    Vehicle::type = newType;
     setStandardValues();
 }
 
@@ -198,48 +199,48 @@ double Vehicle::getV_length() const {
     return v_length;
 }
 
-void Vehicle::setV_length(double v_length) {
-    Vehicle::v_length = v_length;
+void Vehicle::setV_length(double new_v_length) {
+    Vehicle::v_length = new_v_length;
 }
 
 double Vehicle::getV_max_speed() const {
     return v_max_speed;
 }
 
-void Vehicle::setV_max_speed(double v_max_speed) {
-    Vehicle::v_max_speed = v_max_speed;
+void Vehicle::setV_max_speed(double new_v_max_speed) {
+    Vehicle::v_max_speed = new_v_max_speed;
 }
 
 double Vehicle::getV_max_acceleration() const {
     return v_max_acceleration;
 }
 
-void Vehicle::setV_max_acceleration(double v_max_acceleration) {
-    Vehicle::v_max_acceleration = v_max_acceleration;
+void Vehicle::setV_max_acceleration(double new_v_max_acceleration) {
+    Vehicle::v_max_acceleration = new_v_max_acceleration;
 }
 
 double Vehicle::getV_max_brakefactor() const {
     return v_max_brakefactor;
 }
 
-void Vehicle::setV_max_brakefactor(double v_max_brakefactor) {
-    Vehicle::v_max_brakefactor = v_max_brakefactor;
+void Vehicle::setV_max_brakefactor(double new_v_max_brakefactor) {
+    Vehicle::v_max_brakefactor = new_v_max_brakefactor;
 }
 
 double Vehicle::getV_min_followDistance() const {
     return v_min_followDistance;
 }
 
-void Vehicle::setV_min_followDistance(double v_min_followDistance) {
-    Vehicle::v_min_followDistance = v_min_followDistance;
+void Vehicle::setV_min_followDistance(double new_v_min_followDistance) {
+    Vehicle::v_min_followDistance = new_v_min_followDistance;
 }
 
 double Vehicle::getV_decelerate() const {
     return v_decelerate;
 }
 
-void Vehicle::setV_decelerate(double v_decelerate) {
-    Vehicle::v_decelerate = v_decelerate;
+void Vehicle::setV_decelerate(double new_v_decelerate) {
+    Vehicle::v_decelerate = new_v_decelerate;
 }
 
 void Vehicle::calculateNewAcceleration(double maxSpeed) {

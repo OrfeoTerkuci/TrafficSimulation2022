@@ -35,7 +35,7 @@ public:
 
     string getTypeString() const;
 
-    void setType(const vehicleType &type);
+    void setType(const vehicleType &newType);
     /**
      * REQUIRE(*typeid(speed).name() == 'd' , "constructor called with invalid speed parameter");
      * REQUIRE(*typeid(position).name() == 'd' , "constructor called with invalid position parameter");
@@ -94,7 +94,7 @@ public:
      * ENSURE(Vehicle::status == status , "setStatus failed");
      * @param status A vehicleStatus type object
      */
-    void setStatus(vehicleStatus status);
+    void setStatus(vehicleStatus newStatus);
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getSpeed");
@@ -164,27 +164,27 @@ public:
 
     double getV_length() const;
 
-    void setV_length(double v_length);
+    void setV_length(double new_v_length);
 
     double getV_max_speed() const;
 
-    void setV_max_speed(double v_max_speed);
+    void setV_max_speed(double new_v_max_speed);
 
     double getV_max_acceleration() const;
 
-    void setV_max_acceleration(double v_max_acceleration);
+    void setV_max_acceleration(double new_v_max_acceleration);
 
     double getV_max_brakefactor() const;
 
-    void setV_max_brakefactor(double v_max_brakefactor);
+    void setV_max_brakefactor(double new_v_max_brakefactor);
 
     double getV_min_followDistance() const;
 
-    void setV_min_followDistance(double v_min_followDistance);
+    void setV_min_followDistance(double new_v_min_followDistance);
 
     double getV_decelerate() const;
 
-    void setV_decelerate(double v_decelerate);
+    void setV_decelerate(double new_v_decelerate);
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewSpeed");

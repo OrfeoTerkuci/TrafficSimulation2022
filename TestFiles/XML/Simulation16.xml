@@ -12,11 +12,6 @@
         <positie>20</positie>
         <type>bus</type>
     </VOERTUIG>
-    <VERKEERSLICHT>
-        <baan>Middelheimlaan</baan>
-        <positie>400</positie>
-        <cyclus>20</cyclus>
-    </VERKEERSLICHT>
     <KRUISPUNT>
         <baan positie="250">Middelheimlaan</baan>
         <baan positie="500">Floralienlaan</baan>

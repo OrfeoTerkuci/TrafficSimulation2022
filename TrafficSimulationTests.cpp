@@ -319,6 +319,13 @@ TEST(TypeTest, typeTS){
     }
 }
 
+
+TEST(SimTest, simulation16){
+    TrafficSimulation ts(SIM16);
+    ts.startSimNoPrint();
+    EXPECT_TRUE(ts.getVehicles().empty());
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
