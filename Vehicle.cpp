@@ -385,6 +385,9 @@ void Vehicle::simulate() {
     double oldPos = this->position;
     double oldSpeed = this->speed;
     double oldAcc = this->acceleration;
+    if (status == idle){
+        return;
+    }
     if (status == decelerate){
         simulateDecelerate();
     }
@@ -395,16 +398,12 @@ void Vehicle::simulate() {
             setStatus(idle);
             setSpeed(0);
             setAcceleration(0);
-        } else {
-            setStatus(stopping);
         }
     }
-    else{
-        if( (getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - ( this->position + v_length) > v_min_followDistance) || getNextVehicle() == NULL){
-            simulateAccelerate();
-            // Update status
-            setStatus(accelerate);
-        }
+    else if((getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - (this->position + v_length) > v_min_followDistance) || getNextVehicle() == NULL){
+        simulateAccelerate();
+        // Update status
+        setStatus(accelerate);
     }
     if(getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - ( this->position + v_length) < v_min_followDistance){
         setPosition(oldPos);
@@ -412,6 +411,13 @@ void Vehicle::simulate() {
         setAcceleration(oldAcc);
         setStatus(decelerate);
         simulateDecelerate();
+    }
+    else if(getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - ( this->position + v_length) < v_min_followDistance && this->status == decelerate){
+        setPosition(oldPos);
+        setSpeed(oldSpeed);
+        setAcceleration(oldAcc);
+        setStatus(stopping);
+        simulateStop();
     }
 
 }
