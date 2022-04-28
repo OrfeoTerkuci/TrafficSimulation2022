@@ -485,18 +485,14 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
 
         // close file
         outputNewFile.close();
-        outputNewFileHTML.close();
-
-        outputNewFile.open(outputFileName.c_str(), ios::binary);
-        ENSURE(outputNewFile.good(), "TXT outputfile doesn't exist");
-        outputNewFile.close();
         ENSURE(!outputNewFile.is_open(), "File is still open");
-
-        outputNewFileHTML.open(outputFileNameHTML.c_str(), ios::binary);
-        ENSURE(outputNewFileHTML.good(), "HTML outputfile doesn't exist");
         outputNewFileHTML.close();
         ENSURE(!outputNewFileHTML.is_open(), "File is still open");
 
+        codefile = fopen(outputFileName.c_str(), "r");
+        ENSURE(codefile, "TXT outputfile doesn't exist");
+        codefile = fopen(outputFileNameHTML.c_str(), "r");
+        ENSURE(codefile, "HTML outputfile doesn't exist");
     }
     else if (type == update) {
         // open file
@@ -505,8 +501,12 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
         outputFile.open(outputFileName.c_str(),ios::app | ios::ate | ios::binary);
         outputFileHTML.open(outputFileNameHTML.c_str(), ios::app | ios::ate | ios::binary);
 
-        REQUIRE(!outputFile.fail(), "TXT file exists");
-        REQUIRE(!outputFileHTML.fail(), "HTML file exists");
+        FILE* codefile;
+
+        codefile = fopen(outputFileName.c_str(), "r");
+        REQUIRE(codefile, "TXT outputfile doesn't exist");
+        codefile = fopen(outputFileNameHTML.c_str(), "r");
+        REQUIRE(codefile, "HTML outputfile doesn't exist");
 
         if (outputFile.fail()) {
             cout << "TXT File doesn't exist" << endl;
@@ -699,7 +699,10 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
         // open file
         fstream outputFile;
         outputFile.open(newFileNameHTML.c_str(), ios::app | ios::ate | ios::binary);
-        REQUIRE(!outputFile.fail(), "File doesn't exist");
+
+        FILE* codefile;
+        codefile = fopen(outputFileNameHTML.c_str(), "r");
+        ENSURE(codefile, "HTML outputfile doesn't exist");
 
         // write file
         outputFile << "</body>\n"
