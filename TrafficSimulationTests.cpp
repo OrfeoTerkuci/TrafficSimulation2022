@@ -173,6 +173,7 @@ TEST(SimTest, simulationSucces){
 
 TEST(SimTest, simulationFail){
     TrafficSimulation testFile(SIM7);
+    EXPECT_TRUE(FileCompare("TestLog/newLog.txt", "Permanent_logs/sim7log.txt"));
     /*ASSERT_EXIT(TrafficSimulation testFile(SIM7) , testing::KilledBySignal(SIGABRT) , "Road length is not valid");
     //EXPECT_ANY_THROW(TrafficSimulation testFile(SIM8));
     ASSERT_EXIT(TrafficSimulation testFile(SIM8) , testing::KilledBySignal(SIGABRT) , "Position is not valid");
