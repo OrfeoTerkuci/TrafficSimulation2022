@@ -288,6 +288,7 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE) 
     }
     else {
         ENSURE(vehicles.size() == MAX_VEHICLES * this->getVehicleGenerators().size(), "Amount of vehicles on road is not the same as what expected");
+        cout << "test";
     }
 }
 
