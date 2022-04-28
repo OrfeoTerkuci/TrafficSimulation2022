@@ -39,7 +39,7 @@ Vehicle *BusStop::getNearestBus() {
     Vehicle* currentVehicle;
     // Get bus type vehicles
     vector<Vehicle*> buses;
-    for (unsigned int j = 0; j < this->road->getVehicleAmount(); ++j) {
+    for (int j = 0; j < this->road->getVehicleAmount(); ++j) {
         currentVehicle = this->road->getVehicle(j);
         // Check for correct type
         if(currentVehicle->getType() == T_BUS && currentVehicle->getVehiclePosition() < pos){
