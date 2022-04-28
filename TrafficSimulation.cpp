@@ -23,7 +23,6 @@ TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename
     else {
         cout << "No compatible parser for this type of file" << endl;
     }
-    outputFile(create, 0);
     ENSURE(TrafficSimulation::filename == filename , "filename was not properly initialized");
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
@@ -207,7 +206,7 @@ void TrafficSimulation::print( int &count) {
 
 }
 
-void TrafficSimulation::startSimulation() {
+void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling startSimulation");
     int count = 0;
     double vehiclePosition;
@@ -215,7 +214,13 @@ void TrafficSimulation::startSimulation() {
     Vehicle* currentVehicle;
     Road* currentRoad;
 
-    cout << "- Starting simulation" << endl;
+    if (printE){
+        cout << "- Starting simulation" << endl;
+    }
+
+    if (outputE){
+        outputFile(create);
+    }
 
     while (!this->vehicles.empty() || !this->vehicleGenerators.empty()){
         for (unsigned int i = 0; i < this->vehicles.size(); ++i){
@@ -260,14 +265,30 @@ void TrafficSimulation::startSimulation() {
                 this->addVehicle(newVehicle);
             }
         }
-        print(count);
-        outputFile(update, count);
+        if(printE){
+            print(count);
+        }
+        if(outputE){
+            outputFile(update, count);
+        }
+        if (countE and this->vehicles.size() == MAX_VEHICLES * this->getVehicleGenerators().size()){
+            break;
+        }
         count ++;
     }
-    cout << "- There are no vehicles on the road network." << endl;
-    cout << "- Ending simulation" << endl;
-    outputFile(closing, 0);
-    ENSURE(vehicles.empty() , "Simulation ended when it shouldn't");
+    if (printE){
+        cout << "- There are no vehicles on the road network." << endl;
+        cout << "- Ending simulation" << endl;
+    }
+    if (outputE){
+        outputFile(closing);
+    }
+    if (!countE){
+        ENSURE(vehicles.empty() , "Simulation ended when it shouldn't");
+    }
+    else {
+        ENSURE(vehicles.size() == MAX_VEHICLES * this->getVehicleGenerators().size(), "Amount of vehicles on road is not the same as what expected");
+    }
 }
 
 void TrafficSimulation::startSimNoPrint() {

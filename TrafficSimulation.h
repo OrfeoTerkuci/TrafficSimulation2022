@@ -18,8 +18,6 @@ class BusStop;
 
 class TrafficSimulation {
     string filename;
-    string outputFileName;
-    string outputFileNameHTML;
     vector<Vehicle*> vehicles;
     vector<TrafficLight*> lights;
     vector<Road*> roads;
@@ -28,7 +26,11 @@ class TrafficSimulation {
     vector<BusStop*> busStops;
 
     TrafficSimulation* _initCheck;
-public:
+public: // members
+    string outputFileName;
+    string outputFileNameHTML;
+
+public: // functions
     /**
      * REQUIRE(*typeid(filename).name() == 'N' , "constructor was called with invalid filename");
      * ENSURE(TrafficSimulation::filename == filename , "filename was not properly initialized");
@@ -139,9 +141,9 @@ public:
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimulation");
      * ENSURE(vehicles.empty() , "Simulation ended when it shouldn't");
     */
-    void startSimulation();
+    void startSimulation(bool printE = true, bool outputE = true, bool countE = false);
 
-    void outputFile(fileFunctionType type, int timestamp);
+    void outputFile(fileFunctionType type, int timestamp = 0);
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimNoPrint");
      * ENSURE(vehicles.empty() || vehicleGenerators.empty() , "Simulation ended when it shouldn't");

@@ -41,7 +41,7 @@ TrafficSimulation ts(SIM16);
 
 //==== Simulation functions ====//
 //ts.printAll();
-//ts.startSimUntilCount(); // Simulates until there is a maximum vehicle count reached --> Standard_Values --> MAX_VEHICLES
+//ts.startSimulation(false, false, true); // Simulates until there is a maximum vehicle count reached --> Standard_Values --> MAX_VEHICLES
 ts.startSimulation(); // Simulate current loaded file
 
 return 0;
