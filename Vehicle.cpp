@@ -35,7 +35,7 @@ Vehicle::Vehicle(double speed, double position , vehicleType type) : speed(speed
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 
-Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , type(T_AUTO) , _initCheck(this) {
+Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , type(T_AUTO) , status(accelerate), _initCheck(this) {
     setStandardValues();
     ENSURE(Vehicle::speed == 0.0 , "speed was not properly initialized");
     ENSURE(Vehicle::position == 0.0 , "position was not properly initialized");
@@ -362,18 +362,12 @@ void Vehicle::simulate() {
     }
     else{
         if( (getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - ( this->position + v_length) > v_min_followDistance) || getNextVehicle() == NULL){
-            if(this->getNextVehicle() != NULL){
-                cout << this->position + v_length << " and next vehicle " << getNextVehicle()->getVehiclePosition();
-            }
             simulateAccelerate();
             // Update status
             setStatus(accelerate);
         }
     }
     if(getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - ( this->position + v_length) < v_min_followDistance){
-        if(this->getNextVehicle() != NULL){
-            cout << this->position + v_length << " and next vehicle " << getNextVehicle()->getVehiclePosition();
-        }
         setPosition(oldPos);
         setSpeed(oldSpeed);
         setAcceleration(oldAcc);
