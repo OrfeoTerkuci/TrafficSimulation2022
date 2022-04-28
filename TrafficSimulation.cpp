@@ -749,6 +749,5 @@ TrafficSimulation::~TrafficSimulation() {
     ENSURE(crossRoads.empty(), "Crossroads are not properly destructed");
     ENSURE(vehicles.empty(), "Vehicles are not properly destructed");
     ENSURE(vehicleGenerators.empty(), "Vehicle generators are not properly destructed");
-
 }
 
