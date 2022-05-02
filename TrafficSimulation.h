@@ -143,7 +143,10 @@ public: // functions
     */
     void startSimulation(bool printE = true, bool outputE = true, bool countE = false);
 
+    /**
+     * */
     void outputFile(fileFunctionType type, int timestamp = 0);
+
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimNoPrint");
      * ENSURE(vehicles.empty() || vehicleGenerators.empty() , "Simulation ended when it shouldn't");

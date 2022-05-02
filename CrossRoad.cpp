@@ -30,11 +30,17 @@ bool randomBool(){
 }
 
 void CrossRoad::simulateCrossroad(bool random, int modulo_number, int time) {
+    // determine to switchroad
     if (random) {
         switchRoad = randomBool();
     } else {
-
+        if (time % modulo_number == 0){
+            switchRoad = !switchRoad;
+        }
     }
+
+    // simulate
+
 }
 
 CrossRoad::~CrossRoad() {}
