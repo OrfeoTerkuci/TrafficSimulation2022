@@ -119,14 +119,19 @@ void TrafficLight::simulate(int &count) {
         if(currentVehicle->isSlowing_bus() || currentVehicle->isStopping_bus()){
             return;
         }
-        if ( (this->position - ( currentVehicle->getVehiclePosition() + currentVehicle->getV_length() ) ) <= SLOWING_DISTANCE){
-            // Slow down
-            currentVehicle->setStatus(decelerate);
+        if ( (this->position - ( currentVehicle->getVehiclePosition() + currentVehicle->getV_length() ) ) <= STOPPING_DISTANCE){
+            if( (this->position - ( currentVehicle->getVehiclePosition() + currentVehicle->getV_length() ) ) >= STOPPING_DISTANCE / 2 ){
+                // Stop
+                currentVehicle->setStatus(stopping);
+            }
+            if ( currentVehicle->getStatus() == idle){
+                return;
+            }
 //            currentVehicle->simulate();
         }
-        else if ( (this->position - ( currentVehicle->getVehiclePosition() + currentVehicle->getV_length() ) ) <= STOPPING_DISTANCE && (this->position - ( currentVehicle->getVehiclePosition() + currentVehicle->getV_length() ) ) >= STOPPING_DISTANCE / 2 ){
-            // Stop
-            currentVehicle->setStatus(stopping);
+        else if ( (this->position - ( currentVehicle->getVehiclePosition() + currentVehicle->getV_length() ) ) <= SLOWING_DISTANCE && currentVehicle->getStatus() != stopping ){
+            // Slow down
+            currentVehicle->setStatus(decelerate);
 //            currentVehicle->simulate();
         }
         else{
