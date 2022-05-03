@@ -16,6 +16,8 @@ class CrossRoad {
 public:
     CrossRoad();
 
+    bool isSwitchRoad() const;
+
     void addRoad(Road* road, int position);
 
     map<Road *, int> &getRoads();

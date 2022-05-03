@@ -94,7 +94,7 @@ void TrafficLight::simulate(int &count) {
     // Check if the cyclus has been completed
     if (count % this->getCyclus() == 0){
         // Change light color
-//        this->setCurrentColor(this->getCurrentColor() == green ? red : green);
+        this->setCurrentColor(this->getCurrentColor() == green ? red : green);
     }
     Vehicle* currentVehicle;
     if (this->getCurrentColor() == green){

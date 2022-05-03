@@ -38,9 +38,10 @@ void CrossRoad::simulateCrossroad(bool random, int modulo_number, int time) {
             switchRoad = !switchRoad;
         }
     }
+}
 
-    // simulate
-
+bool CrossRoad::isSwitchRoad() const {
+    return switchRoad;
 }
 
 CrossRoad::~CrossRoad() {}
