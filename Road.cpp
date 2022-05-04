@@ -2,6 +2,8 @@
 #include "Vehicle.h"
 #include "TrafficLight.h"
 #include "DesignByContract.h"
+#include "BusStop.h"
+#include "CrossRoad.h"
 #include <typeinfo>
 
 Road::Road(unsigned int length, const string &roadName) : length(length), roadName(roadName) , _initCheck(this) {
@@ -117,6 +119,8 @@ void Road::removeVehicle(Vehicle *oldVehicle) {
 }
 
 void Road::addBusStop(BusStop *newBusStop) {
+    REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addBusStop");
+    REQUIRE(newBusStop->properlyInitialized(), "bus stop isn't properly initialized");
     busStops.push_back(newBusStop);
 }
 
@@ -169,6 +173,7 @@ void Road::setCrossRaods(const vector<CrossRoad *> &newCrossRaods) {
 
 void Road::addCrossRoad(CrossRoad *crossRoad) {
     REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addCrossRoad");
+    REQUIRE(crossRoad->properlyInitialized(), "crossroad wasn't properly initialized");
     crossRaods.push_back(crossRoad);
 }
 
