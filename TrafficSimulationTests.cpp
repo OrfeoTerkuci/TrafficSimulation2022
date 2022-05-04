@@ -44,6 +44,26 @@ bool FileCompare(const std::string leftFileName, const std::string rightFileName
     return result;
 }
 
+bool checktype(const Vehicle* &vehicle){
+    vehicleType type = vehicle->getType();
+    if (type == T_AMBULANCE){
+        return true;
+    }
+    else if (type == T_AUTO){
+        return true;
+    }
+    else if (type == T_BUS){
+        return true;
+    }
+    else if (type == T_FIRETRUCK){
+        return true;
+    }
+    else if (type == T_POLICE){
+        return true;
+    }
+    return false;
+}
+
 //==== Tests ====//
 
 class TrafficSimulationTest: public ::testing::Test {
@@ -325,25 +345,6 @@ TEST(FunctionsTest , VehicleGenerator_Test){
 
 }
 
-bool checktype(const Vehicle* &vehicle){
-    vehicleType type = vehicle->getType();
-    if (type == T_AMBULANCE){
-        return true;
-    }
-    else if (type == T_AUTO){
-        return true;
-    }
-    else if (type == T_BUS){
-        return true;
-    }
-    else if (type == T_FIRETRUCK){
-        return true;
-    }
-    else if (type == T_POLICE){
-        return true;
-    }
-    return false;
-}
 
 TEST(TypeTest, typeTS){
     TrafficSimulation ts(SIM14);

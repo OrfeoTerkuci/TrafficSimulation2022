@@ -13,6 +13,7 @@ class Road;
 class CrossRoad {
     map<Road*, int> roads;
     bool switchRoad;
+    CrossRoad* init;
 public:
     CrossRoad();
 
@@ -25,6 +26,8 @@ public:
     void setRoads(const map<Road *, int> &newRoads);
 
     void simulateCrossroad(bool random = true, int modulo_number = 0, int time = 0);
+
+    bool properlyInitialized();
 
     virtual ~CrossRoad();
 };

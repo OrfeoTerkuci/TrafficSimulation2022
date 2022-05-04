@@ -44,7 +44,7 @@ public: // functions
      */
     TrafficSimulation();
 
-    bool properlyInitialized();
+    bool properlyInitialized() const;
 
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getRoads");
@@ -78,9 +78,13 @@ public: // functions
     */
     const vector<TrafficLight *> &getLights();
 
-    const vector<CrossRoad *> &getCrossRoads() const;
+    /**
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getCrossRoads");*/
+    const vector<CrossRoad *> &getCrossRoads();
 
-    const string &getFilename() const;
+    /**
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getFilename");*/
+    const string &getFilename();
 
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addTrafficLight");
@@ -100,8 +104,15 @@ public: // functions
     */
     void addVehicle(Vehicle* &newVehicle);
 
+    /**
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addCrossRoad");
+     * REQUIRE(crossRoad->properlyInitialized(), "crossRoad wasn't properly initialized when calling addCrossRoad");
+     * @param crossRoad A pointer to a crossRoad element*/
     void addCrossRoad(CrossRoad* crossRoad);
 
+    /**
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addBusStop");
+     * REQUIRE(busStop->properlyInitialized(), "crossRoad wasn't properly initialized when calling addCrossRoad");*/
     void addBusStop(BusStop* busStop);
 
     /**
@@ -124,9 +135,14 @@ public: // functions
     */
     bool addVehicleGenerator(VehicleGenerator* newVehicleGenerator);
 
+    /**
+     * REQUIRE(this->properlyInitialized(), "Trafficsimulation is properly initialized when calling parseXML");*/
     void parseXML();
 
+    /**
+     * REQUIRE(this->properlyInitialized(), "Trafficsimulation is properly initialized when calling parseJSON");*/
     void parseJSON();
+
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling printAll");
     */
@@ -140,11 +156,29 @@ public: // functions
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimulation");
      * ENSURE(vehicles.empty() , "Simulation ended when it shouldn't");
-    */
+     * @param countE enables simulation run until a determined count
+     * @param outputE enables if we're outputting a file
+     * @param printE enables if we're printing something on the terminal*/
     void startSimulation(bool printE = true, bool outputE = true, bool countE = false);
 
     /**
-     * */
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling outpputFile");
+     * REQUIRE(type == create || type == update || type == closing, "type not matching with any of the file functions");
+     * create:
+       ENSURE(!outputNewFile.is_open(), "File is still open");
+       ENSURE(!outputNewFileHTML.is_open(), "File is still open");
+       ENSURE(codefile, "TXT outputfile doesn't exist");
+       ENSURE(codefile, "HTML outputfile doesn't exist");
+     * update:
+       REQUIRE(codefile, "TXT outputfile doesn't exist");
+       REQUIRE(codefile, "HTML outputfile doesn't exist");
+       ENSURE(!outputFile.is_open(), "TXT-file is closed");
+       ENSURE(!outputFileHTML.is_open(), "HTML-file is closed");
+     * close:
+       REQUIRE(codefile, "HTML outputfile doesn't exist");
+       ENSURE(!outputFile.is_open(), "HTML-file is closed");
+     * @param type type that determines what function we're committing
+     * @param timestamp timestamp of current routine in simulation, default = 0*/
     void outputFile(fileFunctionType type, int timestamp = 0);
 
     /**

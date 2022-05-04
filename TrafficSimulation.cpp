@@ -31,7 +31,7 @@ TrafficSimulation::TrafficSimulation() {_initCheck = this;
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
     }
 
-bool TrafficSimulation::properlyInitialized() {
+bool TrafficSimulation::properlyInitialized() const{
     return  _initCheck == this;
 }
 
@@ -289,19 +289,21 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE) 
     if (outputE){
         outputFile(closing);
     }
-//    if (!countE){
-//        ENSURE(vehicles.empty() , "Simulation ended when it shouldn't");
-//    }
-//    else {
-//        ENSURE(vehicles.size() == MAX_VEHICLES * this->getVehicleGenerators().size(), "Amount of vehicles on road is not the same as what expected");
-//    }
+    if (!countE){
+        ENSURE(vehicles.empty() , "Simulation ended when it shouldn't");
+    }
+    else {
+        ENSURE(vehicles.size() == MAX_VEHICLES * this->getVehicleGenerators().size(), "Amount of vehicles on road is not the same as what expected");
+    }
 }
 
-const vector<CrossRoad *> &TrafficSimulation::getCrossRoads() const {
+const vector<CrossRoad *> &TrafficSimulation::getCrossRoads(){
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getCrossRoads");
     return crossRoads;
 }
 
-const string &TrafficSimulation::getFilename() const {
+const string &TrafficSimulation::getFilename(){
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getFilename");
     return filename;
 }
 
@@ -311,13 +313,18 @@ void TrafficSimulation::parseXML() {
 }
 
 void TrafficSimulation::parseJSON() {
+    REQUIRE(this->properlyInitialized(), "Trafficsimulation is properly initialized when calling parseJSON");
     // parse JSON file
 }
 
 void TrafficSimulation::addCrossRoad(CrossRoad* crossRoad) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addCrossRoad");
+    REQUIRE(crossRoad->properlyInitialized(), "crossRoad wasn't properly initialized when calling addCrossRoad");
     crossRoads.push_back(crossRoad);
 }
 void TrafficSimulation::addBusStop(BusStop* busStop) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addBusStop");
+    REQUIRE(busStop->properlyInitialized(), "busstop wasn't properly initialized when calling addBusStop");
     busStops.push_back(busStop);
 }
 
@@ -329,6 +336,7 @@ void addSpaces(fstream &file, int spaceAmount){
 
 void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling outpputFile");
+    REQUIRE(type == create || type == update || type == closing, "type not matching with any of the file functions");
 
     // find file name
     string newFileName = OUTPUT_DIRECTORY + filename.substr(0, filename.find('.'));
@@ -403,8 +411,8 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
 
         // close file
         outputNewFile.close();
-        ENSURE(!outputNewFile.is_open(), "File is still open");
         outputNewFileHTML.close();
+        ENSURE(!outputNewFile.is_open(), "File is still open");
         ENSURE(!outputNewFileHTML.is_open(), "File is still open");
 
         codefile = fopen(outputFileName.c_str(), "r");
@@ -620,7 +628,7 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
 
         FILE* codefile;
         codefile = fopen(outputFileNameHTML.c_str(), "r");
-        ENSURE(codefile, "HTML outputfile doesn't exist");
+        REQUIRE(codefile, "HTML outputfile doesn't exist");
 
         // write file
         outputFile << "</body>\n"

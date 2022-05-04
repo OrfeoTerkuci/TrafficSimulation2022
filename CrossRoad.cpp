@@ -7,7 +7,9 @@
 
 using namespace std;
 
-CrossRoad::CrossRoad() : switchRoad(false){}
+CrossRoad::CrossRoad() : switchRoad(false){
+    init = this;
+}
 
 void CrossRoad::addRoad(Road *road, int position) {
     roads[road] = position;
@@ -45,3 +47,7 @@ bool CrossRoad::isSwitchRoad() const {
 }
 
 CrossRoad::~CrossRoad() {}
+
+bool CrossRoad::properlyInitialized() {
+    return init == this;
+}

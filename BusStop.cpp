@@ -95,6 +95,8 @@ void BusStop::simulateBusStop() {
     }
 }
 
-BusStop::~BusStop() {
+BusStop::~BusStop() {}
 
+bool BusStop::properlyInitialized() const {
+    return init == this;
 }

@@ -14,6 +14,7 @@ class BusStop {
     int waitTime;
     int position;
     Road* road;
+    BusStop* init;
 public:
     BusStop();
 
@@ -34,6 +35,8 @@ public:
     Vehicle* getNearestBus();
 
     void simulateBusStop();
+
+    bool properlyInitialized() const;
 
     virtual ~BusStop();
 };
