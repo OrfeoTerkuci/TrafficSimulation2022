@@ -17,7 +17,7 @@ class CrossRoad {
 public:
     CrossRoad();
 
-    bool isSwitchRoad() const;
+    bool isSwitchRoad();
 
     void addRoad(Road* road, int position);
 

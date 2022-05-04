@@ -47,7 +47,8 @@ void CrossRoad::simulateCrossroad(bool random, int modulo_number, int time) {
     }
 }
 
-bool CrossRoad::isSwitchRoad() const {
+bool CrossRoad::isSwitchRoad() {
+    REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling isSwitchRoad");
     return switchRoad;
 }
 
