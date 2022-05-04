@@ -181,6 +181,9 @@ public: // functions
      * @param timestamp timestamp of current routine in simulation, default = 0*/
     void outputFile(fileFunctionType type, int timestamp = 0);
 
+    /**
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling outputsStats");
+     * ENSURE(!file.is_open(), "file is still open when ending outputStats");*/
     void outputStats();
 
     /**

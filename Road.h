@@ -96,11 +96,11 @@ public:
      */
     Vehicle* &getVehicle(unsigned int index);
 
-    const vector<BusStop *> &getBusStops() const;
+    const vector<BusStop *> &getBusStops();
 
     void setBusStops(const vector<BusStop *> &newBusStops);
 
-    const vector<CrossRoad *> &getCrossRaods() const;
+    const vector<CrossRoad *> &getCrossRaods();
 
     void setCrossRaods(const vector<CrossRoad *> &newCrossRaods);
 

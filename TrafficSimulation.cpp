@@ -669,6 +669,7 @@ void TrafficSimulation::outputStats() {
     file << boolalpha << (_initCheck == this) << '\n';
 
     file.close();
+    ENSURE(!file.is_open(), "file is still open when ending outputStats");
 }
 
 TrafficSimulation::~TrafficSimulation() {

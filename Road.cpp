@@ -147,26 +147,31 @@ void Road::print() {
     cout << '\t' << "-> Length: " << this->getLength() << endl;
 }
 
-Road::~Road() {
-    REQUIRE(properlyInitialized() , "Road wasn't initialized when calling destructor");
-}
-
-const vector<BusStop *> &Road::getBusStops() const {
+const vector<BusStop *> &Road::getBusStops() {
+    REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getBusStops");
     return busStops;
 }
 
 void Road::setBusStops(const vector<BusStop *> &newBusStops) {
+    REQUIRE(properlyInitialized() , "Road wasn't initialized when calling setBusStops");
     Road::busStops = newBusStops;
 }
 
-const vector<CrossRoad *> &Road::getCrossRaods() const {
+const vector<CrossRoad *> &Road::getCrossRaods() {
+    REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getCrossRaods");
     return crossRaods;
 }
 
 void Road::setCrossRaods(const vector<CrossRoad *> &newCrossRaods) {
+    REQUIRE(properlyInitialized() , "Road wasn't initialized when calling setCrossRaods");
     Road::crossRaods = newCrossRaods;
 }
 
 void Road::addCrossRoad(CrossRoad *crossRoad) {
+    REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addCrossRoad");
     crossRaods.push_back(crossRoad);
+}
+
+Road::~Road() {
+    REQUIRE(properlyInitialized() , "Road wasn't initialized when calling destructor");
 }
