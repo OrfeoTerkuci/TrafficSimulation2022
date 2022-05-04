@@ -20,15 +20,15 @@ public:
 
     BusStop(int waitTime, int position, Road *road);
 
-    int getWaitTime() const;
+    int getWaitTime();
 
     void setWaitTime(int newWaitTime);
 
-    int getPosition() const;
+    int getPosition();
 
     void setPosition(int newPosition);
 
-    Road *getRoad() const;
+    Road *getRoad();
 
     void setRoad(Road *newRoad);
 

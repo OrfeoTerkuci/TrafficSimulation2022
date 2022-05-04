@@ -640,6 +640,37 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
     }
 }
 
+void TrafficSimulation::outputStats() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling outputsStats");
+    fstream file("Stats.txt");
+    file.open("Stats/Stats.txt", fstream::out | fstream::in | ios::trunc);
+
+    file << "Amount of vehicles: ";
+    file << vehicles.size();
+    file << '\n';
+
+    file << "Amount of roads: ";
+    file << roads.size();
+    file << '\n';
+
+    file << "Amount of bus stops: ";
+    file << busStops.size();
+    file << '\n';
+
+    file << "Amount of crossroads: ";
+    file << crossRoads.size();
+    file << '\n';
+
+    file << "Amount of VehicleGenerators: ";
+    file << vehicleGenerators.size();
+    file << '\n';
+
+    file << "File is properly initialized: ";
+    file << boolalpha << (_initCheck == this) << '\n';
+
+    file.close();
+}
+
 TrafficSimulation::~TrafficSimulation() {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling destructor");
 

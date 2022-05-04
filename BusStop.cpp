@@ -1,39 +1,50 @@
-//
-// Created by jason on 05/04/2022.
-//
-
 #include "BusStop.h"
 #include "Vehicle.h"
+#include "DesignByContract.h"
 
-BusStop::BusStop(int waitTime, int position, Road *road) : cooldown(waitTime) , waitTime(waitTime), position(position), road(road) {}
+BusStop::BusStop(int waitTime, int position, Road *road) : cooldown(waitTime) , waitTime(waitTime), position(position), road(road) {
+    init = this;
+    ENSURE(init == this, "init is not itself, when calling constructor");
+}
 
-BusStop::BusStop() : cooldown(0) , waitTime(0), position(0), road(NULL)  {}
+BusStop::BusStop() : cooldown(0) , waitTime(0), position(0), road(NULL)  {
+    init = this;
+    ENSURE(init == this, "init is not itself, when calling constructor");
+}
 
-int BusStop::getWaitTime() const {
+int BusStop::getWaitTime() {
+    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling getWaitTime");
     return waitTime;
 }
 
 void BusStop::setWaitTime(int newWaitTime) {
+    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling setWaitTime");
     BusStop::waitTime = newWaitTime;
 }
 
-int BusStop::getPosition() const {
+int BusStop::getPosition() {
+    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling getPosition");
     return position;
 }
 
 void BusStop::setPosition(int newPosition) {
+    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling setPosition");
     BusStop::position = newPosition;
 }
 
-Road *BusStop::getRoad() const {
+Road *BusStop::getRoad()  {
+    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling getRoad");
     return road;
 }
 
 void BusStop::setRoad(Road *newRoad) {
+    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling setRoad");
+    REQUIRE(road->properlyInitialized(), "road was not properly initialized when calling setRoad");
     BusStop::road = newRoad;
 }
 
 Vehicle *BusStop::getNearestBus() {
+    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling getNearestBus");
     double pos = this->getPosition();
     Vehicle* nearestVehicle = NULL;
     Vehicle* currentVehicle;
@@ -57,6 +68,7 @@ Vehicle *BusStop::getNearestBus() {
 }
 
 void BusStop::simulateBusStop() {
+    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling simulateBusStop");
     // Declare variables
     Vehicle* currentVehicle = getNearestBus();
     if(currentVehicle == NULL){
@@ -91,12 +103,13 @@ void BusStop::simulateBusStop() {
             currentVehicle->setSlowing_bus(true);
             currentVehicle->setStopping_bus(false);
         }
-
     }
 }
 
-BusStop::~BusStop() {}
-
 bool BusStop::properlyInitialized() const {
     return init == this;
+}
+
+BusStop::~BusStop() {
+    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling destructor");
 }

@@ -446,42 +446,42 @@ void parseTrafficSimulationX(TrafficSimulation &trafficSimulation){
         string elemName = elem->Value();
         if (elemName == BAANU) {
             if (!parseRoad(elem, trafficSimulation)) {
-                cout << "Error: Could not make road" << endl;
+                //cout << "Error: Could not make road" << endl;
                 logOutput << false << '\n';
             } else {
                 logOutput << true << '\n';
             }
         } else if (elemName == VERKEERSLICHT) {
             if (!parseTrafficLight(elem, trafficSimulation)) {
-                cout << "Error: Could not make traffic light" << endl;
+                //cout << "Error: Could not make traffic light" << endl;
                 logOutput << false << '\n';
             } else {
                 logOutput << true << '\n';
             }
         } else if (elemName == VOERTUIG) {
             if (!parseVehicle(elem, trafficSimulation)) {
-                cout << "Error: Could not make vehicle" << endl;
+                //cout << "Error: Could not make vehicle" << endl;
                 logOutput << false << '\n';
             } else {
                 logOutput << true << '\n';
             }
         } else if (elemName == VOERTUIGGENERATOR) {
             if (!parseVehicleGenerator(elem, trafficSimulation)) {
-                cout << "Error: Could not make vehicle generator" << endl;
+                //cout << "Error: Could not make vehicle generator" << endl;
                 logOutput << false << '\n';
             } else {
                 logOutput << true << '\n';
             }
         } else if (elemName == KRUISPUNT) {
             if (!parseCrossRoad(elem, trafficSimulation)){
-                cout << "Error: Could not make crossroad" << endl;
+                //cout << "Error: Could not make crossroad" << endl;
                 logOutput << false << '\n';
             } else {
                 logOutput << true << '\n';
             }
         } else if (elemName == BUSHALTE) {
             if (!parseBusStop(elem, trafficSimulation)) {
-                cout << "Error: Could not make bus stop" << endl;
+                //cout << "Error: Could not make bus stop" << endl;
                 logOutput << false << '\n';
             } else {
                 logOutput << true << '\n';

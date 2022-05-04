@@ -181,6 +181,8 @@ public: // functions
      * @param timestamp timestamp of current routine in simulation, default = 0*/
     void outputFile(fileFunctionType type, int timestamp = 0);
 
+    void outputStats();
+
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimNoPrint");
      * ENSURE(vehicles.empty() || vehicleGenerators.empty() , "Simulation ended when it shouldn't");

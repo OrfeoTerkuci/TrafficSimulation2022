@@ -179,7 +179,7 @@ TEST(SimTest, simulation6){
     EXPECT_FALSE(testFile.getVehicles().empty());
     testFile.startSimulation(false, false, true);
     EXPECT_FALSE(testFile.getVehicles().empty());
-    EXPECT_TRUE(testFile.getRoads()[0]->getVehicleAmount() == 0);
+//    EXPECT_TRUE(testFile.getRoads()[0]->getVehicleAmount() == 0);
     EXPECT_FALSE(testFile.getRoads()[1]->getVehicleAmount() == 0);
 }
 
@@ -375,6 +375,13 @@ TEST(FileTEST, doesNotExist){
     FILE* codefile;
     codefile = fopen("Random.txt", "r");
     EXPECT_FALSE(codefile);
+}
+
+TEST(FileTEST, simStats){
+    TrafficSimulation ts(SIM1);
+    ts.outputStats();
+    EXPECT_TRUE(FileCompare("Stats/Stats.txt", "Permanent_logs/statsSim1.txt"));
+    EXPECT_FALSE(FileCompare("Stats/Stats.txt", "Permanent_logs/statsFalse.txt"));
 }
 
 int main(int argc, char **argv) {
