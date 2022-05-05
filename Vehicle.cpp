@@ -281,7 +281,7 @@ void Vehicle::calculateNewAcceleration(double maxSpeed) {
     REQUIRE(*typeid(maxSpeed).name() == 'd' , "calculateNewAcceleration was called with invalid parameter : wrong type");
     REQUIRE(maxSpeed >= 0 , "calculateNewAcceleration was called with invalid parameter : negative maxSpeed");
     setCurrentMaxSpeed(maxSpeed);
-    if(getNextVehicle() == NULL){
+    if(getNextVehicle() == NULL || (getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - (this->position + v_length) >= v_min_followDistance) ){
         setAcceleration(v_max_acceleration * ( 1- pow( (this->speed/this->currentMaxSpeed), 4) ) );
     }
     else{
@@ -400,12 +400,12 @@ void Vehicle::simulate() {
             setAcceleration(0);
         }
     }
-    else if((getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - (this->position + v_length) > v_min_followDistance) || getNextVehicle() == NULL){
-        simulateAccelerate();
+    else if((getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - (this->position + v_length) >= v_min_followDistance) || getNextVehicle() == NULL){
         // Update status
         setStatus(accelerate);
+        simulateAccelerate();
     }
-    if(getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - ( this->position + v_length) < v_min_followDistance){
+    else if(getNextVehicle() != NULL && getNextVehicle()->getVehiclePosition() - ( this->position + v_length) < v_min_followDistance){
         setPosition(oldPos);
         setSpeed(oldSpeed);
         setAcceleration(oldAcc);
