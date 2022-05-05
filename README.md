@@ -56,6 +56,6 @@ Simulation functions post-condition must be added.
 |3.4  | Simulatie Met Voertuigengenerator | Belangrijk   |   V    |
 |3.5  | Rijden van voertuig met type      | Verplicht    |   V    |
 |3.6  | Simulatie van bushaltes           | Belangrijk   |   V    |
-|3.7  | Simulatie van kruispunten         | Belangrijk   |   P    |
+|3.7  | Simulatie van kruispunten         | Belangrijk   |   V    |
 ### Comentaar:
 ...  
