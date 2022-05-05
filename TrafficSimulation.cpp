@@ -677,7 +677,9 @@ void TrafficSimulation::outputStats() {
 }
 
 void TrafficSimulation::setStopTime(int newStopTime) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling setStopTime");
     TrafficSimulation::stopTime = newStopTime;
+    ENSURE(newStopTime == stopTime, "stopTime was not assigned to newStopTime, when calling setStopTime");
 }
 
 TrafficSimulation::~TrafficSimulation() {

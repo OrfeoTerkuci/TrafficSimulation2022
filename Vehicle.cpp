@@ -272,8 +272,8 @@ bool Vehicle::isLeaving_bus() const {
     return leaving_bus;
 }
 
-void Vehicle::setLeaving_bus(bool leaving_bus) {
-    Vehicle::leaving_bus = leaving_bus;
+void Vehicle::setLeaving_bus(bool new_leaving_bus) {
+    Vehicle::leaving_bus = new_leaving_bus;
 }
 
 void Vehicle::calculateNewAcceleration(double maxSpeed) {

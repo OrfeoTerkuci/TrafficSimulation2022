@@ -405,12 +405,14 @@ TEST(SimTest, simulation17){
     ts.setStopTime(2979);
     ts.startSimulation(false, false, false, true);
     EXPECT_TRUE(ts.getVehicles()[0]->getStatus() == idle);
-    ts.setStopTime(2998);
+    ts.setStopTime(2999);
     ts.startSimulation(false, false, false, true);
     EXPECT_TRUE(ts.getVehicles()[0]->getStatus() == idle);
-    ts.setStopTime(3009);
+    ts.setStopTime(3000);
     ts.startSimulation(false, false, false, true);
     EXPECT_FALSE(ts.getVehicles()[0]->getStatus() == idle);
+    ts.startSimulation(false, false);
+    EXPECT_TRUE(ts.getVehicles().empty());
 }
 
 int main(int argc, char **argv) {
