@@ -12,39 +12,42 @@ BusStop::BusStop() : cooldown(0) , waitTime(0), position(0), road(NULL)  {
     ENSURE(init == this, "init is not itself, when calling constructor");
 }
 
-int BusStop::getWaitTime() {
-    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling getWaitTime");
+int BusStop::getWaitTime() const {
+    REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getWaitTime");
     return waitTime;
 }
 
 void BusStop::setWaitTime(int newWaitTime) {
-    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling setWaitTime");
+    REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling setWaitTime");
     BusStop::waitTime = newWaitTime;
+    ENSURE(waitTime == newWaitTime, "waitTime was not assigned to newWaitTime, when calling setWaitTime");
 }
 
-int BusStop::getPosition() {
-    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling getPosition");
+int BusStop::getPosition() const {
+    REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getPosition");
     return position;
 }
 
 void BusStop::setPosition(int newPosition) {
-    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling setPosition");
+    REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling setPosition");
     BusStop::position = newPosition;
+    ENSURE(position == newPosition, "position was not assigned to newPosition, when calling setPosition");
 }
 
-Road *BusStop::getRoad()  {
-    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling getRoad");
+Road *BusStop::getRoad() {
+    REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getRoad");
     return road;
 }
 
 void BusStop::setRoad(Road *newRoad) {
-    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling setRoad");
+    REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling setRoad");
     REQUIRE(road->properlyInitialized(), "road was not properly initialized when calling setRoad");
     BusStop::road = newRoad;
+    ENSURE(road == newRoad, "road was not assigned to newRoad, when calling setRoad");
 }
 
 Vehicle *BusStop::getNearestBus() {
-    REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling getNearestBus");
+    REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getNearestBus");
     double pos = this->getPosition();
     Vehicle* nearestVehicle = NULL;
     Vehicle* currentVehicle;

@@ -26,6 +26,7 @@ map<Road *, int> &CrossRoad::getRoads(){
 void CrossRoad::setRoads(const map<Road *, int> &newRoads) {
     REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling setRoad");
     CrossRoad::roads = newRoads;
+    ENSURE(roads == newRoads, "roads was not assigned to newRoads, when calling setRoads");
 }
 
 bool randomBool(){

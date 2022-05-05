@@ -35,7 +35,8 @@ public:
     map<Road *, int> &getRoads();
 
     /**
-     * REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling setRoad");*/
+     * REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling setRoad");
+     * ENSURE(roads == newRoads, "roads was not assigned to newRoads, when calling setRoads");*/
     void setRoads(const map<Road *, int> &newRoads);
 
     /**
