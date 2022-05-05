@@ -2,9 +2,11 @@
 #include "Vehicle.h"
 #include "Standard_Values.h"
 #include "DesignByContract.h"
-#include <typeinfo>
+
 // build in libs
 #include <cmath>
+#include <typeinfo>
+#include <fstream>
 
 using namespace std;
 
@@ -165,44 +167,44 @@ void Vehicle::setType(const vehicleType &newType) {
 void Vehicle::setStandardValues() {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setStandardValues");
     if (type == T_AMBULANCE){
-        v_length = AMBULANCE_LENGTH;
-        v_max_speed = AMBULANCE_MAX_SPEED;
-        v_max_acceleration = AMBULANCE_MAX_ACCELERATION;
-        v_max_brakefactor = AMBULANCE_MAX_BRAKE_FACTOR;
-        v_min_followDistance = AMBULANCE_MIN_FOLLOW_DISTANCE;
-        v_decelerate = AMBULANCE_DECELERATE;
+        setV_length(AMBULANCE_LENGTH);
+        setV_decelerate(AMBULANCE_DECELERATE);
+        setV_max_acceleration(AMBULANCE_MAX_ACCELERATION);
+        setV_max_brakefactor(AMBULANCE_MAX_BRAKE_FACTOR);
+        setV_max_speed(AMBULANCE_MAX_SPEED);
+        setV_min_followDistance(AMBULANCE_MIN_FOLLOW_DISTANCE);
     }
     else if (type == T_BUS){
-        v_length = BUS_LENGTH;
-        v_max_speed = BUS_MAX_SPEED;
-        v_max_acceleration = BUS_MAX_ACCELERATION;
-        v_max_brakefactor = BUS_MAX_BRAKE_FACTOR;
-        v_min_followDistance = BUS_MIN_FOLLOW_DISTANCE;
-        v_decelerate = BUS_DECELERATE;
+        setV_length(BUS_LENGTH);
+        setV_max_speed(BUS_MAX_SPEED);
+        setV_max_acceleration(BUS_MAX_ACCELERATION);
+        setV_max_brakefactor(BUS_MAX_BRAKE_FACTOR);
+        setV_min_followDistance(BUS_MIN_FOLLOW_DISTANCE);
+        setV_decelerate(BUS_DECELERATE);
     }
     else if (type == T_FIRETRUCK){
-        v_length = FIRETRUCK_LENGTH;
-        v_max_speed = FIRETRUCK_MAX_SPEED;
-        v_max_acceleration = FIRETRUCK_MAX_ACCELERATION;
-        v_max_brakefactor = FIRETRUCK_MAX_BRAKE_FACTOR;
-        v_min_followDistance = FIRETRUCK_MIN_FOLLOW_DISTANCE;
-        v_decelerate = FIRETRUCK_DECELERATE;
+        setV_length(FIRETRUCK_LENGTH);
+        setV_max_speed(FIRETRUCK_MAX_SPEED);
+        setV_max_acceleration(FIRETRUCK_MAX_ACCELERATION);
+        setV_max_brakefactor(FIRETRUCK_MAX_BRAKE_FACTOR);
+        setV_min_followDistance(FIRETRUCK_MIN_FOLLOW_DISTANCE);
+        setV_decelerate(FIRETRUCK_DECELERATE);
     }
     else if (type == T_POLICE){
-        v_length = POLICE_LENGTH;
-        v_max_speed = POLICE_MAX_SPEED;
-        v_max_acceleration = POLICE_MAX_ACCELERATION;
-        v_max_brakefactor = POLICE_MAX_BRAKE_FACTOR;
-        v_min_followDistance = POLICE_MIN_FOLLOW_DISTANCE;
-        v_decelerate = POLICE_DECELERATE;
+        setV_length(POLICE_LENGTH);
+        setV_max_speed(POLICE_MAX_SPEED);
+        setV_max_acceleration(POLICE_MAX_ACCELERATION);
+        setV_max_brakefactor(POLICE_MAX_BRAKE_FACTOR);
+        setV_min_followDistance(POLICE_MIN_FOLLOW_DISTANCE);
+        setV_decelerate(POLICE_DECELERATE);
     }
     else{
-        v_length = LENGTH;
-        v_max_speed = MAX_SPEED;
-        v_max_acceleration = MAX_ACCELERATION;
-        v_max_brakefactor = MAX_BRAKE_FACTOR;
-        v_min_followDistance = MIN_FOLLOW_DISTANCE;
-        v_decelerate = DECELERATE;
+        setV_length(LENGTH);
+        setV_max_speed(MAX_SPEED);
+        setV_max_acceleration(MAX_ACCELERATION);
+        setV_max_brakefactor(MAX_BRAKE_FACTOR);
+        setV_min_followDistance(MIN_FOLLOW_DISTANCE);
+        setV_decelerate(DECELERATE);
     }
     currentMaxSpeed = v_max_speed;
 }
@@ -486,6 +488,35 @@ string Vehicle::getTypeString() const {
     else{
         return "";
     }
+}
+
+void Vehicle::outputStatsVehicle() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling outputsStats");
+    fstream file("Stats.txt");
+    file.open("Stats/StatsV.txt", fstream::out | fstream::in | ios::trunc);
+    /*
+    // Bus specific members
+    bool slowing_bus;
+    bool stopping_bus;
+    bool leaving_bus;
+    vehicleStatus status;
+    Road* road;
+    Vehicle* _initCheck;*/
+    file << "vehicle length: " << this->getV_length() << endl;
+    file << "vehicle max speed: " << this->getV_max_speed() << endl;
+    file << "vehicle max acceleration: " << this->getV_max_acceleration() << endl;
+    file << "vehicle max brakefactor: " << this->getV_max_brakefactor() << endl;
+    file << "vehicle min follow distance: " << this->getV_min_followDistance() << endl;
+    file << "vehicle decelerate: " << this->getV_decelerate() << endl;
+
+    file << "slowing bus bool = " << this->isSlowing_bus() << endl;
+    file << "stopping bus bool = " << this->isStopping_bus() << endl;
+    file << "leaving bus bool = " << this->isLeaving_bus() << endl;
+
+    file << "is properly initialized: " << boolalpha << (_initCheck == this) << endl;
+
+    file.close();
+    ENSURE(!file.is_open(), "file is still open when ending outputStats");
 }
 
 Vehicle::~Vehicle() {

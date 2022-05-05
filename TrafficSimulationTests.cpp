@@ -401,6 +401,30 @@ TEST(FunctionTest, BusStop_Test){
 
 }
 
+TEST(FunctionTest, VehicleType_BUS){
+    Vehicle* bus = new Vehicle(0, 0, T_BUS);
+    bus->outputStatsVehicle();
+    EXPECT_TRUE(FileCompare("Stats/StatsV.txt", "Permanent_logs/statsVBus.txt"));
+}
+
+TEST(FunctionTest, VehicleType_FIRETRUCK){
+    Vehicle* firetruck = new Vehicle(0, 0, T_FIRETRUCK);
+    firetruck->outputStatsVehicle();
+    EXPECT_TRUE(FileCompare("Stats/StatsV.txt", "Permanent_logs/statsVFiretruck.txt"));
+}
+
+TEST(FunctionTest, VehicleType_POLICE){
+    Vehicle* police = new Vehicle(0, 0, T_POLICE);
+    police->outputStatsVehicle();
+    EXPECT_TRUE(FileCompare("Stats/StatsV.txt", "Permanent_logs/statsVPolice.txt"));
+}
+
+TEST(FunctionTest, VehicleType_AMBULANCE){
+    Vehicle* ambulance = new Vehicle(0, 0, T_AMBULANCE);
+    ambulance->outputStatsVehicle();
+    EXPECT_TRUE(FileCompare("Stats/StatsV.txt", "Permanent_logs/statsVAmbulance.txt"));
+}
+
 TEST(SimTest, simulation17){
     TrafficSimulation ts(SIM17);
     ts.setStopTime(2979);

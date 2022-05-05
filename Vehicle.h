@@ -265,6 +265,8 @@ public:
      */
     virtual void print();
 
+    void outputStatsVehicle();
+
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling destructor");
      */
