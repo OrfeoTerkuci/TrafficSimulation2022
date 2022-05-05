@@ -37,10 +37,10 @@ int main(){
 //TrafficSimulation ts(SIM15);
 
 //==== Crossroads ====//
-//TrafficSimulation ts(SIM16);
+TrafficSimulation ts(SIM16);
 
 //==== BusStop + Bus ====//
-TrafficSimulation ts(SIM17);
+//TrafficSimulation ts(SIM17);
 
 //==== Simulation functions ====//
 //ts.printAll();

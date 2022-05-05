@@ -356,13 +356,27 @@ TEST(TypeTest, typeTS){
 
 TEST(SimTest, simulation16){
     TrafficSimulation ts(SIM16);
-    ts.startSimulation(false, false, false);
+    ts.startSimulation(false, false);
+    EXPECT_TRUE(ts.getVehicles().empty());
+}
+
+TEST(SimTest, simulation16v2){
+    TrafficSimulation ts(SIM16);
+    ts.outputStats();
+    EXPECT_TRUE(FileCompare("Stats/Stats.txt", "Permanent_logs/statsSim16.txt"));
+    ts.setStopTime(1481);
+    ts.startSimulation(false, false, false, true);
+    EXPECT_TRUE(ts.getVehicles()[0]->getRoad()->getRoadName() == "Middelheimlaan");
+    ts.setStopTime(1482);
+    ts.startSimulation(false, false, false, true);
+    EXPECT_TRUE(ts.getVehicles()[0]->getRoad()->getRoadName() == "Floralienlaan");
+    ts.startSimulation(false, false);
     EXPECT_TRUE(ts.getVehicles().empty());
 }
 
 TEST(FileTEST, exist){
     TrafficSimulation ts(SIM1);
-    ts.startSimulation(false, true, false);
+    ts.startSimulation(false, true);
     FILE * codefile;
 
     codefile = fopen(ts.outputFileNameHTML.c_str(), "r");
@@ -382,12 +396,6 @@ TEST(FileTEST, simStats){
     ts.outputStats();
     EXPECT_TRUE(FileCompare("Stats/Stats.txt", "Permanent_logs/statsSim1.txt"));
     EXPECT_FALSE(FileCompare("Stats/Stats.txt", "Permanent_logs/statsFalse.txt"));
-}
-
-TEST(SimTest, simulation16v2){
-    TrafficSimulation ts(SIM16);
-    ts.outputStats();
-    EXPECT_TRUE(FileCompare("Stats/Stats.txt", "Permanent_logs/statsSim16.txt"));
 }
 
 TEST(FunctionTest, CrossRoad_Test){
