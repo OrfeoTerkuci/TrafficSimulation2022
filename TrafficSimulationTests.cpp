@@ -436,7 +436,38 @@ TEST(FunctionTest, BusStop_Test){
 
 TEST(FunctionTest, CrossRoad_Test){
     CrossRoad* testCross = new CrossRoad();
-    testCross->isSwitchRoad();
+    bool random = false;
+    int time = 13;
+    map<Road* , int> testMap;
+    map<Road* , int> testMap2;
+    Road* testRoad1 = new Road(500 , "testRoad1");
+    Road* testRoad2 = new Road(250 , "testRoad2");
+    Vehicle* testVehicle1 = new Vehicle(0 , 40);
+    Vehicle* testVehicle2 = new Vehicle(0 , 20);
+    testRoad1->addVehicle(testVehicle1);
+    testRoad2->addVehicle(testVehicle2);
+    testMap[testRoad1] = 200;
+    testMap[testRoad2] = 100;
+    // Getters and setters test
+    testCross->addRoad(testRoad1 , 100);
+    testCross->addRoad(testRoad2 , 50);
+    EXPECT_EQ(testCross->getPosition(testRoad1) , 100);
+    EXPECT_EQ(testCross->getPosition(testRoad2) , 50);
+    testCross->setRoads(testMap);
+    EXPECT_EQ(testCross->getRoads() , testMap);
+    EXPECT_EQ(testCross->getNearestVehicle(testRoad1) , testVehicle1);
+    testMap[testRoad1] = 100;
+    testMap[testRoad2] = 50;
+    testCross->setRoads(testMap);
+    EXPECT_FALSE(testCross->isSwitchRoad());
+    testCross->updateSwitchRoad(random , time);
+    EXPECT_TRUE(testCross->isSwitchRoad());
+    // Test simulation
+    testCross->setSwitchRoad(false);
+    testVehicle1->setPosition(99);
+    testCross->simulateCrossroad(random , time);
+    EXPECT_EQ(testVehicle1->getRoad() , testRoad2);
+    EXPECT_EQ(testVehicle1->getVehiclePosition() , 53);
 }
 
 TEST(FunctionTest, VehicleType_BUS){

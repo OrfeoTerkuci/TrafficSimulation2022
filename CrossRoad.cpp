@@ -121,3 +121,7 @@ CrossRoad::~CrossRoad() {
     REQUIRE(this->properlyInitialized(), "crossroad was not properly initialized when calling destructor");
 }
 
+void CrossRoad::setSwitchRoad(bool new_switchRoad) {
+    CrossRoad::switchRoad = new_switchRoad;
+}
+

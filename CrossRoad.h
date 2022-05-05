@@ -24,6 +24,8 @@ public:
      * REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling isSwitchRoad");*/
     bool isSwitchRoad();
 
+    void setSwitchRoad(bool switchRoad);
+
     void updateSwitchRoad(bool &random , int &time);
 
     /**
