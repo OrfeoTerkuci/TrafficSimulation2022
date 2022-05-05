@@ -113,6 +113,10 @@ bool CrossRoad::isSwitchRoad() {
     return switchRoad;
 }
 
+void CrossRoad::setSwitchRoad(bool new_switchRoad) {
+    CrossRoad::switchRoad = new_switchRoad;
+}
+
 bool CrossRoad::properlyInitialized() const{
     return init == this;
 }
@@ -120,8 +124,3 @@ bool CrossRoad::properlyInitialized() const{
 CrossRoad::~CrossRoad() {
     REQUIRE(this->properlyInitialized(), "crossroad was not properly initialized when calling destructor");
 }
-
-void CrossRoad::setSwitchRoad(bool new_switchRoad) {
-    CrossRoad::switchRoad = new_switchRoad;
-}
-
