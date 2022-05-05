@@ -278,9 +278,9 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE) 
             break;
         }
         count ++;
-        if (count == 12000){
+        /*if (count == 12000){
             break;
-        }
+        }*/
     }
     if (printE){
         cout << "- There are no vehicles on the road network." << endl;
