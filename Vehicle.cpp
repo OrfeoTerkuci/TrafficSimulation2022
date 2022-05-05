@@ -151,16 +151,19 @@ void Vehicle::setRoad(Road *newRoad) {
 }
 
 const vehicleType &Vehicle::getType() const {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getType");
     return type;
 }
 
 void Vehicle::setType(const vehicleType &newType) {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setType");
     Vehicle::type = newType;
     setStandardValues();
+    ENSURE(type == newType, "type was not assigned to newType, after calling setType");
 }
 
 void Vehicle::setStandardValues() {
-
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setStandardValues");
     if (type == T_AMBULANCE){
         v_length = AMBULANCE_LENGTH;
         v_max_speed = AMBULANCE_MAX_SPEED;
@@ -205,75 +208,102 @@ void Vehicle::setStandardValues() {
 }
 
 double Vehicle::getV_length() const {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_length");
     return v_length;
 }
 
 void Vehicle::setV_length(double new_v_length) {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setV_length");
     Vehicle::v_length = new_v_length;
+    ENSURE(v_length == new_v_length, "v_length was not assigned to new_v_length, after calling setV_length");
 }
 
 double Vehicle::getV_max_speed() const {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_max_speed");
     return v_max_speed;
 }
 
 void Vehicle::setV_max_speed(double new_v_max_speed) {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setV_max_speed");
     Vehicle::v_max_speed = new_v_max_speed;
+    ENSURE(v_max_speed == new_v_max_speed, "v_max_speed was not assigned to new_v_max_speed, after calling setV_max_speed");
 }
 
 double Vehicle::getV_max_acceleration() const {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_max_acceleration");
     return v_max_acceleration;
 }
 
 void Vehicle::setV_max_acceleration(double new_v_max_acceleration) {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setV_max_acceleration");
     Vehicle::v_max_acceleration = new_v_max_acceleration;
+    ENSURE(v_max_acceleration == new_v_max_acceleration, "v_max_acceleration was not assigned to new_v_max_acceleration, after calling setV_max_acceleration");
 }
 
 double Vehicle::getV_max_brakefactor() const {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_max_brakefactor");
     return v_max_brakefactor;
 }
 
 void Vehicle::setV_max_brakefactor(double new_v_max_brakefactor) {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setV_max_brakefactor");
     Vehicle::v_max_brakefactor = new_v_max_brakefactor;
+    ENSURE(v_max_brakefactor == new_v_max_brakefactor, "v_max_brakefactor was not assigned to new_v_max_brakefactor, after calling setV_max_brakefactor");
 }
 
 double Vehicle::getV_min_followDistance() const {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_min_followDistance");
     return v_min_followDistance;
 }
 
 void Vehicle::setV_min_followDistance(double new_v_min_followDistance) {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setV_min_followDistance");
     Vehicle::v_min_followDistance = new_v_min_followDistance;
+    ENSURE(v_min_followDistance == new_v_min_followDistance, "followDistance was not assigned to new followDistance, after calling setV_min_followDistance");
 }
 
 double Vehicle::getV_decelerate() const {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_decelerate");
     return v_decelerate;
 }
 
 void Vehicle::setV_decelerate(double new_v_decelerate) {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setV_decelerate");
     Vehicle::v_decelerate = new_v_decelerate;
+    ENSURE(v_decelerate == new_v_decelerate, "decelerate of vehicle was not assigende to new decelerate, after calling setV_decelerate");
 }
 
 bool Vehicle::isSlowing_bus() const {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling isSlowing_bus");
     return slowing_bus;
 }
 
 void Vehicle::setSlowing_bus(bool new_slowing_bus) {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setSlowing_bus");
     Vehicle::slowing_bus = new_slowing_bus;
+    ENSURE(slowing_bus == new_slowing_bus, "slowing bus was not assigned to new slowing bus, after calling setSlowing_bus");
 }
 
 bool Vehicle::isStopping_bus() const {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling isStopping_bus");
     return stopping_bus;
 }
 
 void Vehicle::setStopping_bus(bool new_stopping_bus) {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setStopping_bus");
     Vehicle::stopping_bus = new_stopping_bus;
+    ENSURE(stopping_bus == new_stopping_bus, "stopping bus was not assigned to new stopping bus, after calling setStopping_bus");
 }
 
 bool Vehicle::isLeaving_bus() const {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling isLeaving_bus");
     return leaving_bus;
 }
 
-void Vehicle::setLeaving_bus(bool leaving_bus) {
-    Vehicle::leaving_bus = leaving_bus;
+void Vehicle::setLeaving_bus(bool new_leaving_bus) {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setLeaving_bus");
+    Vehicle::leaving_bus = new_leaving_bus;
+    ENSURE(leaving_bus == new_leaving_bus, "leaving bus was not assigend to new leaving bus, after calling setLeaving_bus");
 }
 
 void Vehicle::calculateNewAcceleration(double maxSpeed) {
@@ -436,12 +466,8 @@ void Vehicle::print() {
     cout << endl;
 }
 
-Vehicle::~Vehicle() {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling destructor");
-
-}
-
 string Vehicle::getTypeString() const {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getTypeString");
     if(this->type == T_AUTO){
         return "Auto";
     }
@@ -460,4 +486,9 @@ string Vehicle::getTypeString() const {
     else{
         return "";
     }
+}
+
+Vehicle::~Vehicle() {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling destructor");
+
 }

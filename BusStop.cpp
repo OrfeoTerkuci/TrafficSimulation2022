@@ -2,14 +2,17 @@
 #include "Vehicle.h"
 #include "DesignByContract.h"
 
-BusStop::BusStop(int waitTime, int position, Road *road) : cooldown(waitTime) , waitTime(waitTime), position(position), road(road) {
+BusStop::BusStop() : cooldown(0) , waitTime(0), position(0), road(NULL)  {
     init = this;
     ENSURE(init == this, "init is not itself, when calling constructor");
 }
 
-BusStop::BusStop() : cooldown(0) , waitTime(0), position(0), road(NULL)  {
+BusStop::BusStop(int waitTime, int new_position, Road *new_road) : cooldown(waitTime) , waitTime(waitTime), position(new_position), road(new_road) {
     init = this;
-    ENSURE(init == this, "init is not itself, when calling constructor");
+    ENSURE(init == this, "init is not itself, after calling constructor");
+    ENSURE(road == new_road, "road was not assigned to new_road, after calling constructor");
+    ENSURE(waitTime == cooldown, "cooldown was not assigned to waitTime, after calling constructor");
+    ENSURE(position == new_position, "position was not assigned to new_position, after calling constructor");
 }
 
 int BusStop::getWaitTime() const {
@@ -47,11 +50,14 @@ void BusStop::setRoad(Road *newRoad) {
 }
 
 int BusStop::getCooldown() const {
+    REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getCooldown");
     return cooldown;
 }
 
-void BusStop::setCooldown(int cooldown) {
-    BusStop::cooldown = cooldown;
+void BusStop::setCooldown(int new_cooldown) {
+    REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling setCooldown");
+    BusStop::cooldown = new_cooldown;
+    ENSURE(cooldown == new_cooldown, "cooldown was not assigned to new_cooldown, after calling setCooldown");
 }
 
 Vehicle *BusStop::getNearestBus() {
@@ -94,6 +100,7 @@ void BusStop::simulateBusStop() {
                 currentVehicle->setStopping_bus(false);
                 currentVehicle->setLeaving_bus(true);
                 cooldown = waitTime;
+                ENSURE(cooldown == waitTime, "cooldown wasn't reset");
             }
             else{
                 cooldown--;

@@ -199,7 +199,7 @@ public:
 
     bool isLeaving_bus() const;
 
-    void setLeaving_bus(bool leaving_bus);
+    void setLeaving_bus(bool new_leaving_bus);
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling calculateNewSpeed");

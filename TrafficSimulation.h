@@ -63,6 +63,9 @@ public: // functions
     */
     void setRoads(const vector<Road *> &newRoads);
 
+    /**
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling setStopTime");
+     * ENSURE(newStopTime == stopTime, "stopTime was not assigned to newStopTime, when calling setStopTime");*/
     void setStopTime(int newStopTime);
 
     /**
