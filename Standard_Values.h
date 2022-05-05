@@ -73,7 +73,7 @@ enum fileFunctionType{ closing , create , update};
 #define POLITIECOMBI            "politiecombi"
 
 // Vehiclegenerator test values
-#define MAX_VEHICLES            20
+#define MAX_VEHICLES            5
 
 // Crossroad "random" test valus
 #define MODULO_RANDOM                  10
