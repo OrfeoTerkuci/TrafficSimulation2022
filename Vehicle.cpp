@@ -13,7 +13,7 @@ using namespace std;
 
 Vehicle::Vehicle(double speed, double position , vehicleType type) :
     speed(speed), position(position) , acceleration(0.0) , type(type),
-    slowing_bus(false) , stopping_bus(false) , leaving_bus(false) , _initCheck(this)
+    slowing_bus(false) , stopping_bus(false) , leaving_bus(false) , road(NULL) , _initCheck(this)
     {
     REQUIRE(*typeid(speed).name() == 'd' , "constructor called with invalid speed parameter");
     REQUIRE(*typeid(position).name() == 'd' , "constructor called with invalid position parameter");
@@ -40,10 +40,11 @@ Vehicle::Vehicle(double speed, double position , vehicleType type) :
     ENSURE(!Vehicle::slowing_bus , "slowing_bus was not properly initialized");
     ENSURE(!Vehicle::stopping_bus, "stopping_bus was not properly initialized");
     ENSURE(!Vehicle::leaving_bus, "leaving_bus was not properly initialized");
+    ENSURE(Vehicle::road == NULL , "road was not properly initialized");
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 
-Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , type(T_AUTO) , slowing_bus(false) , stopping_bus(false)  , leaving_bus(false), status(accelerate) , _initCheck(this) {
+Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , type(T_AUTO) , slowing_bus(false) , stopping_bus(false)  , leaving_bus(false), status(accelerate) , road(NULL) , _initCheck(this) {
     setStandardValues();
     ENSURE(Vehicle::speed == 0.0 , "speed was not properly initialized");
     ENSURE(Vehicle::position == 0.0 , "position was not properly initialized");
@@ -53,6 +54,7 @@ Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , type(T_AUT
     ENSURE(!Vehicle::slowing_bus , "slowing_bus was not properly initialized");
     ENSURE(!Vehicle::stopping_bus, "stopping_bus was not properly initialized");
     ENSURE(!Vehicle::leaving_bus, "leaving_bus was not properly initialized");
+    ENSURE(Vehicle::road == NULL , "road was not properly initialized");
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 

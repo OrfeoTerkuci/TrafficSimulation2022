@@ -45,8 +45,12 @@ public:
      * ENSURE(Vehicle::speed == speed , "speed was not properly initialized");
      * ENSURE(Vehicle::position == position , "position was not properly initialized");
      * ENSURE(Vehicle::acceleration == 0.0 , "acceleration was not properly initialized");
-     * ENSURE(Vehicle::currentMaxSpeed == MAX_SPEED , "currentMaxSpeed was not properly initialized");
+     * ENSURE(Vehicle::currentMaxSpeed == v_max_speed , "currentMaxSpeed was not properly initialized");
      * ENSURE(Vehicle::type == type , "vehicleType was not properly initialized");
+     * ENSURE(!Vehicle::slowing_bus , "slowing_bus was not properly initialized");
+     * ENSURE(!Vehicle::stopping_bus, "stopping_bus was not properly initialized");
+     * ENSURE(!Vehicle::leaving_bus, "leaving_bus was not properly initialized");
+     * ENSURE(Vehicle::road == NULL , "road was not properly initialized");
      * ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
      * @param speed The speed of the vehicle
      * @param position The position of the vehicle on the road
@@ -57,8 +61,12 @@ public:
      * ENSURE(Vehicle::speed == 0.0 , "speed was not properly initialized");
      * ENSURE(Vehicle::position == 0.0 , "position was not properly initialized");
      * ENSURE(Vehicle::acceleration == 0.0 , "acceleration was not properly initialized");
-     * ENSURE(Vehicle::currentMaxSpeed == MAX_SPEED , "currentMaxSpeed was not properly initialized");
+     * ENSURE(Vehicle::currentMaxSpeed == v_max_speed , "currentMaxSpeed was not properly initialized");
      * ENSURE(Vehicle::type == T_AUTO , "vehicleType was not properly initialized");
+     * ENSURE(!Vehicle::slowing_bus , "slowing_bus was not properly initialized");
+     * ENSURE(!Vehicle::stopping_bus, "stopping_bus was not properly initialized");
+     * ENSURE(!Vehicle::leaving_bus, "leaving_bus was not properly initialized");
+     * ENSURE(Vehicle::road == NULL , "road was not properly initialized");
      * ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
      */
     Vehicle();

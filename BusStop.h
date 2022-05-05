@@ -25,7 +25,7 @@ public:
      * ENSURE(road == new_road, "road was not assigned to new_road, after calling constructor");
      * ENSURE(waitTime == cooldown, "cooldown was not assigned to waitTime, after calling constructor");
      * ENSURE(position == new_position, "position was not assigned to new_position, after calling constructor");*/
-    BusStop(int waitTime, int position, Road *road);
+    BusStop(int waitTime, int position, Road *road = NULL);
 
     /**
      * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getWaitTime");*/

@@ -98,7 +98,9 @@ void Road::addVehicle(Vehicle *newVehicle) {
     unsigned int* oldSize = new unsigned int;
     *oldSize = vehicles.size();
     vehicles.push_back(newVehicle);
+    newVehicle->setRoad(this);
     ENSURE( *oldSize == vehicles.size() - 1 , "addVehicle failed");
+    ENSURE( newVehicle->getRoad() == this , "addVehicle failed");
     delete oldSize;
 }
 

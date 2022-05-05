@@ -391,13 +391,56 @@ TEST(FileTEST, simStats){
     EXPECT_FALSE(FileCompare("Stats/Stats.txt", "Permanent_logs/statsFalse.txt"));
 }
 
+TEST(FunctionTest, BusStop_Test){
+    BusStop* testBusStop;
+    Vehicle* testVehicle1;
+    Vehicle* testVehicle2;
+    Road* testRoad;
+    testVehicle1 = new Vehicle( 0 , 0 , T_BUS );
+    testVehicle2 = new Vehicle( 0 , 20 , T_BUS );
+    testRoad = new Road(500 , "testRoad");
+    testRoad->addVehicle(testVehicle1);
+    testRoad->addVehicle(testVehicle2);
+    testBusStop = new BusStop(20 , 100);
+    // Test constructor
+    EXPECT_TRUE(testBusStop->properlyInitialized());
+    // Cooldown getter and setter
+    EXPECT_EQ(testBusStop->getCooldown() , 20);
+    testBusStop->setCooldown(10);
+    EXPECT_EQ(testBusStop->getCooldown() , 10);
+    // WaitTime getter and setter
+    EXPECT_EQ(testBusStop->getWaitTime() , 20);
+    testBusStop->setWaitTime(15);
+    EXPECT_EQ(testBusStop->getWaitTime() , 15);
+    // Position getter and setter
+    EXPECT_EQ(testBusStop->getPosition() , 100);
+    testBusStop->setPosition(50);
+    EXPECT_EQ(testBusStop->getPosition() , 50);
+    // Road getter and setter
+    EXPECT_NE(testBusStop->getRoad() , testRoad);
+    testBusStop->setRoad(testRoad);
+    EXPECT_EQ(testBusStop->getRoad() , testRoad);
+    // nearestVehicle test
+    testBusStop->setPosition(100);
+    EXPECT_EQ(testBusStop->getNearestBus() , testVehicle2);
+    // simulation test
+    testVehicle1->setPosition(50);
+    testBusStop->simulateBusStop();
+    EXPECT_TRUE(testVehicle1->isSlowing_bus());
+    EXPECT_FALSE(testVehicle1->isStopping_bus());
+    testVehicle1->setPosition(80);
+    testBusStop->simulateBusStop();
+    EXPECT_FALSE(testVehicle1->isSlowing_bus());
+    EXPECT_TRUE(testVehicle1->isStopping_bus());
+}
+
 TEST(FunctionTest, CrossRoad_Test){
     /*CrossRoad* testCrossRoad = new CrossRoad();
     Road* testRoad = new Road(200, "road1");
     Road* testRoad2 = new Road(300, "road2");*/
 }
 
-TEST(FunctionTest, BusStop_Test){
+TEST(FunctionTest, Vehicle_Type_Test){
 
 }
 
