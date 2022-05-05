@@ -121,7 +121,10 @@ void Road::removeVehicle(Vehicle *oldVehicle) {
 void Road::addBusStop(BusStop *newBusStop) {
     REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addBusStop");
     REQUIRE(newBusStop->properlyInitialized(), "bus stop isn't properly initialized");
+    unsigned int originalSize = busStops.size();
     busStops.push_back(newBusStop);
+    ENSURE(busStops.size() == originalSize + 1, "newBusStop wasn't appended in vector busStops, when calling addBusStop");
+    ENSURE(busStops[originalSize] == newBusStop, "last item in vector busStops is not equal to newBusStop, when calling addBusStop");
 }
 
 void Road::addLight(TrafficLight *newLight) {

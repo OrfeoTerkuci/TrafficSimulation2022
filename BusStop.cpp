@@ -41,7 +41,7 @@ Road *BusStop::getRoad() {
 
 void BusStop::setRoad(Road *newRoad) {
     REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling setRoad");
-    REQUIRE(road->properlyInitialized(), "road was not properly initialized when calling setRoad");
+    REQUIRE(newRoad->properlyInitialized(), "road was not properly initialized when calling setRoad");
     BusStop::road = newRoad;
     ENSURE(road == newRoad, "road was not assigned to newRoad, when calling setRoad");
 }
