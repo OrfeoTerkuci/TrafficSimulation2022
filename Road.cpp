@@ -121,7 +121,10 @@ void Road::removeVehicle(Vehicle *oldVehicle) {
 void Road::addBusStop(BusStop *newBusStop) {
     REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addBusStop");
     REQUIRE(newBusStop->properlyInitialized(), "bus stop isn't properly initialized");
+    unsigned int originalSize = busStops.size();
     busStops.push_back(newBusStop);
+    ENSURE(busStops.size() == originalSize + 1, "newBusStop wasn't appended in vector busStops, when calling addBusStop");
+    ENSURE(busStops[originalSize] == newBusStop, "last item in vector busStops is not equal to newBusStop, when calling addBusStop");
 }
 
 void Road::addLight(TrafficLight *newLight) {
@@ -159,22 +162,27 @@ const vector<BusStop *> &Road::getBusStops() {
 void Road::setBusStops(const vector<BusStop *> &newBusStops) {
     REQUIRE(properlyInitialized() , "Road wasn't initialized when calling setBusStops");
     Road::busStops = newBusStops;
+    ENSURE(busStops == newBusStops, "busStops was not assigned to newBusStops, when calling setBusStops");
 }
 
 const vector<CrossRoad *> &Road::getCrossRaods() {
     REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getCrossRaods");
-    return crossRaods;
+    return crossRoads;
 }
 
 void Road::setCrossRaods(const vector<CrossRoad *> &newCrossRaods) {
     REQUIRE(properlyInitialized() , "Road wasn't initialized when calling setCrossRaods");
-    Road::crossRaods = newCrossRaods;
+    Road::crossRoads = newCrossRaods;
+    ENSURE(crossRoads == newCrossRaods, "crossRoads was not assigned to newCrossRoads, when calling newCrossRoads");
 }
 
 void Road::addCrossRoad(CrossRoad *crossRoad) {
     REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addCrossRoad");
     REQUIRE(crossRoad->properlyInitialized(), "crossroad wasn't properly initialized");
-    crossRaods.push_back(crossRoad);
+    unsigned int originalSize = crossRoads.size();
+    crossRoads.push_back(crossRoad);
+    ENSURE(crossRoads.size() == originalSize + 1, "crossRoads didn't change in size, when calling addCrossRoad");
+    ENSURE(crossRoads[originalSize] == crossRoad, "Last item in crossRoads is not the same as crossRoad, when calling addCrossRoad");
 }
 
 Road::~Road() {

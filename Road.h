@@ -20,7 +20,7 @@ class Road {
     vector<TrafficLight*> trafficLights;
     vector<Vehicle*> vehicles;
     vector<BusStop*> busStops;
-    vector<CrossRoad*> crossRaods;
+    vector<CrossRoad*> crossRoads;
 
     // Self-pointer
     Road* _initCheck;
