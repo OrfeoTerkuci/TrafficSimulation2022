@@ -353,14 +353,7 @@ TEST(TypeTest, typeTS){
     }
 }
 
-
 TEST(SimTest, simulation16){
-    TrafficSimulation ts(SIM16);
-    ts.startSimulation(false, false);
-    EXPECT_TRUE(ts.getVehicles().empty());
-}
-
-TEST(SimTest, simulation16v2){
     TrafficSimulation ts(SIM16);
     ts.outputStats();
     EXPECT_TRUE(FileCompare("Stats/Stats.txt", "Permanent_logs/statsSim16.txt"));
