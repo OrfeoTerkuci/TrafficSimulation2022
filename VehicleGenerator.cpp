@@ -4,11 +4,12 @@
 #include "DesignByContract.h"
 #include <typeinfo>
 
-VehicleGenerator::VehicleGenerator() : road(), frequentie(0) , cooldown(0) , type(T_AUTO) {
+VehicleGenerator::VehicleGenerator() : road(), frequentie(0) , cooldown(0) , type(T_AUTO) , min_distance(LENGTH) {
 
     _initCheck = this;
     ENSURE(VehicleGenerator::frequentie == 0 , "frequentie was not properly initialized");
     ENSURE(VehicleGenerator::cooldown == 0 , "cooldown was not properly initialized");
+    ENSURE(VehicleGenerator::min_distance == LENGTH , "min_distance was not properly initialized");
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
 
@@ -94,7 +95,7 @@ bool VehicleGenerator::simulate() {
         Vehicle* currentVehicle;
         currentVehicle = this->road->getVehicle(i);
         double currentPosition = currentVehicle->getVehiclePosition();
-        if (currentPosition > 0 && currentPosition < 2 * getMin_distance() ) {
+        if (currentPosition >= 0 && currentPosition < 2 * getMin_distance() ) {
             canGenerate = false;
         }
     }
