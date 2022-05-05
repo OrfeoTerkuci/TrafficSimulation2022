@@ -25,6 +25,9 @@ class TrafficSimulation {
     vector<CrossRoad*> crossRoads;
     vector<BusStop*> busStops;
 
+    int time;
+    int stopTime;
+
     TrafficSimulation* _initCheck;
 public: // members
     string outputFileName;
@@ -59,6 +62,8 @@ public: // functions
      * @param newRoads A vector of pointers to Road elements
     */
     void setRoads(const vector<Road *> &newRoads);
+
+    void setStopTime(int newStopTime);
 
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getVehicleGenerator");
@@ -159,7 +164,7 @@ public: // functions
      * @param countE enables simulation run until a determined count
      * @param outputE enables if we're outputting a file
      * @param printE enables if we're printing something on the terminal*/
-    void startSimulation(bool printE = true, bool outputE = true, bool countE = false);
+    void startSimulation(bool printE = true, bool outputE = true, bool countE = false, bool timeE = false);
 
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling outpputFile");

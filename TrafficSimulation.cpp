@@ -11,7 +11,7 @@
 using namespace std;
 
 //==== Constructors and Destructor ====//
-TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename) {
+TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename), time(0), stopTime(0) {
     REQUIRE(*typeid(filename).name() == 'N' , "constructor was called with invalid filename");
     _initCheck = this;
     if (filename.find(XMLL) != string::npos or filename.find(XMLU) != string::npos){
@@ -27,9 +27,10 @@ TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
 
-TrafficSimulation::TrafficSimulation() {_initCheck = this;
+TrafficSimulation::TrafficSimulation(): time(0), stopTime(0) {
+    _initCheck = this;
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
-    }
+}
 
 bool TrafficSimulation::properlyInitialized() const{
     return  _initCheck == this;
@@ -206,9 +207,9 @@ void TrafficSimulation::print( int &count) {
 
 }
 
-void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE) {
+void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, bool timeE) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling startSimulation");
-    int count = 0;
+    int count = time;
     double vehiclePosition;
     int roadLength;
     Vehicle* currentVehicle;
@@ -277,7 +278,11 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE) 
         if (countE and this->vehicles.size() == MAX_VEHICLES * this->getVehicleGenerators().size()){
             break;
         }
+        if (timeE and count == stopTime){
+            break;
+        }
         count ++;
+        time = count;
         /*if (count == 12000){
             break;
         }*/
@@ -289,10 +294,9 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE) 
     if (outputE){
         outputFile(closing);
     }
-    if (!countE){
+    if (!countE and !timeE){
         ENSURE(vehicles.empty() , "Simulation ended when it shouldn't");
-    }
-    else {
+    } else if (countE){
         ENSURE(vehicles.size() == MAX_VEHICLES * this->getVehicleGenerators().size(), "Amount of vehicles on road is not the same as what expected");
     }
 }
@@ -670,6 +674,10 @@ void TrafficSimulation::outputStats() {
 
     file.close();
     ENSURE(!file.is_open(), "file is still open when ending outputStats");
+}
+
+void TrafficSimulation::setStopTime(int newStopTime) {
+    TrafficSimulation::stopTime = newStopTime;
 }
 
 TrafficSimulation::~TrafficSimulation() {

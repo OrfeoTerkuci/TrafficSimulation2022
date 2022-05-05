@@ -290,9 +290,6 @@ TEST(FunctionsTest , Road_Test){
     EXPECT_EQ( testRoad->getTrafficLightsAmount() , 1);
     EXPECT_EQ( testRoad->getTrafficLight(0) , testLight );
     EXPECT_EQ( testRoad->getTrafficLights() , lightsVector );
-    delete testRoad;
-    delete testLight;
-    delete testVehicle;
 }
 
 TEST(FunctionsTest , TrafficLight_Test){
@@ -322,8 +319,6 @@ TEST(FunctionsTest , TrafficLight_Test){
     // Nearest vehicle getter test
     testRoad->addVehicle(testVehicle);
     EXPECT_EQ( testLight.getNearestVehicle() , testVehicle);
-    delete testRoad;
-    delete testRoad2;
 }
 
 TEST(FunctionsTest , VehicleGenerator_Test){
@@ -348,7 +343,6 @@ TEST(FunctionsTest , VehicleGenerator_Test){
     }
     EXPECT_TRUE( testGenerator.simulate() );
     EXPECT_FALSE( testGenerator.simulate() );
-    delete testRoad;
 }
 
 
@@ -397,16 +391,26 @@ TEST(SimTest, simulation16v2){
 }
 
 TEST(FunctionTest, CrossRoad_Test){
-    CrossRoad* testCrossRoad = new CrossRoad();
+    /*CrossRoad* testCrossRoad = new CrossRoad();
     Road* testRoad = new Road(200, "road1");
-    Road* testRoad2 = new Road(300, "road2");
-    delete testCrossRoad;
-    delete testRoad;
-    delete testRoad2;
+    Road* testRoad2 = new Road(300, "road2");*/
 }
 
 TEST(FunctionTest, BusStop_Test){
 
+}
+
+TEST(SimTest, simulation17){
+    TrafficSimulation ts(SIM17);
+    ts.setStopTime(2979);
+    ts.startSimulation(false, false, false, true);
+    EXPECT_TRUE(ts.getVehicles()[0]->getStatus() == idle);
+    ts.setStopTime(2998);
+    ts.startSimulation(false, false, false, true);
+    EXPECT_TRUE(ts.getVehicles()[0]->getStatus() == idle);
+    ts.setStopTime(3009);
+    ts.startSimulation(false, false, false, true);
+    EXPECT_FALSE(ts.getVehicles()[0]->getStatus() == idle);
 }
 
 int main(int argc, char **argv) {
