@@ -50,12 +50,12 @@ Simulation functions post-condition must be added.
 
 |Case | Simulatie                         | Prioriteit   | Status |
 |:---:|-----------------------------------|:------------:|:------:|
-|3.1  | Rijden Van Voertuig               | Verplicht    |   P    |
+|3.1  | Rijden Van Voertuig               | Verplicht    |   V    |
 |3.2  | Simulatie Van Verkeerslicht       | Verplicht    |   V    |
 |3.3  | Automatische Simulatie            | Verplicht    |   V    |
 |3.4  | Simulatie Met Voertuigengenerator | Belangrijk   |   V    |
-|3.5  | Rijden van voertuig met type      | Verplicht    |   P    |
+|3.5  | Rijden van voertuig met type      | Verplicht    |   V    |
 |3.6  | Simulatie van bushaltes           | Belangrijk   |   V    |
-|3.7  | Simulatie van kruispunten         | Belangrijk   |        |
+|3.7  | Simulatie van kruispunten         | Belangrijk   |   P    |
 ### Comentaar:
 ...  
