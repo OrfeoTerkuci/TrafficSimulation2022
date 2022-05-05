@@ -290,9 +290,6 @@ TEST(FunctionsTest , Road_Test){
     EXPECT_EQ( testRoad->getTrafficLightsAmount() , 1);
     EXPECT_EQ( testRoad->getTrafficLight(0) , testLight );
     EXPECT_EQ( testRoad->getTrafficLights() , lightsVector );
-    delete testRoad;
-    delete testLight;
-    delete testVehicle;
 }
 
 TEST(FunctionsTest , TrafficLight_Test){
