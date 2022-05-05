@@ -435,9 +435,8 @@ TEST(FunctionTest, BusStop_Test){
 }
 
 TEST(FunctionTest, CrossRoad_Test){
-    /*CrossRoad* testCrossRoad = new CrossRoad();
-    Road* testRoad = new Road(200, "road1");
-    Road* testRoad2 = new Road(300, "road2");*/
+    CrossRoad* testCross = new CrossRoad();
+    testCross->isSwitchRoad();
 }
 
 TEST(FunctionTest, VehicleType_BUS){
