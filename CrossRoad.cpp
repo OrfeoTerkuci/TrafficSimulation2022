@@ -15,6 +15,7 @@ void CrossRoad::addRoad(Road *road, int position) {
     REQUIRE(road->properlyInitialized(), "Road is not properly initialized when calling addRoad");
     REQUIRE(position >= 0 and (unsigned) position <= road->getLength(), "position was out of bounds when calling addRoad");
     roads[road] = position;
+    ENSURE(roads[road] == position, "road is not on the right position");
 }
 
 map<Road *, int> &CrossRoad::getRoads(){
@@ -28,8 +29,8 @@ void CrossRoad::setRoads(const map<Road *, int> &newRoads) {
 }
 
 bool randomBool(){
-    int i = rand() % 200;
-    if (i % 2 == 0){
+    int i = rand() % 1;
+    if (i == 0){
         return false;
     }
     return true;
@@ -52,10 +53,10 @@ bool CrossRoad::isSwitchRoad() {
     return switchRoad;
 }
 
-CrossRoad::~CrossRoad() {
-    REQUIRE(this->properlyInitialized(), "crossroad was not properly initialized when calling destructor");
+bool CrossRoad::properlyInitialized() const{
+    return init == this;
 }
 
-bool CrossRoad::properlyInitialized() {
-    return init == this;
+CrossRoad::~CrossRoad() {
+    REQUIRE(this->properlyInitialized(), "crossroad was not properly initialized when calling destructor");
 }
