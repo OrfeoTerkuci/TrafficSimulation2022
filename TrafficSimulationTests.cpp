@@ -440,10 +440,6 @@ TEST(FunctionTest, CrossRoad_Test){
     Road* testRoad2 = new Road(300, "road2");*/
 }
 
-TEST(FunctionTest, Vehicle_Type_Test){
-
-}
-
 TEST(FunctionTest, VehicleType_BUS){
     Vehicle* bus = new Vehicle(0, 0, T_BUS);
     bus->outputStatsVehicle();
