@@ -88,7 +88,7 @@ void BusStop::simulateBusStop() {
     if(currentVehicle->getType() == T_BUS) {
         // Check cooldown
         if(currentVehicle->getStatus() == idle){
-            if(cooldown == 0){
+            if(cooldown < 0){
                 currentVehicle->setStatus(accelerate);
                 currentVehicle->setSlowing_bus(false);
                 currentVehicle->setStopping_bus(false);

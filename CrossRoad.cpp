@@ -30,23 +30,13 @@ void CrossRoad::setRoads(const map<Road *, int> &newRoads) {
 }
 
 bool randomBool(){
-    int i = rand() % 1;
-    if (i == 0){
-        return false;
-    }
-    return true;
+    return rand() % 1 != 0;
 }
 
-void CrossRoad::simulateCrossroad(bool random, int modulo_number, int time) {
+void CrossRoad::simulateCrossroad(bool random , int time) {
     REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling simulateCrossroad");
-    // determine to switchroad
-    if (random) {
-        switchRoad = randomBool();
-    } else {
-        if (time % modulo_number == 0){
-            switchRoad = !switchRoad;
-        }
-    }
+    // determine to switchRoad
+    switchRoad = random ? randomBool() : (time % MODULO_RANDOM == 0) xor switchRoad;
 }
 
 bool CrossRoad::isSwitchRoad() {

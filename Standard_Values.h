@@ -76,8 +76,7 @@ enum fileFunctionType{ closing , create , update};
 #define MAX_VEHICLES            5
 
 // Crossroad "random" test valus
-#define MODULO_RANDOM           10
-
+#define MODULO_RANDOM                  13
 
 // xml file names
 #define SIM0                    "Simulation0.xml"

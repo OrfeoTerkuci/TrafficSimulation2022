@@ -41,7 +41,7 @@ public:
 
     /**
      * REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling simulateCrossroad");*/
-    void simulateCrossroad(bool random = true, int modulo_number = 0, int time = 0);
+    void simulateCrossroad(bool random = true , int time = 0);
 
     bool properlyInitialized() const;
 
