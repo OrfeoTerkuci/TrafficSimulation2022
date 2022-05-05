@@ -71,8 +71,12 @@ enum fileFunctionType{ closing , create , update};
 #define BRANDWEERWAGEN          "brandweerwagen"
 #define ZIEKENWAGEN             "ziekenwagen"
 #define POLITIECOMBI            "politiecombi"
+
 // Vehiclegenerator test values
 #define MAX_VEHICLES            20
+
+// Crossroad "random" test valus
+#define MODULO_RANDOM                  10
 
 // xml file names
 #define SIM0                    "Simulation0.xml"

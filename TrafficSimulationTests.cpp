@@ -384,6 +384,13 @@ TEST(FileTEST, simStats){
     EXPECT_FALSE(FileCompare("Stats/Stats.txt", "Permanent_logs/statsFalse.txt"));
 }
 
+TEST(SimTest, simulation16v2){
+    TrafficSimulation ts(SIM16);
+    ts.outputStats();
+    EXPECT_TRUE(FileCompare("Stats/Stats.txt", "Permanent_logs/statsSim16.txt"));
+
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
