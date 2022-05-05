@@ -9,6 +9,7 @@
 using namespace std;
 
 class Road;
+class Vehicle;
 
 class CrossRoad {
     map<Road*, int> roads;
@@ -22,6 +23,8 @@ public:
     /**
      * REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling isSwitchRoad");*/
     bool isSwitchRoad();
+
+    void updateSwitchRoad(bool &random , int &time);
 
     /**
      * REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling addRoad");
@@ -38,6 +41,10 @@ public:
      * REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling setRoad");
      * ENSURE(roads == newRoads, "roads was not assigned to newRoads, when calling setRoads");*/
     void setRoads(const map<Road *, int> &newRoads);
+
+    int getPosition(Road* &road);
+
+    Vehicle* getNearestVehicle(Road* &road);
 
     /**
      * REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling simulateCrossroad");*/

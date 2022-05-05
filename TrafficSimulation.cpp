@@ -266,8 +266,13 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, 
             if (vehiclePosition > roadLength){
                 // Remove the vehicle from the simulation
                 currentRoad->removeVehicle(currentVehicle);
+                delete currentVehicle;
                 this->vehicles.erase(vehicles.begin() + i);
             }
+        }
+        for (unsigned int i = 0; i < this->crossRoads.size(); i++){
+            CrossRoad* currentCross = this->crossRoads.at(i);
+            currentCross->simulateCrossroad(false , count);
         }
         if(printE){
             print(count);
