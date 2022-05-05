@@ -62,6 +62,7 @@ bool parseBusStop(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         } else if (elemname == WACHTTIJD) {
             tempi = convertStrToInt(tempn);
             busStop->setWaitTime(tempi);
+            busStop->setCooldown(tempi);
         } else if (elemname == POSITIE) {
             tempi = convertStrToInt(tempn);
             busStop->setPosition(tempi);

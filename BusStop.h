@@ -24,6 +24,10 @@ public:
 
     void setWaitTime(int newWaitTime);
 
+    int getCooldown() const;
+
+    void setCooldown(int cooldown);
+
     int getPosition() const;
 
     void setPosition(int newPosition);

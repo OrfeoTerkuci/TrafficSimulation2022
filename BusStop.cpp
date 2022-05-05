@@ -46,6 +46,14 @@ void BusStop::setRoad(Road *newRoad) {
     ENSURE(road == newRoad, "road was not assigned to newRoad, when calling setRoad");
 }
 
+int BusStop::getCooldown() const {
+    return cooldown;
+}
+
+void BusStop::setCooldown(int cooldown) {
+    BusStop::cooldown = cooldown;
+}
+
 Vehicle *BusStop::getNearestBus() {
     REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getNearestBus");
     double pos = this->getPosition();
