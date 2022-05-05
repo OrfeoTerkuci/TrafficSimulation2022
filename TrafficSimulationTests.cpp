@@ -13,7 +13,7 @@ using namespace std;
 #include "BusStop.h"
 
 //==== Extra functions ====//
-bool FileCompare(const std::string leftFileName, const std::string rightFileName) {
+bool FileCompare(const std::string& leftFileName, const std::string& rightFileName) {
     /*Made by: Serge Meyer, comes from TicTacToeTest.cpp*/
     ifstream leftFile, rightFile;
     char leftRead, rightRead;
@@ -113,7 +113,7 @@ TEST(ParserTest, Parser){
 TEST(VehiclePosTest, Position){
     // test if the car position is the right position
     TrafficSimulation testFile(SIM1);
-    EXPECT_TRUE(testFile.getRoads()[0]->getVehicle(0)->getNextVehicle() == NULL);
+    EXPECT_TRUE(NULL == testFile.getRoads()[0]->getVehicle(0)->getNextVehicle());
     Vehicle* vehicle = testFile.getRoads()[0]->getVehicle(0);
     Vehicle* vehicle1 = testFile.getRoads()[0]->getVehicle(1)->getNextVehicle();
     EXPECT_TRUE(vehicle1 == vehicle);
@@ -139,7 +139,7 @@ TEST(SimTest, simulation1){
     // test on simulation file 1, basic trafficSimulation
     TrafficSimulation testFile(SIM1);
     EXPECT_FALSE(testFile.getRoads()[0]->getVehicleAmount() == 0);
-    testFile.startSimulation(false, false, false);
+    testFile.startSimulation(false, false);
     EXPECT_TRUE(testFile.getRoads()[0]->getVehicleAmount() == 0);
 }
 
@@ -149,7 +149,7 @@ TEST(SimTest, simulation3){
     for (unsigned int i = 0; i < testFile.getRoads().size(); i++){
         EXPECT_FALSE(testFile.getRoads()[i]->getVehicleAmount() == 0);
     }
-    testFile.startSimulation(false, false, false);
+    testFile.startSimulation(false, false);
     for (unsigned int i = 0; i < testFile.getRoads().size(); i++){
         EXPECT_TRUE(testFile.getRoads()[i]->getVehicleAmount() == 0);
     }
