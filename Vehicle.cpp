@@ -466,12 +466,8 @@ void Vehicle::print() {
     cout << endl;
 }
 
-Vehicle::~Vehicle() {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling destructor");
-
-}
-
 string Vehicle::getTypeString() const {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getTypeString");
     if(this->type == T_AUTO){
         return "Auto";
     }
@@ -490,4 +486,9 @@ string Vehicle::getTypeString() const {
     else{
         return "";
     }
+}
+
+Vehicle::~Vehicle() {
+    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling destructor");
+
 }
