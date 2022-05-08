@@ -1,7 +1,3 @@
-//
-// Created by jason on 05/04/2022.
-//
-
 #ifndef TRAFFICSIMULATION2022_BUSSTOP_H
 #define TRAFFICSIMULATION2022_BUSSTOP_H
 
@@ -10,22 +6,43 @@
 class Road;
 
 class BusStop {
+
     int cooldown;
     int waitTime;
     int position;
     Road* road;
     BusStop* init;
+
 public:
-    /**
-     * ENSURE(init == this, "init is not itself, when calling constructor");*/
-    BusStop();
 
     /**
-     * ENSURE(init == this, "init is not itself, after calling constructor");
-     * ENSURE(road == new_road, "road was not assigned to new_road, after calling constructor");
-     * ENSURE(waitTime == cooldown, "cooldown was not assigned to waitTime, after calling constructor");
-     * ENSURE(position == new_position, "position was not assigned to new_position, after calling constructor");*/
-    BusStop(int waitTime, int position, Road *road = NULL);
+     * ENSURE(road == new_road, "road was not correctly initialized");
+     * ENSURE(cooldown == new_waitTime, "cooldown was not correctly initialized");
+     * ENSURE(waitTime == new_waitTime , "waitTime was not correctly initialized");
+     * ENSURE(position == new_position, "position was not correctly initialized");
+     * ENSURE(properlyInitialized(), "BusStop constructor must end in properlyInitialized state");
+    */
+    BusStop(int waitTime, int new_position, Road *new_road = NULL);
+
+    /**
+     * ENSURE(road == NULL, "road was not correctly initialized");
+     * ENSURE(cooldown == 0, "cooldown was not correctly initialized");
+     * ENSURE(waitTime == 0 , "waitTime was not correctly initialized");
+     * ENSURE(position == 0, "position was not correctly initialized");
+     * ENSURE(properlyInitialized(), "BusStop constructor must end in properlyInitialized state");
+    */
+    BusStop();
+
+    bool properlyInitialized() const;
+
+    /**
+     * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getCooldown");*/
+    int getCooldown() const;
+
+    /**
+    * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling setCooldown");
+    * ENSURE(cooldown == new_cooldown, "cooldown was not assigned to new_cooldown, after calling setCooldown");*/
+    void setCooldown(int new_cooldown);
 
     /**
      * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getWaitTime");*/
@@ -36,14 +53,6 @@ public:
      * ENSURE(waitTime == newWaitTime, "waitTime was not assigned to newWaitTime, when calling setWaitTime");*/
     void setWaitTime(int newWaitTime);
 
-    /**
-     * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getCooldown");*/
-    int getCooldown() const;
-
-    /**
-    * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling setCooldown");
-    * ENSURE(cooldown == new_cooldown, "cooldown was not assigned to new_cooldown, after calling setCooldown");*/
-    void setCooldown(int new_cooldown);
 
     /**
      * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getPosition");*/
@@ -56,7 +65,7 @@ public:
 
     /**
      * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getRoad");*/
-    Road *getRoad();
+    Road *getRoad() const;
 
     /**
      * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling setRoad");
@@ -66,14 +75,13 @@ public:
 
     /**
      * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getNearestBus");*/
-    Vehicle* getNearestBus();
+    Vehicle* getNearestBus() const;
 
     /**
      * REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling simulateBusStop");
      * ENSURE(cooldown == waitTime, "cooldown wasn't reset");*/
     void simulateBusStop();
 
-    bool properlyInitialized() const;
 
     /**
      * REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling destructor");*/
