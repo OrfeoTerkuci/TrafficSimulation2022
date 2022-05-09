@@ -2,8 +2,9 @@
 #include "DesignByContract.h"
 #include "Road.h"
 #include "Vehicle.h"
-#include <cstdlib>
 
+#include <cstdlib>
+#include <typeinfo>
 using namespace std;
 
 CrossRoad::CrossRoad() : switchRoad(false){
@@ -53,6 +54,8 @@ Vehicle* CrossRoad::getNearestVehicle(Road* &road) {
 }
 
 int CrossRoad::getPosition(Road* &road) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling getPosition");
+    REQUIRE(*typeid(road).name() == 'P', "road is not a pointer");
     return roads[road];
 }
 
@@ -64,6 +67,7 @@ void CrossRoad::updateSwitchRoad(bool &random , int &time) {
 
 void CrossRoad::simulateCrossroad(bool random , int time) {
     REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling simulateCrossroad");
+    REQUIRE(*typeid(random).name() == 'b', "type was not boolean");
     Road* currentRoad;
     Road* newRoad;
     Vehicle* currentVehicle;
@@ -90,7 +94,8 @@ void CrossRoad::simulateCrossroad(bool random , int time) {
         tempVehicle = getNearestVehicle(newRoad);
         // switchRoad?
         updateSwitchRoad(random , time);
-        if (tempVehicle != NULL && roads[newRoad] - (tempVehicle->getVehiclePosition() + tempVehicle->getV_length() ) < tempVehicle->getV_min_followDistance() ){
+        int tempRoad = roads[newRoad];
+        if (tempVehicle != NULL && (tempRoad - (tempVehicle->getVehiclePosition() + tempVehicle->getV_length() )) < tempVehicle->getV_min_followDistance() ){
             it = it2;
             continue;
         }
@@ -113,6 +118,8 @@ bool CrossRoad::isSwitchRoad() {
 }
 
 void CrossRoad::setSwitchRoad(bool new_switchRoad) {
+    REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized, when calling setSwitchRoad");
+    REQUIRE(*typeid(new_switchRoad).name() == 'b', "new_switchRoad is not of type bool");
     CrossRoad::switchRoad = new_switchRoad;
 }
 
