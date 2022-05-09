@@ -121,191 +121,6 @@ bool TrafficSimulation::addVehicleGenerator(VehicleGenerator *newVehicleGenerato
     return true;
 }
 
-void TrafficSimulation::printAll() {
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling printAll");
-    if (!this->roads.empty()){
-
-        if(this->roads.size() == 1){
-            cout <<"Consists of " << this->roads.size() << " road: " << endl;
-        }
-        else{
-            cout <<"Consists of " << this->roads.size() << " roads: " << endl;
-        }
-
-        for(unsigned int i = 0; i < this->roads.size(); i++){
-            cout << endl << "--------------------";
-
-            cout << endl;
-
-            this->roads[i]->print();
-
-            cout << endl;
-
-            if(this->roads[i]->getTrafficLightsAmount() == 1){
-                cout << "Consist of " << this->roads[i]->getTrafficLightsAmount() << " traffic light." << endl;
-            }
-            else{
-                cout << "Consist of " << this->roads[i]->getTrafficLightsAmount() << " traffic lights." << endl;
-            }
-
-            cout << endl;
-
-            for (int j = 0; j < this->roads[i]->getTrafficLightsAmount(); ++j) {
-                cout << "Traffic light " << j + 1 << ":" << endl;
-                this->roads[i]->getTrafficLight(j)->print();
-            }
-
-            cout << endl;
-
-            if(this->roads[i]->getVehicleAmount() == 1){
-                cout << "Consist of " << this->roads[i]->getVehicleAmount() << " vehicle." << endl;
-            }
-            else{
-                cout << "Consist of " << this->roads[i]->getVehicleAmount() << " vehicles." << endl;
-            }
-
-            cout << endl;
-
-            for (int k = 0; k < this->roads[i]->getVehicleAmount(); ++k) {
-                cout << "Vehicle " << k + 1 << ":" << endl;
-                this->roads[i]->getVehicle(k)->print();
-                cout << endl;
-            }
-
-            if(this->vehicleGenerators.size() == 1){
-                cout << "Consists of " << vehicleGenerators.size() << " Vehicle Generator: " << endl;
-            }
-            else if(this->vehicleGenerators.size() > 1){
-                cout << "Consists of " << vehicleGenerators.size() << " Vehicle Generators: " << endl;
-            }
-
-            cout << endl;
-
-            for (long unsigned int l = 0; l < this->vehicleGenerators.size(); ++l) {
-                cout << "Vehicle Generator " << l << " : " << endl;
-                cout << '\t' << "-> Road: " << this->vehicleGenerators[l]->getRoad()->getRoadName() << endl;
-                cout << '\t' << "-> Frequency: " << this->vehicleGenerators[l]->getFrequentie() << endl;
-                cout << endl;
-            }
-        }
-    }
-    else{
-        cout << "There are no roads." << endl;
-    }
-}
-
-void TrafficSimulation::print( int &count) {
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling print");
-    if (!this->vehicles.empty() || !this->vehicleGenerators.empty()){
-        cout << "Time: " << count << endl;
-        for (long unsigned int i = 0; i < this->vehicles.size(); ++i) {
-            cout << "Vehicle " << i+1 << ": " << endl;
-            this->vehicles.at(i)->print();
-            cout << endl;
-        }
-    }
-
-}
-
-void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, bool timeE) {
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling startSimulation");
-    int count = time;
-    double vehiclePosition;
-    int roadLength;
-    Vehicle* currentVehicle;
-    Road* currentRoad;
-
-    if (printE){
-        cout << "- Starting simulation" << endl;
-    }
-
-    if (outputE){
-        outputFile(create);
-    }
-
-    while (!this->vehicles.empty() || !this->vehicleGenerators.empty()){
-        for (unsigned int j = 0; j < this->lights.size(); ++j) {
-            // Simulate traffic light
-            currentRoad = lights.at(j)->getRoad();
-            if(currentRoad->getVehicleAmount() > 0){
-                this->lights.at(j)->simulate(count);
-            }
-        }
-        for (unsigned int k = 0; k < this->busStops.size(); ++k) {
-            this->busStops.at(k)->simulateBusStop();
-        }
-        for (unsigned int l = 0; l < this->vehicleGenerators.size(); l++){
-            VehicleGenerator* currentGenerator;
-            currentGenerator = this->vehicleGenerators.at(l);
-            // Check if we can generate
-            if (currentGenerator->simulate())
-            {
-                // Generate new vehicle
-                Vehicle* newVehicle;
-                newVehicle = new Vehicle();
-                // Add road to vehicle
-                newVehicle->setRoad(currentGenerator->getRoad());
-                // Add vehicle to road
-                newVehicle->setRoad(currentGenerator->getRoad());
-                currentGenerator->getRoad()->addVehicle(newVehicle);
-                // Add vehicle to our simulation
-                this->addVehicle(newVehicle);
-            }
-        }
-        for (unsigned int i = 0; i < this->vehicles.size(); ++i){
-            // Get current vehicle
-            currentVehicle = this->vehicles.at(i);
-            // Get current road
-            currentRoad = currentVehicle->getRoad();
-            // Simulate vehicle
-            currentVehicle->simulate();
-            // Get vehicle position
-            vehiclePosition = currentVehicle->getVehiclePosition();
-            roadLength = currentRoad->getLength();
-            // Check if vehicle had gone off the road
-            if (vehiclePosition > roadLength){
-                // Remove the vehicle from the simulation
-                currentRoad->removeVehicle(currentVehicle);
-                delete currentVehicle;
-                this->vehicles.erase(vehicles.begin() + i);
-            }
-        }
-        for (unsigned int i = 0; i < this->crossRoads.size(); i++){
-            CrossRoad* currentCross = this->crossRoads.at(i);
-            currentCross->simulateCrossroad(false , count);
-        }
-        if(printE){
-            print(count);
-        }
-        if(outputE){
-            outputFile(update, count);
-        }
-        if (countE and this->vehicles.size() == MAX_VEHICLES * this->getVehicleGenerators().size()){
-            break;
-        }
-        if (timeE and count == stopTime){
-            break;
-        }
-        count ++;
-        time = count;
-        /*if (count == 12000){
-            break;
-        }*/
-    }
-    if (printE){
-        cout << "- There are no vehicles on the road network." << endl;
-        cout << "- Ending simulation" << endl;
-    }
-    if (outputE){
-        outputFile(closing);
-    }
-    if (!countE and !timeE){
-        ENSURE(vehicles.empty() , "Simulation ended when it shouldn't");
-    } else if (countE){
-        ENSURE(vehicles.size() == MAX_VEHICLES * this->getVehicleGenerators().size(), "Amount of vehicles on road is not the same as what expected");
-    }
-}
-
 const vector<CrossRoad *> &TrafficSimulation::getCrossRoads(){
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getCrossRoads");
     return crossRoads;
@@ -314,6 +129,12 @@ const vector<CrossRoad *> &TrafficSimulation::getCrossRoads(){
 const string &TrafficSimulation::getFilename(){
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getFilename");
     return filename;
+}
+
+void TrafficSimulation::setStopTime(int newStopTime) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling setStopTime");
+    TrafficSimulation::stopTime = newStopTime;
+    ENSURE(newStopTime == stopTime, "stopTime was not assigned to newStopTime, when calling setStopTime");
 }
 
 void TrafficSimulation::parseXML() {
@@ -328,11 +149,13 @@ void TrafficSimulation::parseJSON() {
 
 void TrafficSimulation::addCrossRoad(CrossRoad* crossRoad) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addCrossRoad");
+    REQUIRE(*typeid(crossRoad).name() == 'P' , "addCrossRoad was called with invalid parameter: wrong type");
     REQUIRE(crossRoad->properlyInitialized(), "crossRoad wasn't properly initialized when calling addCrossRoad");
     crossRoads.push_back(crossRoad);
 }
 void TrafficSimulation::addBusStop(BusStop* busStop) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addBusStop");
+    REQUIRE(*typeid(busStop).name() == 'P' , "addBusStop was called with invalid parameter : wrong type");
     REQUIRE(busStop->properlyInitialized(), "busstop wasn't properly initialized when calling addBusStop");
     busStops.push_back(busStop);
 }
@@ -632,7 +455,7 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
         outputFileHTML.close();
         ENSURE(!outputFileHTML.is_open(), "HTML-file is closed");
     }
-    else if (type == closing) {
+    else {
         // open file
         fstream outputFile;
         outputFile.open(newFileNameHTML.c_str(), ios::app | ios::ate | ios::binary);
@@ -683,10 +506,189 @@ void TrafficSimulation::outputStats() {
     ENSURE(!file.is_open(), "file is still open when ending outputStats");
 }
 
-void TrafficSimulation::setStopTime(int newStopTime) {
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling setStopTime");
-    TrafficSimulation::stopTime = newStopTime;
-    ENSURE(newStopTime == stopTime, "stopTime was not assigned to newStopTime, when calling setStopTime");
+void TrafficSimulation::printAll() {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling printAll");
+    if (!this->roads.empty()){
+
+        if(this->roads.size() == 1){
+            cout <<"Consists of " << this->roads.size() << " road: " << endl;
+        }
+        else{
+            cout <<"Consists of " << this->roads.size() << " roads: " << endl;
+        }
+
+        for(unsigned int i = 0; i < this->roads.size(); i++){
+            cout << endl << "--------------------";
+
+            cout << endl;
+
+            this->roads[i]->print();
+
+            cout << endl;
+
+            if(this->roads[i]->getTrafficLightsAmount() == 1){
+                cout << "Consist of " << this->roads[i]->getTrafficLightsAmount() << " traffic light." << endl;
+            }
+            else{
+                cout << "Consist of " << this->roads[i]->getTrafficLightsAmount() << " traffic lights." << endl;
+            }
+
+            cout << endl;
+
+            for (int j = 0; j < this->roads[i]->getTrafficLightsAmount(); ++j) {
+                cout << "Traffic light " << j + 1 << ":" << endl;
+                this->roads[i]->getTrafficLight(j)->print();
+            }
+
+            cout << endl;
+
+            if(this->roads[i]->getVehicleAmount() == 1){
+                cout << "Consist of " << this->roads[i]->getVehicleAmount() << " vehicle." << endl;
+            }
+            else{
+                cout << "Consist of " << this->roads[i]->getVehicleAmount() << " vehicles." << endl;
+            }
+
+            cout << endl;
+
+            for (int k = 0; k < this->roads[i]->getVehicleAmount(); ++k) {
+                cout << "Vehicle " << k + 1 << ":" << endl;
+                this->roads[i]->getVehicle(k)->print();
+                cout << endl;
+            }
+
+            if(this->vehicleGenerators.size() == 1){
+                cout << "Consists of " << vehicleGenerators.size() << " Vehicle Generator: " << endl;
+            }
+            else if(this->vehicleGenerators.size() > 1){
+                cout << "Consists of " << vehicleGenerators.size() << " Vehicle Generators: " << endl;
+            }
+
+            cout << endl;
+
+            for (long unsigned int l = 0; l < this->vehicleGenerators.size(); ++l) {
+                cout << "Vehicle Generator " << l << " : " << endl;
+                cout << '\t' << "-> Road: " << this->vehicleGenerators[l]->getRoad()->getRoadName() << endl;
+                cout << '\t' << "-> Frequency: " << this->vehicleGenerators[l]->getFrequentie() << endl;
+                cout << endl;
+            }
+        }
+    }
+    else{
+        cout << "There are no roads." << endl;
+    }
+}
+
+void TrafficSimulation::print( int &count) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling print");
+    if (!this->vehicles.empty() || !this->vehicleGenerators.empty()){
+        cout << "Time: " << count << endl;
+        for (long unsigned int i = 0; i < this->vehicles.size(); ++i) {
+            cout << "Vehicle " << i+1 << ": " << endl;
+            this->vehicles.at(i)->print();
+            cout << endl;
+        }
+    }
+
+}
+
+void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, bool timeE) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling startSimulation");
+    int count = time;
+    double vehiclePosition;
+    int roadLength;
+    Vehicle* currentVehicle;
+    Road* currentRoad;
+
+    if (printE){
+        cout << "- Starting simulation" << endl;
+    }
+
+    if (outputE){
+        outputFile(create);
+    }
+
+    while (!this->vehicles.empty() || !this->vehicleGenerators.empty()){
+        for (unsigned int j = 0; j < this->lights.size(); ++j) {
+            // Simulate traffic light
+            currentRoad = lights.at(j)->getRoad();
+            if(currentRoad->getVehicleAmount() > 0){
+                this->lights.at(j)->simulate(count);
+            }
+        }
+        for (unsigned int k = 0; k < this->busStops.size(); ++k) {
+            this->busStops.at(k)->simulateBusStop();
+        }
+        for (unsigned int l = 0; l < this->vehicleGenerators.size(); l++){
+            VehicleGenerator* currentGenerator;
+            currentGenerator = this->vehicleGenerators.at(l);
+            // Check if we can generate
+            if (currentGenerator->simulate())
+            {
+                // Generate new vehicle
+                Vehicle* newVehicle;
+                newVehicle = new Vehicle();
+                // Add road to vehicle
+                newVehicle->setRoad(currentGenerator->getRoad());
+                // Add vehicle to road
+                newVehicle->setRoad(currentGenerator->getRoad());
+                currentGenerator->getRoad()->addVehicle(newVehicle);
+                // Add vehicle to our simulation
+                this->addVehicle(newVehicle);
+            }
+        }
+        for (unsigned int i = 0; i < this->vehicles.size(); ++i){
+            // Get current vehicle
+            currentVehicle = this->vehicles.at(i);
+            // Get current road
+            currentRoad = currentVehicle->getRoad();
+            // Simulate vehicle
+            currentVehicle->simulate();
+            // Get vehicle position
+            vehiclePosition = currentVehicle->getVehiclePosition();
+            roadLength = currentRoad->getLength();
+            // Check if vehicle had gone off the road
+            if (vehiclePosition > roadLength){
+                // Remove the vehicle from the simulation
+                currentRoad->removeVehicle(currentVehicle);
+                delete currentVehicle;
+                this->vehicles.erase(vehicles.begin() + i);
+            }
+        }
+        for (unsigned int i = 0; i < this->crossRoads.size(); i++){
+            CrossRoad* currentCross = this->crossRoads.at(i);
+            currentCross->simulateCrossroad(false , count);
+        }
+        if(printE){
+            print(count);
+        }
+        if(outputE){
+            outputFile(update, count);
+        }
+        if (countE and this->vehicles.size() == MAX_VEHICLES * this->getVehicleGenerators().size()){
+            break;
+        }
+        if (timeE and count == stopTime){
+            break;
+        }
+        count ++;
+        time = count;
+        /*if (count == 12000){
+            break;
+        }*/
+    }
+    if (printE){
+        cout << "- There are no vehicles on the road network." << endl;
+        cout << "- Ending simulation" << endl;
+    }
+    if (outputE){
+        outputFile(closing);
+    }
+    if (!countE and !timeE){
+        ENSURE(vehicles.empty() , "Simulation ended when it shouldn't");
+    } else if (countE){
+        ENSURE(vehicles.size() == MAX_VEHICLES * this->getVehicleGenerators().size(), "Amount of vehicles on road is not the same as what expected");
+    }
 }
 
 TrafficSimulation::~TrafficSimulation() {
