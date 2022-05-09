@@ -164,6 +164,7 @@ public: // functions
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimulation");
      * ENSURE(vehicles.empty() , "Simulation ended when it shouldn't");
+     * ENSURE(vehicles.size() == MAX_VEHICLES , "Simulation ended before reaching vehicle limit");
      * @param countE enables simulation run until a determined count
      * @param outputE enables if we're outputting a file
      * @param printE enables if we're printing something on the terminal*/
@@ -193,17 +194,6 @@ public: // functions
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling outputsStats");
      * ENSURE(!file.is_open(), "file is still open when ending outputStats");*/
     void outputStats();
-
-    /**
-     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimNoPrint");
-     * ENSURE(vehicles.empty() || vehicleGenerators.empty() , "Simulation ended when it shouldn't");
-    */
-
-    /**
-     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimUntilCount");
-     * REQUIRE(!this->vehicleGenerators.empty(), "This type of simulation works only for traffic simulations with a vehicle generator");
-     * ENSURE(vehicles.size() == MAX_VEHICLES , "Simulation ended before reaching vehicle limit");
-    */
 
     /**
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling destructor");
