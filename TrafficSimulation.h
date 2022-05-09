@@ -29,7 +29,8 @@ class TrafficSimulation {
     int stopTime;
 
     TrafficSimulation* _initCheck;
-public: // members
+public:
+    // members
     string outputFileName;
     string outputFileNameHTML;
 
@@ -114,12 +115,14 @@ public: // functions
 
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addCrossRoad");
+     * REQUIRE(*typeid(crossRoad).name() == 'P' , "addCrossRoad was called with invalid parameter: wrong type");
      * REQUIRE(crossRoad->properlyInitialized(), "crossRoad wasn't properly initialized when calling addCrossRoad");
      * @param crossRoad A pointer to a crossRoad element*/
     void addCrossRoad(CrossRoad* crossRoad);
 
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addBusStop");
+     * REQUIRE(*typeid(busStop).name() == 'P' , "addBusStop was called with invalid parameter : wrong type");
      * REQUIRE(busStop->properlyInitialized(), "crossRoad wasn't properly initialized when calling addCrossRoad");*/
     void addBusStop(BusStop* busStop);
 
