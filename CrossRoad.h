@@ -24,8 +24,13 @@ public:
      * REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling isSwitchRoad");*/
     bool isSwitchRoad();
 
+    /**
+     * REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized, when calling setSwitchRoad");
+     * REQUIRE(*typeid(new_switchRoad).name() == 'b', "new_switchRoad is not of type bool");*/
     void setSwitchRoad(bool switchRoad);
 
+    /**
+     * REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling updateSwitchRoad");*/
     void updateSwitchRoad(bool &random , int &time);
 
     /**
@@ -44,12 +49,18 @@ public:
      * ENSURE(roads == newRoads, "roads was not assigned to newRoads, when calling setRoads");*/
     void setRoads(const map<Road *, int> &newRoads);
 
+    /**
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling getPosition");
+     * REQUIRE(*typeid(road).name() == 'P', "road is not a pointer");*/
     int getPosition(Road* &road);
 
+    /**
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling getNearestVehicle");*/
     Vehicle* getNearestVehicle(Road* &road);
 
     /**
-     * REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling simulateCrossroad");*/
+     * REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling simulateCrossroad");
+     * REQUIRE(*typeid(random).name() == 'b', "type was not boolean");*/
     void simulateCrossroad(bool random = true , int time = 0);
 
     bool properlyInitialized() const;
