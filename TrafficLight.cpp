@@ -4,25 +4,24 @@
 #include "DesignByContract.h"
 #include <typeinfo>
 
-TrafficLight::TrafficLight(unsigned int cyclus, Road *road) : cyclus(cyclus), road(road) , currentColor(red) {
+TrafficLight::TrafficLight(unsigned int cyclus, Road *road) : cyclus(cyclus), road(road) , currentColor(red) , init(this) {
     REQUIRE(*typeid(cyclus).name() == 'j' && cyclus >= 0 , "constructor was called with invalid cyclus");
     REQUIRE(*typeid(road).name() == 'P' , "constructor was called with invalid road");
     REQUIRE(road->properlyInitialized() , "constructor was called with invalid road");
-    _initCheck = this;
     ENSURE(TrafficLight::cyclus == cyclus , "cyclus was not properly initialized");
     ENSURE(TrafficLight::road == road , "road was not properly initialized");
     ENSURE(TrafficLight::currentColor == red , "currentColor was not properly initialized");
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
 
-TrafficLight::TrafficLight() : road(NULL), currentColor(red){
-    _initCheck = this;
+TrafficLight::TrafficLight() : road(NULL), currentColor(red) , init(this){
     ENSURE(TrafficLight::currentColor == red , "currentColor was not properly initialized");
+    ENSURE(TrafficLight::road == NULL , "road was not properly initialized");
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
 
 bool TrafficLight::properlyInitialized() {
-    return _initCheck == this;
+    return init == this;
 }
 
 int TrafficLight::getCyclus() {

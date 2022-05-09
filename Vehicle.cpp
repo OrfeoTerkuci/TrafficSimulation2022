@@ -496,14 +496,6 @@ void Vehicle::outputStatsVehicle() {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling outputsStats");
     fstream file("Stats.txt");
     file.open("Stats/StatsV.txt", fstream::out | fstream::in | ios::trunc);
-    /*
-    // Bus specific members
-    bool slowing_bus;
-    bool stopping_bus;
-    bool leaving_bus;
-    vehicleStatus status;
-    Road* road;
-    Vehicle* _initCheck;*/
     file << "vehicle length: " << this->getV_length() << endl;
     file << "vehicle max speed: " << this->getV_max_speed() << endl;
     file << "vehicle max acceleration: " << this->getV_max_acceleration() << endl;

@@ -17,7 +17,7 @@ class TrafficLight {
 
     unsigned int position;
 
-    TrafficLight* _initCheck;
+    TrafficLight* init;
 public:
 
     /** 
@@ -35,6 +35,7 @@ public:
 
     /**
      * ENSURE(TrafficLight::currentColor == red , "currentColor was not properly initialized");
+     * ENSURE(TrafficLight::road == NULL , "road was not properly initialized");
      * ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
      */
     TrafficLight();
