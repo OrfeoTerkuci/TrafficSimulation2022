@@ -304,27 +304,27 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                     int count = 0;
                     for (int l = 0; l < roads[j]->getVehicleAmount(); ++l) {
                         if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and
-                            k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + 8 and
+                            k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + POLICE_LENGTH and
                             roads[j]->getVehicle(l)->getType() == T_POLICE) {
                             outputFile << "P";
                             outputFileHTML << "<span style=\"color: #0000ff\">P</span>";
                         } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and
-                                   k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + 8 and
+                                   k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + AMBULANCE_LENGTH and
                                    roads[j]->getVehicle(l)->getType() == T_AMBULANCE) {
                             outputFile << "Z";
                             outputFileHTML << "<span style = \"color: #00ff00\">Z</span>";
                         } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and
-                                   k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + 4 and
+                                   k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + LENGTH and
                                    roads[j]->getVehicle(l)->getType() == T_AUTO) {
                             outputFile << "A";
                             outputFileHTML << "<span style = \" color: #fd7924\">A</span>";
                         } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and
-                                   k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + 12 and
+                                   k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + BUS_LENGTH and
                                    roads[j]->getVehicle(l)->getType() == T_BUS) {
                             outputFile << "B";
                             outputFileHTML << "<span style = \" color: #ffff00\">B</span>";
                         } else if (k >= (int) roads[j]->getVehicle(l)->getVehiclePosition() and
-                                   k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + 10 and
+                                   k < (int) roads[j]->getVehicle(l)->getVehiclePosition() + FIRETRUCK_LENGTH and
                                    roads[j]->getVehicle(l)->getType() == T_FIRETRUCK) {
                             outputFile << "F";
                             outputFileHTML << "<span style = \"color: #ff0000\">F</span>";
@@ -362,7 +362,7 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                                     outputFile << "R";
                                     outputFileHTML << "</span><span style = \" color: #ff0000\">R</span><span style = \" color: #ffffff\">";
                                 }
-                            } else if (roads[j]->getTrafficLight(k)->getPosition() - 15 == (unsigned) i) {
+                            } else if (roads[j]->getTrafficLight(k)->getPosition() - STOPPING_DISTANCE == (unsigned) i) {
                                 outputFile << '|';
                                 outputFileHTML << "</span>|<span style = \" color: #ffffff\">";
                             } else {
@@ -397,7 +397,7 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                                 outputFileHTML
                                         << "</span><span style = \"color: #FFA500 ; background-color: #ffff00\">B</span><span style = \" color: #ffffff\">";
                                 bushalteExist = true;
-                            } else if (roads[j]->getBusStops()[k]->getPosition() - 15 == i) {
+                            } else if (roads[j]->getBusStops()[k]->getPosition() - STOPPING_DISTANCE == i) {
                                 outputFile << "|";
                                 outputFileHTML << "</span>|<span style = \" color: #ffffff\"><span style = \" color: #ffffff\">";
                                 bushalteExist = true;
@@ -673,9 +673,6 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, 
         }
         count ++;
         time = count;
-        /*if (count == 12000){
-            break;
-        }*/
     }
     if (printE){
         cout << "- There are no vehicles on the road network." << endl;
