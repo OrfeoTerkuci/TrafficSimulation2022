@@ -71,6 +71,8 @@ void CrossRoad::simulateCrossroad(bool random , int time) {
     map<Road*,int>::iterator it2;
     double currentPos;
     double distance;
+    // switchRoad?
+    updateSwitchRoad(random , time);
     // Loop through both roads
     for(map<Road*,int>::iterator it = roads.begin(); it != roads.end(); it++){
         // Get road , vehicle and position on road
@@ -88,8 +90,6 @@ void CrossRoad::simulateCrossroad(bool random , int time) {
         }
         newRoad = it->first;
         tempVehicle = getNearestVehicle(newRoad);
-        // switchRoad?
-        updateSwitchRoad(random , time);
         if (tempVehicle != NULL && roads[newRoad] - (tempVehicle->getVehiclePosition() + tempVehicle->getV_length() ) < tempVehicle->getV_min_followDistance() ){
             it = it2;
             continue;
@@ -101,6 +101,7 @@ void CrossRoad::simulateCrossroad(bool random , int time) {
             newRoad->addVehicle(currentVehicle);
             currentVehicle->setPosition(roads[newRoad] - distance);
             currentRoad->removeVehicle(currentVehicle);
+            setSwitchRoad(false);
         }
         it = it2;
     }
