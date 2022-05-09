@@ -527,31 +527,31 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                     outputFileHTML << '\t';
                     outputFileHTML << "> verkeerslichten";
                     outputFileHTML << "| ";
-
+                    outputFileHTML <<  "<span style = \" color: #ffffff\">";
                     for (int i = 0; i < roadLenghth; ++i) {
                         int lightsAmount = 0;
                         for (int k = 0; k < roads[j]->getTrafficLightsAmount(); ++k) {
                             if (roads[j]->getTrafficLights()[k]->getPosition() == (unsigned) i) {
                                 if (roads[j]->getTrafficLight(k)->getCurrentColor() == green) {
                                     outputFile << "G";
-                                    outputFileHTML << "<span style = \" color: #00ff00\">G</span>";
+                                    outputFileHTML << "</span><span style = \" color: #00ff00\">G</span><span style = \" color: #ffffff\">";
                                 } else {
                                     outputFile << "R";
-                                    outputFileHTML << "<span style = \" color: #ff0000\">R</span>";
+                                    outputFileHTML << "</span><span style = \" color: #ff0000\">R</span><span style = \" color: #ffffff\">";
                                 }
                             } else if (roads[j]->getTrafficLight(k)->getPosition() - 15 == (unsigned) i) {
                                 outputFile << '|';
-                                outputFileHTML << '|';
+                                outputFileHTML << "</span>|<span style = \" color: #ffffff\">";
                             } else {
                                 lightsAmount++;
                             }
                         }
                         if (lightsAmount == roads[j]->getTrafficLightsAmount()) {
                             outputFile << ' ';
-                            outputFileHTML << "<span style = \" color: #ffffff\">=</span>\n";
+                            outputFileHTML << "=";
                         }
                     }
-                    outputFileHTML << "</h4>\n";
+                    outputFileHTML << "</span></h4>\n";
                     outputFile << '\n';
                 }
 
@@ -565,26 +565,27 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                     outputFileHTML << '\t';
                     outputFileHTML << "> bushaltes";
                     outputFileHTML << "| ";
+                    outputFileHTML << "<span style = \" color: #ffffff\">";
                     for (int i = 0; i < roadLenghth; ++i) {
                         bool bushalteExist = false;
                         for (unsigned int k = 0; k < roads[j]->getBusStops().size(); ++k) {
                             if (roads[j]->getBusStops()[k]->getPosition() == i) {
                                 outputFile << "B";
                                 outputFileHTML
-                                        << "<span style = \"color: #FFA500 ; background-color: #ffff00\">B</span>";
+                                        << "</span><span style = \"color: #FFA500 ; background-color: #ffff00\">B</span><span style = \" color: #ffffff\">";
                                 bushalteExist = true;
                             } else if (roads[j]->getBusStops()[k]->getPosition() - 15 == i) {
                                 outputFile << "|";
-                                outputFileHTML << "|";
+                                outputFileHTML << "</span>|<span style = \" color: #ffffff\"><span style = \" color: #ffffff\">";
                                 bushalteExist = true;
                             }
                         }
                         if (!bushalteExist) {
                             outputFile << " ";
-                            outputFileHTML << "<span style = \" color: #ffffff\">=</span>\n";
+                            outputFileHTML << "=";
                         }
                     }
-                    outputFileHTML << "</h4>\n";
+                    outputFileHTML << "</span></h4>\n";
                     outputFile << '\n';
                 }
 
@@ -598,6 +599,7 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                     outputFileHTML << '\t';
                     outputFileHTML << "> kruispunten";
                     outputFileHTML << "| ";
+                    outputFileHTML << "<span style = \" color: #ffffff\">";
 
                     for (int i = 0; i < roadLenghth; ++i) {
                         bool crossRoadExist = false;
@@ -606,7 +608,7 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                             while (it != roads[j]->getCrossRaods().at(k)->getRoads().end()) {
                                 if (it->first == roads[j] and i == it->second) {
                                     outputFile << "K";
-                                    outputFileHTML << "K";
+                                    outputFileHTML << "</span>K<span style = \" color: #ffffff\">";
                                     crossRoadExist = true;
                                     break;
                                 }
@@ -615,10 +617,10 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                         }
                         if (!crossRoadExist) {
                             outputFile << " ";
-                            outputFileHTML << "<span style = \" color: #ffffff\">=</span>\n";
+                            outputFileHTML << "=";
                         }
                     }
-                    outputFileHTML << "</h4>\n";
+                    outputFileHTML << "</span></h4>\n";
                     outputFile << "\n";
                 }
             }
