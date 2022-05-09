@@ -167,7 +167,8 @@ public: // functions
      * ENSURE(vehicles.size() == MAX_VEHICLES , "Simulation ended before reaching vehicle limit");
      * @param countE enables simulation run until a determined count
      * @param outputE enables if we're outputting a file
-     * @param printE enables if we're printing something on the terminal*/
+     * @param printE enables if we're printing something on the terminal
+     */
     void startSimulation(bool printE = true, bool outputE = true, bool countE = false, bool timeE = false);
 
     /**
@@ -187,12 +188,14 @@ public: // functions
        REQUIRE(codefile, "HTML outputfile doesn't exist");
        ENSURE(!outputFile.is_open(), "HTML-file is closed");
      * @param type type that determines what function we're committing
-     * @param timestamp timestamp of current routine in simulation, default = 0*/
+     * @param timestamp timestamp of current routine in simulation, default = 0
+     */
     void outputFile(fileFunctionType type, int timestamp = 0);
 
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling outputsStats");
-     * ENSURE(!file.is_open(), "file is still open when ending outputStats");*/
+     * ENSURE(!file.is_open(), "file is still open when ending outputStats");
+     */
     void outputStats();
 
     /**

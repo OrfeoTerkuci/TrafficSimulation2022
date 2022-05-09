@@ -174,84 +174,102 @@ public:
     virtual void calculateNewAcceleration(double maxSpeed);
 
     /**
-     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_length");*/
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_length");
+     */
     double getV_length() const;
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setV_length");
-     * ENSURE(v_length == new_v_length, "v_length was not assigned to new_v_length, after calling setV_length");*/
+     * ENSURE(v_length == new_v_length, "v_length was not assigned to new_v_length, after calling setV_length");
+     */
     void setV_length(double new_v_length);
 
     /**
-     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_max_speed");*/
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_max_speed");
+     */
     double getV_max_speed() const;
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setV_max_speed");
-     * ENSURE(v_max_speed == new_v_max_speed, "v_max_speed was not assigned to new_v_max_speed, after calling setV_max_speed");*/
+     * ENSURE(v_max_speed == new_v_max_speed, "v_max_speed was not assigned to new_v_max_speed, after calling setV_max_speed");
+     */
     void setV_max_speed(double new_v_max_speed);
 
     /**
-     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_max_acceleration");*/
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_max_acceleration");
+     */
     double getV_max_acceleration() const;
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setV_max_acceleration");
-     * ENSURE(v_max_acceleration == new_v_max_acceleration, "v_max_acceleration was not assigned to new_v_max_acceleration, after calling setV_max_acceleration");*/
+     * ENSURE(v_max_acceleration == new_v_max_acceleration, "v_max_acceleration was not assigned to new_v_max_acceleration, after calling setV_max_acceleration");
+     */
     void setV_max_acceleration(double new_v_max_acceleration);
 
     /**
-     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_max_brakefactor");*/
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_max_brakefactor");
+     */
     double getV_max_brakefactor() const;
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setV_max_brakefactor");
-     * ENSURE(v_max_brakefactor == new_v_max_brakefactor, "v_max_brakefactor was not assigned to new_v_max_brakefactor, after calling setV_max_brakefactor");*/
+     * ENSURE(v_max_brakefactor == new_v_max_brakefactor, "v_max_brakefactor was not assigned to new_v_max_brakefactor, after calling setV_max_brakefactor");
+     */
     void setV_max_brakefactor(double new_v_max_brakefactor);
 
     /**
-     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_min_followDistance");*/
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_min_followDistance");
+     */
     double getV_min_followDistance() const;
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setV_min_followDistance");
-     * ENSURE(v_min_followDistance == new_v_min_followDistance, "followDistance was not assigned to new followDistance, after calling setV_min_followDistance");*/
+     * ENSURE(v_min_followDistance == new_v_min_followDistance, "followDistance was not assigned to new followDistance, after calling setV_min_followDistance");
+     */
     void setV_min_followDistance(double new_v_min_followDistance);
 
     /**
-     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_decelerate");*/
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getV_decelerate");
+     */
     double getV_decelerate() const;
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setV_decelerate");
-     * ENSURE(v_decelerate == new_v_decelerate, "decelerate of vehicle was not assigende to new decelerate, after calling setV_decelerate");*/
+     * ENSURE(v_decelerate == new_v_decelerate, "decelerate of vehicle was not assigende to new decelerate, after calling setV_decelerate");
+     */
     void setV_decelerate(double new_v_decelerate);
 
     /**
-     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling isSlowing_bus");*/
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling isSlowing_bus");
+     */
     bool isSlowing_bus() const;
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setSlowing_bus");
-     * ENSURE(slowing_bus == new_slowing_bus, "slowing bus was not assigned to new slowing bus, after calling setSlowing_bus");*/
+     * ENSURE(slowing_bus == new_slowing_bus, "slowing bus was not assigned to new slowing bus, after calling setSlowing_bus");
+     */
     void setSlowing_bus(bool new_slowing_bus);
 
     /**
-     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling isStopping_bus");*/
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling isStopping_bus");
+     */
     bool isStopping_bus() const;
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setStopping_bus");
-     * ENSURE(stopping_bus == new_stopping_bus, "stopping bus was not assigned to new stopping bus, after calling setStopping_bus");*/
+     * ENSURE(stopping_bus == new_stopping_bus, "stopping bus was not assigned to new stopping bus, after calling setStopping_bus");
+     */
     void setStopping_bus(bool new_stopping_bus);
 
     /**
-     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling isLeaving_bus");*/
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling isLeaving_bus");
+     */
     bool isLeaving_bus() const;
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setLeaving_bus");
-     * ENSURE(leaving_bus == new_leaving_bus, "leaving bus was not assigend to new leaving bus, after calling setLeaving_bus");*/
+     * ENSURE(leaving_bus == new_leaving_bus, "leaving bus was not assigend to new leaving bus, after calling setLeaving_bus");
+     */
     void setLeaving_bus(bool new_leaving_bus);
 
     /**
