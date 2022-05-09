@@ -7,17 +7,30 @@
 #include <typeinfo>
 using namespace std;
 
-CrossRoad::CrossRoad() : switchRoad(false){
-    init = this;
-    ENSURE(this == init, "init is not equal to itself, when calling constructor");
+CrossRoad::CrossRoad() : switchRoad(false) , init(this) {
+    ENSURE(!switchRoad, "switchRoad was not properly initialized");
+    ENSURE(properlyInitialized(), "CrossRoad was not properly initialized");
 }
 
-void CrossRoad::addRoad(Road *road, int position) {
-    REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling addRoad");
-    REQUIRE(road->properlyInitialized(), "Road is not properly initialized when calling addRoad");
-    REQUIRE(position >= 0 and (unsigned) position <= road->getLength(), "position was out of bounds when calling addRoad");
-    roads[road] = position;
-    ENSURE(roads[road] == position, "road is not on the right position");
+bool CrossRoad::properlyInitialized() const{
+    return init == this;
+}
+
+bool CrossRoad::isSwitchRoad() {
+    REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling isSwitchRoad");
+    return switchRoad;
+}
+
+void CrossRoad::setSwitchRoad(bool new_switchRoad) {
+    REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized, when calling setSwitchRoad");
+    REQUIRE(*typeid(new_switchRoad).name() == 'b', "new_switchRoad is not of type bool");
+    CrossRoad::switchRoad = new_switchRoad;
+    ENSURE(CrossRoad::switchRoad == new_switchRoad , "setSwitchRoad failed");
+}
+
+void CrossRoad::updateSwitchRoad(bool &random , int &time) {
+    REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling updateSwitchRoad");
+    switchRoad = random ? rand() % 1 != 0 : ((time % MODULO_RANDOM) == 0) xor switchRoad;
 }
 
 map<Road *, int> &CrossRoad::getRoads(){
@@ -31,8 +44,22 @@ void CrossRoad::setRoads(const map<Road *, int> &newRoads) {
     ENSURE(roads == newRoads, "roads was not assigned to newRoads, when calling setRoads");
 }
 
-bool randomBool(){
-    return rand() % 1 != 0;
+
+void CrossRoad::addRoad(Road *road, int position) {
+    REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling addRoad");
+    REQUIRE(*typeid(road).name() == 'P' , "addRoad was called with invalid road parameter : wrong type");
+    REQUIRE(road->properlyInitialized(), "Road is not properly initialized when calling addRoad");
+    REQUIRE(*typeid(position).name() == 'i' , "addRoad was called with invalid position parameter : wrong type");
+    REQUIRE(position >= 0 and (unsigned) position <= road->getLength(), "position was out of bounds when calling addRoad");
+    roads[road] = position;
+    ENSURE(roads[road] == position, "road is not on the right position");
+}
+
+int CrossRoad::getPosition(Road* &road) {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling getPosition");
+    REQUIRE(*typeid(road).name() == 'P', "getPosition was called with invalid road parameter : wrong type");
+    REQUIRE(road->properlyInitialized() , "road was not properly initialized when calling getPosition");
+    return roads[road];
 }
 
 Vehicle* CrossRoad::getNearestVehicle(Road* &road) {
@@ -53,21 +80,10 @@ Vehicle* CrossRoad::getNearestVehicle(Road* &road) {
     return nearestVehicle;
 }
 
-int CrossRoad::getPosition(Road* &road) {
-    REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling getPosition");
-    REQUIRE(*typeid(road).name() == 'P', "road is not a pointer");
-    return roads[road];
-}
-
-
-void CrossRoad::updateSwitchRoad(bool &random , int &time) {
-    REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling updateSwitchRoad");
-    switchRoad = random ? randomBool() : ((time % MODULO_RANDOM) == 0) xor switchRoad;
-}
-
 void CrossRoad::simulateCrossroad(bool random , int time) {
     REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling simulateCrossroad");
-    REQUIRE(*typeid(random).name() == 'b', "type was not boolean");
+    REQUIRE(*typeid(random).name() == 'b', "simulateCrossroad was called with invalid random parameter : wrong type");
+    REQUIRE(*typeid(time).name() == 'i', "simulateCrossroad was called with invalid time parameter : wrong type");
     Road* currentRoad;
     Road* newRoad;
     Vehicle* currentVehicle;
@@ -99,8 +115,6 @@ void CrossRoad::simulateCrossroad(bool random , int time) {
             continue;
         }
         else if (switchRoad && distance > 0 &&  distance < currentVehicle->getV_length() ){
-//            // Get remaining distance
-//            distance = currentVehicle->getV_length() - distance;
             // Move vehicle to different road
             newRoad->addVehicle(currentVehicle);
             currentVehicle->setPosition(roads[newRoad] - distance);
@@ -110,21 +124,6 @@ void CrossRoad::simulateCrossroad(bool random , int time) {
         it = it2;
     }
 
-}
-
-bool CrossRoad::isSwitchRoad() {
-    REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized when calling isSwitchRoad");
-    return switchRoad;
-}
-
-void CrossRoad::setSwitchRoad(bool new_switchRoad) {
-    REQUIRE(this->properlyInitialized(), "Crossroad was not properly initialized, when calling setSwitchRoad");
-    REQUIRE(*typeid(new_switchRoad).name() == 'b', "new_switchRoad is not of type bool");
-    CrossRoad::switchRoad = new_switchRoad;
-}
-
-bool CrossRoad::properlyInitialized() const{
-    return init == this;
 }
 
 CrossRoad::~CrossRoad() {
