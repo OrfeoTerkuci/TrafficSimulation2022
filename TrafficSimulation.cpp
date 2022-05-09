@@ -523,10 +523,10 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                     addSpaces(outputFile, 5);
                     outputFile << "| ";
 
-                    outputFileHTML << "<h4>";
+                    outputFileHTML << "<h3>";
                     outputFileHTML << '\t';
                     outputFileHTML << "> verkeerslichten";
-                    outputFileHTML << "| ";
+                    outputFileHTML << "&nbsp;|";
                     outputFileHTML <<  "<span style = \" color: #ffffff\">";
                     for (int i = 0; i < roadLenghth; ++i) {
                         int lightsAmount = 0;
@@ -551,7 +551,7 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                             outputFileHTML << "=";
                         }
                     }
-                    outputFileHTML << "</span></h4>\n";
+                    outputFileHTML << "</span></h3>\n";
                     outputFile << '\n';
                 }
 
@@ -561,10 +561,10 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                     addSpaces(outputFile, 11);
                     outputFile << "| ";
 
-                    outputFileHTML << "<h4>";
+                    outputFileHTML << "<h3>";
                     outputFileHTML << '\t';
                     outputFileHTML << "> bushaltes";
-                    outputFileHTML << "| ";
+                    outputFileHTML << "&nbsp;| ";
                     outputFileHTML << "<span style = \" color: #ffffff\">";
                     for (int i = 0; i < roadLenghth; ++i) {
                         bool bushalteExist = false;
@@ -585,7 +585,7 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                             outputFileHTML << "=";
                         }
                     }
-                    outputFileHTML << "</span></h4>\n";
+                    outputFileHTML << "</span></h3>\n";
                     outputFile << '\n';
                 }
 
@@ -593,9 +593,9 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                     outputFile << '\t';
                     outputFile << "> kruispunten";
                     addSpaces(outputFile, 9);
-                    outputFile << "| ";
+                    outputFile << "&nbsp;| ";
 
-                    outputFileHTML << "<h4>";
+                    outputFileHTML << "<h3>";
                     outputFileHTML << '\t';
                     outputFileHTML << "> kruispunten";
                     outputFileHTML << "| ";
@@ -620,7 +620,7 @@ void TrafficSimulation::outputFile(fileFunctionType type, int timestamp) {
                             outputFileHTML << "=";
                         }
                     }
-                    outputFileHTML << "</span></h4>\n";
+                    outputFileHTML << "</span></h3>\n";
                     outputFile << "\n";
                 }
             }
