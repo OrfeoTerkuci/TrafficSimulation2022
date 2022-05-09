@@ -60,5 +60,6 @@ Simulation functions post-condition must be added.
 ### Comentaar:
 ...
 ### TODO:
-Inheritance for vehicles  
+Inheritance for vehicles
+HTML needs a cleanup and a little optimization 
 
