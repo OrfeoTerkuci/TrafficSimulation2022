@@ -37,44 +37,44 @@ public:
 
     /**
      * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getCooldown");
-     * */
+     */
     int getCooldown() const;
 
     /**
      * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling setCooldown");
      * REQUIRE( *typeid(new_cooldown).name() == 'i' , "new_cooldown was not an int when calling setCooldown");
      * ENSURE(cooldown == new_cooldown, "cooldown was not assigned to new_cooldown, after calling setCooldown");
-     * */
+     */
     void setCooldown(int new_cooldown);
 
     /**
      * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getWaitTime");
-     * */
+     */
     int getWaitTime() const;
 
     /**
      * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling setWaitTime");
      * REQUIRE(*typeid(newWaitTime).name() == 'i' , "newWaitTime was not an int when calling setWaitTime");
      * ENSURE(waitTime == newWaitTime, "waitTime was not assigned to newWaitTime, when calling setWaitTime");
-     * */
+     */
     void setWaitTime(int newWaitTime);
 
 
     /**
      * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getPosition");
-     * */
+     */
     int getPosition() const;
 
     /**
      * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling setPosition");
      * REQUIRE(*typeid(newPosition).name() == 'i' , "newPosition was not an int when calling setPosition");
      * ENSURE(position == newPosition, "position was not assigned to newPosition, when calling setPosition");
-     * */
+     */
     void setPosition(int newPosition);
 
     /**
      * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getRoad");
-     * */
+     */
     Road *getRoad() const;
 
     /**
@@ -85,17 +85,20 @@ public:
     void setRoad(Road *newRoad);
 
     /**
-     * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getNearestBus");*/
+     * REQUIRE(this->properlyInitialized(), "Bus stop was not properly initialized when calling getNearestBus");
+     */
     Vehicle* getNearestBus() const;
 
     /**
      * REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling simulateBusStop");
-     * ENSURE(cooldown == waitTime, "cooldown wasn't reset");*/
+     * ENSURE(cooldown == waitTime, "cooldown wasn't reset")
+     ;*/
     void simulateBusStop();
 
 
     /**
-     * REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling destructor");*/
+     * REQUIRE(this->properlyInitialized(), "Busstop was not properly initialized when calling destructor");
+     */
     virtual ~BusStop();
 };
 
