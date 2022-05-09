@@ -53,10 +53,5 @@ add_executable(ts_debug ${DEBUG_SOURCE_FILES})
 
 set_target_properties("ts_debug" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/TestFiles/XML" )
 
-# Create External function test targer
-add_executable(ES_test ExtraFunctionTest.cpp)
-
-set_target_properties("ES_test" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/TestFiles/XML" )
-
 # Link library
 target_link_libraries(ts_debug gtest)
