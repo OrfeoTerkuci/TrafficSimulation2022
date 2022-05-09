@@ -97,21 +97,25 @@ public:
     Vehicle* &getVehicle(unsigned int index);
 
     /**
-     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getBusStops");*/
+     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getBusStops");
+     */
     const vector<BusStop *> &getBusStops();
 
     /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling setBusStops");
-     * ENSURE(busStops == newBusStops, "busStops was not assigned to newBusStops, when calling setBusStops");*/
+     * ENSURE(busStops == newBusStops, "busStops was not assigned to newBusStops, when calling setBusStops");
+     */
     void setBusStops(const vector<BusStop *> &newBusStops);
 
     /**
-     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getCrossRaods");*/
+     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getCrossRaods");
+     */
     const vector<CrossRoad *> &getCrossRaods();
 
     /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling setCrossRaods");
-     * ENSURE(crossRoads == newCrossRaods, "crossRoads was not assigned to newCrossRoads, when calling newCrossRoads");*/
+     * ENSURE(crossRoads == newCrossRaods, "crossRoads was not assigned to newCrossRoads, when calling newCrossRoads");
+     */
     void setCrossRaods(const vector<CrossRoad *> &newCrossRaods);
 
     /**
@@ -149,14 +153,16 @@ public:
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addBusStop");
      * REQUIRE(newBusStop->properlyInitialized(), "bus stop isn't properly initialized");
      * ENSURE(busStops.size() == originalSize + 1, "newBusStop wasn't appended in vector busStops, when calling addBusStop");
-     * ENSURE(busStops[originalSize] == newBusStop, "last item in vector busStops is not equal to newBusStop, when calling addBusStop");*/
+     * ENSURE(busStops[originalSize] == newBusStop, "last item in vector busStops is not equal to newBusStop, when calling addBusStop");
+     */
     void addBusStop (BusStop* newBusStop);
 
     /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addCrossRoad");
      * REQUIRE(crossRoad->properlyInitialized(), "crossroad wasn't properly initialized");
      * ENSURE(crossRoads.size() == originalSize + 1, "crossRoads didn't change in size, when calling addCrossRoad");
-     * ENSURE(crossRoads[originalSize] == crossRoad, "Last item in crossRoads is not the same as crossRoad, when calling addCrossRoad");*/
+     * ENSURE(crossRoads[originalSize] == crossRoad, "Last item in crossRoads is not the same as crossRoad, when calling addCrossRoad");
+     */
     void addCrossRoad(CrossRoad* crossRoad);
 
     /**
