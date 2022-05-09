@@ -58,4 +58,7 @@ Simulation functions post-condition must be added.
 |3.6  | Simulatie van bushaltes           | Belangrijk   |   V    |
 |3.7  | Simulatie van kruispunten         | Belangrijk   |   V    |
 ### Comentaar:
-...  
+...
+### TODO:
+Inheritance for vehicles  
+
