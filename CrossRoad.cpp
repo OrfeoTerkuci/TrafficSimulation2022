@@ -95,12 +95,11 @@ void CrossRoad::simulateCrossroad(bool random , int time) {
             continue;
         }
         else if (switchRoad && distance > 0 &&  distance < currentVehicle->getV_length() ){
-            // Get remaining distance
-            distance = currentVehicle->getV_length() - distance;
+//            // Get remaining distance
+//            distance = currentVehicle->getV_length() - distance;
             // Move vehicle to different road
             newRoad->addVehicle(currentVehicle);
-            currentVehicle->setRoad(newRoad);
-            currentVehicle->setPosition(roads[newRoad] + distance);
+            currentVehicle->setPosition(roads[newRoad] - distance);
             currentRoad->removeVehicle(currentVehicle);
         }
         it = it2;

@@ -467,7 +467,7 @@ TEST(FunctionTest, CrossRoad_Test){
     testVehicle1->setPosition(99);
     testCross->simulateCrossroad(random , time);
     EXPECT_EQ(testVehicle1->getRoad() , testRoad2);
-    EXPECT_EQ(testVehicle1->getVehiclePosition() , 53);
+    EXPECT_EQ(testVehicle1->getVehiclePosition() , 49);
 }
 
 TEST(FunctionTest, VehicleType_BUS){

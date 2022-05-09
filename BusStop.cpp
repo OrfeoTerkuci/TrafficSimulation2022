@@ -4,6 +4,10 @@
 #include <typeinfo>
 
 BusStop::BusStop(int new_waitTime, int new_position, Road *new_road) : cooldown(new_waitTime) , waitTime(new_waitTime), position(new_position), road(new_road) , init(this) {
+    REQUIRE(*typeid(new_waitTime).name() == 'i' , "new_waitTime was not an int when calling constructor");
+    REQUIRE(*typeid(new_position).name() == 'i' , "new_position was not an int when calling constructor");
+    REQUIRE(*typeid(new_road).name() == 'P' , "new_road was not a pointer when calling constructor");
+    REQUIRE(new_road == NULL || new_road->properlyInitialized() , "new_road was not properly initialized when calling constructor");
     ENSURE(road == new_road, "road was not correctly initialized");
     ENSURE(cooldown == new_waitTime, "cooldown was not correctly initialized");
     ENSURE(waitTime == new_waitTime , "waitTime was not correctly initialized");
@@ -54,6 +58,7 @@ int BusStop::getPosition() const {
 
 void BusStop::setPosition(int newPosition) {
     REQUIRE(this->properlyInitialized(), "BusStop was not properly initialized when calling setPosition");
+    REQUIRE(*typeid(newPosition).name() == 'i' , "newPosition was not an int when calling setPosition");
     BusStop::position = newPosition;
     ENSURE(position == newPosition, "position was not assigned to newPosition, when calling setPosition");
 }
@@ -65,6 +70,7 @@ Road *BusStop::getRoad() const {
 
 void BusStop::setRoad(Road *newRoad) {
     REQUIRE(this->properlyInitialized(), "BusStop was not properly initialized when calling setRoad");
+    REQUIRE(*typeid(newRoad).name() == 'P' , "newRoad was not a pointer when calling setRoad");
     REQUIRE(newRoad->properlyInitialized(), "road was not properly initialized when calling setRoad");
     BusStop::road = newRoad;
     ENSURE(road == newRoad, "road was not assigned to newRoad, when calling setRoad");
