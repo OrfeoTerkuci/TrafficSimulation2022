@@ -23,7 +23,7 @@ class Road {
     vector<CrossRoad*> crossRoads;
 
     // Self-pointer
-    Road* _initCheck;
+    Road* init;
 
 public:
 
@@ -53,13 +53,26 @@ public:
     unsigned int getLength() const;
 
     /**
-     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getTrafficLight");
-     * REQUIRE( *typeid(index).name() == 'j' , "Index was not a number when calling getTrafficLight");
-     * REQUIRE( index < trafficLights.size() , "Index was out of range when calling getTrafficLight");
-     * @param index The index of the TrafficLight
-     * @return A pointer to a TrafficLight element
+     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling setLength");
+     * REQUIRE( *typeid(newLength).name() == 'j' , "setLength was called with invalid parameter");
+     * ENSURE(Road::length == newLength , "setLength was failed");
+     * @param newLength The new length.
      */
-    TrafficLight* &getTrafficLight(unsigned int index);
+    void setLength(unsigned int newLength);
+
+    /**
+     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getRoadName");
+     * @return The name of the road
+     */
+    const string &getRoadName() const;
+
+    /**
+     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling setRoadName");
+     * REQUIRE( *typeid(newRoadName).name() == 'N' && newRoadName.length() > 0 , "setRoadName was called with invalid parameter");
+     * ENSURE( Road::roadName == newRoadName , "setRoadName failed");
+     * @param newRoadName The new name
+     */
+    void setRoadName(const string &newRoadName);
 
     /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getTrafficLights");
@@ -74,6 +87,23 @@ public:
      * @param newTrafficLights A vector of pointers to TrafficLight elements
      */
     void setTrafficLights(const vector<TrafficLight *> &newTrafficLights);
+
+    /**
+     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getTrafficLight");
+     * REQUIRE( *typeid(index).name() == 'j' , "Index was not a number when calling getTrafficLight");
+     * REQUIRE( index < trafficLights.size() , "Index was out of range when calling getTrafficLight");
+     * @param index The index of the TrafficLight
+     * @return A pointer to a TrafficLight element
+     */
+    TrafficLight* &getTrafficLight(unsigned int index);
+
+    /**
+     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addLight");
+     * REQUIRE(*typeid(newLight).name() == 'P' , "addLight was called with invalid parameter");
+     * REQUIRE(newLight->properlyInitialized(), "addLight was called with uninitialized parameter");
+     * ENSURE(*oldSize == trafficLights.size() - 1 , "addLight failed");
+     */
+    void addLight (TrafficLight* newLight);
 
     /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getVehicles");
@@ -97,6 +127,23 @@ public:
     Vehicle* &getVehicle(unsigned int index);
 
     /**
+     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addVehicle");
+     * REQUIRE(*typeid(newVehicle).name() == 'P' , "addVehicle was called with invalid parameter");
+     * REQUIRE(newVehicle->properlyInitialized() , "addVehicle was called with uninitialized parameter");
+     * ENSURE(*oldSize == vehicles.size() - 1 , "addVehicle failed");
+     * @param newVehicle A pointer to a Vehicle element
+     */
+    void addVehicle (Vehicle* newVehicle);
+
+    /**
+     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling removeVehicle");
+     * REQUIRE(*typeid(oldVehicle).name() == 'P' , "removeVehicle was called with invalid parameter");
+     * REQUIRE(oldVehicle->properlyInitialized() , "removeVehicle was called with uninitialized parameter");
+     * ENSURE(*oldSize == vehicles.size() + 1 , "removeVehicle failed");
+     */
+    void removeVehicle(Vehicle* oldVehicle);
+
+    /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getBusStops");
      */
     const vector<BusStop *> &getBusStops();
@@ -106,6 +153,15 @@ public:
      * ENSURE(busStops == newBusStops, "busStops was not assigned to newBusStops, when calling setBusStops");
      */
     void setBusStops(const vector<BusStop *> &newBusStops);
+
+    /**
+     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addBusStop");
+     * REQUIRE(*typeid(newBusStop).name() == 'P' , "addBusStop was called with invalid parameter: wrong type");
+     * REQUIRE(newBusStop->properlyInitialized(), "bus stop isn't properly initialized");
+     * ENSURE(busStops.size() == originalSize + 1, "newBusStop wasn't appended in vector busStops, when calling addBusStop");
+     * ENSURE(busStops[originalSize] == newBusStop, "last item in vector busStops is not equal to newBusStop, when calling addBusStop");
+     */
+    void addBusStop (BusStop* newBusStop);
 
     /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getCrossRaods");
@@ -119,67 +175,13 @@ public:
     void setCrossRaods(const vector<CrossRoad *> &newCrossRaods);
 
     /**
-     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling setLength");
-     * REQUIRE( *typeid(newLength).name() == 'j' , "setLength was called with invalid parameter");
-     * ENSURE(Road::length == newLength , "setLength was failed");
-     * @param newLength The new length.
-     */
-    void setLength(unsigned int newLength);
-
-    /**
-     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getRoadName");
-     * @return The name of the road
-     */
-    const string &getRoadName() const;
-
-    /**
-     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling setRoadName");
-     * REQUIRE( *typeid(newRoadName).name() == 'N' && newRoadName.length() > 0 , "setRoadName was called with invalid parameter");
-     * ENSURE( Road::roadName == newRoadName , "setRoadName failed");
-     * @param newRoadName The new name
-     */
-    void setRoadName(const string &newRoadName);
-
-    /**
-     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addVehicle");
-     * REQUIRE(*typeid(newVehicle).name() == 'P' , "addVehicle was called with invalid parameter");
-     * REQUIRE(newVehicle->properlyInitialized() , "addVehicle was called with uninitialized parameter");
-     * ENSURE(*oldSize == vehicles.size() - 1 , "addVehicle failed");
-     * @param newVehicle A pointer to a Vehicle element
-     */
-    void addVehicle (Vehicle* newVehicle);
-
-    /**
-     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addBusStop");
-     * REQUIRE(newBusStop->properlyInitialized(), "bus stop isn't properly initialized");
-     * ENSURE(busStops.size() == originalSize + 1, "newBusStop wasn't appended in vector busStops, when calling addBusStop");
-     * ENSURE(busStops[originalSize] == newBusStop, "last item in vector busStops is not equal to newBusStop, when calling addBusStop");
-     */
-    void addBusStop (BusStop* newBusStop);
-
-    /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addCrossRoad");
+     * REQUIRE(*typeid(crossRoad).name() == 'P' , "addCrossRoad was called with invalid parameter: wrong type");
      * REQUIRE(crossRoad->properlyInitialized(), "crossroad wasn't properly initialized");
      * ENSURE(crossRoads.size() == originalSize + 1, "crossRoads didn't change in size, when calling addCrossRoad");
      * ENSURE(crossRoads[originalSize] == crossRoad, "Last item in crossRoads is not the same as crossRoad, when calling addCrossRoad");
      */
     void addCrossRoad(CrossRoad* crossRoad);
-
-    /**
-     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling removeVehicle");
-     * REQUIRE(*typeid(oldVehicle).name() == 'P' , "removeVehicle was called with invalid parameter");
-     * REQUIRE(oldVehicle->properlyInitialized() , "removeVehicle was called with uninitialized parameter");
-     * ENSURE(*oldSize == vehicles.size() + 1 , "removeVehicle failed");
-     */
-    void removeVehicle(Vehicle* oldVehicle);
-
-    /**
-     * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling addLight");
-     * REQUIRE(*typeid(newLight).name() == 'P' , "addLight was called with invalid parameter");
-     * REQUIRE(newLight->properlyInitialized(), "addLight was called with uninitialized parameter");
-     * ENSURE(*oldSize == trafficLights.size() - 1 , "addLight failed");
-     */
-    void addLight (TrafficLight* newLight);
 
     /**
      * REQUIRE(properlyInitialized() , "Road wasn't initialized when calling getVehicleAmount");
