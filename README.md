@@ -59,6 +59,7 @@ Simulation functions post-condition must be added.
 |3.5  | Rijden van voertuig met type      | Verplicht    |   V    |
 |3.6  | Simulatie van bushaltes           | Belangrijk   |   V    |
 |3.7  | Simulatie van kruispunten         | Belangrijk   |   V    |
+
 ### Comentaar:
 ...
 ### TODO:
@@ -96,7 +97,7 @@ HTML needs a cleanup and a little optimization
 |3.7  | Simulatie van kruispunten                   | Belangrijk   |   V    |
 |3.8  | Simulatie van kruispunten met verkeerslicht | Nuttig       |   T    |
 |3.9  | Slimme verkeerslichten                      | Nuttig       |   T    |
-|3.10  | Simulatie van oranje verkeerslicht         | Nuttig       |   T    |
+|3.10 | Simulatie van oranje verkeerslicht          | Nuttig       |   T    |
 
 |Case | Gebruikersinterface                 | Prioriteit   | Status |
 |:---:|-------------------------------------|:------------:|:------:|
