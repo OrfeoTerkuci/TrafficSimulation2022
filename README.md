@@ -32,6 +32,7 @@ Parser must have it's own class.
 Simulation must not stop at an error --> generate log file.  
 Simulation functions post-condition must be added.  
 
+----------------------------------------------------------------------
 
 ## Versie 2.0  
 ### Overzicht  
@@ -63,6 +64,8 @@ Simulation functions post-condition must be added.
 ### TODO:
 Inheritance for vehicles  
 HTML needs a cleanup and a little optimization 
+
+----------------------------------------------------------------------
 
 ## Versie 2.1  
 ### Overzicht  
@@ -100,3 +103,15 @@ HTML needs a cleanup and a little optimization
 |2.1  | GUI voor simulatie                  | Nuttig       |   T    |
 |2.2  | GUI voor verkeerslichten            | Nuttig       |   T    |
 |2.3  | GUI voor voertuiggenerator          | Nuttig       |   T    |
+
+### Comentaar:
+...
+
+
+![GitHub all releases](https://img.shields.io/github/downloads/{OrfeoTerkuci}/{TrafficSimulation2022}/total)
+![GitHub language count](https://img.shields.io/github/languages/count/{OrfeoTerkuci}/{TrafficSimulation2022})
+![GitHub top language](https://img.shields.io/github/languages/top/{OrfeoTerkuci}/{TrafficSimulation2022}?color=yellow)
+![Bitbucket open issues](https://img.shields.io/bitbucket/issues/{OrfeoTerkuci}/{TrafficSimulation2022})
+![GitHub forks](https://img.shields.io/github/forks/{OrfeoTerkuci}/{TrafficSimulation2022}?style=social)
+![GitHub Repo stars](https://img.shields.io/github/stars/{OrfeoTerkuci}/{TrafficSimulation2022}?style=social)
+
