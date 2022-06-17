@@ -1,0 +1,15 @@
+<Veerkerssimulatie>
+    <BAAN>
+        <naam>Middelheimlaan</naam>
+        <lengte>500</lengte>
+    </BAAN>
+    <VERKEERSLICHT>
+        <baan>Middelheimlaan</baan>
+        <positie>400</positie>
+        <cyclus>20</cyclus>
+    </VERKEERSLICHT>
+    <VOERTUIGGENERATOR>
+        <baan>Middelheimlaan</baan>
+        <frequentie>-5</frequentie>
+    </VOERTUIGGENERATOR>
+</Veerkerssimulatie>
