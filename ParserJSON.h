@@ -414,7 +414,10 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
 }
 
 void parseTrafficSimulationX(TrafficSimulation &trafficSimulation){
-    TiXmlDocument doc;
+    //* Read from file
+    ifstream input(trafficSimulation.getFilename());
+    json j;
+    input >> j;
     // File readable detection with error message
     try{
         if(!doc.LoadFile(trafficSimulation.getFilename().c_str())) {
