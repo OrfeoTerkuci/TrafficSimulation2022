@@ -415,8 +415,9 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
 void parseTrafficSimulationX(TrafficSimulation &trafficSimulation){
     TiXmlDocument doc;
     // File readable detection with error message
+    string filename = XML_DIRECTORY + trafficSimulation.getFilename();
     try{
-        if(!doc.LoadFile(trafficSimulation.getFilename().c_str())) {
+        if(!doc.LoadFile(filename.c_str())) {
             cerr << doc.ErrorDesc() << endl;
             throw 1;
         }
@@ -440,7 +441,9 @@ void parseTrafficSimulationX(TrafficSimulation &trafficSimulation){
     ofstream logOutput;
 
     // write in a file
-    logOutput.open("TestLog/newLog.txt");
+    filename = XML_DIRECTORY;
+    filename += "TestLog/newLog.txt";
+    logOutput.open(filename.c_str());
 
     // Parsing of data
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
