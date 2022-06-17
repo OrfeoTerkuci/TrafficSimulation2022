@@ -1,6 +1,23 @@
-<Veerkerssimulatie>
-    <BAAN>
-        <naam>Middelheimlaan</naam>
-        <lengte>500</lengte>
-    </BAAN>
-</Veerkerssimulatie>
+{
+    "BAAN": [
+        {
+            "naam": "Middelheimlaan",
+            "lengte": 500
+        }
+    ],
+    "VERKEERSLICHT": [
+
+    ],
+    "VOERTUIGGENERATOR": [
+
+    ],
+    "BUSHALTE": [
+
+    ],
+    "KRUISPUNT": [
+
+    ],
+    "VOERTUIG": [
+
+    ]
+}

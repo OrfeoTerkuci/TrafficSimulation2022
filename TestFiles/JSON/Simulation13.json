@@ -1,11 +1,16 @@
-<Veerkerssimulatie>
-    <BAAN>
-        <naam>Middelheimlaan</naam>
-        <lengte>500</lengte>
-    </BAAN>
-    <BUSHALTE>
-        <baan>Middelheimlaan</baan>
-        <positie>250</positie>
-        <wachttijd>20</wachttijd>
-    </BUSHALTE>
-</Veerkerssimulatie>
+
+{
+  "BAAN": [
+    {
+      "naam": "Middelheimlaan",
+      "lengte": 500
+    }
+  ],
+  "BUSHALTE": [
+    {
+      "baan": "Middelheimlaan",
+      "positie": 250,
+      "wachttijd": 20
+    }
+  ]
+}

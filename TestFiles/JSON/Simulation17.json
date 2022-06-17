@@ -1,16 +1,23 @@
-<VERKEERSSIMULATIE>
-    <BAAN>
-        <naam>Middelheimlaan</naam>
-        <lengte>300</lengte>
-    </BAAN>
-    <VOERTUIG>
-        <baan>Middelheimlaan</baan>
-        <positie>20</positie>
-        <type>bus</type>
-    </VOERTUIG>
-    <BUSHALTE>
-        <baan>Middelheimlaan</baan>
-        <positie>250</positie>
-        <wachttijd>20</wachttijd>
-    </BUSHALTE>
-</VERKEERSSIMULATIE>
+
+{
+  "BAAN": [
+    {
+      "naam": "Middelheimlaan",
+      "lengte": 300
+    }
+  ],
+  "BUSHALTE": [
+      {
+        "naam": "Middelheimlaan",
+        "positie" : 250,
+        "wachttijd" : 20
+      }
+  ],
+  "VOERTUIG": [
+    {
+      "baan": "Middelheimlaan",
+      "positie": 20,
+      "type": "bus"
+    }
+  ]
+}
