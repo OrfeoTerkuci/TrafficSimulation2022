@@ -1,19 +1,26 @@
-<Veerkerssimulatie>
-    <BAAN>
-        <naam>Middelheimlaan</naam>
-        <lengte>500</lengte>
-    </BAAN>
-    <VERKEERSLICHT>
-        <baan>Middelheimlaan</baan>
-        <positie>400</positie>
-        <cyclus>20</cyclus>
-    </VERKEERSLICHT>
-    <VOERTUIG>
-        <baan>Middelheimlaan</baan>
-        <positie>-20</positie>
-    </VOERTUIG>
-    <VOERTUIG>
-        <baan>Middelheimlaan</baan>
-        <positie>0</positie>
-    </VOERTUIG>
-</Veerkerssimulatie>
+
+{
+  "BAAN": [
+    {
+      "naam": "Middelheimlaan",
+      "lengte": 500
+    }
+  ],
+  "VERKEERSLICHT": [
+    {
+      "baan": "Middelheimlaan",
+      "positie": 400,
+      "cyclus": 20
+    }
+  ],
+  "VOERTUIG": [
+    {
+      "baan": "Middelheimlaan",
+      "positie": -20
+    },
+    {
+      "baan": "Middelheimlaan",
+      "positie": 0
+    }
+  ]
+}

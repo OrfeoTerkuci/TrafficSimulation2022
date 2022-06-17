@@ -1,31 +1,39 @@
-<VERKEERSSIMULATIE>
-    <BAAN>
-        <naam>Middelheimlaan</naam>
-        <lengte>500</lengte>
-    </BAAN>
-    <VOERTUIGGENERATOR>
-        <baan>Middelheimlaan</baan>
-        <frequentie>5</frequentie>
-        <type>auto</type>
-    </VOERTUIGGENERATOR>
-    <VOERTUIG>
-        <baan>Middelheimlaan</baan>
-        <positie>20</positie>
-        <type>bus</type>
-    </VOERTUIG>
-    <VOERTUIG>
-        <baan>Middelheimlaan</baan>
-        <positie>40</positie>
-        <type>brandweerwagen</type>
-    </VOERTUIG>
-    <VOERTUIG>
-        <baan>Middelheimlaan</baan>
-        <positie>60</positie>
-        <type>ziekenwagen</type>
-    </VOERTUIG>
-    <VOERTUIG>
-        <baan>Middelheimlaan</baan>
-        <positie>80</positie>
-        <type>politiecombi</type>
-    </VOERTUIG>
-</VERKEERSSIMULATIE>
+
+{
+  "BAAN": [
+    {
+      "naam": "Middelheimlaan",
+      "lengte": 500
+    }
+  ],
+  "VOERTUIGGENERATOR": [
+    {
+      "baan": "Middelheimlaan",
+      "frequentie": 5,
+      "type": "auto"
+
+    }
+  ],
+  "VOERTUIG": [
+    {
+      "baan": "Middelheimlaan",
+      "positie": 20,
+      "type": "bus"
+    },
+    {
+      "baan": "Middelheimlaan",
+      "positie": 40,
+      "type": "brandweerwagen"
+    },
+    {
+      "baan": "Middelheimlaan",
+      "positie": 60,
+      "type": "ziekenwagen"
+    },
+    {
+      "baan": "Middelheimlaan",
+      "positie": 80,
+      "type": "politiecombi"
+    }
+  ]
+}

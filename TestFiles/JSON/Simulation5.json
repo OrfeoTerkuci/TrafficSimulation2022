@@ -1,28 +1,44 @@
-<Veerkerssimulatie>
-    <BAAN>
-        <naam>Middelheimlaan</naam>
-        <lengte>500</lengte>
-    </BAAN>
-    <BAAN>
-        <naam>Groeneborgenlaan</naam>
-        <lengte>600</lengte>
-    </BAAN>
-    <VERKEERSLICHT>
-        <baan>Middelheimlaan</baan>
-        <positie>400</positie>
-        <cyclus>20</cyclus>
-    </VERKEERSLICHT>
-    <VERKEERSLICHT>
-        <baan>Groeneborgenlaan</baan>
-        <positie>500</positie>
-        <cyclus>25</cyclus>
-    </VERKEERSLICHT>
-    <VOERTUIGGENERATOR>
-        <baan>Middelheimlaan</baan>
-        <frequentie>5</frequentie>
-    </VOERTUIGGENERATOR>
-    <VOERTUIGGENERATOR>
-        <baan>Groeneborgenlaan</baan>
-        <frequentie>10</frequentie>
-    </VOERTUIGGENERATOR>
-</Veerkerssimulatie>
+
+{
+  "BAAN": [
+    {
+      "naam": "Middelheimlaan",
+      "lengte": 500
+    },
+    {
+      "naam": "Groeneborgenlaan",
+      "lengte": 600
+    }
+  ],
+  "VERKEERSLICHT": [
+    {
+      "baan": "Middelheimlaan",
+      "positie": 400,
+      "cyclus": 20
+    },
+    {
+      "baan": "Groeneborgenlaan",
+      "positie": 500,
+      "cyclus": 25
+    }
+  ],
+  "VOERTUIGGENERATOR": [
+    {
+      "baan": "Middelheimlaan",
+      "frequentie": 5
+    },
+    {
+      "baan": "Groeneborgenlaan",
+      "frequentie": 10
+    }
+  ],
+  "BUSHALTE": [
+
+  ],
+  "KRUISPUNT": [
+
+  ],
+  "VOERTUIG": [
+
+  ]
+}
