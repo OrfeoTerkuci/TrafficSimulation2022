@@ -8,3 +8,4 @@ tinyxml
 *.html
 ts
 ts_debug
+.cache
