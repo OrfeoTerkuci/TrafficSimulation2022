@@ -145,7 +145,7 @@ bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         if(elem->NoChildren()){
             return false;
         }
-
+        cout;
         tempn = elem->GetText();
 
 
