@@ -47,11 +47,11 @@ set(DEBUG_SOURCE_FILES TrafficSimulationTests.cpp ${sources} ${AdditionalSources
 
 # Create RELEASE target
 add_executable(ts ${RELEASE_SOURCE_FILES})
-set_target_properties("ts" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/TestFiles/XML" )
+set_target_properties("ts" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/TestFiles/" )
 # Create DEBUG target
 add_executable(ts_debug ${DEBUG_SOURCE_FILES})
 
-set_target_properties("ts_debug" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/TestFiles/XML" )
+set_target_properties("ts_debug" PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/TestFiles/" )
 
 # Link library
 target_link_libraries(ts_debug gtest)

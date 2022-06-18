@@ -1,11 +1,10 @@
 cmake-build-debug
-.idea
-tinyxml
 build
+.idea
 .vscode
-tinyxml
 *.txt
 *.html
+tinyxml
 ts
 ts_debug
 .cache

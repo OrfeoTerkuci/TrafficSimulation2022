@@ -1,0 +1,34 @@
+{
+  "BAAN": [
+    {
+      "naam": "Middelheimlaan",
+      "lengte": 500
+    }
+  ],
+  "VERKEERSLICHT": [
+    {
+      "baan": "Middelheimlaan",
+      "positie": 400,
+      "cyclus": 20
+    }
+  ],
+  "VOERTUIGGENERATOR": [
+
+  ],
+  "BUSHALTE": [
+
+  ],
+  "KRUISPUNT": [
+
+  ],
+  "VOERTUIG": [
+    {
+      "baan": "Middelheimlaan",
+      "positie": 20
+    },
+    {
+      "baan": "Middelheimlaan",
+      "positie": 0
+    }
+  ]
+}

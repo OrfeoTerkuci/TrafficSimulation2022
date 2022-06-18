@@ -1,0 +1,33 @@
+{
+  "BAAN": [
+    {
+      "naam": "Middelheimlaan",
+      "lengte": 500
+    },
+    {
+      "naam": "Floralienlaan",
+      "lengte": 750
+    }
+  ],
+  "KRUISPUNT": [
+    {
+      "baan": [
+        {
+          "naam": "Middelheimlaan",
+          "positie" : 250
+        },
+        {
+          "naam": "Floralienlaan",
+          "positie" : 500
+        }
+      ]
+    }
+  ],
+  "VOERTUIG": [
+    {
+      "baan": "Middelheimlaan",
+      "positie": 20,
+      "type": "bus"
+    }
+  ]
+}
