@@ -197,15 +197,15 @@ TEST(SimTest, simulationSucces){
 
 TEST(SimTest, simulationFail){
     TrafficSimulation testFile1(SIM7);
-    EXPECT_TRUE(FileCompare("TestLog/newLog.txt", "Permanent_logs/sim7log.txt"));
+    EXPECT_TRUE(FileCompare("XML/TestLog/newLog.txt", "Permanent_logs/sim7log.txt"));
     TrafficSimulation testFile2(SIM8);
-    EXPECT_TRUE(FileCompare("TestLog/newLog.txt", "Permanent_logs/sim8log.txt"));
+    EXPECT_TRUE(FileCompare("XML/TestLog/newLog.txt", "Permanent_logs/sim8log.txt"));
     TrafficSimulation testFile3(SIM9);
-    EXPECT_TRUE(FileCompare("TestLog/newLog.txt", "Permanent_logs/sim9log.txt"));
+    EXPECT_TRUE(FileCompare("XML/TestLog/newLog.txt", "Permanent_logs/sim9log.txt"));
     TrafficSimulation testFile4(SIM10);
-    EXPECT_TRUE(FileCompare("TestLog/newLog.txt", "Permanent_logs/sim10log.txt"));
+    EXPECT_TRUE(FileCompare("XML/TestLog/newLog.txt", "Permanent_logs/sim10log.txt"));
     TrafficSimulation testFile5(SIM11);
-    EXPECT_TRUE(FileCompare("TestLog/newLog.txt", "Permanent_logs/sim11log.txt"));
+    EXPECT_TRUE(FileCompare("XML/TestLog/newLog.txt", "Permanent_logs/sim11log.txt"));
 }
 
 TEST(FunctionsTest , Vehicle_Test){

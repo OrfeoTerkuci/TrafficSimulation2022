@@ -1,0 +1,52 @@
+{
+  "BAAN": [
+    {
+      "naam": "Middelheimlaan",
+      "lengte": 500
+    },
+    {
+      "naam": "Groeneborgenlaan",
+      "lengte": 600
+    }
+  ],
+  "VERKEERSLICHT": [
+    {
+      "baan": "Middelheimlaan",
+      "positie": 400,
+      "cyclus": 20
+    },
+    {
+      "baan": "Middelheimlaan",
+      "positie": 200,
+      "cyclus": 20
+    },
+    {
+      "baan": "Groeneborgenlaan",
+      "positie": 150,
+      "cyclus": 15
+    }
+  ],
+  "VOERTUIGGENERATOR": [
+
+  ],
+  "BUSHALTE": [
+
+  ],
+  "KRUISPUNT": [
+
+  ],
+  "VOERTUIG": [
+    {
+      "baan": "Middelheimlaan",
+      "positie": 30
+    },
+    {
+      "baan": "Middelheimlaan",
+      "positie": 0
+    },
+    {
+      "baan": "Groeneborgenlaan",
+      "positie": 0
+    }
+  ]
+}

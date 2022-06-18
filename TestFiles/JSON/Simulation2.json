@@ -1,0 +1,23 @@
+{
+    "BAAN": [
+        {
+            "naam": "Middelheimlaan",
+            "lengte": 500
+        }
+    ],
+    "VERKEERSLICHT": [
+
+    ],
+    "VOERTUIGGENERATOR": [
+
+    ],
+    "BUSHALTE": [
+
+    ],
+    "KRUISPUNT": [
+
+    ],
+    "VOERTUIG": [
+
+    ]
+}

@@ -1,0 +1,22 @@
+
+{
+  "BAAN": [
+    {
+      "naam": "Middelheimlaan",
+      "lengte": 500
+    }
+  ],
+  "VERKEERSLICHT": [
+    {
+      "baan": "Middelheimlaan",
+      "positie": 400,
+      "cyclus": 20
+    }
+  ],
+  "VOERTUIGGENERATOR": [
+    {
+      "baan": "Middelheimlaan",
+      "frequentie": -5
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+
+{
+  "BAAN": [
+    {
+      "naam": "Middelheimlaan",
+      "lengte": 500
+    }
+  ],
+  "VOERTUIGGENERATOR": [
+    {
+      "baan": "Middelheimlaan",
+      "frequentie": 5,
+      "type": "auto"
+
+    }
+  ],
+  "VOERTUIG": [
+    {
+      "baan": "Middelheimlaan",
+      "positie": 20,
+      "type": "bus"
+    },
+    {
+      "baan": "Middelheimlaan",
+      "positie": 40,
+      "type": "brandweerwagen"
+    },
+    {
+      "baan": "Middelheimlaan",
+      "positie": 60,
+      "type": "ziekenwagen"
+    },
+    {
+      "baan": "Middelheimlaan",
+      "positie": 80,
+      "type": "politiecombi"
+    }
+  ]
+}
