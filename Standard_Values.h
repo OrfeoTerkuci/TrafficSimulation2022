@@ -104,8 +104,6 @@ enum fileFunctionType{ closing , create , update};
 #define JSONL                   ".json"
 #define JSONU                   ".JSON"
 #define OUTPUT_DIRECTORY        "./OutputLog/"
-#define XML_DIRECTORY           "./XML/"
-#define JSON_DIRECTORY          "./JSON/"
 #define TXTL                    ".txt"
 #define HTMLL                   ".html"
 

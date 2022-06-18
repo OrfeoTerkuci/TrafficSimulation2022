@@ -145,7 +145,7 @@ bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         if(elem->NoChildren()){
             return false;
         }
-        cout;
+
         tempn = elem->GetText();
 
 
@@ -415,9 +415,8 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
 void parseTrafficSimulationX(TrafficSimulation &trafficSimulation){
     TiXmlDocument doc;
     // File readable detection with error message
-    string filename = XML_DIRECTORY + trafficSimulation.getFilename();
     try{
-        if(!doc.LoadFile(filename.c_str())) {
+        if(!doc.LoadFile(trafficSimulation.getFilename().c_str())) {
             cerr << doc.ErrorDesc() << endl;
             throw 1;
         }
@@ -441,9 +440,7 @@ void parseTrafficSimulationX(TrafficSimulation &trafficSimulation){
     ofstream logOutput;
 
     // write in a file
-    filename = XML_DIRECTORY;
-    filename += "TestLog/newLog.txt";
-    logOutput.open(filename.c_str());
+    logOutput.open("TestLog/newLog.txt");
 
     // Parsing of data
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {

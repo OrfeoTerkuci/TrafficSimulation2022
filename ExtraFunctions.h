@@ -6,6 +6,12 @@
 using namespace std;
 
 //==== Extra Functions ====//
+int convertStrToInt(string input){
+    int tempi = 0;
+    stringstream temps(input);
+    temps >> tempi;
+    return tempi;
+}
 
 void eraseSubStr(string &mainStr, const string &toErase)
 {

@@ -8,7 +8,7 @@ int main(){
 
 //==== Normal simulation files ====//
 //TrafficSimulation ts(SIM0); // Single vehicle , long road
-//TrafficSimulation ts(SIM1); // Basic Simulation
+TrafficSimulation ts(SIM1); // Basic Simulation
 //TrafficSimulation ts(SIM2); // Empty road simulation
 //TrafficSimulation ts(SIM3); // Multiple Roads simulation
 
@@ -34,7 +34,7 @@ int main(){
 //TrafficSimulation ts(SIM14);
 
 //==== Different types of vehicles ====//
-TrafficSimulation ts(SIM15);
+// TrafficSimulation ts(SIM15);
 
 //==== Crossroads ====//
 //TrafficSimulation ts(SIM16);
@@ -45,7 +45,7 @@ TrafficSimulation ts(SIM15);
 //==== Simulation functions ====//
 //ts.printAll();
 //ts.startSimulation(false, false, true); // Simulates until there is a maximum vehicle count reached --> Standard_Values --> MAX_VEHICLES
-ts.startSimulation(); // Simulate current loaded file
+ts.startSimulation(true , true , false); // Simulate current loaded file
 
 return 0;
 }
