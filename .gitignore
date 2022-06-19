@@ -6,5 +6,7 @@ build
 tinyxml
 *.txt
 *.html
+*.exe
 ts
 ts_debug
+.cache

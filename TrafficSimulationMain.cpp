@@ -8,7 +8,7 @@ int main(){
 
 //==== Normal simulation files ====//
 //TrafficSimulation ts(SIM0); // Single vehicle , long road
-//TrafficSimulation ts(SIM1); // Basic Simulation
+// TrafficSimulation ts(SIM1); // Basic Simulation
 //TrafficSimulation ts(SIM2); // Empty road simulation
 //TrafficSimulation ts(SIM3); // Multiple Roads simulation
 
@@ -43,7 +43,7 @@ TrafficSimulation ts(SIM10); // Vehicle generator simulation, with invalid vehic
 //TrafficSimulation ts(SIM17);
 
 //==== Simulation functions ====//
-//ts.printAll();
+// ts.printAll();
 //ts.startSimulation(false, false, true); // Simulates until there is a maximum vehicle count reached --> Standard_Values --> MAX_VEHICLES
 //ts.startSimulation(); // Simulate current loaded file
 ts.startSimulation(false);
