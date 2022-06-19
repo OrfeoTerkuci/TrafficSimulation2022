@@ -29,6 +29,7 @@ class TrafficSimulation {
     int stopTime;
 
     TrafficSimulation* _initCheck;
+    Road* dummyRoad;
 public:
     // members
     string outputFileName;
@@ -79,7 +80,9 @@ public: // functions
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getVehicles");
      * @return A vector of pointers to Vehicle elements
     */
-    const vector<Vehicle *> &getVehicles();
+    vector<Vehicle *> getVehicles();
+
+    void setVehicles(const vector<Vehicle *> &newvehicles);
 
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getLights");
@@ -89,11 +92,17 @@ public: // functions
 
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getCrossRoads");*/
-    const vector<CrossRoad *> &getCrossRoads();
+    const vector<CrossRoad *> & getCrossRoads();
 
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getFilename");*/
     const string &getFilename();
+
+    /**
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getDummyRoad");
+     */
+    Road *getDummyRoad() const;
+
 
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling addTrafficLight");
@@ -205,6 +214,7 @@ public: // functions
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling destructor");
     */
     virtual ~TrafficSimulation();
+
 };
 
 

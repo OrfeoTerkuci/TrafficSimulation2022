@@ -49,34 +49,34 @@ enum vehicleType{ T_AUTO , T_BUS , T_FIRETRUCK , T_AMBULANCE , T_POLICE , T_NULL
 enum fileFunctionType{ closing , create , update};
 
 // Strings
+#define TYPE                    "type"
 #define NAAM                    "naam"
 #define BAANU                   "BAAN"
 #define BAANL                   "baan"
 #define LENGTE                  "lengte"
-#define VERKEERSLICHT           "VERKEERSLICHT"
-#define VOERTUIG                "VOERTUIG"
-#define POSITIE                 "positie"
 #define CYCLUS                  "cyclus"
-#define VOERTUIGGENERATOR       "VOERTUIGGENERATOR"
-#define FREQUENTIE              "frequentie"
+#define POSITIE                 "positie"
+#define VOERTUIG                "VOERTUIG"
 #define BUSHALTE                "BUSHALTE"
 #define WACHTTIJD               "wachttijd"
 #define KRUISPUNT               "KRUISPUNT"
-#define TYPE                    "type"
+#define FREQUENTIE              "frequentie"
+#define VERKEERSLICHT           "VERKEERSLICHT"
 #define BAAN_POSITIE            "baan positie ="
+#define VOERTUIGGENERATOR       "VOERTUIGGENERATOR"
 
 // Vehicle type strings
 #define AUTO                    "auto"
 #define BUS                     "bus"
-#define BRANDWEERWAGEN          "brandweerwagen"
 #define ZIEKENWAGEN             "ziekenwagen"
 #define POLITIECOMBI            "politiecombi"
+#define BRANDWEERWAGEN          "brandweerwagen"
 
 // Vehiclegenerator test values
 #define MAX_VEHICLES            5
 
 // Crossroad "random" test valus
-#define MODULO_RANDOM                  13
+#define MODULO_RANDOM           13
 
 // xml file names
 #define SIM0                    "Simulation0.xml"
@@ -101,10 +101,19 @@ enum fileFunctionType{ closing , create , update};
 // file types
 #define XMLL                    ".xml"
 #define XMLU                    ".XML"
-#define JSONL                   ".json"
-#define JSONU                   ".JSON"
-#define OUTPUT_DIRECTORY        "./OutputLog/"
 #define TXTL                    ".txt"
 #define HTMLL                   ".html"
+#define JSONL                   ".json"
+#define JSONU                   ".JSON"
+#define TESTLOG                 "./TestLog/"
+#define OUTPUT_DIRECTORY        "./OutputLog/"
+
+// log files
+#define BUSLOG                  "BusLog/busLog.txt"
+#define ROADLOG                 "RoadLog/roadLog.txt"
+#define VEHICLELOG              "VehicleLog/vehicleLog.txt"
+#define CROSSROADLOG            "CrossRoadLog/crossroadLog.txt"
+#define TRAFFICLIGHTLOG         "TrafficLightLog/trafficLightLog.txt"
+#define VEHICLEGENERATORLOG     "VehicleGeneratorLog/vehicleGeneratorLog.txt"
 
 #endif //TRAFFICSIMULATION2022_STANDARD_VALUES_H

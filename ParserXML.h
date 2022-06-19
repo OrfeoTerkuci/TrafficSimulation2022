@@ -32,66 +32,115 @@ int convertStrToInt(string input){
 
 bool parseBusStop(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     REQUIRE(trafficSimulation.properlyInitialized(), "TrafficSimulation was not initialized when calling parseBusStop");
+
+    string filename;
+    filename = TESTLOG;
+    filename += BUSLOG;
+
+    fstream log;
+    log.open(filename.c_str(), ios::out| ios::trunc);
+
     // create new object
     BusStop* busStop = new BusStop();
 
     // temp values
     string tempn;
     int tempi;
+    bool failed = true;
+    bool exists = false;
 
     // parsing
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
         string elemname = elem->Value();
 
         if(elem->NoChildren()){
+            busStop->setRoad(trafficSimulation.getDummyRoad());
             busStop->setPosition(0);
             busStop->setWaitTime(0);
-            busStop->setRoad(NULL);
+            failed = false;
+            log.close();
+            log.open(filename.c_str(), ios::out | ios::trunc);
+            log << "One of the elements had no value assigned\n";
+            log.close();
             return false;
         }
 
         tempn = elem->GetText();
-
         if (elemname == BAANL){
             for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); i++){
                 if (trafficSimulation.getRoads()[i]->getRoadName() == tempn){
                     busStop->setRoad(trafficSimulation.getRoads()[i]);
                     trafficSimulation.getRoads()[i]->addBusStop(busStop);
+                    log << "road found\n";
+                    exists = true;
                 }
+            }
+            if (!exists){
+                log << "road not found\n";
+                failed = false;
             }
         } else if (elemname == WACHTTIJD) {
             tempi = convertStrToInt(tempn);
-            busStop->setWaitTime(tempi);
-            busStop->setCooldown(tempi);
+            if (tempi < 1){
+                failed = false;
+                log << "Cycle time was lower than 1\n";
+            }
+            else {
+                busStop->setWaitTime(tempi);
+                busStop->setCooldown(tempi);
+                log << "Cycle time was higher than 0\n";
+            }
         } else if (elemname == POSITIE) {
             tempi = convertStrToInt(tempn);
-            busStop->setPosition(tempi);
+            if (tempi < 1){
+                failed = false;
+                log << "Position was lower than 1\n";
+            }
+            else {
+                busStop->setPosition(tempi);
+                log << "Position was higher than 0\n";
+            }
         }
         else{
             cout << "Not recognized parameter" << endl;
-            return false;
+            log << "Not reconizable parameter\n";
+            failed = false;
         }
     }
-    trafficSimulation.addBusStop(busStop);
-    return true;
+    if (failed){
+        trafficSimulation.addBusStop(busStop);
+    }
+    log.close();
+    return failed;
 }
 
 bool parseCrossRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     REQUIRE(trafficSimulation.properlyInitialized(), "TrafficSimulation was not initialized when calling parseCrossRoad");
+
+    string filename;
+    filename = TESTLOG;
+    filename += CROSSROADLOG;
+
+    fstream log;
+    log.open(filename.c_str(), ios::out| ios::trunc);
+
     // create new object
     CrossRoad* crossRoad = new CrossRoad();
 
     // temp values
     string tempn;
     int tempi;
+    bool failed = true;
 
     // parsing
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
         string elemname = elem->Value();
 
         if(elem->NoChildren()){
-            crossRoad->addRoad(NULL, 0);
-            crossRoad->addRoad(NULL, 0);
+            delete crossRoad;
+            log.open(filename.c_str(), ios::out | ios::trunc);
+            log << "One of the elements had no value assigned\n";
+            log.close();
             return false;
         }
         tempn = elem->GetText();
@@ -99,23 +148,48 @@ bool parseCrossRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
             TiXmlAttribute* atr = elem->FirstAttribute();
             string pos;
             if (atr != NULL){
+                log << "Position was assigned\n";
                 pos = atr->Value();
             }
+            else{
+                pos = "0";
+                log << "Position was not assigned\n";
+                failed = false;
+            }
             tempi = convertStrToInt(pos);
+            if (tempi > 1){
+                log << "Position value is higher than 1\n";
+            }
+            else {
+                log << "Position was lower than 1\n";
+                failed = false;
+            }
+            bool roadFound = false;
             for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); ++i) {
                 if (trafficSimulation.getRoads()[i]->getRoadName() == tempn){
                     crossRoad->addRoad(trafficSimulation.getRoads()[i], tempi);
                     trafficSimulation.getRoads()[i]->addCrossRoad(crossRoad);
+                    roadFound = true;
                     break;
                 }
             }
+            if (roadFound){
+                log << "Road is found\n";
+            }
+            else {
+                log << "Road not found\n";
+                failed = false;
+            }
         }
     }
-    if (crossRoad->getRoads().size() > 1){
+    bool end = false;
+    if (crossRoad->getRoads().size() > 1 and failed){
         trafficSimulation.addCrossRoad(crossRoad);
-        return true;
+        end = true;
     }
-    return false;
+
+    log.close();
+    return end;
 }
 
 
@@ -131,6 +205,15 @@ bool parseCrossRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
 bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     REQUIRE(trafficSimulation.properlyInitialized(), "TrafficSimulation was not initialized when calling parseRoad");
     REQUIRE(*typeid(root).name() == 'P' , "parseRoad was called with invalid parameter");
+
+    string filename;
+    filename = TESTLOG;
+    filename += ROADLOG;
+
+    fstream log;
+    log.open(filename.c_str(), ios::out| ios::trunc);
+
+
     // create road object
     Road *newRoad = new Road();
 
@@ -143,11 +226,14 @@ bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         string elemName = elem->Value();
 
         if(elem->NoChildren()){
+            log.close();
+            log.open(filename.c_str(), ios::out | ios::trunc);
+            log << "One of the elements had no value assigned\n";
+            log.close();
             return false;
         }
 
         tempn = elem->GetText();
-
 
         if(elemName == NAAM){
             newRoad->setRoadName(tempn);
@@ -156,9 +242,11 @@ bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
             tempi = convertStrToInt(tempn);
             if(tempi <= 0){
                 newRoad->setLength(0);
+                log << "Road length was assigned lower than 1\n";
             }
             else{
                 newRoad->setLength(tempi);
+                log << "Road length was assigned higher than 1\n";
             }
         }
     }
@@ -166,13 +254,17 @@ bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     // Check if road already exists + add road
     if(newRoad->getLength() > 0 and !newRoad->getRoadName().empty()){
         if(!trafficSimulation.addRoad(newRoad)){
+            log << "Road was not unique\n";
+            log.close();
             return false;
         }
         else{
+            log << "Road is unique\n";
+            log.close();
             return true;
         }
     }
-    delete newRoad;
+    log.close();
     return false;
 }
 
@@ -212,10 +304,20 @@ bool setTypeParser(const string &tempn, Vehicle* &vehicle){
 bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     REQUIRE(trafficSimulation.properlyInitialized(), "TrafficSimulation was not initialized when calling parseVehicle");
     REQUIRE(*typeid(root).name() == 'P' , "parseVehicle was called with invalid parameter");
+
+    string filename;
+    filename = TESTLOG;
+    filename += VEHICLELOG;
+
+    fstream log;
+    log.open(filename.c_str(), ios::out| ios::trunc);
+
     Vehicle* vehicle = new Vehicle();
 
     string tempn;
     int tempi;
+    bool failed = true;
+    bool roadExist = false;
 
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
         string elemName = elem->Value();
@@ -223,8 +325,20 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         // if elem is empty, end parsing and return false
         if(elem->NoChildren()){
             vehicle->setType(T_NULL);
-            vehicle->setRoad(NULL);
             vehicle->setPosition(0);
+            if (roadExist){
+                vehicle->getRoad()->removeVehicle(vehicle);
+            }
+            vector<Vehicle*> tempVec = trafficSimulation.getVehicles();
+            if (!trafficSimulation.getVehicles().empty() and trafficSimulation.getVehicles()[trafficSimulation.getVehicles().size()-1] == vehicle){
+                tempVec.pop_back();
+                trafficSimulation.setVehicles(tempVec);
+            }
+            vehicle->setRoad(trafficSimulation.getDummyRoad());
+            log.close();
+            log.open(filename.c_str(), ios::out | ios::trunc);
+            log << "One of the elements had no value assigned\n";
+            log.close();
             return false;
         }
 
@@ -233,7 +347,11 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         if (elemName == TYPE){
             if(!setTypeParser(tempn, vehicle)){
                 vehicle->setType(T_NULL);
-                return false;
+                log << "Type not found\n";
+                failed = false;
+            }
+            else {
+                log << "Type was found\n";
             }
         }
         else if(elemName == BAANL){
@@ -242,20 +360,51 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
                     vehicle->setRoad(trafficSimulation.getRoads()[i]);
                     trafficSimulation.getRoads()[i]->addVehicle(vehicle);
                     trafficSimulation.addVehicle(vehicle);
+                    roadExist = true;
                     break;
                 }
+            }
+            if (roadExist){
+                log << "Road was found\n";
+            }
+            else {
+                log << "Road was not found\n";
+                failed = false;
             }
         }
         else if(elemName == POSITIE){
             tempi = convertStrToInt(tempn);
             if (tempi < 0){
                 vehicle->setPosition(0);
-                return false;
+                log << "Posistion was assigned lower than 0\n";
+                failed = false;
             }
-            vehicle->setPosition(tempi);
+            else if ((unsigned) tempi > vehicle->getRoad()->getLength()){
+                vehicle->setPosition(vehicle->getRoad()->getLength());
+                log << "Position was assigned higher than road length\n";
+                failed = false;
+            }
+            else {
+                vehicle->setPosition(tempi);
+                log << "Position was assigned higher than 0\n";
+            }
         }
     }
-    return true;
+    if (!failed){
+        vehicle->setType(T_NULL);
+        vehicle->setPosition(0);
+        if (roadExist){
+            vehicle->getRoad()->removeVehicle(vehicle);
+        }
+        vector<Vehicle*> tempVec = trafficSimulation.getVehicles();
+        if (!trafficSimulation.getVehicles().empty() and trafficSimulation.getVehicles()[trafficSimulation.getVehicles().size()-1] == vehicle){
+            tempVec.pop_back();
+            trafficSimulation.setVehicles(tempVec);
+        }
+        vehicle->setRoad(trafficSimulation.getDummyRoad());
+    }
+    log.close();
+    return failed;
 }
 
 
@@ -272,12 +421,21 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
 bool parseTrafficLight(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     REQUIRE(trafficSimulation.properlyInitialized(), "TrafficSimulation was not initialized when calling parseTrafficLight");
     REQUIRE(*typeid(root).name() == 'P' , "parseTrafficLight was called with invali parameter");
+
+    string filename;
+    filename = TESTLOG;
+    filename += TRAFFICLIGHTLOG;
+
+    fstream log;
+    log.open(filename.c_str(), ios::out| ios::trunc);
+
     // Create object
     TrafficLight* trafficLight = new TrafficLight();
 
     // Create temp values
     string tempn;
     int tempi;
+    bool failed = true;
 
     // Parsing
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
@@ -286,53 +444,72 @@ bool parseTrafficLight(TiXmlElement* &root, TrafficSimulation &trafficSimulation
         // if elem is empty, end parsing and return false
         if(elem->NoChildren()){
             trafficLight->setPosition(0);
-            trafficLight->setRoad(NULL);
+            trafficLight->setRoad(trafficSimulation.getDummyRoad());
             trafficLight->setCyclus(0);
+            log.close();
+            log.open(filename.c_str(), ios::out | ios::trunc);
+            log << "One of the elements had no value assigned\n";
+            log.close();
             return false;
         }
 
         tempn = elem->GetText();
 
-
+        bool roadExist = false;
         if(elemName == BAANL){
             for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); ++i) {
                 if (tempn == trafficSimulation.getRoads()[i]->getRoadName()) {
                     trafficLight->setRoad(trafficSimulation.getRoads()[i]);
+                    roadExist = true;
                     break;
                 }
             }
-            if (trafficLight->getRoad() == NULL){
-                delete trafficLight;
-                return false;
+            if (roadExist){
+                log << "Road found\n";
+            }
+            else {
+                log << "Road not found\n";
+                failed = false;
             }
         }
         else if(elemName == POSITIE){
             tempi = convertStrToInt(elem->GetText());
             if (tempi < 0 || tempi > int(trafficLight->getRoad()->getLength()) ){
                 trafficLight->setPosition(0);
-                return false;
+                log << "Position was assigned higher than road length or lower than 0\n";
+                failed = false;
             }
-            trafficLight->setPosition(tempi);
+            else {
+                log << "Position is valid\n";
+                trafficLight->setPosition(tempi);
+            }
         }
         else if(elemName == CYCLUS){
             tempi = convertStrToInt(elem->GetText());
             if (tempi <= 0){
                 trafficLight->setCyclus(0);
-                return false;
+                log << "Cycle time was assigned lower than 1\n";
+                failed = false;
             }
-            trafficLight->setCyclus(tempi);
+            else {
+                log << "Cycle time is valid\n";
+                trafficLight->setCyclus(tempi);
+            }
         }
     }
 
     // add traffic light to road
-    for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); ++i) {
-        if (trafficSimulation.getRoads()[i] == trafficLight->getRoad()){
-            trafficSimulation.getRoads()[i]->addLight(trafficLight);
-            trafficSimulation.addTrafficLight(trafficLight);
-            break;
+    if (failed){
+        for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); ++i) {
+            if (trafficSimulation.getRoads()[i] == trafficLight->getRoad()){
+                trafficSimulation.getRoads()[i]->addLight(trafficLight);
+                trafficSimulation.addTrafficLight(trafficLight);
+                break;
+            }
         }
     }
-    return true;
+    log.close();
+    return failed;
 }
 
 
@@ -348,10 +525,20 @@ bool parseTrafficLight(TiXmlElement* &root, TrafficSimulation &trafficSimulation
 bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
     REQUIRE(trafficSimulation.properlyInitialized(), "TrafficSimulation was not initialized when calling parseVehicleGenerator");
     REQUIRE(*typeid(root).name() == 'P' , "parseVehicleGenerator was called with invalid parameter");
+
+    string filename;
+    filename = TESTLOG;
+    filename += VEHICLEGENERATORLOG;
+
+    fstream log;
+    log.open(filename.c_str(), ios::out| ios::trunc);
+
     VehicleGenerator* vehicleGenerator = new VehicleGenerator();
 
     string tempn;
     int tempf;
+    bool failed = true;
+    bool exist = false;
 
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
         string elemName = elem->Value();
@@ -359,9 +546,13 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
         // if elem is empty, end parsing and return false
         if(elem->NoChildren()){
             vehicleGenerator->setType(T_NULL);
-            vehicleGenerator->setRoad(NULL);
+            vehicleGenerator->setRoad(trafficSimulation.getDummyRoad());
             vehicleGenerator->setFrequentie(0);
             vehicleGenerator->setCooldown(0);
+            log.close();
+            log.open(filename.c_str(), ios::out | ios::trunc);
+            log << "One of the elements had no value assigned\n";
+            log.close();
             return false;
         }
 
@@ -371,26 +562,38 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
             for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); ++i) {
                 if (tempn == trafficSimulation.getRoads()[i]->getRoadName()) {
                     vehicleGenerator->setRoad(trafficSimulation.getRoads()[i]);
-                    if (!trafficSimulation.addVehicleGenerator(vehicleGenerator)){
+                    exist = true;
+                    /*if (!trafficSimulation.addVehicleGenerator(vehicleGenerator)){
                         vehicleGenerator->setRoad(NULL);
                         return false;
-                    }
+                    }*/
                     break;
                 }
+            }
+            if (exist){
+                log << "Road was found\n";
+            }
+            else {
+                log << "Road was nit found\n";
+                failed = false;
             }
         }
         else if (elemName == FREQUENTIE) {
             tempf = convertStrToInt(elem->GetText());
-            if (tempf < 0){
+            if (tempf <= 0){
                 vehicleGenerator->setFrequentie(0);
-                return false;
+                log << "Frequency was assigned lower than 1\n";
+                failed = false;
             }
-            vehicleGenerator->setFrequentie(tempf);
-            // Set cooldown : 0 for instant generation upon simulation start
-            vehicleGenerator->setCooldown(tempf);
+            else {
+                vehicleGenerator->setFrequentie(tempf);
+                // Set cooldown : 0 for instant generation upon simulation start
+                vehicleGenerator->setCooldown(tempf);
+                log << "Frequency was assigned higher than 1\n";
+            }
         }
         if (tempn == AUTO){
-                vehicleGenerator->setType(T_AUTO);
+            vehicleGenerator->setType(T_AUTO);
         }
         else if ( tempn == BUS ){
             vehicleGenerator->setType(T_BUS);
@@ -409,7 +612,11 @@ bool parseVehicleGenerator(TiXmlElement* &root, TrafficSimulation &trafficSimula
             vehicleGenerator->setType(T_AUTO);
         }
     }
-    return true;
+    if (failed){
+        trafficSimulation.addVehicleGenerator(vehicleGenerator);
+    }
+    log.close();
+    return failed;
 }
 
 void parseTrafficSimulationX(TrafficSimulation &trafficSimulation){

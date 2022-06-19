@@ -14,6 +14,9 @@ using namespace std;
 TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename), time(0), stopTime(0) {
     REQUIRE(*typeid(filename).name() == 'N' , "constructor was called with invalid filename");
     _initCheck = this;
+    dummyRoad = new Road();
+    dummyRoad->setLength(0);
+    dummyRoad->setRoadName("Dummy");
     if (filename.find(XMLL) != string::npos or filename.find(XMLU) != string::npos){
         parseXML();
     }
@@ -29,6 +32,9 @@ TrafficSimulation::TrafficSimulation(const string &filename) : filename(filename
 
 TrafficSimulation::TrafficSimulation(): time(0), stopTime(0) {
     _initCheck = this;
+    dummyRoad = new Road();
+    dummyRoad->setLength(0);
+    dummyRoad->setRoadName("Dummy");
     ENSURE(properlyInitialized(), "constructor must end in properlyInitialized state");
 }
 
@@ -58,9 +64,9 @@ const vector<TrafficLight *> &TrafficSimulation::getLights() {
     return lights;
 }
 
-const vector<Vehicle *> &TrafficSimulation::getVehicles(){
+vector<Vehicle *> TrafficSimulation::getVehicles(){
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getVehicles");
-    return vehicles;
+    return this->vehicles;
 }
 
 void TrafficSimulation::addTrafficLight(TrafficLight *&newLight) {
@@ -130,6 +136,13 @@ const string &TrafficSimulation::getFilename(){
     REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getFilename");
     return filename;
 }
+
+Road *TrafficSimulation::getDummyRoad() const {
+    REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getDummyRoad");
+    return dummyRoad;
+}
+
+
 
 void TrafficSimulation::setStopTime(int newStopTime) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling setStopTime");
@@ -686,6 +699,10 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, 
     } else if (countE){
         ENSURE(vehicles.size() == MAX_VEHICLES * this->getVehicleGenerators().size(), "Amount of vehicles on road is not the same as what expected");
     }
+}
+
+void TrafficSimulation::setVehicles(const vector<Vehicle *> &newvehicles) {
+    TrafficSimulation::vehicles = newvehicles;
 }
 
 TrafficSimulation::~TrafficSimulation() {

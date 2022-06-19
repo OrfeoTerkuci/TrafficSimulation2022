@@ -1,11 +1,11 @@
 <Veerkerssimulatie>
     <BAAN>
         <naam>Middelheimlaan</naam>
-        <lengte>5000</lengte>
+        <lengte>500</lengte>
     </BAAN>
     <VERKEERSLICHT>
         <baan>Middelheimlaan</baan>
-        <positie>5000</positie>
+        <positie>400</positie>
         <cyclus>20</cyclus>
     </VERKEERSLICHT>
     <VOERTUIG>

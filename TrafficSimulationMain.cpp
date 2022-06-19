@@ -21,7 +21,7 @@ int main(){
 //TrafficSimulation ts(SIM7); // Normal simulation, with invalid road length
 //TrafficSimulation ts(SIM8); // Normal simulation, with invalid traffic-light position
 //TrafficSimulation ts(SIM9); // Normal simulation, with invalid vehicle position
-//TrafficSimulation ts(SIM10); // Vehicle generator simulation, with invalid vehicle generator frequencies
+TrafficSimulation ts(SIM10); // Vehicle generator simulation, with invalid vehicle generator frequencies
 //TrafficSimulation testFile(SIM11); // Normal simulation, with empty parameter for road
 
 //==== Crossroad files ====//
@@ -34,7 +34,7 @@ int main(){
 //TrafficSimulation ts(SIM14);
 
 //==== Different types of vehicles ====//
-TrafficSimulation ts(SIM15);
+//TrafficSimulation ts(SIM15);
 
 //==== Crossroads ====//
 //TrafficSimulation ts(SIM16);
@@ -45,7 +45,8 @@ TrafficSimulation ts(SIM15);
 //==== Simulation functions ====//
 //ts.printAll();
 //ts.startSimulation(false, false, true); // Simulates until there is a maximum vehicle count reached --> Standard_Values --> MAX_VEHICLES
-ts.startSimulation(); // Simulate current loaded file
+//ts.startSimulation(); // Simulate current loaded file
+ts.startSimulation(false);
 
 return 0;
 }

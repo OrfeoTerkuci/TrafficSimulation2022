@@ -1,0 +1,3 @@
+Road found
+Position is valid
+Cycle time is valid
