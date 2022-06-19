@@ -436,6 +436,7 @@ bool parseTrafficLight(TiXmlElement* &root, TrafficSimulation &trafficSimulation
     string tempn;
     int tempi;
     bool failed = true;
+    bool roadExist = false;
 
     // Parsing
     for(TiXmlElement* elem = root->FirstChildElement(); elem != NULL; elem = elem->NextSiblingElement()) {
@@ -455,7 +456,6 @@ bool parseTrafficLight(TiXmlElement* &root, TrafficSimulation &trafficSimulation
 
         tempn = elem->GetText();
 
-        bool roadExist = false;
         if(elemName == BAANL){
             for (unsigned int i = 0; i < trafficSimulation.getRoads().size(); ++i) {
                 if (tempn == trafficSimulation.getRoads()[i]->getRoadName()) {
