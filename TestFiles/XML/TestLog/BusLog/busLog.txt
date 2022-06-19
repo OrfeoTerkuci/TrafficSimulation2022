@@ -1,1 +1,3 @@
-One of the elements had no value
+road found
+Position was higher than 0
+Cycle time was higher than 0

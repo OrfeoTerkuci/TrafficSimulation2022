@@ -379,7 +379,7 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
                 log << "Posistion was assigned lower than 0\n";
                 failed = false;
             }
-            else if ((unsigned) tempi > vehicle->getRoad()->getLength()){
+            else if (roadExist and (unsigned) tempi > vehicle->getRoad()->getLength()){
                 vehicle->setPosition(vehicle->getRoad()->getLength());
                 log << "Position was assigned higher than road length\n";
                 failed = false;
@@ -474,7 +474,7 @@ bool parseTrafficLight(TiXmlElement* &root, TrafficSimulation &trafficSimulation
         }
         else if(elemName == POSITIE){
             tempi = convertStrToInt(elem->GetText());
-            if (tempi < 0 || tempi > int(trafficLight->getRoad()->getLength()) ){
+            if ((roadExist) && (tempi < 0 || tempi > int(trafficLight->getRoad()->getLength()))){
                 trafficLight->setPosition(0);
                 log << "Position was assigned higher than road length or lower than 0\n";
                 failed = false;

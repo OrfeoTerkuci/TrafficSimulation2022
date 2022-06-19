@@ -1,0 +1,6 @@
+Amount of vehicles: 2
+Amount of roads: 1
+Amount of bus stops: 0
+Amount of crossroads: 0
+Amount of VehicleGenerators: 0
+File is properly initialized: true

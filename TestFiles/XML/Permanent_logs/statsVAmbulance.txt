@@ -1,0 +1,10 @@
+vehicle length: 8
+vehicle max speed: 15.5
+vehicle max acceleration: 1.44
+vehicle max brakefactor: 4.47
+vehicle min follow distance: 8
+vehicle decelerate: 6.2
+slowing bus bool = 0
+stopping bus bool = 0
+leaving bus bool = 0
+is properly initialized: true
