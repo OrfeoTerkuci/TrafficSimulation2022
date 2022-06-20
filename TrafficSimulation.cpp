@@ -905,6 +905,85 @@ void TrafficSimulation::generateIni() {
         count++;
     }
 
+    int position;
+
+    // Generate traffic lights
+    for(unsigned int i = 0; i < lights.size(); i++){
+        position = (size / 2) - lights[i]->getPosition();
+        outputNewFile << "[Figure";
+        outputNewFile << count;
+        outputNewFile << "]\n"
+                         "type = \"Cylinder\"\n"
+                         "height = 15\n"
+                         "n = 36\n"
+                         "scale = 0.3\n"
+                         "rotateX = 0\n"
+                         "rotateY = 0\n"
+                         "rotateZ = 0\n";
+        outputNewFile << "center = (";
+        outputNewFile << 2.6;
+        outputNewFile << ",";
+        if(position < 0){
+            outputNewFile << "-" << abs(position);
+        } else{
+            outputNewFile << position;
+        }
+        outputNewFile << ",";
+        outputNewFile << 0.1;
+        outputNewFile << ")\n"
+                         "ambientReflection = (0.5, 0.5, 0.5)\n"
+                         "diffuseReflection = (0.5, 0.5, 0.5)\n"
+                         "\n\n";
+        count++;
+        outputNewFile << "[Figure";
+        outputNewFile << count;
+        outputNewFile << "]\n"
+                         "type = \"Sphere\"\n"
+                         "n = 3\n"
+                         "scale = 0.3\n"
+                         "rotateX = 0\n"
+                         "rotateY = 0\n"
+                         "rotateZ = 0\n";
+        outputNewFile << "center = (";
+        outputNewFile << 2.6;
+        outputNewFile << ",";
+        if(position < 0){
+            outputNewFile << "-" << abs(position);
+        } else{
+            outputNewFile << position;
+        }
+        outputNewFile << ",";
+        outputNewFile << 4;
+        outputNewFile << ")\n"
+                         "ambientReflection = (1, 0, 0)\n"
+                         "diffuseReflection = (1, 0, 0)\n"
+                         "\n\n";
+        count++;
+        outputNewFile << "[Figure";
+        outputNewFile << count;
+        outputNewFile << "]\n"
+                         "type = \"Sphere\"\n"
+                         "n = 3\n"
+                         "scale = 0.3\n"
+                         "rotateX = 0\n"
+                         "rotateY = 0\n"
+                         "rotateZ = 0\n";
+        outputNewFile << "center = (";
+        outputNewFile << 2.6;
+        outputNewFile << ",";
+        if(position < 0){
+            outputNewFile << "-" << abs(position);
+        } else{
+            outputNewFile << position;
+        }
+        outputNewFile << ",";
+        outputNewFile << 3.5;
+        outputNewFile << ")\n"
+                         "ambientReflection = (0, 1, 0)\n"
+                         "diffuseReflection = (0, 1, 0)"
+                         "\n\n";
+        count++;
+    }
     // Write general tags
     outputNewFile << "[General]\n"
                      "size = 1024\n"
@@ -918,7 +997,7 @@ void TrafficSimulation::generateIni() {
     outputNewFile << ",";
     outputNewFile << (size + 10) / 2;
     outputNewFile<<  ")\n"
-                     "viewDirection = (1, 1,-1)\n"
+                     "viewDirection = (0, 0,-1)\n"
                      "hfov = 90\n"
                      "aspectRatio = 1.3333\n"
                      "dNear = 1\n"
@@ -948,13 +1027,13 @@ void TrafficSimulation::generateIni() {
 
 int TrafficSimulation::generateImage() {
     int ret = std::system("cd ../; cd ../; cd ./Engine; ./engine");
-    // Update filelist
-    string newFileName = INI_DIRECTORY;
-    newFileName += "filelist";
-
-    fstream outputNewFile;
-    outputNewFile.open(newFileName.c_str(), ios::trunc | ios::out);
-    outputNewFile.close();
+//    // Update filelist
+//    string newFileName = INI_DIRECTORY;
+//    newFileName += "filelist";
+//
+//    fstream outputNewFile;
+//    outputNewFile.open(newFileName.c_str(), ios::trunc | ios::out);
+//    outputNewFile.close();
     return ret;
 }
 
