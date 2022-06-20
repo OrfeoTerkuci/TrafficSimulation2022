@@ -7,6 +7,12 @@
 #include <typeinfo>
 #include <sstream>
 #include <filesystem>
+#include <unistd.h>
+#include <sys/types.h>
+#include <errno.h>
+#include <stdio.h>
+#include <sys/wait.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -743,5 +749,15 @@ TrafficSimulation::~TrafficSimulation() {
     ENSURE(crossRoads.empty(), "Crossroads are not properly destructed");
     ENSURE(vehicles.empty(), "Vehicles are not properly destructed");
     ENSURE(vehicleGenerators.empty(), "Vehicle generators are not properly destructed");
+}
+
+void TrafficSimulation::generateIni() {
+
+
+}
+
+int TrafficSimulation::generateImage() {
+    int ret = std::system("cd ../; cd ../; cd ./Engine; ./engine");
+    return ret;
 }
 
