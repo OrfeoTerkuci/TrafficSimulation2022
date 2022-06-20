@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>647</width>
-    <height>587</height>
+    <width>1280</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -163,21 +163,41 @@
           <property name="text">
            <string>Traffic Lights</string>
           </property>
+          <item>
+           <property name="text">
+            <string>TrafficLight1</string>
+           </property>
+          </item>
          </item>
          <item>
           <property name="text">
            <string>Bus stops</string>
           </property>
+          <item>
+           <property name="text">
+            <string>BusStop1</string>
+           </property>
+          </item>
          </item>
          <item>
           <property name="text">
            <string>Vehicle Generators</string>
           </property>
+          <item>
+           <property name="text">
+            <string>Generator1</string>
+           </property>
+          </item>
          </item>
          <item>
           <property name="text">
            <string>Vehicles</string>
           </property>
+          <item>
+           <property name="text">
+            <string>Vehicle1</string>
+           </property>
+          </item>
          </item>
         </item>
        </widget>
@@ -418,8 +438,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>647</width>
-     <height>21</height>
+     <width>1280</width>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -485,12 +505,12 @@
    <slot>playToggle()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>374</x>
-     <y>409</y>
+     <x>768</x>
+     <y>519</y>
     </hint>
     <hint type="destinationlabel">
      <x>352</x>
-     <y>-12</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -501,12 +521,12 @@
    <slot>enableItemSettingsSlot()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>102</x>
-     <y>302</y>
+     <x>112</x>
+     <y>666</y>
     </hint>
     <hint type="destinationlabel">
      <x>127</x>
-     <y>-12</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -517,12 +537,12 @@
    <slot>showMenu()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>253</x>
-     <y>405</y>
+     <x>387</x>
+     <y>517</y>
     </hint>
     <hint type="destinationlabel">
-     <x>253</x>
-     <y>405</y>
+     <x>387</x>
+     <y>517</y>
     </hint>
    </hints>
   </connection>
