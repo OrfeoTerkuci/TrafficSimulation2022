@@ -8,7 +8,7 @@ int main(){
 
 //==== Normal simulation files ====//
 //TrafficSimulation ts(SIM0); // Single vehicle , long road
-//TrafficSimulation ts(SIM1); // Basic Simulation
+TrafficSimulation ts(SIM1); // Basic Simulation
 //TrafficSimulation ts(SIM2); // Empty road simulation
 //TrafficSimulation ts(SIM3); // Multiple Roads simulation
 
@@ -43,7 +43,7 @@ int main(){
 //TrafficSimulation ts(SIM17);
 
 //==== Negative numbers ====//
-TrafficSimulation ts(SIM18);
+//TrafficSimulation ts(SIM18);
 
 //==== Simulation functions ====//
 // ts.printAll();

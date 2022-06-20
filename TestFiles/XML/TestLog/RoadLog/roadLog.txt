@@ -1,1 +1,2 @@
-Road length was assigned lower than 1
+Road length was assigned higher than 1
+Road is unique
