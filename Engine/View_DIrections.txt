@@ -1,0 +1,4 @@
+Diagonal_Top_Right: (1,1,-1)
+Horizontal_Right_Side: (1,0,-1)
+Front_View: (0,1,-1)
+Top_View: (0,0,-1)

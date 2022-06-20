@@ -8,12 +8,12 @@ int main(){
 
 //==== Normal simulation files ====//
 //TrafficSimulation ts(SIM0); // Single vehicle , long road
-// TrafficSimulation ts(SIM1); // Basic Simulation
+//TrafficSimulation ts(SIM1); // Basic Simulation
 //TrafficSimulation ts(SIM2); // Empty road simulation
 //TrafficSimulation ts(SIM3); // Multiple Roads simulation
 
 //==== Vehicle generator files ====//
-//TrafficSimulation ts(SIM4); // VehicleGenerator sim
+TrafficSimulation ts(SIM4); // VehicleGenerator sim
 //TrafficSimulation ts(SIM5); // VehicleGenerator sim with multiple roads
 //TrafficSimulation ts(SIM6); // VehicleGenerator sim and with cars on different roads
 
@@ -22,7 +22,7 @@ int main(){
 //TrafficSimulation ts(SIM8); // Normal simulation, with invalid traffic-light position
 //TrafficSimulation ts(SIM9); // Normal simulation, with invalid vehicle position
 //TrafficSimulation ts(SIM10); // Vehicle generator simulation, with invalid vehicle generator frequencies
-TrafficSimulation ts(SIM11); // Normal simulation, with empty parameter for road
+//TrafficSimulation ts(SIM11); // Normal simulation, with empty parameter for road
 
 //==== Crossroad files ====//
 //TrafficSimulation ts(SIM12);

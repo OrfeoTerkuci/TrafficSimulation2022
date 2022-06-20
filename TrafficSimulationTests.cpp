@@ -509,6 +509,40 @@ TEST(SimTest, simulation17){
     EXPECT_TRUE(ts.getVehicles().empty());
 }
 
+TEST(SimTest, parseLogNormal){
+    TrafficSimulation ts(SIM0);
+    string filename = TESTLOG;
+    filename += ROADLOG;
+    EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/roadLogSucces.txt"));
+    filename = TESTLOG;
+    filename += TRAFFICLIGHTLOG;
+    EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/trafficLightLogSucces.txt"));
+    filename = TESTLOG;
+    filename += VEHICLELOG;
+    EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/vehicleLogSucces.txt"));
+}
+
+TEST(SimTest, parseLogGenerator){
+    TrafficSimulation ts(SIM4);
+    string filename = TESTLOG;
+    filename += ROADLOG;
+    EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/roadLogSucces.txt"));
+    filename = TESTLOG;
+    filename += TRAFFICLIGHTLOG;
+    EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/trafficLightLogSucces.txt"));
+    filename = TESTLOG;
+    filename += VEHICLEGENERATORLOG;
+    EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/vehicleGeneratorLogSucces.txt"));
+}
+
+TEST(SimTest, parseLogBusStop){
+
+}
+
+TEST(SimTest, parseLogCrossroad){
+
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
