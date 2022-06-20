@@ -104,11 +104,13 @@ enum vehicleType{ T_AUTO , T_BUS , T_FIRETRUCK , T_AMBULANCE , T_POLICE , T_NULL
 #define XMLL                    ".xml"
 #define XMLU                    ".XML"
 #define TXTL                    ".txt"
+#define INIL                    ".ini"
 #define HTMLL                   ".html"
 #define JSONL                   ".json"
 #define JSONU                   ".JSON"
 #define TESTLOG                 "./TestLog/"
 #define OUTPUT_DIRECTORY        "./OutputLog/"
+#define INI_DIRECTORY           "../../Engine/"
 
 // log files
 #define BUSLOG                  "BusLog/busLog.txt"

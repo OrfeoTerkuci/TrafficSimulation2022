@@ -692,6 +692,9 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, 
         }
         count ++;
         time = count;
+        if(time % 100 == 0){
+            generateIni();
+        }
     }
     if (printE){
         cout << "- There are no vehicles on the road network." << endl;
@@ -705,6 +708,7 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, 
     } else if (countE){
         ENSURE(vehicles.size() == MAX_VEHICLES * this->getVehicleGenerators().size(), "Amount of vehicles on road is not the same as what expected");
     }
+    generateImage();
 }
 
 void TrafficSimulation::setVehicles(const vector<Vehicle *> &newvehicles) {
@@ -752,12 +756,205 @@ TrafficSimulation::~TrafficSimulation() {
 }
 
 void TrafficSimulation::generateIni() {
+    // create file
+    string newFileName = INI_DIRECTORY;
+    string fileList;
+    newFileName += filename;
+    newFileName = newFileName.substr(0,newFileName.size() - 4);
+    newFileName += INIL;
+    fileList = filename.substr(0, filename.size() - 4);
+    fileList += INIL;
+    FILE* codefile;
 
+    // TXT
+    bool doesntExists = true;
+    fstream outputNewFile;
+    int i = 0;
+
+    while (doesntExists){
+        i++;
+        codefile = fopen(newFileName.c_str(), "r");
+        if (codefile){
+            newFileName = INI_DIRECTORY + filename.substr(0, filename.size() - 4);
+            stringstream intStr;
+            intStr << i;
+            newFileName += '(';
+            newFileName += intStr.str();
+            newFileName += ')';
+            newFileName += INIL;
+            fileList = filename.substr(0, filename.size() - 4);
+            fileList += '(';
+            fileList += intStr.str();
+            fileList += ')';
+            fileList += INIL;
+        }
+        else {
+            outputNewFile.open(newFileName.c_str(), ios::app | ios::ate);
+            doesntExists = false;
+        }
+    }
+
+    outputNewFile << "\n"
+                     "[Light0]\n"
+                     "infinity = TRUE\n"
+                     "direction = (0, 0, -1)\n"
+                     "ambientLight = (1, 1, 1)\n"
+                     "diffuseLight = (1, 1, 1)"
+                     "\n\n";
+
+    int count = 0;
+
+    // Generate figures for roads
+    unsigned int size = 0;
+    for(unsigned int i = 0; i < roads.size(); i++){
+        outputNewFile << "[Figure";
+        outputNewFile << i;
+        outputNewFile << "]\n"
+                         "type = \"Rectangular Plane\"\n"
+                         "scale = 1\n"
+                         "length = ";
+        outputNewFile << roads[i]->getLength();
+        outputNewFile << "\n"
+                         "width = 5\n"
+                         "height = 1\n"
+                         "rotateX = 0\n"
+                         "rotateY = 0\n"
+                         "rotateZ = 0\n"
+                         "center = (0, 0, 0.1)\n"
+                         "ambientReflection = (0, 0, 0)\n"
+                         "diffuseReflection = (0, 0, 0)"
+                         "\n\n";
+        if(roads[i]->getLength() > size){
+            size = roads[i]->getLength();
+        }
+        count++;
+    }
+
+    // Generate ground plane
+
+    outputNewFile << "[Figure";
+    outputNewFile << count;
+    outputNewFile << "]\n"
+                     "type = \"Plane\"\n"
+                     "scale = ";
+    outputNewFile << (size + 10) / 2;
+    outputNewFile << "\n"
+                     "rotateX = 0\n"
+                     "rotateY = 0\n"
+                     "rotateZ = 0\n"
+                     "center = (0, 0, 0)\n"
+                     "ambientReflection = (0, 0.75, 0.00)\n"
+                     "diffuseReflection = (0, 0.75, 0.00)"
+                     "\n\n";
+
+    count++;
+
+    // Generate vehicles
+    for(unsigned int j = 0; j < vehicles.size(); j++){
+        // Vehicle base
+        outputNewFile << "[Figure";
+        outputNewFile << count;
+        outputNewFile << "]\n"
+                         "type = \"Rectangular Prism\"\n"
+                         "scale = 1\n"
+                         "length = ";
+        outputNewFile << vehicles[j]->getV_length();
+        outputNewFile << "\n"
+                         "width = 2\n"
+                         "height = 1\n"
+                         "rotateX = 0\n"
+                         "rotateY = 0\n"
+                         "rotateZ = 0\n";
+
+        outputNewFile << "center = (";
+        outputNewFile << 0;
+        outputNewFile << ",";
+        outputNewFile << (size / 2)  - vehicles[j]->getVehiclePosition();
+        outputNewFile << ",";
+        outputNewFile << 0.1;
+        outputNewFile << ")\n"
+                         "ambientReflection = (1, 0.5, 0.00)\n"
+                         "diffuseReflection = (1, 0.5, 0.00)\n"
+                         "\n\n";
+        count++;
+
+        // Vehicle top
+        outputNewFile << "[Figure";
+        outputNewFile << count;
+        outputNewFile << "]\n"
+                         "type = \"Rectangular Prism\"\n"
+                         "scale = 1\n"
+                         "length = ";
+        outputNewFile << vehicles[j]->getV_length() - 1;
+        outputNewFile << "\n"
+                         "width = 2\n"
+                         "height = 1\n"
+                         "rotateX = 0\n"
+                         "rotateY = 0\n"
+                         "rotateZ = 0\n";
+        outputNewFile << "center = (";
+        outputNewFile << 0;
+        outputNewFile << ",";
+        outputNewFile << (size / 2) - vehicles[j]->getVehiclePosition();
+        outputNewFile << ",";
+        outputNewFile << 0.1;
+        outputNewFile << ")\n"
+                         "ambientReflection = (1, 0.5, 0.00)\n"
+                         "diffuseReflection = (1, 0.5, 0.00)"
+                         "\n\n";
+        count++;
+    }
+
+    // Write general tags
+    outputNewFile << "[General]\n"
+                     "size = 1024\n"
+                     "backgroundcolor = (0.5, 0.5, 0.5)\n"
+                     "type = \"LightedZBuffering\"\n"
+                     "clipping = TRUE\n";
+    outputNewFile << "eye = (";
+    outputNewFile << (size + 10) / 2;
+    outputNewFile << ",";
+    outputNewFile << (size + 10) / 2;
+    outputNewFile << ",";
+    outputNewFile << (size + 10) / 2;
+    outputNewFile<<  ")\n"
+                     "viewDirection = (1, 1,-1)\n"
+                     "hfov = 90\n"
+                     "aspectRatio = 1.3333\n"
+                     "dNear = 1\n"
+                     "dFar = 1000\n"
+                     "nrLights = 1\n";
+
+    // Calculate total number of figures
+    outputNewFile << "nrFigures = ";
+    outputNewFile << count;
+    outputNewFile << "\n";
+
+    // Close file
+    outputNewFile.close();
+
+    // Update filelist
+    string fileListName = INI_DIRECTORY;
+    fileListName += "filelist";
+
+    outputNewFile.open(fileListName.c_str(), ios::app);
+
+    outputNewFile << fileList;
+    outputNewFile << "\n";
+
+    outputNewFile.close();
 
 }
 
 int TrafficSimulation::generateImage() {
     int ret = std::system("cd ../; cd ../; cd ./Engine; ./engine");
+    // Update filelist
+    string newFileName = INI_DIRECTORY;
+    newFileName += "filelist";
+
+    fstream outputNewFile;
+    outputNewFile.open(newFileName.c_str(), ios::trunc | ios::out);
+    outputNewFile.close();
     return ret;
 }
 
