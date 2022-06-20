@@ -112,7 +112,6 @@ Made by: **Orfeo Terkuci** and **Jason Liu**
 ![GitHub all releases](https://img.shields.io/github/downloads/OrfeoTerkuci/TrafficSimulation2022/total)
 ![GitHub language count](https://img.shields.io/github/languages/count/OrfeoTerkuci/TrafficSimulation2022)
 ![GitHub top language](https://img.shields.io/github/languages/top/OrfeoTerkuci/TrafficSimulation2022?color=yellow)
-![Bitbucket open issues](https://img.shields.io/bitbucket/issues/OrfeoTerkuci/TrafficSimulation2022)
 ![GitHub repo size](https://img.shields.io/github/repo-size/OrfeoTerkuci/TrafficSimulation2022)
 ![GitHub last commit](https://img.shields.io/github/last-commit/OrfeoTerkuci/TrafficSimulation2022)  
 ![GitHub forks](https://img.shields.io/github/forks/OrfeoTerkuci/TrafficSimulation2022?style=social)
