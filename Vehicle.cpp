@@ -44,13 +44,13 @@ Vehicle::Vehicle(double speed, double position , vehicleType type) :
     ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
 }
 
-Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , type(T_NULL) , slowing_bus(false) , stopping_bus(false)  , leaving_bus(false), status(accelerate) , road(NULL) , _initCheck(this) {
+Vehicle::Vehicle() : speed(0.0) , position(0.0) , acceleration(0.0) , type(T_AUTO) , slowing_bus(false) , stopping_bus(false)  , leaving_bus(false), status(accelerate) , road(NULL) , _initCheck(this) {
     setStandardValues();
     ENSURE(Vehicle::speed == 0.0 , "speed was not properly initialized");
     ENSURE(Vehicle::position == 0.0 , "position was not properly initialized");
     ENSURE(Vehicle::acceleration == 0.0 , "acceleration was not properly initialized");
     ENSURE(Vehicle::currentMaxSpeed == v_max_speed , "currentMaxSpeed was not properly initialized");
-    ENSURE(Vehicle::type == T_NULL , "vehicleType was not properly initialized");
+    ENSURE(Vehicle::type == T_AUTO , "vehicleType was not properly initialized");
     ENSURE(!Vehicle::slowing_bus , "slowing_bus was not properly initialized");
     ENSURE(!Vehicle::stopping_bus, "stopping_bus was not properly initialized");
     ENSURE(!Vehicle::leaving_bus, "leaving_bus was not properly initialized");
