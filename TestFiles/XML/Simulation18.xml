@@ -1,0 +1,21 @@
+<VERKEERSSIMULATIE>
+    <BAAN>
+        <naam>Middelheimlaan</naam>
+        <lengte>-300</lengte>
+    </BAAN>
+    <VOERTUIG>
+        <baan>Middelheimlaan</baan>
+        <positie>-20</positie>
+        <type>bus</type>
+    </VOERTUIG>
+    <BUSHALTE>
+        <baan>Middelheimlaan</baan>
+        <positie>-250</positie>
+        <wachttijd>-20</wachttijd>
+    </BUSHALTE>
+    <VERKEERSLICHT>
+        <baan>Middelheimlaan</baan>
+        <positie>-400</positie>
+        <cyclus>-20</cyclus>
+    </VERKEERSLICHT>
+</VERKEERSSIMULATIE>

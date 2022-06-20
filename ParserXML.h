@@ -276,7 +276,9 @@ bool setTypeParser(const string &tempn, Vehicle* &vehicle){
         newVehicle = new Vehicle(vehicle->getSpeed() , vehicle->getVehiclePosition() , T_AUTO);
         // Remove the vehicle from the road
         tempRoad = vehicle->getRoad();
-        tempRoad->removeVehicle(vehicle);
+        if (tempRoad != NULL){
+            tempRoad->removeVehicle(vehicle);
+        }
         // Update parameters
         newVehicle->setStatus(vehicle->getStatus());
         newVehicle->setAcceleration(vehicle->getAcceleration());
@@ -284,14 +286,18 @@ bool setTypeParser(const string &tempn, Vehicle* &vehicle){
         *vehicle = *newVehicle;
         vehicle->updateInitCheck();
         // Add vehicle back on the road
-        tempRoad->addVehicle(vehicle);
+        if (tempRoad != NULL){
+            tempRoad->addVehicle(vehicle);
+        }
     }
     else if ( tempn == BUS ){
         // Create new vehicle
         newVehicle = new Vehicle(vehicle->getSpeed() , vehicle->getVehiclePosition() , T_BUS);
         // Remove the vehicle from the road
         tempRoad = vehicle->getRoad();
-        tempRoad->removeVehicle(vehicle);
+        if (tempRoad != NULL){
+            tempRoad->removeVehicle(vehicle);
+        }
         // Update parameters
         newVehicle->setStatus(vehicle->getStatus());
         newVehicle->setAcceleration(vehicle->getAcceleration());
@@ -299,14 +305,18 @@ bool setTypeParser(const string &tempn, Vehicle* &vehicle){
         *vehicle = *newVehicle;
         vehicle->updateInitCheck();
         // Add vehicle back on the road
-        tempRoad->addVehicle(vehicle);
+        if (tempRoad != NULL){
+            tempRoad->addVehicle(vehicle);
+        }
     }
     else if ( tempn == BRANDWEERWAGEN ){
         // Create new vehicle
         newVehicle = new Vehicle(vehicle->getSpeed() , vehicle->getVehiclePosition() , T_FIRETRUCK);
         // Remove the vehicle from the road
         tempRoad = vehicle->getRoad();
-        tempRoad->removeVehicle(vehicle);
+        if (tempRoad != NULL){
+            tempRoad->removeVehicle(vehicle);
+        }
         // Update parameters
         newVehicle->setStatus(vehicle->getStatus());
         newVehicle->setAcceleration(vehicle->getAcceleration());
@@ -314,14 +324,18 @@ bool setTypeParser(const string &tempn, Vehicle* &vehicle){
         *vehicle = *newVehicle;
         vehicle->updateInitCheck();
         // Add vehicle back on the road
-        tempRoad->addVehicle(vehicle);
+        if (tempRoad != NULL){
+            tempRoad->addVehicle(vehicle);
+        }
     }
     else if ( tempn == ZIEKENWAGEN ){
         // Create new vehicle
         newVehicle = new Vehicle(vehicle->getSpeed() , vehicle->getVehiclePosition() , T_AMBULANCE);
         // Remove the vehicle from the road
         tempRoad = vehicle->getRoad();
-        tempRoad->removeVehicle(vehicle);
+        if (tempRoad != NULL){
+            tempRoad->removeVehicle(vehicle);
+        }
         // Update parameters
         newVehicle->setStatus(vehicle->getStatus());
         newVehicle->setAcceleration(vehicle->getAcceleration());
@@ -329,14 +343,18 @@ bool setTypeParser(const string &tempn, Vehicle* &vehicle){
         *vehicle = *newVehicle;
         vehicle->updateInitCheck();
         // Add vehicle back on the road
-        tempRoad->addVehicle(vehicle);
+        if (tempRoad != NULL){
+            tempRoad->addVehicle(vehicle);
+        }
     }
     else if ( tempn == POLITIECOMBI ){
         // Create new vehicle
         newVehicle = new Vehicle(vehicle->getSpeed() , vehicle->getVehiclePosition() , T_POLICE);
         // Remove the vehicle from the road
         tempRoad = vehicle->getRoad();
-        tempRoad->removeVehicle(vehicle);
+        if (tempRoad != NULL){
+            tempRoad->removeVehicle(vehicle);
+        }
         // Update parameters
         newVehicle->setStatus(vehicle->getStatus());
         newVehicle->setAcceleration(vehicle->getAcceleration());
@@ -344,7 +362,9 @@ bool setTypeParser(const string &tempn, Vehicle* &vehicle){
         *vehicle = *newVehicle;
         vehicle->updateInitCheck();
         // Add vehicle back on the road
-        tempRoad->addVehicle(vehicle);
+        if (tempRoad != NULL){
+            tempRoad->addVehicle(vehicle);
+        }
     }
     else{
         return false;
@@ -440,7 +460,7 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
             tempi = convertStrToInt(tempn);
             if (tempi < 0){
                 vehicle->setPosition(0);
-                log << "Posistion was assigned lower than 0\n";
+                log << "Position was assigned lower than 0\n";
                 failed = false;
             }
             else if (roadExist and (unsigned) tempi > vehicle->getRoad()->getLength()){

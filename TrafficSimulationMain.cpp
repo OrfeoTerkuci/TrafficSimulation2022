@@ -13,7 +13,7 @@ int main(){
 //TrafficSimulation ts(SIM3); // Multiple Roads simulation
 
 //==== Vehicle generator files ====//
-TrafficSimulation ts(SIM4); // VehicleGenerator sim
+//TrafficSimulation ts(SIM4); // VehicleGenerator sim
 //TrafficSimulation ts(SIM5); // VehicleGenerator sim with multiple roads
 //TrafficSimulation ts(SIM6); // VehicleGenerator sim and with cars on different roads
 
@@ -41,6 +41,9 @@ TrafficSimulation ts(SIM4); // VehicleGenerator sim
 
 //==== BusStop + Bus ====//
 //TrafficSimulation ts(SIM17);
+
+//==== Negative numbers ====//
+TrafficSimulation ts(SIM18);
 
 //==== Simulation functions ====//
 // ts.printAll();

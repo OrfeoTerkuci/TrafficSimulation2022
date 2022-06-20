@@ -16,7 +16,7 @@
         <baan positie="500">Floralienlaan</baan>
     </KRUISPUNT>
     <KRUISPUNT>
-    <baan positie="500">Middelheimlaan</baan>
-    <baan positie="500">Beukenlaan</baan>
+        <baan positie="500">Middelheimlaan</baan>
+        <baan positie="500">Beukenlaan</baan>
     </KRUISPUNT>
 </Veerkerssimulatie>

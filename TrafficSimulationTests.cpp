@@ -509,7 +509,7 @@ TEST(SimTest, simulation17){
     EXPECT_TRUE(ts.getVehicles().empty());
 }
 
-TEST(SimTest, parseLogNormal){
+TEST(parseTest, parseLogNormal){
     TrafficSimulation ts(SIM0);
     string filename = TESTLOG;
     filename += ROADLOG;
@@ -522,7 +522,7 @@ TEST(SimTest, parseLogNormal){
     EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/vehicleLogSucces.txt"));
 }
 
-TEST(SimTest, parseLogGenerator){
+TEST(parseTest, parseLogGenerator){
     TrafficSimulation ts(SIM4);
     string filename = TESTLOG;
     filename += ROADLOG;
@@ -535,12 +535,44 @@ TEST(SimTest, parseLogGenerator){
     EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/vehicleGeneratorLogSucces.txt"));
 }
 
-TEST(SimTest, parseLogBusStop){
-
+TEST(parseTest, parseLogBusStop){
+    TrafficSimulation ts(SIM13);
+    string filename = TESTLOG;
+    filename += ROADLOG;
+    EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/roadLogSucces.txt"));
+    filename = TESTLOG;
+    filename += BUSLOG;
+    EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/busLogSucces.txt"));
 }
 
-TEST(SimTest, parseLogCrossroad){
+TEST(parseTest, parseLogCrossroad){
+    TrafficSimulation ts(SIM16);
+    string filename = TESTLOG;
+    filename += CROSSROADLOG;
+    EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/crossroadLogSucces.txt"));
+}
 
+TEST(parseTest, parseLogFails){
+    TrafficSimulation ts(SIM11);
+    string filename = TESTLOG;
+    filename += ROADLOG;
+    EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/EmptyParameterLogFail.txt"));
+}
+
+TEST(parseTest, parseLogNegativenumbers){
+    TrafficSimulation ts(SIM18);
+    string filename = TESTLOG;
+    filename += ROADLOG;
+    EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/roadLogSIM18.txt"));
+    filename = TESTLOG;
+    filename += TRAFFICLIGHTLOG;
+    EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/trafficLightLogSIM18.txt"));
+    filename = TESTLOG;
+    filename += VEHICLELOG;
+    EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/vehicleLogSIM18.txt"));
+    filename = TESTLOG;
+    filename += BUSLOG;
+    EXPECT_TRUE(FileCompare(filename, "./Permanent_logs/busLogSIM18.txt"));
 }
 
 int main(int argc, char **argv) {

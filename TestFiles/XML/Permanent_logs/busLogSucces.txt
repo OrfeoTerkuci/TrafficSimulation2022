@@ -1,0 +1,3 @@
+road found
+Position was higher than 0
+Cycle time was higher than 0
