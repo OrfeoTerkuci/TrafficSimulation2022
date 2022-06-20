@@ -33,12 +33,6 @@ class Vehicle {
     Vehicle* _initCheck;
 public:
 
-    void setStandardValues();
-    const vehicleType &getType() const;
-
-    string getTypeString() const;
-
-    void setType(const vehicleType &newType);
     /**
      * REQUIRE(*typeid(speed).name() == 'd' , "constructor called with invalid speed parameter");
      * REQUIRE(*typeid(position).name() == 'd' , "constructor called with invalid position parameter");
@@ -57,6 +51,7 @@ public:
      * @param type The vehicle type
      */
     Vehicle(double speed, double position , vehicleType type = T_AUTO);
+
     /**
      * ENSURE(Vehicle::speed == 0.0 , "speed was not properly initialized");
      * ENSURE(Vehicle::position == 0.0 , "position was not properly initialized");
@@ -70,6 +65,14 @@ public:
      * ENSURE(properlyInitialized() , "constructor must end in properlyInitialized state");
      */
     Vehicle();
+
+    void updateInitCheck();
+
+    void setStandardValues();
+
+    const vehicleType &getType() const;
+
+    string getTypeString() const;
 
     bool properlyInitialized() const;
 

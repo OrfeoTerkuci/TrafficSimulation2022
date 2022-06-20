@@ -269,25 +269,89 @@ bool parseRoad(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
 }
 
 bool setTypeParser(const string &tempn, Vehicle* &vehicle){
+    Vehicle *newVehicle;
+    Road* tempRoad;
     if (tempn == AUTO){
-        vehicle->setType(T_AUTO);
+        // Create new vehicle
+        newVehicle = new Vehicle(vehicle->getSpeed() , vehicle->getVehiclePosition() , T_AUTO);
+        // Remove the vehicle from the road
+        tempRoad = vehicle->getRoad();
+        tempRoad->removeVehicle(vehicle);
+        // Update parameters
+        newVehicle->setStatus(vehicle->getStatus());
+        newVehicle->setAcceleration(vehicle->getAcceleration());
+        // Update pointer and InitCheck
+        *vehicle = *newVehicle;
+        vehicle->updateInitCheck();
+        // Add vehicle back on the road
+        tempRoad->addVehicle(vehicle);
     }
     else if ( tempn == BUS ){
-        vehicle->setType(T_BUS);
+        // Create new vehicle
+        newVehicle = new Vehicle(vehicle->getSpeed() , vehicle->getVehiclePosition() , T_BUS);
+        // Remove the vehicle from the road
+        tempRoad = vehicle->getRoad();
+        tempRoad->removeVehicle(vehicle);
+        // Update parameters
+        newVehicle->setStatus(vehicle->getStatus());
+        newVehicle->setAcceleration(vehicle->getAcceleration());
+        // Update pointer and InitCheck
+        *vehicle = *newVehicle;
+        vehicle->updateInitCheck();
+        // Add vehicle back on the road
+        tempRoad->addVehicle(vehicle);
     }
     else if ( tempn == BRANDWEERWAGEN ){
-        vehicle->setType(T_FIRETRUCK);
+        // Create new vehicle
+        newVehicle = new Vehicle(vehicle->getSpeed() , vehicle->getVehiclePosition() , T_FIRETRUCK);
+        // Remove the vehicle from the road
+        tempRoad = vehicle->getRoad();
+        tempRoad->removeVehicle(vehicle);
+        // Update parameters
+        newVehicle->setStatus(vehicle->getStatus());
+        newVehicle->setAcceleration(vehicle->getAcceleration());
+        // Update pointer and InitCheck
+        *vehicle = *newVehicle;
+        vehicle->updateInitCheck();
+        // Add vehicle back on the road
+        tempRoad->addVehicle(vehicle);
     }
     else if ( tempn == ZIEKENWAGEN ){
-        vehicle->setType(T_AMBULANCE);
+        // Create new vehicle
+        newVehicle = new Vehicle(vehicle->getSpeed() , vehicle->getVehiclePosition() , T_AMBULANCE);
+        // Remove the vehicle from the road
+        tempRoad = vehicle->getRoad();
+        tempRoad->removeVehicle(vehicle);
+        // Update parameters
+        newVehicle->setStatus(vehicle->getStatus());
+        newVehicle->setAcceleration(vehicle->getAcceleration());
+        // Update pointer and InitCheck
+        *vehicle = *newVehicle;
+        vehicle->updateInitCheck();
+        // Add vehicle back on the road
+        tempRoad->addVehicle(vehicle);
     }
     else if ( tempn == POLITIECOMBI ){
-        vehicle->setType(T_POLICE);
+        // Create new vehicle
+        newVehicle = new Vehicle(vehicle->getSpeed() , vehicle->getVehiclePosition() , T_POLICE);
+        // Remove the vehicle from the road
+        tempRoad = vehicle->getRoad();
+        tempRoad->removeVehicle(vehicle);
+        // Update parameters
+        newVehicle->setStatus(vehicle->getStatus());
+        newVehicle->setAcceleration(vehicle->getAcceleration());
+        // Update pointer and InitCheck
+        *vehicle = *newVehicle;
+        vehicle->updateInitCheck();
+        // Add vehicle back on the road
+        tempRoad->addVehicle(vehicle);
     }
     else{
         return false;
     }
-    vehicle->setStandardValues();
+    vehicle->updateInitCheck();
+//    vehicle->setStandardValues();
+    delete newVehicle;
     return true;
 }
 
@@ -324,7 +388,7 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
 
         // if elem is empty, end parsing and return false
         if(elem->NoChildren()){
-            vehicle->setType(T_NULL);
+//            vehicle->setType(T_NULL);
             vehicle->setPosition(0);
             if (roadExist){
                 vehicle->getRoad()->removeVehicle(vehicle);
@@ -346,7 +410,7 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
 
         if (elemName == TYPE){
             if(!setTypeParser(tempn, vehicle)){
-                vehicle->setType(T_NULL);
+//                vehicle->setType(T_NULL);
                 log << "Type not found\n";
                 failed = false;
             }
@@ -391,7 +455,7 @@ bool parseVehicle(TiXmlElement* &root, TrafficSimulation &trafficSimulation){
         }
     }
     if (!failed){
-        vehicle->setType(T_NULL);
+//        vehicle->setType(T_NULL);
         vehicle->setPosition(0);
         if (roadExist){
             vehicle->getRoad()->removeVehicle(vehicle);
