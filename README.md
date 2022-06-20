@@ -28,9 +28,9 @@ Made by: **Orfeo Terkuci** and **Jason Liu**
 |3.4  | Simulatie Met Voertuigengenerator | Belangrijk   |   V    |
  
 ### Commentaar:
-Parser must have it's own class.  
-Simulation must not stop at an error --> generate log file.  
-Simulation functions post-condition must be added.  
+- [X] Parser must have it's own class.  
+- [X] Simulation must not stop at an error --> generate log file.  
+- [ ] Simulation functions post-condition must be added.  
 
 ----------------------------------------------------------------------
 
@@ -63,8 +63,9 @@ Simulation functions post-condition must be added.
 ### Comentaar:
 ...
 ### TODO:
-Inheritance for vehicles  
-HTML needs a cleanup and a little optimization 
+- [ ] Inheritance for vehicles  
+- [X] HTML needs a cleanup and a little optimization 
+- [X] Vehicle cannot change type after construction
 
 ----------------------------------------------------------------------
 
