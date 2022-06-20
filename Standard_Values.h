@@ -45,8 +45,9 @@
 // Enumerations
 
 enum vehicleStatus{ accelerate , decelerate , stopping , idle };
-enum vehicleType{ T_AUTO , T_BUS , T_FIRETRUCK , T_AMBULANCE , T_POLICE , T_NULL};
+enum busStatus{ slowingBus , stoppingBus , leavingBus , farBus , noBus };
 enum fileFunctionType{ closing , create , update};
+enum vehicleType{ T_AUTO , T_BUS , T_FIRETRUCK , T_AMBULANCE , T_POLICE , T_NULL};
 
 // Strings
 #define TYPE                    "type"

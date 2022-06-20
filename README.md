@@ -28,9 +28,9 @@ Made by: **Orfeo Terkuci** and **Jason Liu**
 |3.4  | Simulatie Met Voertuigengenerator | Belangrijk   |   V    |
  
 ### Commentaar:
-Parser must have it's own class.  
-Simulation must not stop at an error --> generate log file.  
-Simulation functions post-condition must be added.  
+- [X] Parser must have it's own class.  
+- [X] Simulation must not stop at an error --> generate log file.  
+- [ ] Simulation functions post-condition must be added.  
 
 ----------------------------------------------------------------------
 
@@ -63,8 +63,9 @@ Simulation functions post-condition must be added.
 ### Comentaar:
 ...
 ### TODO:
-Inheritance for vehicles  
-HTML needs a cleanup and a little optimization 
+- [ ] Inheritance for vehicles  
+- [X] HTML needs a cleanup and a little optimization 
+- [X] Vehicle cannot change type after construction
 
 ----------------------------------------------------------------------
 
@@ -111,7 +112,6 @@ HTML needs a cleanup and a little optimization
 ![GitHub all releases](https://img.shields.io/github/downloads/OrfeoTerkuci/TrafficSimulation2022/total)
 ![GitHub language count](https://img.shields.io/github/languages/count/OrfeoTerkuci/TrafficSimulation2022)
 ![GitHub top language](https://img.shields.io/github/languages/top/OrfeoTerkuci/TrafficSimulation2022?color=yellow)
-![Bitbucket open issues](https://img.shields.io/bitbucket/issues/OrfeoTerkuci/TrafficSimulation2022)
 ![GitHub repo size](https://img.shields.io/github/repo-size/OrfeoTerkuci/TrafficSimulation2022)
 ![GitHub last commit](https://img.shields.io/github/last-commit/OrfeoTerkuci/TrafficSimulation2022)  
 ![GitHub forks](https://img.shields.io/github/forks/OrfeoTerkuci/TrafficSimulation2022?style=social)

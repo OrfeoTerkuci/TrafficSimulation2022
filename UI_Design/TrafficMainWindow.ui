@@ -6,105 +6,326 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>819</width>
-    <height>587</height>
+    <width>1280</width>
+    <height>720</height>
    </rect>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::DefaultContextMenu</enum>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QVBoxLayout" name="SimulationSettingsLayout">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <widget class="QGroupBox" name="simulationSettings">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="title">
+         <string>Simulation Settings</string>
+        </property>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="simulationSpeedLabel">
+           <property name="text">
+            <string>Simulation Speed</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QDoubleSpinBox" name="simulationSpeedDoubleSpinBox">
+           <property name="decimals">
+            <number>4</number>
+           </property>
+           <property name="maximum">
+            <double>5.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.010000000000000</double>
+           </property>
+           <property name="value">
+            <double>0.016600000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="slowingDistanceLabel">
+           <property name="text">
+            <string>Slowing Distance</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="slowingDistanceSpinBox">
+           <property name="minimum">
+            <number>15</number>
+           </property>
+           <property name="maximum">
+            <number>99</number>
+           </property>
+           <property name="value">
+            <number>50</number>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="stoppingDistanceLabel">
+           <property name="text">
+            <string>Stopping Distance</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QSpinBox" name="stoppingDistanceSpinBox">
+           <property name="minimum">
+            <number>5</number>
+           </property>
+           <property name="value">
+            <number>15</number>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="slowingFactorLabel">
+           <property name="text">
+            <string>Slowing Factor</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDoubleSpinBox" name="slowingFactorDoubleSpinBox">
+           <property name="maximum">
+            <double>1.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>0.010000000000000</double>
+           </property>
+           <property name="value">
+            <double>0.400000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTreeWidget" name="simulationOverview">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
+        </property>
+        <property name="tabKeyNavigation">
+         <bool>true</bool>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>true</bool>
+        </property>
+        <property name="uniformRowHeights">
+         <bool>true</bool>
+        </property>
+        <property name="animated">
+         <bool>true</bool>
+        </property>
+        <property name="allColumnsShowFocus">
+         <bool>false</bool>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+        <property name="columnCount">
+         <number>1</number>
+        </property>
+        <attribute name="headerHighlightSections">
+         <bool>true</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Simulation Elements</string>
+         </property>
+        </column>
         <item>
-         <widget class="QGroupBox" name="simulationSettings">
+         <property name="text">
+          <string>Road</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Traffic Lights</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>TrafficLight1</string>
+           </property>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>Bus stops</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>BusStop1</string>
+           </property>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>Vehicle Generators</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>Generator1</string>
+           </property>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>Vehicles</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>Vehicle1</string>
+           </property>
+          </item>
+         </item>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="1">
+     <layout class="QVBoxLayout" name="RightLayout">
+      <item>
+       <layout class="QVBoxLayout" name="visualisationLayout">
+        <item>
+         <widget class="QGraphicsView" name="simulationView">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="TimeControlLayout">
+          <item>
+           <widget class="QToolButton" name="addElementButton">
+            <property name="text">
+             <string>Add Element</string>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::MenuButtonPopup</enum>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextOnly</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="PlayButton">
+            <property name="text">
+             <string>Play</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="elementSettingsLayout">
+        <item>
+         <widget class="QGroupBox" name="TrafficLightSettings">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="styleSheet">
            <string notr="true"/>
           </property>
           <property name="title">
-           <string>Simulation Settings</string>
+           <string>Traffic Light settings</string>
           </property>
-          <layout class="QFormLayout" name="formLayout">
+          <layout class="QFormLayout" name="formLayout_3">
            <item row="0" column="0">
-            <widget class="QLabel" name="simulationSpeedLabel">
+            <widget class="QLabel" name="cycleLabel">
              <property name="text">
-              <string>Simulation Speed</string>
+              <string>Cycle</string>
              </property>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QDoubleSpinBox" name="simulationSpeedDoubleSpinBox">
-             <property name="decimals">
-              <number>4</number>
-             </property>
-             <property name="maximum">
-              <double>5.000000000000000</double>
-             </property>
-             <property name="singleStep">
-              <double>0.010000000000000</double>
-             </property>
-             <property name="value">
-              <double>0.016600000000000</double>
-             </property>
-            </widget>
+            <widget class="QSpinBox" name="cycleSpinBox"/>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="slowingDistanceLabel">
+            <widget class="QLabel" name="lightColorLabel">
              <property name="text">
-              <string>Slowing Distance</string>
+              <string>Color</string>
              </property>
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QSpinBox" name="slowingDistanceSpinBox">
-             <property name="minimum">
-              <number>15</number>
-             </property>
-             <property name="maximum">
-              <number>99</number>
-             </property>
-             <property name="value">
-              <number>50</number>
-             </property>
+            <widget class="QComboBox" name="colorComboBox">
+             <item>
+              <property name="text">
+               <string>Red</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Green</string>
+              </property>
+             </item>
             </widget>
            </item>
            <item row="2" column="0">
-            <widget class="QLabel" name="stoppingDistanceLabel">
+            <widget class="QLabel" name="LightPositionLabel">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
-              <string>Stopping Distance</string>
+              <string>Position</string>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QSpinBox" name="stoppingDistanceSpinBox">
-             <property name="minimum">
-              <number>5</number>
-             </property>
-             <property name="value">
-              <number>15</number>
+            <widget class="QSpinBox" name="LightPositionSpinBox">
+             <property name="enabled">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
            <item row="3" column="0">
-            <widget class="QLabel" name="slowingFactorLabel">
+            <widget class="QLabel" name="LightRoadLabel">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
-              <string>Slowing Factor</string>
+              <string>Road</string>
              </property>
             </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QDoubleSpinBox" name="slowingFactorDoubleSpinBox">
-             <property name="maximum">
-              <double>1.000000000000000</double>
-             </property>
-             <property name="singleStep">
-              <double>0.010000000000000</double>
-             </property>
-             <property name="value">
-              <double>0.400000000000000</double>
+            <widget class="QComboBox" name="LightRoadComboBox">
+             <property name="enabled">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -112,121 +333,98 @@
          </widget>
         </item>
         <item>
-         <widget class="QTreeWidget" name="simulationOverview">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="tabKeyNavigation">
-           <bool>true</bool>
-          </property>
-          <property name="alternatingRowColors">
-           <bool>true</bool>
-          </property>
-          <property name="uniformRowHeights">
-           <bool>true</bool>
-          </property>
-          <property name="animated">
-           <bool>true</bool>
-          </property>
-          <property name="allColumnsShowFocus">
+         <widget class="QGroupBox" name="BusStopSettings">
+          <property name="enabled">
            <bool>false</bool>
-          </property>
-          <property name="wordWrap">
-           <bool>false</bool>
-          </property>
-          <property name="columnCount">
-           <number>1</number>
-          </property>
-          <attribute name="headerHighlightSections">
-           <bool>true</bool>
-          </attribute>
-          <column>
-           <property name="text">
-            <string>Simulation Elements</string>
-           </property>
-          </column>
-          <item>
-           <property name="text">
-            <string>Road</string>
-           </property>
-           <item>
-            <property name="text">
-             <string>Traffic Lights</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Bus stops</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Vehicle Generators</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Vehicles</string>
-            </property>
-           </item>
-          </item>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <widget class="QGraphicsView" name="simulationView">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <item>
-             <widget class="QPushButton" name="pushButton">
-              <property name="text">
-               <string>Add Element</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_2">
-              <property name="text">
-               <string>Play</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_3">
-              <property name="text">
-               <string>Pause</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="elementSettings">
-          <property name="styleSheet">
-           <string notr="true">border: 1px dotted black</string>
           </property>
           <property name="title">
-           <string>Element Settings</string>
+           <string>Bus Stop settings</string>
           </property>
-          <layout class="QFormLayout" name="formLayout_3"/>
+          <layout class="QFormLayout" name="formLayout_4">
+           <item row="0" column="0">
+            <widget class="QLabel" name="waitingTimeLabel">
+             <property name="text">
+              <string>Waiting Time</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="waitingTimeSpinBox"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="busStopPositionLabel">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Position</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="busPositionSpinBox">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="BusRoadLabel">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Road</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QComboBox" name="BusRoadComboBox">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="VehicleGeneratorSettings">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="title">
+           <string>Vehicle Generator settings</string>
+          </property>
+          <layout class="QFormLayout" name="formLayout_5">
+           <item row="0" column="0">
+            <widget class="QLabel" name="frequenceLabel">
+             <property name="text">
+              <string>Frequence</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="frequenceSpinBox"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="GeneratorRoadLabel">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Road</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="GeneratorRoadComboBox">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
@@ -240,13 +438,117 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>819</width>
-     <height>21</height>
+     <width>1280</width>
+     <height>24</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="actionDevelopper_Settings"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuSettings"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Esc</string>
+   </property>
+  </action>
+  <action name="actionDevelopper_Settings">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Developper Settings</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>PlayButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>playToggle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>768</x>
+     <y>519</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>simulationOverview</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>enableItemSettingsSlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>112</x>
+     <y>666</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>127</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addElementButton</sender>
+   <signal>clicked()</signal>
+   <receiver>addElementButton</receiver>
+   <slot>showMenu()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>517</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>387</x>
+     <y>517</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>playToggleSlot()</slot>
+  <slot>enableItemSettingsSlot()</slot>
+ </slots>
 </ui>

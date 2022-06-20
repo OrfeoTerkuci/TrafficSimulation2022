@@ -159,13 +159,6 @@ const vehicleType &Vehicle::getType() const {
     return type;
 }
 
-void Vehicle::setType(const vehicleType &newType) {
-    REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setType");
-    Vehicle::type = newType;
-    setStandardValues();
-    ENSURE(type == newType, "type was not assigned to newType, after calling setType");
-}
-
 void Vehicle::setStandardValues() {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setStandardValues");
     if (type == T_AMBULANCE){
@@ -516,4 +509,8 @@ void Vehicle::outputStatsVehicle() {
 Vehicle::~Vehicle() {
     REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling destructor");
 
+}
+
+void Vehicle::updateInitCheck() {
+    Vehicle::_initCheck = this;
 }
