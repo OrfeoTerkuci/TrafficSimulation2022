@@ -1,0 +1,3 @@
+Road not found
+Position is valid
+Cycle time was assigned lower than 1

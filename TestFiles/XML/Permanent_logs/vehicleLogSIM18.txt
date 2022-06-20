@@ -1,0 +1,3 @@
+Road was not found
+Position was assigned lower than 0
+Type was found
