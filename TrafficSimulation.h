@@ -173,11 +173,17 @@ public: // functions
     */
     void print(int &count);
 
+    /**
+     * REQUIRE(properlyInitialized() , "TrafficSimulation was not properly initialized when calling generateIni");
+     * @param override If true, the generated file overrides any existing file with the same name
+     * @param lighting If true, there will be lighting
+     * @param viewPos The view position
+     */
     void generateIni(bool override = true , bool lighting = false , viewPosition viewPos = topView);
 
     /**
-     *
-     * @return
+     * REQUIRE(properlyInitialized() , "TrafficSimulation was not properly initialized when calling generateImage");
+     * @return 0 if no errors occured
      */
     int generateImage();
 

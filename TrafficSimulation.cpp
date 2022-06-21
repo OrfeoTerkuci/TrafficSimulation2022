@@ -855,10 +855,16 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
                          "rotateZ = 0\n"
                          "center = (";
         outputNewFile << roadAlign;
-        outputNewFile << ", 0, 0.1)\n"
-                         "ambientReflection = (0, 0, 0)\n"
-                         "diffuseReflection = (0, 0, 0)"
-                         "\n\n";
+        outputNewFile << ", 0, 0.1)\n";
+        if(lighting){
+            outputNewFile << "ambientReflection = (0, 0, 0)\n"
+                             "diffuseReflection = (0, 0, 0)\n"
+                             "specularReflection = (0, 0, 0)\n"
+                             "\n\n";
+        }
+        else{
+            outputNewFile << "color = (0, 0, 0)\n";
+        }
         if(roads[i]->getLength() > size){
             size = roads[i]->getLength();
         }
@@ -890,11 +896,16 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
             outputNewFile << (size / 2)  - roads[i]->getVehicle(j)->getVehiclePosition() - roads[i]->getVehicle(j)->getV_length() / 2;
             outputNewFile << ",";
             outputNewFile << 0.1;
-            outputNewFile << ")\n"
-                             "ambientReflection = (1, 0.5, 0.00)\n"
-                             "diffuseReflection = (1, 0.5, 0.00)\n"
-                             "specularReflection = (1, 0.5, 0.00)\n"
-                             "\n\n";
+            outputNewFile << ")\n";
+            if(lighting){
+                outputNewFile << "ambientReflection = (1, 0.5, 0.00)\n"
+                                 "diffuseReflection = (1, 0.5, 0.00)\n"
+                                 "specularReflection = (1, 0.5, 0.00)\n"
+                                 "\n\n";
+            }
+            else{
+                outputNewFile << "color = (1, 0.5, 0)\n";
+            }
             figureCount++;
 
             // Vehicle top
@@ -919,11 +930,16 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
             outputNewFile << (size / 2)  - roads[i]->getVehicle(j)->getVehiclePosition() - roads[i]->getVehicle(j)->getV_length() / 2 + 0.5;
             outputNewFile << ",";
             outputNewFile << 0.6;
-            outputNewFile << ")\n"
-                             "ambientReflection = (1, 0.5, 0.00)\n"
-                             "diffuseReflection = (1, 0.5, 0.00)\n"
-                             "specularReflection = (1, 0.5, 0.00)\n"
-                             "\n\n";
+            outputNewFile << ")\n";
+            if(lighting){
+                outputNewFile << "ambientReflection = (1, 0.5, 0.00)\n"
+                                 "diffuseReflection = (1, 0.5, 0.00)\n"
+                                 "specularReflection = (1, 0.5, 0.00)\n"
+                                 "\n\n";
+            }
+            else{
+                outputNewFile << "color = (1, 0.5, 0)\n";
+            }
             figureCount++;
 
         }
@@ -958,11 +974,16 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
             position < 0 ? outputNewFile << "-" << abs(position) : outputNewFile << position;
             outputNewFile << ",";
             outputNewFile << 0.1;
-            outputNewFile << ")\n"
-                             "ambientReflection = (0.5, 0.5, 0.5)\n"
-                             "diffuseReflection = (0.5, 0.5, 0.5)\n"
-                             "specularReflection = (0.5, 0.5, 0.5)\n"
-                             "\n\n";
+            outputNewFile << ")\n";
+            if(lighting){
+                outputNewFile << "ambientReflection = (0.5, 0.5, 0.5)\n"
+                                 "diffuseReflection = (0.5, 0.5, 0.5)\n"
+                                 "specularReflection = (0.5, 0.5, 0.5)\n"
+                                 "\n\n";
+            }
+            else{
+                outputNewFile << "color = (0.5, 0.5, 0.5)\n";
+            }
             figureCount++;
             // Create light
             outputNewFile << "[Figure";
@@ -989,18 +1010,28 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
             outputNewFile << TRAFFICLIGHT_HEIGHT / 4;
             // Check light color
             if(roads[i]->getTrafficLight(l)->getCurrentColor() == red){
-                outputNewFile << ")\n"
-                                 "ambientReflection = (1, 0, 0)\n"
-                                 "diffuseReflection = (1, 0, 0)\n"
-                                 "specularReflection = (1, 0, 0)\n"
-                                 "\n\n";
+                outputNewFile << ")\n";
+                if(lighting){
+                    outputNewFile << "ambientReflection = (1, 0, 0)\n"
+                                     "diffuseReflection = (1, 0, 0)\n"
+                                     "specularReflection = (1, 0, 0)\n"
+                                     "\n\n";
+                }
+                else{
+                    outputNewFile << "color = (1, 0, 0)\n";
+                }
             }
             else{
-                outputNewFile << ")\n"
-                                 "ambientReflection = (0, 1, 0)\n"
-                                 "diffuseReflection = (0, 1, 0)\n"
-                                 "specularReflection = (0, 1, 0)\n"
-                                 "\n\n";
+                outputNewFile << ")\n";
+                if(lighting){
+                    outputNewFile << "ambientReflection = (0, 1, 0)\n"
+                                     "diffuseReflection = (0, 1, 0)\n"
+                                     "specularReflection = (0, 1, 0)\n"
+                                     "\n\n";
+                }
+                else{
+                    outputNewFile << "color = (0, 1, 0)\n";
+                }
             }
             if(lighting){
                 // Create dynamic light
@@ -1059,10 +1090,16 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
                      "rotateX = 0\n"
                      "rotateY = 0\n"
                      "rotateZ = 0\n"
-                     "center = (0, 0, 0)\n"
-                     "ambientReflection = (0, 0.75, 0.00)\n"
-                     "diffuseReflection = (0, 0.75, 0.00)"
-                     "\n\n";
+                     "center = (0, 0, 0)\n";
+    if(lighting){
+        outputNewFile << "ambientReflection = (0, 0.75, 0)\n"
+                         "diffuseReflection = (0, 0, 0)\n"
+                         "specularReflection = (0, 0, 0)\n"
+                         "\n\n";
+    }
+    else{
+        outputNewFile << "color = (0 , 0.75 , 0)\n";
+    }
 
     figureCount++;
 
@@ -1070,9 +1107,14 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
     // Write general tags
     outputNewFile << "[General]\n"
                      "size = 1024\n"
-                     "backgroundcolor = (0.5, 0.5, 0.5)\n"
-                     "type = \"LightedZBuffering\"\n"
-                     "clipping = TRUE\n";
+                     "backgroundcolor = (0.5, 0.5, 0.5)\n";
+    if(lighting){
+        outputNewFile << "type = \"LightedZBuffering\"\n";
+    }
+    else{
+        outputNewFile << "type = \"ZBuffering\"\n";
+    }
+    outputNewFile << "clipping = TRUE\n";
     outputNewFile << "eye = (";
     outputNewFile << size / 2;
     outputNewFile << ",";
