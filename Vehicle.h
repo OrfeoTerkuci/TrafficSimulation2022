@@ -66,15 +66,29 @@ public:
      */
     Vehicle();
 
+    bool properlyInitialized() const;
+
+    /**
+     *
+     */
     void updateInitCheck();
 
+    /**
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling setStandardValues");
+     */
     void setStandardValues();
 
+    /**
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getType");
+     * @return vehicleType
+     */
     const vehicleType &getType() const;
 
+    /**
+     * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getTypeString");
+     * @return string of type
+     */
     string getTypeString() const;
-
-    bool properlyInitialized() const;
 
     /**
      * REQUIRE(this->properlyInitialized() , "Vehicle wasn't initialized when calling getCurrentMaxSpeed");

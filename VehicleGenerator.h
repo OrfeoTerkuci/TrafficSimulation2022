@@ -69,8 +69,17 @@ public:
      */
     void setCooldown(int newCooldown);
 
+    /**
+     * REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling setCooldown");
+     * @return vehicleType
+     */
     vehicleType getType();
 
+    /**
+     * REQUIRE(this->properlyInitialized(), "VehicleGenerator was not initialized when calling setType");
+     * ENSURE(VehicleGenerator::type == newType , "setType failed");
+     * @param newType
+     */
     void setType(const vehicleType newType);
 
     /**
