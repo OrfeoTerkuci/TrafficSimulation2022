@@ -699,7 +699,7 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, 
         }
         count ++;
         time = count;
-        if(time % 100 == 0){
+        if(time % FPS == 0){
             generateIni();
         }
     }

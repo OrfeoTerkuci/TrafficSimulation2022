@@ -177,7 +177,6 @@ public: // functions
 
     int generateImage();
 
-
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling startSimulation");
      * ENSURE(vehicles.empty() , "Simulation ended when it shouldn't");

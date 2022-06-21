@@ -124,5 +124,6 @@ enum viewPosition{top , left , right , front , back};
 // visualisation values
 #define ROAD_WIDTH              5.0
 #define TRAFFICLIGHT_HEIGHT     15.0
+#define FPS                     100
 
 #endif //TRAFFICSIMULATION2022_STANDARD_VALUES_H
