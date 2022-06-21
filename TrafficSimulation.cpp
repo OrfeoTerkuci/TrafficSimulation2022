@@ -1197,10 +1197,6 @@ int TrafficSimulation::generateImage() {
 
 int TrafficSimulation::clearIniFile(string filename) {
     REQUIRE(properlyInitialized() , "TrafficSimulation was not properly initialized when calling clearIniFiles");
-    if( remove(filename.c_str()) != 0 )
-        perror( "Error deleting file" );
-    else
-        puts( "File successfully deleted" );
-    return 0;
+    return remove(filename.c_str()) != 0 ? 1 : 0;
 }
 
