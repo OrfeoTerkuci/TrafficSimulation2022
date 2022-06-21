@@ -102,7 +102,7 @@ bool TrafficSimulation::addRoad(Road *newRoad) {
     REQUIRE(*typeid(newRoad).name() == 'P' , "addRoad was called with invalid parameter");
     REQUIRE(newRoad->properlyInitialized() , "addRoad was called with uninitialized parameter");
     unsigned int* oldSize = new unsigned int;
-    *oldSize = roads.size();
+    *oldSize = static_cast<unsigned int>(roads.size());
     for (unsigned int i = 0; i < this->roads.size(); ++i) {
         if(this->roads[i] == newRoad){
             ENSURE(*oldSize == roads.size() , "addRoad: vector modified when it shouldn't");
@@ -120,7 +120,7 @@ bool TrafficSimulation::addVehicleGenerator(VehicleGenerator *newVehicleGenerato
     REQUIRE (*typeid(newVehicleGenerator).name() == 'P' , "addVehicleGenerator was called with invalid parameter");
     REQUIRE (newVehicleGenerator->properlyInitialized() , "addVehicleGenerator was called with uninitialized parameter");
     unsigned int* oldSize = new unsigned int;
-    *oldSize = vehicleGenerators.size();
+    *oldSize = static_cast<unsigned int>(vehicleGenerators.size());
     // Check if the vehicle generator is already present
     for (unsigned int i = 0; i < this->vehicleGenerators.size(); ++i) {
         if (this->vehicleGenerators[i]->getRoad() == newVehicleGenerator->getRoad()){
@@ -613,6 +613,7 @@ void TrafficSimulation::print( int &count) {
 
 void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, bool timeE) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling startSimulation");
+    // Declare variables
     int count = time;
     double vehiclePosition;
     int roadLength;
@@ -628,16 +629,7 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, 
     }
 
     while (!this->vehicles.empty() || !this->vehicleGenerators.empty()){
-        for (unsigned int j = 0; j < this->lights.size(); ++j) {
-            // Simulate traffic light
-            currentRoad = lights.at(j)->getRoad();
-            if(currentRoad->getVehicleAmount() > 0){
-                this->lights.at(j)->simulate(count);
-            }
-        }
-        for (unsigned int k = 0; k < this->busStops.size(); ++k) {
-            this->busStops.at(k)->simulateBusStop();
-        }
+        // Simulate vehicle generators
         for (unsigned int l = 0; l < this->vehicleGenerators.size(); l++){
             VehicleGenerator* currentGenerator;
             currentGenerator = this->vehicleGenerators.at(l);
@@ -656,6 +648,19 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, 
                 this->addVehicle(newVehicle);
             }
         }
+        // Simulate traffic lights
+        for (unsigned int j = 0; j < this->lights.size(); ++j) {
+            // Simulate traffic light
+            currentRoad = lights.at(j)->getRoad();
+            if(currentRoad->getVehicleAmount() > 0){
+                this->lights.at(j)->simulate(count);
+            }
+        }
+        // Simulate bus stops
+        for (unsigned int k = 0; k < this->busStops.size(); ++k) {
+            this->busStops.at(k)->simulateBusStop();
+        }
+        // Simulate vehicles
         for (unsigned int i = 0; i < this->vehicles.size(); ++i){
             // Get current vehicle
             currentVehicle = this->vehicles.at(i);
@@ -674,10 +679,12 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, 
                 this->vehicles.erase(vehicles.begin() + i);
             }
         }
+        // Simulate crossroads
         for (unsigned int i = 0; i < this->crossRoads.size(); i++){
             CrossRoad* currentCross = this->crossRoads.at(i);
             currentCross->simulateCrossroad(false , count);
         }
+        // Execute required outputs
         if(printE){
             print(count);
         }
@@ -755,7 +762,7 @@ TrafficSimulation::~TrafficSimulation() {
     ENSURE(vehicleGenerators.empty(), "Vehicle generators are not properly destructed");
 }
 
-void TrafficSimulation::generateIni() {
+void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition viewPos) {
     // create file
     string newFileName = INI_DIRECTORY;
     string fileList;
@@ -764,48 +771,63 @@ void TrafficSimulation::generateIni() {
     newFileName += INIL;
     fileList = filename.substr(0, filename.size() - 4);
     fileList += INIL;
-    FILE* codefile;
-
-    // TXT
-    bool doesntExists = true;
+    // Create output file
     fstream outputNewFile;
-    int i = 0;
+    // No override
+    if(!override){
+        FILE* codefile;
 
-    while (doesntExists){
-        i++;
-        codefile = fopen(newFileName.c_str(), "r");
-        if (codefile){
-            newFileName = INI_DIRECTORY + filename.substr(0, filename.size() - 4);
-            stringstream intStr;
-            intStr << i;
-            newFileName += '(';
-            newFileName += intStr.str();
-            newFileName += ')';
-            newFileName += INIL;
-            fileList = filename.substr(0, filename.size() - 4);
-            fileList += '(';
-            fileList += intStr.str();
-            fileList += ')';
-            fileList += INIL;
-        }
-        else {
-            outputNewFile.open(newFileName.c_str(), ios::app | ios::ate);
-            doesntExists = false;
+        // TXT
+        bool doesntExists = true;
+        int i = 0;
+        // Check if file already exists
+        while (doesntExists){
+            i++;
+            codefile = fopen(newFileName.c_str(), "r");
+            if (codefile){
+                newFileName = INI_DIRECTORY + filename.substr(0, filename.size() - 4);
+                stringstream intStr;
+                intStr << i;
+                newFileName += '(';
+                newFileName += intStr.str();
+                newFileName += ')';
+                newFileName += INIL;
+                fileList = filename.substr(0, filename.size() - 4);
+                fileList += '(';
+                fileList += intStr.str();
+                fileList += ')';
+                fileList += INIL;
+            }
+            else {
+                outputNewFile.open(newFileName.c_str(), ios::app | ios::ate);
+                doesntExists = false;
+            }
         }
     }
+    // Override
+    else{
+        outputNewFile.open(newFileName.c_str(), ios::trunc | ios::out);
+    }
 
-    outputNewFile << "\n"
-                     "[Light0]\n"
-                     "infinity = TRUE\n"
-                     "direction = (0, 0, -1)\n"
-                     "ambientLight = (1, 1, 1)\n"
-                     "diffuseLight = (1, 1, 1)"
-                     "\n\n";
-
-    int count = 0;
+    // If there should be lighting
+    if(lighting){
+        // Praise the sun
+        outputNewFile << "\n"
+                         "[Light0]\n"
+                         "infinity = TRUE\n"
+                         "direction = (0, 0, -1)\n"
+                         "ambientLight = (1, 1, 1)\n"
+                         "diffuseLight = (1, 1, 1)"
+                         "\n\n";
+    }
+    // Initiate figureCount
+    int figureCount = 0;
+    // Initiate lightCount
+    int lightCount = 1;
 
     // Generate figures for roads
-    unsigned int size = 0;
+    double size = 0;
+
     for(unsigned int i = 0; i < roads.size(); i++){
         outputNewFile << "[Figure";
         outputNewFile << i;
@@ -815,7 +837,9 @@ void TrafficSimulation::generateIni() {
                          "length = ";
         outputNewFile << roads[i]->getLength();
         outputNewFile << "\n"
-                         "width = 5\n"
+                         "width = ";
+        outputNewFile << ROAD_WIDTH;
+        outputNewFile << "\n"
                          "height = 1\n"
                          "rotateX = 0\n"
                          "rotateY = 0\n"
@@ -827,13 +851,13 @@ void TrafficSimulation::generateIni() {
         if(roads[i]->getLength() > size){
             size = roads[i]->getLength();
         }
-        count++;
+        figureCount++;
     }
 
     // Generate ground plane
 
     outputNewFile << "[Figure";
-    outputNewFile << count;
+    outputNewFile << figureCount;
     outputNewFile << "]\n"
                      "type = \"Plane\"\n"
                      "scale = ";
@@ -847,20 +871,22 @@ void TrafficSimulation::generateIni() {
                      "diffuseReflection = (0, 0.75, 0.00)"
                      "\n\n";
 
-    count++;
+    figureCount++;
 
     // Generate vehicles
     for(unsigned int j = 0; j < vehicles.size(); j++){
         // Vehicle base
         outputNewFile << "[Figure";
-        outputNewFile << count;
+        outputNewFile << figureCount;
         outputNewFile << "]\n"
                          "type = \"Rectangular Prism\"\n"
                          "scale = 1\n"
                          "length = ";
         outputNewFile << vehicles[j]->getV_length();
         outputNewFile << "\n"
-                         "width = 2\n"
+                         "width = ";
+        outputNewFile << vehicles[j]->getV_length() / 2;
+        outputNewFile << "\n"
                          "height = 1\n"
                          "rotateX = 0\n"
                          "rotateY = 0\n"
@@ -869,25 +895,27 @@ void TrafficSimulation::generateIni() {
         outputNewFile << "center = (";
         outputNewFile << 0;
         outputNewFile << ",";
-        outputNewFile << (size / 2)  - vehicles[j]->getVehiclePosition();
+        outputNewFile << (size / 2)  - vehicles[j]->getVehiclePosition() - vehicles[j]->getV_length() / 2;
         outputNewFile << ",";
         outputNewFile << 0.1;
         outputNewFile << ")\n"
                          "ambientReflection = (1, 0.5, 0.00)\n"
                          "diffuseReflection = (1, 0.5, 0.00)\n"
                          "\n\n";
-        count++;
+        figureCount++;
 
         // Vehicle top
         outputNewFile << "[Figure";
-        outputNewFile << count;
+        outputNewFile << figureCount;
         outputNewFile << "]\n"
                          "type = \"Rectangular Prism\"\n"
                          "scale = 1\n"
                          "length = ";
         outputNewFile << vehicles[j]->getV_length() - 1;
         outputNewFile << "\n"
-                         "width = 2\n"
+                         "width = ";
+        outputNewFile << vehicles[j]->getV_length() / 2;
+        outputNewFile << "\n"
                          "height = 1\n"
                          "rotateX = 0\n"
                          "rotateY = 0\n"
@@ -895,94 +923,107 @@ void TrafficSimulation::generateIni() {
         outputNewFile << "center = (";
         outputNewFile << 0;
         outputNewFile << ",";
-        outputNewFile << (size / 2) - vehicles[j]->getVehiclePosition();
+        outputNewFile << (size / 2)  - vehicles[j]->getVehiclePosition() - vehicles[j]->getV_length() / 2;
         outputNewFile << ",";
         outputNewFile << 0.1;
         outputNewFile << ")\n"
                          "ambientReflection = (1, 0.5, 0.00)\n"
                          "diffuseReflection = (1, 0.5, 0.00)"
                          "\n\n";
-        count++;
+        figureCount++;
     }
 
-    int position;
+    double position;
 
     // Generate traffic lights
     for(unsigned int i = 0; i < lights.size(); i++){
+        // Get traffic light position
         position = (size / 2) - lights[i]->getPosition();
+        // Create pole
         outputNewFile << "[Figure";
-        outputNewFile << count;
+        outputNewFile << figureCount;
         outputNewFile << "]\n"
-                         "type = \"Cylinder\"\n"
-                         "height = 15\n"
+                         "type = \"Cylinder\"\n";
+        outputNewFile << "height = ";
+        outputNewFile << TRAFFICLIGHT_HEIGHT;
+        outputNewFile << "\n"
                          "n = 36\n"
                          "scale = 0.3\n"
                          "rotateX = 0\n"
                          "rotateY = 0\n"
                          "rotateZ = 0\n";
         outputNewFile << "center = (";
-        outputNewFile << 2.6;
+        outputNewFile << 1.05 * ROAD_WIDTH / 2;
         outputNewFile << ",";
-        if(position < 0){
-            outputNewFile << "-" << abs(position);
-        } else{
-            outputNewFile << position;
-        }
+        position < 0 ? outputNewFile << "-" << abs(position) : outputNewFile << position;
         outputNewFile << ",";
         outputNewFile << 0.1;
         outputNewFile << ")\n"
                          "ambientReflection = (0.5, 0.5, 0.5)\n"
                          "diffuseReflection = (0.5, 0.5, 0.5)\n"
                          "\n\n";
-        count++;
+        figureCount++;
+        // Create light
         outputNewFile << "[Figure";
-        outputNewFile << count;
+        outputNewFile << figureCount;
         outputNewFile << "]\n"
-                         "type = \"Sphere\"\n"
-                         "n = 3\n"
-                         "scale = 0.3\n"
+                         "type = \"Rectangular Prism\"\n"
+                         "scale = 0.35\n"
+                         "length = 1.5\n"
+                         "height = 3\n"
+                         "width = 1.4\n"
                          "rotateX = 0\n"
                          "rotateY = 0\n"
                          "rotateZ = 0\n";
         outputNewFile << "center = (";
-        outputNewFile << 2.6;
+        outputNewFile << 1.05 * ROAD_WIDTH / 2;
         outputNewFile << ",";
-        if(position < 0){
-            outputNewFile << "-" << abs(position);
-        } else{
-            outputNewFile << position;
+        position < 0 ? outputNewFile << "-" << abs(position + 0.1) : outputNewFile << position + 0.1;
+        outputNewFile << ",";
+        outputNewFile << TRAFFICLIGHT_HEIGHT / 4;
+        // Check light color
+        if(lights[i]->getCurrentColor() == red){
+            outputNewFile << ")\n"
+                             "ambientReflection = (1, 0, 0)\n"
+                             "diffuseReflection = (1, 0, 0)\n"
+                             "\n\n";
         }
-        outputNewFile << ",";
-        outputNewFile << 4;
-        outputNewFile << ")\n"
-                         "ambientReflection = (1, 0, 0)\n"
-                         "diffuseReflection = (1, 0, 0)\n"
-                         "\n\n";
-        count++;
-        outputNewFile << "[Figure";
-        outputNewFile << count;
-        outputNewFile << "]\n"
-                         "type = \"Sphere\"\n"
-                         "n = 3\n"
-                         "scale = 0.3\n"
-                         "rotateX = 0\n"
-                         "rotateY = 0\n"
-                         "rotateZ = 0\n";
-        outputNewFile << "center = (";
-        outputNewFile << 2.6;
-        outputNewFile << ",";
-        if(position < 0){
-            outputNewFile << "-" << abs(position);
-        } else{
-            outputNewFile << position;
+        else{
+            outputNewFile << ")\n"
+                             "ambientReflection = (0, 1, 0)\n"
+                             "diffuseReflection = (0, 1, 0)\n"
+                             "\n\n";
         }
-        outputNewFile << ",";
-        outputNewFile << 3.5;
-        outputNewFile << ")\n"
-                         "ambientReflection = (0, 1, 0)\n"
-                         "diffuseReflection = (0, 1, 0)"
-                         "\n\n";
-        count++;
+        if(lighting){
+            // Create dynamic light
+            outputNewFile << "\n"
+                             "[Light";
+            outputNewFile << lightCount;
+            outputNewFile << "]\n"
+                             "infinity = FALSE\n"
+                             "location = (";
+            outputNewFile << 1.05 * ROAD_WIDTH / 2;;
+            outputNewFile << ",";
+            position < 0 ? outputNewFile << "-" << abs(position + 0.1) : outputNewFile << position + 0.1;
+            outputNewFile << ",";
+            outputNewFile << TRAFFICLIGHT_HEIGHT / 4;
+            if(lights[i]->getCurrentColor() == red) {
+                outputNewFile << ")\n"
+                                 "ambientLight = (1, 0, 0)\n"
+                                 "diffuseLight = (1, 0, 0)\n"
+                                 "spotAngle = 60.0"
+                                 "\n\n";
+            }
+            else{
+                outputNewFile << ")\n"
+                                 "ambientReflection = (0, 1, 0)\n"
+                                 "diffuseReflection = (0, 1, 0)\n"
+                                 "spotAngle = 60.0"
+                                 "\n\n";
+            }
+            lightCount++;
+        }
+        figureCount++;
     }
     // Write general tags
     outputNewFile << "[General]\n"
@@ -1006,7 +1047,7 @@ void TrafficSimulation::generateIni() {
 
     // Calculate total number of figures
     outputNewFile << "nrFigures = ";
-    outputNewFile << count;
+    outputNewFile << figureCount;
     outputNewFile << "\n";
 
     // Close file
@@ -1026,14 +1067,15 @@ void TrafficSimulation::generateIni() {
 }
 
 int TrafficSimulation::generateImage() {
+    // Render image
     int ret = std::system("cd ../; cd ../; cd ./Engine; ./engine");
-    // Update filelist
+    // Reset filelist
     string newFileName = INI_DIRECTORY;
     newFileName += "filelist";
-
     fstream outputNewFile;
     outputNewFile.open(newFileName.c_str(), ios::trunc | ios::out);
     outputNewFile.close();
+    // Return execution status
     return ret;
 }
 

@@ -48,6 +48,7 @@ enum vehicleStatus{ accelerate , decelerate , stopping , idle };
 enum busStatus{ slowingBus , stoppingBus , leavingBus , farBus , noBus };
 enum fileFunctionType{ closing , create , update};
 enum vehicleType{ T_AUTO , T_BUS , T_FIRETRUCK , T_AMBULANCE , T_POLICE , T_NULL};
+enum viewPosition{top , left , right , front , back};
 
 // Strings
 #define TYPE                    "type"
@@ -119,5 +120,9 @@ enum vehicleType{ T_AUTO , T_BUS , T_FIRETRUCK , T_AMBULANCE , T_POLICE , T_NULL
 #define CROSSROADLOG            "CrossRoadLog/crossroadLog.txt"
 #define TRAFFICLIGHTLOG         "TrafficLightLog/trafficLightLog.txt"
 #define VEHICLEGENERATORLOG     "VehicleGeneratorLog/vehicleGeneratorLog.txt"
+
+// visualisation values
+#define ROAD_WIDTH              5.0
+#define TRAFFICLIGHT_HEIGHT     15.0
 
 #endif //TRAFFICSIMULATION2022_STANDARD_VALUES_H

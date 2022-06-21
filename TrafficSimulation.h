@@ -173,7 +173,7 @@ public: // functions
     */
     void print(int &count);
 
-    void generateIni();
+    void generateIni(bool override = true , bool lighting = false , viewPosition viewPos = top);
 
     int generateImage();
 
