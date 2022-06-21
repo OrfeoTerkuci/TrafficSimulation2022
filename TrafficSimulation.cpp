@@ -611,7 +611,7 @@ void TrafficSimulation::print( int &count) {
 
 }
 
-void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, bool timeE) {
+void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, bool timeE , bool visualise, bool override, bool lighting, viewPosition viewPos) {
     REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling startSimulation");
     // Declare variables
     int count = time;
@@ -699,8 +699,9 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, 
         }
         count ++;
         time = count;
-        if(time % FPS == 0){
-            generateIni();
+        if(time % FPS == 0 && visualise){
+            generateIni(override , lighting , viewPos);
+            generateImage();
         }
     }
     if (printE){
@@ -715,7 +716,6 @@ void TrafficSimulation::startSimulation(bool printE, bool outputE, bool countE, 
     } else if (countE){
         ENSURE(vehicles.size() == MAX_VEHICLES * this->getVehicleGenerators().size(), "Amount of vehicles on road is not the same as what expected");
     }
-    generateImage();
 }
 
 void TrafficSimulation::setVehicles(const vector<Vehicle *> &newvehicles) {
@@ -763,6 +763,7 @@ TrafficSimulation::~TrafficSimulation() {
 }
 
 void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition viewPos) {
+    REQUIRE(properlyInitialized() , "TrafficSimulation was not properly initialized when calling generateIni");
     // create file
     string newFileName = INI_DIRECTORY;
     string fileList;
@@ -824,13 +825,16 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
     int figureCount = 0;
     // Initiate lightCount
     int lightCount = 1;
+    // Initiate road alignment
+    double roadAlign = 0;
 
     // Generate figures for roads
     double size = 0;
 
     for(unsigned int i = 0; i < roads.size(); i++){
+        // Create road figure
         outputNewFile << "[Figure";
-        outputNewFile << i;
+        outputNewFile << figureCount;
         outputNewFile << "]\n"
                          "type = \"Rectangular Plane\"\n"
                          "scale = 1\n"
@@ -838,20 +842,209 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
         outputNewFile << roads[i]->getLength();
         outputNewFile << "\n"
                          "width = ";
-        outputNewFile << ROAD_WIDTH;
+        if(roads[i]->getLength() < ROAD_WIDTH){
+            outputNewFile << ROAD_WIDTH / 2;
+        }
+        else{
+            outputNewFile << ROAD_WIDTH;
+        }
         outputNewFile << "\n"
                          "height = 1\n"
                          "rotateX = 0\n"
                          "rotateY = 0\n"
                          "rotateZ = 0\n"
-                         "center = (0, 0, 0.1)\n"
+                         "center = (";
+        outputNewFile << roadAlign;
+        outputNewFile << ", 0, 0.1)\n"
                          "ambientReflection = (0, 0, 0)\n"
                          "diffuseReflection = (0, 0, 0)"
                          "\n\n";
         if(roads[i]->getLength() > size){
             size = roads[i]->getLength();
         }
+
         figureCount++;
+
+        // Generate vehicles
+        for(int j = 0; j < roads[i]->getVehicleAmount(); j++){
+            // Vehicle base
+            outputNewFile << "[Figure";
+            outputNewFile << figureCount;
+            outputNewFile << "]\n"
+                             "type = \"Rectangular Prism\"\n"
+                             "scale = 1\n"
+                             "length = ";
+            outputNewFile << roads[i]->getVehicle(j)->getV_length();
+            outputNewFile << "\n"
+                             "width = ";
+            outputNewFile << roads[i]->getVehicle(j)->getV_length() / 2;
+            outputNewFile << "\n"
+                             "height = 1\n"
+                             "rotateX = 0\n"
+                             "rotateY = 0\n"
+                             "rotateZ = 0\n";
+
+            outputNewFile << "center = (";
+            outputNewFile << roadAlign;
+            outputNewFile << ",";
+            outputNewFile << (size / 2)  - roads[i]->getVehicle(j)->getVehiclePosition() - roads[i]->getVehicle(j)->getV_length() / 2;
+            outputNewFile << ",";
+            outputNewFile << 0.1;
+            outputNewFile << ")\n"
+                             "ambientReflection = (1, 0.5, 0.00)\n"
+                             "diffuseReflection = (1, 0.5, 0.00)\n"
+                             "specularReflection = (1, 0.5, 0.00)\n"
+                             "\n\n";
+            figureCount++;
+
+            // Vehicle top
+            outputNewFile << "[Figure";
+            outputNewFile << figureCount;
+            outputNewFile << "]\n"
+                             "type = \"Rectangular Prism\"\n"
+                             "scale = 1\n"
+                             "length = ";
+            outputNewFile << roads[i]->getVehicle(j)->getV_length() - 1;
+            outputNewFile << "\n"
+                             "width = ";
+            outputNewFile << roads[i]->getVehicle(j)->getV_length() / 2;
+            outputNewFile << "\n"
+                             "height = 1\n"
+                             "rotateX = 0\n"
+                             "rotateY = 0\n"
+                             "rotateZ = 0\n";
+            outputNewFile << "center = (";
+            outputNewFile << roadAlign;
+            outputNewFile << ",";
+            outputNewFile << (size / 2)  - roads[i]->getVehicle(j)->getVehiclePosition() - roads[i]->getVehicle(j)->getV_length() / 2 + 0.5;
+            outputNewFile << ",";
+            outputNewFile << 0.6;
+            outputNewFile << ")\n"
+                             "ambientReflection = (1, 0.5, 0.00)\n"
+                             "diffuseReflection = (1, 0.5, 0.00)\n"
+                             "specularReflection = (1, 0.5, 0.00)\n"
+                             "\n\n";
+            figureCount++;
+
+        }
+
+        double position;
+
+        // Generate traffic lights
+        for(int l = 0; l < roads[i]->getTrafficLightsAmount(); l++){
+            // Get traffic light position
+            position = (size / 2) - roads[i]->getTrafficLight(l)->getPosition();
+            // Create pole
+            outputNewFile << "[Figure";
+            outputNewFile << figureCount;
+            outputNewFile << "]\n"
+                             "type = \"Cylinder\"\n";
+            outputNewFile << "height = ";
+            outputNewFile << TRAFFICLIGHT_HEIGHT;
+            outputNewFile << "\n"
+                             "n = 36\n"
+                             "scale = 0.3\n"
+                             "rotateX = 0\n"
+                             "rotateY = 0\n"
+                             "rotateZ = 0\n";
+            outputNewFile << "center = (";
+            if(roads[i]->getLength() < ROAD_WIDTH){
+                outputNewFile << 1.05 * ROAD_WIDTH / 4;
+            }
+            else{
+                outputNewFile << 1.05 * ROAD_WIDTH / 2;
+            }
+            outputNewFile << ",";
+            position < 0 ? outputNewFile << "-" << abs(position) : outputNewFile << position;
+            outputNewFile << ",";
+            outputNewFile << 0.1;
+            outputNewFile << ")\n"
+                             "ambientReflection = (0.5, 0.5, 0.5)\n"
+                             "diffuseReflection = (0.5, 0.5, 0.5)\n"
+                             "specularReflection = (0.5, 0.5, 0.5)\n"
+                             "\n\n";
+            figureCount++;
+            // Create light
+            outputNewFile << "[Figure";
+            outputNewFile << figureCount;
+            outputNewFile << "]\n"
+                             "type = \"Rectangular Prism\"\n"
+                             "scale = 0.35\n"
+                             "length = 1.5\n"
+                             "height = 3\n"
+                             "width = 1.4\n"
+                             "rotateX = 0\n"
+                             "rotateY = 0\n"
+                             "rotateZ = 0\n";
+            outputNewFile << "center = (";
+            if(roads[i]->getLength() < ROAD_WIDTH){
+                outputNewFile << 1.05 * ROAD_WIDTH / 4;
+            }
+            else{
+                outputNewFile << 1.05 * ROAD_WIDTH / 2;
+            }
+            outputNewFile << ",";
+            position < 0 ? outputNewFile << "-" << abs(position + 0.1) : outputNewFile << position + 0.1;
+            outputNewFile << ",";
+            outputNewFile << TRAFFICLIGHT_HEIGHT / 4;
+            // Check light color
+            if(roads[i]->getTrafficLight(l)->getCurrentColor() == red){
+                outputNewFile << ")\n"
+                                 "ambientReflection = (1, 0, 0)\n"
+                                 "diffuseReflection = (1, 0, 0)\n"
+                                 "specularReflection = (1, 0, 0)\n"
+                                 "\n\n";
+            }
+            else{
+                outputNewFile << ")\n"
+                                 "ambientReflection = (0, 1, 0)\n"
+                                 "diffuseReflection = (0, 1, 0)\n"
+                                 "specularReflection = (0, 1, 0)\n"
+                                 "\n\n";
+            }
+            if(lighting){
+                // Create dynamic light
+                outputNewFile << "\n"
+                                 "[Light";
+                outputNewFile << lightCount;
+                outputNewFile << "]\n"
+                                 "infinity = FALSE\n"
+                                 "location = (";
+                if(roads[i]->getLength() < ROAD_WIDTH){
+                    outputNewFile << 1.01 * ROAD_WIDTH / 4;
+                }
+                else{
+                    outputNewFile << 1.01 * ROAD_WIDTH / 2;
+                }
+                outputNewFile << ",";
+                position < 0 ? outputNewFile << "-" << abs(position + 0.1) : outputNewFile << position + 0.1;
+                outputNewFile << ",";
+                outputNewFile << TRAFFICLIGHT_HEIGHT / 4;
+
+
+                // Give light intensity
+                if(roads[i]->getTrafficLight(l)->getCurrentColor() == red) {
+                    outputNewFile << ")\n"
+                                     "ambientLight = (0, 0, 0)\n"
+                                     "diffuseLight = (1, 0, 0)\n"
+                                     "specularLight = (1, 0, 0)\n"
+                                     "spotAngle = 60.0\n"
+                                     "\n\n";
+                }
+                else{
+                    outputNewFile << ")\n"
+                                     "ambientLight = (0, 0, 0)\n"
+                                     "diffuseLight = (0, 1, 0)\n"
+                                     "specularLight = (0, 1, 0)\n"
+                                     "spotAngle = 60.0\n"
+                                     "\n\n";
+                }
+                lightCount++;
+            }
+            figureCount++;
+        }
+        roadAlign += ROAD_WIDTH + 5;
+
     }
 
     // Generate ground plane
@@ -873,158 +1066,7 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
 
     figureCount++;
 
-    // Generate vehicles
-    for(unsigned int j = 0; j < vehicles.size(); j++){
-        // Vehicle base
-        outputNewFile << "[Figure";
-        outputNewFile << figureCount;
-        outputNewFile << "]\n"
-                         "type = \"Rectangular Prism\"\n"
-                         "scale = 1\n"
-                         "length = ";
-        outputNewFile << vehicles[j]->getV_length();
-        outputNewFile << "\n"
-                         "width = ";
-        outputNewFile << vehicles[j]->getV_length() / 2;
-        outputNewFile << "\n"
-                         "height = 1\n"
-                         "rotateX = 0\n"
-                         "rotateY = 0\n"
-                         "rotateZ = 0\n";
 
-        outputNewFile << "center = (";
-        outputNewFile << 0;
-        outputNewFile << ",";
-        outputNewFile << (size / 2)  - vehicles[j]->getVehiclePosition() - vehicles[j]->getV_length() / 2;
-        outputNewFile << ",";
-        outputNewFile << 0.1;
-        outputNewFile << ")\n"
-                         "ambientReflection = (1, 0.5, 0.00)\n"
-                         "diffuseReflection = (1, 0.5, 0.00)\n"
-                         "\n\n";
-        figureCount++;
-
-        // Vehicle top
-        outputNewFile << "[Figure";
-        outputNewFile << figureCount;
-        outputNewFile << "]\n"
-                         "type = \"Rectangular Prism\"\n"
-                         "scale = 1\n"
-                         "length = ";
-        outputNewFile << vehicles[j]->getV_length() - 1;
-        outputNewFile << "\n"
-                         "width = ";
-        outputNewFile << vehicles[j]->getV_length() / 2;
-        outputNewFile << "\n"
-                         "height = 1\n"
-                         "rotateX = 0\n"
-                         "rotateY = 0\n"
-                         "rotateZ = 0\n";
-        outputNewFile << "center = (";
-        outputNewFile << 0;
-        outputNewFile << ",";
-        outputNewFile << (size / 2)  - vehicles[j]->getVehiclePosition() - vehicles[j]->getV_length() / 2;
-        outputNewFile << ",";
-        outputNewFile << 0.1;
-        outputNewFile << ")\n"
-                         "ambientReflection = (1, 0.5, 0.00)\n"
-                         "diffuseReflection = (1, 0.5, 0.00)"
-                         "\n\n";
-        figureCount++;
-    }
-
-    double position;
-
-    // Generate traffic lights
-    for(unsigned int i = 0; i < lights.size(); i++){
-        // Get traffic light position
-        position = (size / 2) - lights[i]->getPosition();
-        // Create pole
-        outputNewFile << "[Figure";
-        outputNewFile << figureCount;
-        outputNewFile << "]\n"
-                         "type = \"Cylinder\"\n";
-        outputNewFile << "height = ";
-        outputNewFile << TRAFFICLIGHT_HEIGHT;
-        outputNewFile << "\n"
-                         "n = 36\n"
-                         "scale = 0.3\n"
-                         "rotateX = 0\n"
-                         "rotateY = 0\n"
-                         "rotateZ = 0\n";
-        outputNewFile << "center = (";
-        outputNewFile << 1.05 * ROAD_WIDTH / 2;
-        outputNewFile << ",";
-        position < 0 ? outputNewFile << "-" << abs(position) : outputNewFile << position;
-        outputNewFile << ",";
-        outputNewFile << 0.1;
-        outputNewFile << ")\n"
-                         "ambientReflection = (0.5, 0.5, 0.5)\n"
-                         "diffuseReflection = (0.5, 0.5, 0.5)\n"
-                         "\n\n";
-        figureCount++;
-        // Create light
-        outputNewFile << "[Figure";
-        outputNewFile << figureCount;
-        outputNewFile << "]\n"
-                         "type = \"Rectangular Prism\"\n"
-                         "scale = 0.35\n"
-                         "length = 1.5\n"
-                         "height = 3\n"
-                         "width = 1.4\n"
-                         "rotateX = 0\n"
-                         "rotateY = 0\n"
-                         "rotateZ = 0\n";
-        outputNewFile << "center = (";
-        outputNewFile << 1.05 * ROAD_WIDTH / 2;
-        outputNewFile << ",";
-        position < 0 ? outputNewFile << "-" << abs(position + 0.1) : outputNewFile << position + 0.1;
-        outputNewFile << ",";
-        outputNewFile << TRAFFICLIGHT_HEIGHT / 4;
-        // Check light color
-        if(lights[i]->getCurrentColor() == red){
-            outputNewFile << ")\n"
-                             "ambientReflection = (1, 0, 0)\n"
-                             "diffuseReflection = (1, 0, 0)\n"
-                             "\n\n";
-        }
-        else{
-            outputNewFile << ")\n"
-                             "ambientReflection = (0, 1, 0)\n"
-                             "diffuseReflection = (0, 1, 0)\n"
-                             "\n\n";
-        }
-        if(lighting){
-            // Create dynamic light
-            outputNewFile << "\n"
-                             "[Light";
-            outputNewFile << lightCount;
-            outputNewFile << "]\n"
-                             "infinity = FALSE\n"
-                             "location = (";
-            outputNewFile << 1.05 * ROAD_WIDTH / 2;;
-            outputNewFile << ",";
-            position < 0 ? outputNewFile << "-" << abs(position + 0.1) : outputNewFile << position + 0.1;
-            outputNewFile << ",";
-            outputNewFile << TRAFFICLIGHT_HEIGHT / 4;
-            if(lights[i]->getCurrentColor() == red) {
-                outputNewFile << ")\n"
-                                 "ambientLight = (1, 0, 0)\n"
-                                 "diffuseLight = (1, 0, 0)\n"
-                                 "spotAngle = 20.0"
-                                 "\n\n";
-            }
-            else{
-                outputNewFile << ")\n"
-                                 "ambientReflection = (0, 1, 0)\n"
-                                 "diffuseReflection = (0, 1, 0)\n"
-                                 "spotAngle = 20.0"
-                                 "\n\n";
-            }
-            lightCount++;
-        }
-        figureCount++;
-    }
     // Write general tags
     outputNewFile << "[General]\n"
                      "size = 1024\n"
@@ -1036,10 +1078,33 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
     outputNewFile << ",";
     outputNewFile << size / 2;
     outputNewFile << ",";
-    outputNewFile << 50;
-    outputNewFile<<  ")\n"
-                     "viewDirection = (0, 0,-1)\n"
-                     "hfov = 90\n"
+    if(viewPos == rightView || viewPos == leftView){
+        outputNewFile << 0;
+    }
+    else{
+        outputNewFile << 10;
+    }
+    outputNewFile<<  ")\n";
+    if(viewPos == topView){
+        outputNewFile << "viewDirection = (0, 0,-1)\n";
+    }
+    else if(viewPos == rightView){
+        outputNewFile << "viewDirection = (1,0,-1)\n";
+    }
+    else if(viewPos == leftView){
+        outputNewFile << "viewDirection = (-1,0,-1)\n";
+    }
+    else if(viewPos == frontView){
+        outputNewFile << "viewDirection = (0,1,-1)\n";
+    }
+    else if(viewPos == backView){
+        outputNewFile << "viewDirection = (0,-1,-1)\n";
+    }
+    else{
+        outputNewFile << "viewDirection = (1,1,-1)\n";
+    }
+
+    outputNewFile << "hfov = 90\n"
                      "aspectRatio = 1.3333\n"
                      "dNear = 1\n"
                      "dFar = 1000\n"
@@ -1069,6 +1134,7 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
 }
 
 int TrafficSimulation::generateImage() {
+    REQUIRE(properlyInitialized() , "TrafficSimulation was not properly initialized when calling generateImage");
     // Render image
     int ret = std::system("cd ../; cd ../; cd ./Engine; ./engine");
     // Reset filelist

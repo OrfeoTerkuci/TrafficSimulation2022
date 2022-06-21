@@ -173,8 +173,12 @@ public: // functions
     */
     void print(int &count);
 
-    void generateIni(bool override = true , bool lighting = false , viewPosition viewPos = top);
+    void generateIni(bool override = true , bool lighting = false , viewPosition viewPos = topView);
 
+    /**
+     *
+     * @return
+     */
     int generateImage();
 
     /**
@@ -185,7 +189,7 @@ public: // functions
      * @param outputE enables if we're outputting a file
      * @param printE enables if we're printing something on the terminal
      */
-    void startSimulation(bool printE = true, bool outputE = true, bool countE = false, bool timeE = false);
+    void startSimulation(bool printE = true, bool outputE = true, bool countE = false, bool timeE = false , bool visualise = false , bool override = true , bool lighting = false , viewPosition viewPos = topView);
 
     /**
      * REQUIRE(this->properlyInitialized(), "TrafficSimulation was not initialized when calling outpputFile");

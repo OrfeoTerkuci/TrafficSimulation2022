@@ -7,10 +7,10 @@ int main(){
 //* Task 1 *//
 
 //==== Normal simulation files ====//
-TrafficSimulation ts(SIM0); // Single vehicle , long road
+//TrafficSimulation ts(SIM0); // Single vehicle , long road
 //TrafficSimulation ts(SIM1); // Basic Simulation
 //TrafficSimulation ts(SIM2); // Empty road simulation
-//TrafficSimulation ts(SIM3); // Multiple Roads simulation
+TrafficSimulation ts(SIM3); // Multiple Roads simulation
 
 //==== Vehicle generator files ====//
 //TrafficSimulation ts(SIM4); // VehicleGenerator sim
@@ -49,8 +49,8 @@ TrafficSimulation ts(SIM0); // Single vehicle , long road
 // ts.printAll();
 //ts.startSimulation(false, false, true); // Simulates until there is a maximum vehicle count reached --> Standard_Values --> MAX_VEHICLES
 //ts.startSimulation(); // Simulate current loaded file
-//ts.startSimulation(false);
-ts.generateIni(true, true, top);
-ts.generateImage();
+//ts.startSimulation(false , true , false , false , true , true , true , topView);
+//ts.generateIni(true, true, topView);
+//ts.generateImage();
 return 0;
 }
