@@ -91,11 +91,13 @@ public: // functions
     const vector<TrafficLight *> &getLights();
 
     /**
-     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getCrossRoads");*/
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getCrossRoads");
+     * */
     const vector<CrossRoad *> & getCrossRoads();
 
     /**
-     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getFilename");*/
+     * REQUIRE(this->properlyInitialized(), "TrafficSimulation wasn't properly initialized when calling getFilename");
+     * */
     const string &getFilename();
 
     /**
@@ -187,6 +189,11 @@ public: // functions
      */
     int generateImage();
 
+    /**
+     * REQUIRE(properlyInitialized() , "TrafficSimulation was not properly initialized when calling generateImage");
+     * @param filename File to be deleted
+     * @return
+     */
     int clearIniFile(string filename);
 
     /**

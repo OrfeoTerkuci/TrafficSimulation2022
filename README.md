@@ -30,7 +30,7 @@ Made by: **Orfeo Terkuci** and **Jason Liu**
 ### Commentaar:
 - [X] Parser must have it's own class.  
 - [X] Simulation must not stop at an error --> generate log file.  
-- [ ] Simulation functions post-condition must be added.  
+- [X] Simulation functions post-condition must be added.  
 
 ----------------------------------------------------------------------
 
@@ -84,7 +84,7 @@ Made by: **Orfeo Terkuci** and **Jason Liu**
 |:---:|-------------------------|:------------:|:------:|
 |2.1  | Simpele Uitvoer         | Verplicht    |   V    |
 |2.2  | Grafische impressie     | Belangrijk   |   V    |
-|2.3  | Integratie met graphics | Belangrijk   |   P    |
+|2.3  | Integratie met graphics | Belangrijk   |   V    |
 
 
 |Case | Simulatie                                   | Prioriteit   | Status |
