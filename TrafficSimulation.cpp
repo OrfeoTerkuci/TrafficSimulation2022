@@ -1178,14 +1178,29 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
 int TrafficSimulation::generateImage() {
     REQUIRE(properlyInitialized() , "TrafficSimulation was not properly initialized when calling generateImage");
     // Render image
-    int ret = std::system("cd ../; cd ../; cd ./Engine; ./engine");
+    int gen = std::system("cd ../; cd ../; cd ./Engine; ./engine");
+    int del;
     // Reset filelist
     string newFileName = INI_DIRECTORY;
     newFileName += "filelist";
     fstream outputNewFile;
     outputNewFile.open(newFileName.c_str(), ios::trunc | ios::out);
     outputNewFile.close();
+    // Delete ini file
+    newFileName = INI_DIRECTORY;
+    newFileName += filename.substr(0,filename.size() - 4);
+    newFileName += INIL;
+    del = clearIniFile(newFileName);
     // Return execution status
-    return ret;
+    return (gen && del);
+}
+
+int TrafficSimulation::clearIniFile(string filename) {
+    REQUIRE(properlyInitialized() , "TrafficSimulation was not properly initialized when calling clearIniFiles");
+    if( remove(filename.c_str()) != 0 )
+        perror( "Error deleting file" );
+    else
+        puts( "File successfully deleted" );
+    return 0;
 }
 
