@@ -1027,13 +1027,13 @@ void TrafficSimulation::generateIni() {
 
 int TrafficSimulation::generateImage() {
     int ret = std::system("cd ../; cd ../; cd ./Engine; ./engine");
-//    // Update filelist
-//    string newFileName = INI_DIRECTORY;
-//    newFileName += "filelist";
-//
-//    fstream outputNewFile;
-//    outputNewFile.open(newFileName.c_str(), ios::trunc | ios::out);
-//    outputNewFile.close();
+    // Update filelist
+    string newFileName = INI_DIRECTORY;
+    newFileName += "filelist";
+
+    fstream outputNewFile;
+    outputNewFile.open(newFileName.c_str(), ios::trunc | ios::out);
+    outputNewFile.close();
     return ret;
 }
 
