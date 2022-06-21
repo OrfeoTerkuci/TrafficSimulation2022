@@ -84,7 +84,7 @@ Made by: **Orfeo Terkuci** and **Jason Liu**
 |:---:|-------------------------|:------------:|:------:|
 |2.1  | Simpele Uitvoer         | Verplicht    |   V    |
 |2.2  | Grafische impressie     | Belangrijk   |   V    |
-|2.3  | Integratie met graphics | Belangrijk   |   T    |
+|2.3  | Integratie met graphics | Belangrijk   |   P    |
 
 
 |Case | Simulatie                                   | Prioriteit   | Status |
