@@ -1011,14 +1011,14 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
                 outputNewFile << ")\n"
                                  "ambientLight = (1, 0, 0)\n"
                                  "diffuseLight = (1, 0, 0)\n"
-                                 "spotAngle = 60.0"
+                                 "spotAngle = 20.0"
                                  "\n\n";
             }
             else{
                 outputNewFile << ")\n"
                                  "ambientReflection = (0, 1, 0)\n"
                                  "diffuseReflection = (0, 1, 0)\n"
-                                 "spotAngle = 60.0"
+                                 "spotAngle = 20.0"
                                  "\n\n";
             }
             lightCount++;
@@ -1032,18 +1032,20 @@ void TrafficSimulation::generateIni(bool override , bool lighting , viewPosition
                      "type = \"LightedZBuffering\"\n"
                      "clipping = TRUE\n";
     outputNewFile << "eye = (";
-    outputNewFile << (size + 10) / 2;
+    outputNewFile << size / 2;
     outputNewFile << ",";
-    outputNewFile << (size + 10) / 2;
+    outputNewFile << size / 2;
     outputNewFile << ",";
-    outputNewFile << (size + 10) / 2;
+    outputNewFile << 50;
     outputNewFile<<  ")\n"
                      "viewDirection = (0, 0,-1)\n"
                      "hfov = 90\n"
                      "aspectRatio = 1.3333\n"
                      "dNear = 1\n"
                      "dFar = 1000\n"
-                     "nrLights = 1\n";
+                     "nrLights = ";
+    outputNewFile << lightCount;
+    outputNewFile << "\n";
 
     // Calculate total number of figures
     outputNewFile << "nrFigures = ";
