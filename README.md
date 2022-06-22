@@ -8,106 +8,44 @@ Made by: **Orfeo Terkuci** and **Jason Liu**
 **P** = Partially implemented  
 **T** = _TODO_
 
-## Versie 1.0
-### Overzicht
+## Version 2.1  
+### Overview  
 
-|Case | Invoer                      | Prioriteit   | Status |
-|:---:|-----------------------------|:------------:|:------:|
-|1.1  | Verkeerssituatie Inlezen    | Verplicht    |   V    | 
-|1.2  | Voertuigengenerator Inlezen | Belangrijk   |   V    |
+|Case | Input                       | Priority      | Status |
+|:---:|-----------------------------|:-------------:|:------:|
+|**_1:_**|**_Input_**|  |   |
+|1.1  | [Read traffic situation](https://github.com/OrfeoTerkuci/TrafficSimulation2022#overzicht)      | Required      |   V    | 
+|1.2  | Read vehicle generators     | Important     |   V    |
+|1.3  | Read vehicles types         | Required      |   V    |
+|1.4  | Read bus stops              | Important     |   V    |
+|1.5  | Read crossroads             | Important     |   V    |
+|**_2:_**|**_Output_**| |   |
+|2.1  | Simple output               | Required      |   V    |
+|2.2  | Graphical impression        | Important     |   V    |
+|2.3  | Integration with graphics   | Important     |   V    |
+|**_3:_**|**_Simulation_**| |   |
+|3.1  | Driving of vehicle                              | Required    |   V    |
+|3.2  | Simulation of traffic light                     | Required    |   V    |
+|3.3  | Automatic Simulation                            | Required    |   V    |
+|3.4  | Simulation with vehicle generator               | Important   |   V    |
+|3.5  | Driving of vehicle with type                    | Required    |   V    |
+|3.6  | Simulation of bus stops                         | Important   |   V    |
+|3.7  | Simulation of intersections                     | Important   |   V    |
+|3.8  | Simulation of intersections with traffic light  | Useful      |   T    |
+|3.9  | Smart traffic lights                            | Useful      |   T    |
+|3.10 | Simulation of orange traffic light              | Useful      |   T    |
+|**_4:_**|**_User's Interface_**|   |   |
+|4.1  | GUI for simulation          | Useful       |   T    |
+|4.2  | GUI for traffic lights      | Useful       |   T    |
+|4.3  | GUI for vehicle generators  | Useful       |   T    |  
 
-|Case | Uitvoer         | Prioriteit   | Status  |
-|:---:|-----------------|:------------:|:-------:|
-|2.1  | Simpele Uitvoer | Verplicht    |   V     |
+## Features
 
-|Case | Simulatie                         | Prioriteit   | Status |
-|:---:|-----------------------------------|:------------:|:------:|
-|3.1  | Rijden Van Voertuig               | Verplicht    |   V    |
-|3.2  | Simulatie Van Verkeerslicht       | Verplicht    |   V    |
-|3.3  | Automatische Simulatie            | Verplicht    |   V    |
-|3.4  | Simulatie Met Voertuigengenerator | Belangrijk   |   V    |
- 
-### Commentaar:
-- [X] Parser must have it's own class.  
-- [X] Simulation must not stop at an error --> generate log file.  
-- [X] Simulation functions post-condition must be added.  
 
-----------------------------------------------------------------------
-
-## Versie 2.0  
-### Overzicht  
-
-|Case | Invoer                      | Prioriteit   | Status |
-|:---:|-----------------------------|:------------:|:------:|
-|1.1  | Verkeerssituatie Inlezen    | Verplicht    |   V    | 
-|1.2  | Voertuigengenerator Inlezen | Belangrijk   |   V    |
-|1.3  | Voertuig met type Inlezen   | Verplicht    |   V    |
-|1.4  | Bushaltes Inlezen           | Belangrijk   |   V    |
-|1.5  | Kruispunten Inlezen         | Belangrijk   |   V    |
-
-|Case | Uitvoer                 | Prioriteit   | Status |
-|:---:|-------------------------|:------------:|:------:|
-|2.1  | Simpele Uitvoer         | Verplicht    |   V    |
-|2.2  | Grafische impressie     | Belangrijk   |   V    |
-
-|Case | Simulatie                         | Prioriteit   | Status |
-|:---:|-----------------------------------|:------------:|:------:|
-|3.1  | Rijden Van Voertuig               | Verplicht    |   V    |
-|3.2  | Simulatie Van Verkeerslicht       | Verplicht    |   V    |
-|3.3  | Automatische Simulatie            | Verplicht    |   V    |
-|3.4  | Simulatie Met Voertuigengenerator | Belangrijk   |   V    |
-|3.5  | Rijden van voertuig met type      | Verplicht    |   V    |
-|3.6  | Simulatie van bushaltes           | Belangrijk   |   V    |
-|3.7  | Simulatie van kruispunten         | Belangrijk   |   V    |
-
-### Comentaar:
-...
 ### TODO:
 - [ ] Inheritance for vehicles  
 - [X] HTML needs a cleanup and a little optimization 
 - [X] Vehicle cannot change type after construction
-
-----------------------------------------------------------------------
-
-## Versie 2.1  
-### Overzicht  
-
-|Case | Invoer                      | Prioriteit   | Status |
-|:---:|-----------------------------|:------------:|:------:|
-|1.1  | Verkeerssituatie Inlezen    | Verplicht    |   V    | 
-|1.2  | Voertuigengenerator Inlezen | Belangrijk   |   V    |
-|1.3  | Voertuig met type Inlezen   | Verplicht    |   V    |
-|1.4  | Bushaltes Inlezen           | Belangrijk   |   V    |
-|1.5  | Kruispunten Inlezen         | Belangrijk   |   V    |
-
-|Case | Uitvoer                 | Prioriteit   | Status |
-|:---:|-------------------------|:------------:|:------:|
-|2.1  | Simpele Uitvoer         | Verplicht    |   V    |
-|2.2  | Grafische impressie     | Belangrijk   |   V    |
-|2.3  | Integratie met graphics | Belangrijk   |   V    |
-
-
-|Case | Simulatie                                   | Prioriteit   | Status |
-|:---:|---------------------------------------------|:------------:|:------:|
-|3.1  | Rijden van voertuig                         | Verplicht    |   V    |
-|3.2  | Simulatie van verkeerslicht                 | Verplicht    |   V    |
-|3.3  | Automatische Simulatie                      | Verplicht    |   V    |
-|3.4  | Simulatie met voertuigengenerator           | Belangrijk   |   V    |
-|3.5  | Rijden van voertuig met type                | Verplicht    |   V    |
-|3.6  | Simulatie van bushaltes                     | Belangrijk   |   V    |
-|3.7  | Simulatie van kruispunten                   | Belangrijk   |   V    |
-|3.8  | Simulatie van kruispunten met verkeerslicht | Nuttig       |   T    |
-|3.9  | Slimme verkeerslichten                      | Nuttig       |   T    |
-|3.10 | Simulatie van oranje verkeerslicht          | Nuttig       |   T    |
-
-|Case | Gebruikersinterface                 | Prioriteit   | Status |
-|:---:|-------------------------------------|:------------:|:------:|
-|2.1  | GUI voor simulatie                  | Nuttig       |   T    |
-|2.2  | GUI voor verkeerslichten            | Nuttig       |   T    |
-|2.3  | GUI voor voertuiggenerator          | Nuttig       |   T    |
-
-### Comentaar:
-...
 
 ![GitHub all releases](https://img.shields.io/github/downloads/OrfeoTerkuci/TrafficSimulation2022/total)
 ![GitHub language count](https://img.shields.io/github/languages/count/OrfeoTerkuci/TrafficSimulation2022)
