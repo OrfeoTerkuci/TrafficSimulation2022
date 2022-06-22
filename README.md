@@ -14,11 +14,11 @@ Made by: **Orfeo Terkuci** and **Jason Liu**
 |Case | Input                       | Priority      | Status |
 |:---:|-----------------------------|:-------------:|:------:|
 |**_1:_**|**_Input_**|  |   |
-|1.1  | [Read traffic situation](https://github.com/OrfeoTerkuci/TrafficSimulation2022#overzicht)      | Required      |   V    | 
-|1.2  | Read vehicle generators     | Important     |   V    |
-|1.3  | Read vehicles types         | Required      |   V    |
-|1.4  | Read bus stops              | Important     |   V    |
-|1.5  | Read crossroads             | Important     |   V    |
+|1.1  | [Read traffic situation](https://github.com/OrfeoTerkuci/TrafficSimulation2022#overview)      | Required      |   V    | 
+|1.2  | [Read vehicle generators]()     | Important     |   V    |
+|1.3  | [Read vehicles types]()         | Required      |   V    |
+|1.4  | [Read bus stops]()             | Important     |   V    |
+|1.5  | [Read crossroads]()             | Important     |   V    |
 |**_2:_**|**_Output_**| |   |
 |2.1  | Simple output               | Required      |   V    |
 |2.2  | Graphical impression        | Important     |   V    |
