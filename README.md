@@ -8,14 +8,29 @@ Made by: **Orfeo Terkuci** and **Jason Liu**
 **P** = Partially implemented  
 **T** = _TODO_
 
-## Version 2.1  
+## Version 2.1
+
+### Table of contents
+
+[Read traffic situation]()  
+[Read vehicle generators]()  
+[Read vehicle types]()  
+[Read bus stops]()  
+[Read crossroads]()  
+
+[Simple Output]()  
+[Graphical impression]()  
+[Integration with graphics]()  
+
+[User's Interface]()  
+  
 ### Overview  
 
 |Case | Input                       | Priority      | Status |
 |:---:|-----------------------------|:-------------:|:------:|
 |**_1:_**|**_Input_**|  |   |
 |1.1  | Read traffic situation      | Required      |   V    | 
-|1.2  | Read vehicle generators]()  | Important     |   V    |
+|1.2  | Read vehicle generators     | Important     |   V    |
 |1.3  | Read vehicles types         | Required      |   V    |
 |1.4  | Read bus stops              | Important     |   V    |
 |1.5  | Read crossroads             | Important     |   V    |
@@ -40,6 +55,26 @@ Made by: **Orfeo Terkuci** and **Jason Liu**
 |4.3  | GUI for vehicle generators  | Useful       |   T    |  
 
 ## Features
+
+
+### Read traffic situation 
+
+### Read vehicle generators
+
+### Read vehicle types
+
+### Read bus stops
+
+### Read crossroads 
+
+
+### Simple Output
+
+### Graphical impression 
+
+### Integration with graphics 
+
+### User's Interface  
 
 
 ### TODO:
